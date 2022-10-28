@@ -17,6 +17,7 @@ After editing, you will select "File->Save all changes".
 
 Also, you can load loss statistics after training.
 After pressing the "Interrupt" button, in the console you will see the loss statistics for each image.
+
 ![](https://user-images.githubusercontent.com/1236582/198585578-1a958600-cc95-466e-b926-3cfed44b28e4.jpg)
 
 Copy all text to file. File should look like this:
@@ -31,6 +32,7 @@ recent 32 loss:0.048±(0.007)
 ```
 
 In the program, select "File->Load loss from file", and you will see:
+
 ![](https://user-images.githubusercontent.com/1236582/198586476-6094d32f-b31d-48a2-8ad7-f043417cd78c.jpg)
 
 You can automatically translate tags into the language you need. Specify the code of the language you need in the setting.json file. In the program select "View->Translate tags".
