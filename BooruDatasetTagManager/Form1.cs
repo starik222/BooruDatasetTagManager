@@ -76,6 +76,7 @@ namespace BooruDatasetTagManager
             listView1.LargeImageList = Program.DataManager.Images;
             listView1.TileSize = new Size(Program.DataManager.Images.ImageSize.Width + 10, Program.DataManager.Images.ImageSize.Height + 10);
             listViewItems = new List<ListViewItem>();
+            listView1.Items.Clear();
             foreach (var item in Program.DataManager.DataSet)
             {
                 ListViewItem lvItem = listView1.Items.Add(item.Key, "", item.Key);
