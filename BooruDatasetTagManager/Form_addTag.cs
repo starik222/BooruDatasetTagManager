@@ -32,5 +32,15 @@ namespace BooruDatasetTagManager
             comboBox1.Items.AddRange(Enum.GetNames(typeof(DatasetManager.AddingType)));
             comboBox1.SelectedItem = "Down";
         }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if ((string)comboBox1.SelectedItem == "Custom")
+            {
+                numericUpDown1.Visible = true;
+            }
+            else
+                numericUpDown1.Visible = false;
+        }
     }
 }

@@ -70,29 +70,37 @@ namespace BooruDatasetTagManager
             CommonTags.Sort((a, b) => a.Tag.CompareTo(b.Tag));
         }
 
-        public void AddTagToAll(string tag, AddingType addType)
+        public void AddTagToAll(string tag, AddingType addType, int pos=-1)
         {
             tag = tag.ToLower();
             foreach (var item in DataSet)
             {
-                if (!item.Value.Tags.Contains(tag))
-                {
-                    if (addType == AddingType.Down)
-                        item.Value.Tags.Add(tag);
-                    else if (addType == AddingType.Top)
-                        item.Value.Tags.Insert(0, tag);
-                    else if (addType == AddingType.Center)
-                    {
-                        item.Value.Tags.Insert(item.Value.Tags.Count/2, tag);
-                    }
-                }
-                else if (addType != AddingType.Down)
+                if (item.Value.Tags.Contains(tag))
                 {
                     item.Value.Tags.Remove(tag);
-                    int index = 0;
-                    if (addType == AddingType.Center)
-                        index = item.Value.Tags.Count / 2;
-                    item.Value.Tags.Insert(index, tag);
+                }
+                switch (addType)
+                {
+                    case AddingType.Top:
+                        {
+                            item.Value.Tags.Insert(0, tag);
+                            break;
+                        }
+                    case AddingType.Center:
+                        {
+                            item.Value.Tags.Insert(item.Value.Tags.Count / 2, tag);
+                            break;
+                        }
+                    case AddingType.Down:
+                        {
+                            item.Value.Tags.Add(tag);
+                            break;
+                        }
+                    case AddingType.Custom:
+                        {
+                            item.Value.Tags.Insert(pos, tag);
+                            break;
+                        }
                 }
             }
         }
@@ -236,7 +244,8 @@ namespace BooruDatasetTagManager
         {
             Top,
             Center,
-            Down
+            Down,
+            Custom
         }
 
 

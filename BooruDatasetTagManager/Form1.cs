@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -323,37 +324,44 @@ namespace BooruDatasetTagManager
             }
             if (addTag.ShowDialog() == DialogResult.OK)
             {
+                int customIndex = (int)addTag.numericUpDown1.Value;
+                if (customIndex >= dataGridView1.RowCount || customIndex < 0)
+                {
+                    MessageBox.Show("Selected position out of range!");
+                    return;
+                }
                 DatasetManager.AddingType addType = (DatasetManager.AddingType)Enum.Parse(typeof(DatasetManager.AddingType), (string)addTag.comboBox1.SelectedItem);
-                Program.DataManager.AddTagToAll(addTag.textBox1.Text, addType);
+                Program.DataManager.AddTagToAll(addTag.textBox1.Text, addType, customIndex);
                 Program.DataManager.UpdateData();
                 int valIndex = IndexOfValueInGrig(dataGridView1, "ImageTags", addTag.textBox1.Text);
+
                 if (valIndex != -1)
                 {
-                    if (addType != DatasetManager.AddingType.Down)
-                    {
-                        dataGridView1.Rows.RemoveAt(valIndex);
-                        int index = 0;
-                        if (addType == DatasetManager.AddingType.Center)
-                            index = dataGridView1.RowCount / 2;
-
-                        dataGridView1.Rows.Insert(index, addTag.textBox1.Text);
-                    }
+                    dataGridView1.Rows.RemoveAt(valIndex);
                 }
-                else
-                {
-                    if (addType == DatasetManager.AddingType.Down)
-                    {
-                        dataGridView1.Rows.Add(addTag.textBox1.Text);
 
-                    }
-                    else
-                    {
-                        int index = 0;
-                        if (addType == DatasetManager.AddingType.Center)
-                            index = dataGridView1.RowCount / 2;
-                        dataGridView1.Rows.Insert(index, addTag.textBox1.Text);
-                    }
-                        
+                switch (addType)
+                {
+                    case DatasetManager.AddingType.Top:
+                        {
+                            dataGridView1.Rows.Insert(0, addTag.textBox1.Text);
+                            break;
+                        }
+                    case DatasetManager.AddingType.Center:
+                        {
+                            dataGridView1.Rows.Insert(dataGridView1.RowCount / 2, addTag.textBox1.Text);
+                            break;
+                        }
+                    case DatasetManager.AddingType.Down:
+                        {
+                            dataGridView1.Rows.Add(addTag.textBox1.Text);
+                            break;
+                        }
+                    case DatasetManager.AddingType.Custom:
+                        {
+                            dataGridView1.Rows.Insert(customIndex, addTag.textBox1.Text);
+                            break;
+                        }
                 }
             }
             addTag.Close();
