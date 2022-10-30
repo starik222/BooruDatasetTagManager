@@ -2,10 +2,13 @@
 A simple tag editor for a dataset created in [stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui) with the deepdanbooru option enabled.
 
 
-#Using
+# Using
 You need a dataset like the following:
+*You can also specify a dataset without text files if you want to create tags from scratch. In this case, text files will be created on save.*
 
 ![](https://user-images.githubusercontent.com/1236582/198582869-be2938a7-f7b2-4ad9-8e8c-a53604a24c2d.jpg)
+
+
 
 In the program, select "File->Load folder" and specify the directory with the dataset.
 
