@@ -325,7 +325,7 @@ namespace BooruDatasetTagManager
             if (addTag.ShowDialog() == DialogResult.OK)
             {
                 int customIndex = (int)addTag.numericUpDown1.Value;
-                if (customIndex >= dataGridView1.RowCount || customIndex < 0)
+                if ((dataGridView1.RowCount>0) && (customIndex >= dataGridView1.RowCount || customIndex < 0))
                 {
                     MessageBox.Show("Selected position out of range!");
                     return;

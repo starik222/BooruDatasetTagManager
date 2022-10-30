@@ -557,7 +557,7 @@ namespace BooruDatasetTagManager
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Name = "Form1";
-            this.Text = "Texture inversion dataset tag manager";
+            this.Text = "BooruDatasetTagManager";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.toolStrip2.ResumeLayout(false);

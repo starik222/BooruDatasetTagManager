@@ -158,7 +158,11 @@ namespace BooruDatasetTagManager
 
         public void LoadFromFolder(string folder)
         {
-            string[] imgs = Directory.GetFiles(folder, "*.png", SearchOption.TopDirectoryOnly);
+            List<string> imagesExt = new List<string>() { ".jpg", ".png", ".bmp", ".jpeg" };
+            string[] imgs = Directory.GetFiles(folder, "*.*", SearchOption.TopDirectoryOnly);
+
+            imgs = imgs.Where(a => imagesExt.Contains(Path.GetExtension(a).ToLower())).ToArray();
+
             for (int i = 0; i < imgs.Length; i++)
             {
                 var dt = new DataItem(imgs[i]);
@@ -277,10 +281,18 @@ namespace BooruDatasetTagManager
 
             public void GetTagsFromFile()
             {
-                string text = File.ReadAllText(TextFilePath);
-                Tags = text.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                for (int i = 0; i < Tags.Count; i++)
-                    Tags[i] = Tags[i].Trim();
+                if (File.Exists(TextFilePath))
+                {
+                    string text = File.ReadAllText(TextFilePath);
+                    Tags = text.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                    for (int i = 0; i < Tags.Count; i++)
+                        Tags[i] = Tags[i].Trim();
+                }
+                else
+                {
+                    Tags = new List<string>();
+                }
+
             }
         }
     }
