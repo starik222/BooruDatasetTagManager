@@ -1,5 +1,5 @@
 # BooruDatasetTagManager
-A simple tag editor for a dataset created in [stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui) with the deepdanbooru option enabled.
+A simple tag editor for a dataset created in [stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui) with the deepdanbooru option enabled, or creating a dataset from scratch.
 
 
 # Using
