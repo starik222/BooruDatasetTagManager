@@ -4,6 +4,7 @@ A simple tag editor for a dataset created in [stable-diffusion-webui](https://gi
 
 # Using
 You need a dataset like the following:
+
 *You can also specify a dataset without text files if you want to create tags from scratch. In this case, text files will be created on save.*
 
 ![](https://user-images.githubusercontent.com/1236582/198582869-be2938a7-f7b2-4ad9-8e8c-a53604a24c2d.jpg)
