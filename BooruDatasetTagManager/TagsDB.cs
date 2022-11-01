@@ -4,16 +4,17 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace BooruDatasetTagManager
 {
     public class TagsDB
     {
-        public List<string> Tags;
+        public AutoCompleteStringCollection Tags;
 
         public TagsDB()
         {
-            Tags = new List<string>();
+            Tags = new AutoCompleteStringCollection();
         }
 
 
@@ -26,6 +27,9 @@ namespace BooruDatasetTagManager
             {
                 int index = item.LastIndexOf(',');
                 string tag = item.Substring(0, index);
+                tag = tag.Replace('_', ' ');
+                tag = tag.Replace("(", "\\(");
+                tag = tag.Replace(")", "\\)");
                 if (!Tags.Contains(tag))
                     Tags.Add(tag);
             }
@@ -41,7 +45,7 @@ namespace BooruDatasetTagManager
 
         public void SaveTags(string fPath)
         {
-            File.WriteAllLines(fPath, Tags);
+            File.WriteAllLines(fPath, Tags.Cast<string>());
         }
 
     }

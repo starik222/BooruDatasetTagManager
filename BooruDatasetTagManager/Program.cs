@@ -47,7 +47,10 @@ namespace BooruDatasetTagManager
                     {
                         TagsList.LoadFromCSVFile(item, true);
                     }
-                    TagsList.Tags.Sort();
+                    List<string> temp = new List<string>(TagsList.Tags.Cast<string>());
+                    temp.Sort();
+                    TagsList.Tags.Clear();
+                    TagsList.Tags.AddRange(temp.ToArray());
                     TagsList.SaveTags(tagFile);
                 }
             }

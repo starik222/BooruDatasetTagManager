@@ -218,11 +218,16 @@ namespace BooruDatasetTagManager
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedCells.Count == 0)
+            AddNewRow();
+        }
+
+        private void AddNewRow()
+        {
+            if (dataGridView1.SelectedCells.Count == 0 || dataGridView1.RowCount == 0)
                 dataGridView1.Rows.Add();
             else
             {
-                dataGridView1.Rows.Insert(dataGridView1.SelectedCells[0].RowIndex+1);
+                dataGridView1.Rows.Insert(dataGridView1.SelectedCells[0].RowIndex + 1);
             }
         }
 
@@ -273,6 +278,11 @@ namespace BooruDatasetTagManager
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
+            if (Program.DataManager == null)
+            {
+                MessageBox.Show("Dataset not load.");
+                return;
+            }
             List<string> nTags = new List<string>();
             for (int i = 0; i < dataGridView1.RowCount; i++)
             {
@@ -298,20 +308,30 @@ namespace BooruDatasetTagManager
         private void BindTagList()
         {
             if (Program.DataManager == null)
+            {
+                MessageBox.Show("Dataset not load.");
                 return;
+            }
             if (isAllTags)
             {
-                dataGridView2.DataSource = null;
-                dataGridView2.DataSource = Program.DataManager.AllTags;
-                dataGridView2.Refresh();
+                BingSourceToDGV(dataGridView2, Program.DataManager.AllTags);
             }
             else
             {
-                dataGridView2.DataSource = null;
-                dataGridView2.DataSource = Program.DataManager.CommonTags;
-                dataGridView2.Refresh();
+                BingSourceToDGV(dataGridView2, Program.DataManager.CommonTags);
             }
             dataGridView2.Columns["Tag"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        }
+
+        private void BingSourceToDGV(DataGridView dgv, object source)
+        {
+            BindingSource binding = new BindingSource();
+            binding.SuspendBinding();
+            binding.DataSource = source;
+            binding.ResumeBinding();
+            dgv.DataSource = null;
+            dgv.DataSource = binding;
+            dgv.Refresh();
         }
 
         private void toolStripButton7_Click(object sender, EventArgs e)
@@ -420,7 +440,10 @@ namespace BooruDatasetTagManager
         private void saveAllChangesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Program.DataManager == null)
+            {
+                MessageBox.Show("Dataset not load.");
                 return;
+            }
             Program.DataManager.SaveAll();
             SetStatus("Saved!");
             MessageBox.Show("Saved!");
@@ -429,7 +452,10 @@ namespace BooruDatasetTagManager
         private void showPreviewToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Program.DataManager == null)
+            {
+                MessageBox.Show("Dataset not load.");
                 return;
+            }
             isShowPreview = !isShowPreview;
             showPreviewToolStripMenuItem.Checked = isShowPreview;
             if (isShowPreview)
@@ -527,7 +553,7 @@ namespace BooruDatasetTagManager
             }
         }
 
-        private int findIndex = -1;
+        //private int findIndex = -1;
         private void toolStripButton13_Click(object sender, EventArgs e)
         {
             SetFilter();
@@ -587,6 +613,10 @@ namespace BooruDatasetTagManager
                 if (dataGridView1.SelectedCells.Count > 0)
                     dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
             }
+            else if (e.KeyCode == Keys.Insert)
+            {
+                AddNewRow();
+            }
         }
 
         private void loadLossFromFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -626,7 +656,16 @@ namespace BooruDatasetTagManager
 
         private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-
+            if (dataGridView1.CurrentCell.ColumnIndex == 0)
+            {
+                TextBox autoText = e.Control as TextBox;
+                if (autoText != null)
+                {
+                    autoText.AutoCompleteMode = AutoCompleteMode.Suggest;
+                    autoText.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                    autoText.AutoCompleteCustomSource = Program.TagsList.Tags;
+                }
+            }
         }
     }
 }

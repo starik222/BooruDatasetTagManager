@@ -98,7 +98,12 @@ namespace BooruDatasetTagManager
                         }
                     case AddingType.Custom:
                         {
-                            item.Value.Tags.Insert(pos, tag);
+                            if (pos >= item.Value.Tags.Count)
+                            {
+                                item.Value.Tags.Add(tag);
+                            }
+                            else
+                                item.Value.Tags.Insert(pos, tag);
                             break;
                         }
                 }
