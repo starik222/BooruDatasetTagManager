@@ -102,6 +102,10 @@ namespace BooruDatasetTagManager
                             {
                                 item.Value.Tags.Add(tag);
                             }
+                            else if (pos < 0)
+                            {
+                                item.Value.Tags.Insert(0, tag);
+                            }
                             else
                                 item.Value.Tags.Insert(pos, tag);
                             break;

@@ -345,11 +345,7 @@ namespace BooruDatasetTagManager
             if (addTag.ShowDialog() == DialogResult.OK)
             {
                 int customIndex = (int)addTag.numericUpDown1.Value;
-                if ((dataGridView1.RowCount>0) && (customIndex >= dataGridView1.RowCount || customIndex < 0))
-                {
-                    MessageBox.Show("Selected position out of range!");
-                    return;
-                }
+
                 DatasetManager.AddingType addType = (DatasetManager.AddingType)Enum.Parse(typeof(DatasetManager.AddingType), (string)addTag.comboBox1.SelectedItem);
                 Program.DataManager.AddTagToAll(addTag.textBox1.Text, addType, customIndex);
                 Program.DataManager.UpdateData();
@@ -379,7 +375,16 @@ namespace BooruDatasetTagManager
                         }
                     case DatasetManager.AddingType.Custom:
                         {
-                            dataGridView1.Rows.Insert(customIndex, addTag.textBox1.Text);
+                            if (customIndex >= dataGridView1.RowCount)
+                            {
+                                dataGridView1.Rows.Add(addTag.textBox1.Text);
+                            }
+                            else if (customIndex < 0)
+                            {
+                                dataGridView1.Rows.Insert(0, addTag.textBox1.Text);
+                            }
+                            else
+                                dataGridView1.Rows.Insert(customIndex, addTag.textBox1.Text);
                             break;
                         }
                 }
@@ -502,6 +507,8 @@ namespace BooruDatasetTagManager
                 {
                     dataGridView1.Rows.Add(tagsBuffer[i]);
                 }
+                if (isTranslate)
+                    FillTranslation();
                 SetStatus("Pasted!");
             }
             else
@@ -546,6 +553,7 @@ namespace BooruDatasetTagManager
                 dataGridView1.Columns.Add("Translation", "Translation");
                 dataGridView1.Columns["Translation"].ReadOnly = true;
                 dataGridView1.Columns["Translation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                FillTranslation();
             }
             else
             {
@@ -641,6 +649,9 @@ namespace BooruDatasetTagManager
                 string[] lines = text.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 for (int i = 0; i < lines.Length; i++)
                     dataGridView1.Rows.Add(lines[i].ToLower().Trim());
+
+                if (isTranslate)
+                    FillTranslation();
             }
         }
 
