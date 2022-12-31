@@ -678,5 +678,24 @@ namespace BooruDatasetTagManager
                 }
             }
         }
+
+        private void toolStripButton17_Click(object sender, EventArgs e)
+        {
+            List<string> tags = new List<string>();
+            for (int i = 0; i < dataGridView1.RowCount; i++)
+            {
+                tags.Add((string)dataGridView1[0, i].Value);
+            }
+            if (MessageBox.Show("Set tag list to empty images only?\nYes - only empty, No - to all images.", "Tag setting option", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                Program.DataManager.SetTagListToAll(tags, true);
+            }
+            else
+            {
+                Program.DataManager.SetTagListToAll(tags, false);
+            }
+            Program.DataManager.UpdateData();
+            BindTagList();
+        }
     }
 }

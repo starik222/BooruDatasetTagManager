@@ -114,6 +114,25 @@ namespace BooruDatasetTagManager
             }
         }
 
+        public void SetTagListToAll(List<string> tags, bool onlyEmpty)
+        {
+            foreach (var item in DataSet)
+            {
+                if (onlyEmpty)
+                {
+                    if (item.Value.Tags.Count == 0)
+                    {
+                        item.Value.Tags.AddRange(tags);
+                    }
+                }
+                else
+                {
+                    item.Value.Tags.Clear();
+                    item.Value.Tags.AddRange(tags);
+                }
+            }
+        }
+
         public void DeleteTagFromAll(string tag)
         {
             tag = tag.ToLower();
