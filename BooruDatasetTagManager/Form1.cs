@@ -527,6 +527,7 @@ namespace BooruDatasetTagManager
             if (dataGridView2.SelectedCells.Count > 0)
             {
                 string delTag = (string)dataGridView2.SelectedCells[0].Value;
+                dataGridView2.Rows.RemoveAt(dataGridView2.CurrentCell.RowIndex);
                 Program.DataManager.DeleteTagFromAll(delTag);
                 Program.DataManager.UpdateData();
                 int index = -1;
@@ -541,7 +542,6 @@ namespace BooruDatasetTagManager
                 if (index != -1)
                     dataGridView1.Rows.RemoveAt(index);
             }
-            BindTagList();
         }
 
         private void translateTagsToolStripMenuItem_Click(object sender, EventArgs e)
