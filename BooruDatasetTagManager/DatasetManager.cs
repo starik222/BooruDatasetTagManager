@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -13,7 +14,7 @@ namespace BooruDatasetTagManager
 {
     public class DatasetManager
     {
-        public Dictionary<string, DataItem> DataSet;
+        public ConcurrentDictionary<string, DataItem> DataSet;
 
         public ImageList Images;
 
@@ -21,7 +22,7 @@ namespace BooruDatasetTagManager
         public List<TagValue> CommonTags;
         public DatasetManager()
         {
-            DataSet = new Dictionary<string, DataItem>();
+            DataSet = new ConcurrentDictionary<string, DataItem>();
             AllTags = new List<TagValue>();
             CommonTags = new List<TagValue>();
         }
@@ -191,11 +192,11 @@ namespace BooruDatasetTagManager
 
             imgs = imgs.Where(a => imagesExt.Contains(Path.GetExtension(a).ToLower())).ToArray();
 
-            for (int i = 0; i < imgs.Length; i++)
+            imgs.AsParallel().ForAll(x =>
             {
-                var dt = new DataItem(imgs[i]);
-                DataSet.Add(dt.Name, dt );
-            }
+                var dt = new DataItem(x);
+                DataSet.TryAdd(dt.Name, dt);
+            });
             Images = GetImageList(130, 130);
         }
 
@@ -304,7 +305,26 @@ namespace BooruDatasetTagManager
                 Name = Path.GetFileNameWithoutExtension(imagePath);
                 TextFilePath = Path.Combine(Path.GetDirectoryName(imagePath), Name + ".txt");
                 GetTagsFromFile();
-                Img = Image.FromFile(imagePath);
+                Img = MakeThumb(imagePath);
+            }
+
+            Image MakeThumb(string imagePath)
+            {
+                using (var img = Image.FromFile(imagePath))
+                {
+                    var aspect = img.Width / (float)img.Height;
+
+                    int newHeight = img.Height * 130 / img.Width;
+                    int newWidth = 130;
+
+                    if (newHeight > 130)
+                    {
+                        newWidth = img.Width * 130 / img.Height;
+                        newHeight = 130;
+                    }
+
+                    return img.GetThumbnailImage(newWidth, newHeight, () => false, IntPtr.Zero);
+                }
             }
 
             public void GetTagsFromFile()
