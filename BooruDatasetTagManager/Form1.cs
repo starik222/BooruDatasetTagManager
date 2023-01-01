@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Translator;
 
 namespace BooruDatasetTagManager
 {
@@ -18,8 +14,7 @@ namespace BooruDatasetTagManager
         {
             InitializeComponent();
             tagsBuffer = new List<string>();
-            fPreview = new Form_preview();
-            fPreview.FormClosed += FPreview_FormClosed;
+            ReinitPreviewIfDisposed();
 
             dataGridView1.CellValueChanged += DataGridView1_CellValueChanged;
             dataGridView1.RowsAdded += DataGridView1_RowsAdded;
@@ -53,11 +48,6 @@ namespace BooruDatasetTagManager
         private void Form1_Load(object sender, EventArgs e)
         {
 
-        }
-
-        private void FPreview_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            fPreview = new Form_preview();
         }
 
         private void SetChangedStatus(bool changed)
@@ -137,7 +127,10 @@ namespace BooruDatasetTagManager
                     dataGridView1.Rows.Add(item);
                 if (isShowPreview)
                 {
-                    fPreview.pictureBox1.Image = Program.DataManager.DataSet[listView1.SelectedItems[0].Name].Img;
+                    ReinitPreviewIfDisposed();
+                    if (fPreview.pictureBox1.Image != null)
+                        fPreview.pictureBox1.Image.Dispose();
+                    fPreview.pictureBox1.Image = Image.FromFile(Program.DataManager.DataSet[listView1.SelectedItems[0].Name].ImageFilePath);
                     fPreview.Show();
                 }
                 if (isTranslate)
@@ -145,6 +138,13 @@ namespace BooruDatasetTagManager
                 SetChangedStatus(false);
             }
         }
+
+        private void ReinitPreviewIfDisposed()
+        {
+            if (fPreview == null || fPreview.IsDisposed)
+                fPreview = new Form_preview();
+        }
+
 
         private Rectangle dragBoxFromMouseDown;
         private int rowIndexFromMouseDown;
@@ -463,11 +463,16 @@ namespace BooruDatasetTagManager
             }
             isShowPreview = !isShowPreview;
             showPreviewToolStripMenuItem.Checked = isShowPreview;
+            ReinitPreviewIfDisposed();
             if (isShowPreview)
             {
                 if (listView1.SelectedItems.Count > 0)
-                    fPreview.pictureBox1.Image = Program.DataManager.DataSet[listView1.SelectedItems[0].Name].Img;
-                fPreview.Show();
+                {
+                    if (fPreview.pictureBox1.Image != null)
+                        fPreview.pictureBox1.Image.Dispose();
+                    fPreview.pictureBox1.Image = Image.FromFile(Program.DataManager.DataSet[listView1.SelectedItems[0].Name].ImageFilePath);
+                    fPreview.Show();
+                }
             }
             else
             {

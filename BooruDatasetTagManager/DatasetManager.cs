@@ -288,6 +288,7 @@ namespace BooruDatasetTagManager
             public Image Img { get; set; }
             public List<string> Tags { get; set; }
             public string TextFilePath { get; set; }
+            public string ImageFilePath { get; set; }
 
             public float Loss { get; set; }
             public float LastLoss { get; set; }
@@ -302,6 +303,7 @@ namespace BooruDatasetTagManager
             public DataItem(string imagePath)
             {
                 Tags = new List<string>();
+                ImageFilePath = imagePath;
                 Name = Path.GetFileNameWithoutExtension(imagePath);
                 TextFilePath = Path.Combine(Path.GetDirectoryName(imagePath), Name + ".txt");
                 GetTagsFromFile();
