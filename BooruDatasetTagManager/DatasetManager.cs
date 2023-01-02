@@ -38,37 +38,20 @@ namespace BooruDatasetTagManager
 
         public void UpdateData()
         {
-            if (DataSet.Count == 0)
-                return;
-            AllTags.Clear();
-            CommonTags.Clear();
-            bool isFirst = true;
-            foreach (var item in DataSet)
-            {
-                if (isFirst)
-                {
-                    CommonTags.AddRange(item.Value.Tags);
-                }
-                foreach (var tag in item.Value.Tags)
-                {
-                    if (!AllTags.Exists(a=>a.Tag.ToLower() == tag.ToLower()))
-                    {
-                        AllTags.Add(new TagValue(tag));
-                    }
-                }
-                if (!isFirst)
-                {
-                    var delTags = GetTagsForDel(CommonTags, item.Value.Tags);
-                    foreach (var delTag in delTags)
-                    {
-                        CommonTags.Remove(delTag);
-                    }
-                }
-                else
-                    isFirst = false;
-            }
-            AllTags.Sort((a, b) => a.Tag.CompareTo(b.Tag));
-            CommonTags.Sort((a, b) => a.Tag.CompareTo(b.Tag));
+            AllTags = DataSet
+                .SelectMany(x => x.Value.Tags)
+                .Distinct()
+                .OrderBy(x => x)
+                .Select(x => new TagValue(x))
+                .ToList();
+            CommonTags = DataSet
+                .Skip(1).Aggregate(
+                    new HashSet<string>(DataSet.First().Value.Tags),
+                    (h, e) => { h.IntersectWith(e.Value.Tags); return h; }
+                )
+                .OrderBy(x => x)
+                .Select(x => new TagValue(x))
+                .ToList();
         }
 
         public void AddTagToAll(string tag, AddingType addType, int pos=-1)
