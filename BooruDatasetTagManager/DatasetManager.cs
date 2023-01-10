@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -15,11 +16,11 @@ namespace BooruDatasetTagManager
     public class DatasetManager
     {
         public ConcurrentDictionary<string, DataItem> DataSet;
-
         public ImageList Images;
-
         public List<TagValue> AllTags;
         public List<TagValue> CommonTags;
+
+        private int originalHash;
         public DatasetManager()
         {
             DataSet = new ConcurrentDictionary<string, DataItem>();
@@ -31,7 +32,6 @@ namespace BooruDatasetTagManager
         {
             foreach (var item in DataSet)
             {
-
                 File.WriteAllText(item.Value.TextFilePath, string.Join(", ", item.Value.Tags));
             }
         }
@@ -181,6 +181,7 @@ namespace BooruDatasetTagManager
                 DataSet.TryAdd(dt.Name, dt);
             });
             Images = GetImageList(130, 130);
+            UpdateDatasetHash();
         }
 
         private ImageList GetImageList(int w, int h)
@@ -200,7 +201,15 @@ namespace BooruDatasetTagManager
             Images = GetImageList(w, h);
         }
 
+        public bool IsDataSetChanged()
+        {
+            return !originalHash.Equals(GetHashCode());
+        }
 
+        public void UpdateDatasetHash()
+        {
+            originalHash = GetHashCode();
+        }
 
         public void LoadLossFromFile(string fPath)
         {
@@ -253,6 +262,17 @@ namespace BooruDatasetTagManager
                 else
                     continue;
             }
+        }
+
+        public override int GetHashCode()
+        {
+            int result = 0;
+            unchecked
+            {
+                foreach (var item in DataSet)
+                    result = result * 31 + item.Value.GetHashCode();
+            }
+            return result;
         }
 
 
@@ -326,6 +346,16 @@ namespace BooruDatasetTagManager
                     Tags = new List<string>();
                 }
 
+            }
+
+            public override string ToString()
+            {
+                return String.Join(", ", Tags);
+            }
+
+            public override int GetHashCode()
+            {
+                return ToString().GetHashCode();
             }
         }
     }

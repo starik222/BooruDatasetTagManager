@@ -145,7 +145,6 @@ namespace BooruDatasetTagManager
                 fPreview = new Form_preview();
         }
 
-
         private Rectangle dragBoxFromMouseDown;
         private int rowIndexFromMouseDown;
         private int rowIndexOfItemUnderMouseToDrop;
@@ -450,6 +449,7 @@ namespace BooruDatasetTagManager
                 return;
             }
             Program.DataManager.SaveAll();
+            Program.DataManager.UpdateDatasetHash();
             SetStatus("Saved!");
             MessageBox.Show("Saved!");
         }
@@ -701,6 +701,20 @@ namespace BooruDatasetTagManager
             }
             Program.DataManager.UpdateData();
             BindTagList();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (Program.DataManager.IsDataSetChanged())
+            {
+                DialogResult result = MessageBox.Show("The dataset has been changed,\ndo you want to save the changes?", "Saving changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    Program.DataManager.SaveAll();
+                }
+                else if (result == DialogResult.Cancel)
+                    e.Cancel = true;
+            }
         }
     }
 }
