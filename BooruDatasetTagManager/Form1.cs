@@ -705,7 +705,7 @@ namespace BooruDatasetTagManager
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (Program.DataManager.IsDataSetChanged())
+            if (Program.DataManager!=null && Program.DataManager.IsDataSetChanged())
             {
                 DialogResult result = MessageBox.Show("The dataset has been changed,\ndo you want to save the changes?", "Saving changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
