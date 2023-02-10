@@ -71,6 +71,7 @@
     <Compile Include="AppSettings.cs" />
     <Compile Include="DatasetManager.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="FileNamesComparer.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -204,6 +205,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SetToAll.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ORIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ANDIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AddSelToTags.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DelSelFromTags.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AddToFiltered.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DelFromFiltered.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

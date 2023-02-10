@@ -73,6 +73,36 @@ namespace BooruDatasetTagManager.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap AddSelToTags {
+            get {
+                object obj = ResourceManager.GetObject("AddSelToTags", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap AddToFiltered {
+            get {
+                object obj = ResourceManager.GetObject("AddToFiltered", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ANDIcon {
+            get {
+                object obj = ResourceManager.GetObject("ANDIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Apply {
             get {
                 object obj = ResourceManager.GetObject("Apply", resourceCulture);
@@ -113,6 +143,26 @@ namespace BooruDatasetTagManager.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap DelFromFiltered {
+            get {
+                object obj = ResourceManager.GetObject("DelFromFiltered", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DelSelFromTags {
+            get {
+                object obj = ResourceManager.GetObject("DelSelFromTags", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Down {
             get {
                 object obj = ResourceManager.GetObject("Down", resourceCulture);
@@ -126,6 +176,16 @@ namespace BooruDatasetTagManager.Properties {
         internal static System.Drawing.Bitmap Find {
             get {
                 object obj = ResourceManager.GetObject("Find", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ORIcon {
+            get {
+                object obj = ResourceManager.GetObject("ORIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
