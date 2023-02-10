@@ -13,7 +13,7 @@ You need a dataset like the following:
 
 In the program, select "File->Load folder" and specify the directory with the dataset.
 
-![](https://user-images.githubusercontent.com/1236582/198584302-318bb8bb-a6b5-464e-bf0f-181bbeeedd9e.jpg)
+![](https://user-images.githubusercontent.com/1236582/218164012-6b9a474c-dca6-4556-a608-ba89f132d600.jpg)
 
 In the left column, tags are edited for the selected image, in the right column, tags are edited for all images of the dataset.
 
