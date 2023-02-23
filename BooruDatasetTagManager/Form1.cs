@@ -1201,5 +1201,33 @@ namespace BooruDatasetTagManager
                 }
             }
         }
+
+        private void toolStripButton23_Click(object sender, EventArgs e)
+        {
+            string searchedTag;
+            if (gridViewDS.SelectedRows.Count == 1)
+            {
+                searchedTag = (string)gridViewTags["ImageTags", gridViewTags.CurrentCell.RowIndex].Value;
+            }
+            else if (gridViewDS.SelectedRows.Count > 1)
+            {
+                searchedTag = (string)gridViewTags.Rows[gridViewTags.CurrentCell.RowIndex].Tag;
+            }
+            else
+                return;
+            searchedTag = searchedTag.Trim().ToLower();
+            for (int i = 0; i < gridViewAllTags.RowCount; i++)
+            {
+                if (((string)gridViewAllTags[0, i].Value).Trim().ToLower() == searchedTag)
+                {
+                    gridViewAllTags.ClearSelection();
+                    gridViewAllTags.Rows[i].Selected = true;
+                    if (i < gridViewAllTags.FirstDisplayedScrollingRowIndex || i > gridViewAllTags.FirstDisplayedScrollingRowIndex + gridViewAllTags.DisplayedRowCount(false))
+                    {
+                        gridViewAllTags.FirstDisplayedScrollingRowIndex = i;
+                    }
+                }
+            }
+        }
     }
 }
