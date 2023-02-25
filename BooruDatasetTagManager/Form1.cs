@@ -1215,10 +1215,9 @@ namespace BooruDatasetTagManager
             }
             else
                 return;
-            searchedTag = searchedTag.Trim().ToLower();
             for (int i = 0; i < gridViewAllTags.RowCount; i++)
             {
-                if (((string)gridViewAllTags[0, i].Value).Trim().ToLower() == searchedTag)
+                if (((string)gridViewAllTags[0, i].Value) == searchedTag)
                 {
                     gridViewAllTags.ClearSelection();
                     gridViewAllTags.Rows[i].Selected = true;
