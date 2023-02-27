@@ -12,7 +12,7 @@ namespace BooruDatasetTagManager
     {
         public string TranslationLanguage { get; set; } = "ru";
         public int PreviewSize { get; set; } = 130;
-
+        [JsonIgnore]
         public List<LanguageItem> AvaibleLanguages;
         private string settingsFile;
 
