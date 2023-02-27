@@ -20,18 +20,8 @@ namespace BooruDatasetTagManager
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             tools = new TextTool(Application.StartupPath);
-            if (!File.Exists("settings.json"))
-            {
-                Settings = new AppSettings();
-                File.WriteAllText("settings.json", JsonConvert.SerializeObject(Settings));
-            }
-            else
-            {
-                Settings = JsonConvert.DeserializeObject<AppSettings>(File.ReadAllText("settings.json"));
-            }
-
+            Settings = new AppSettings(Application.StartupPath);
             TagsList = new TagsDB();
-            
             string tagsDir = Path.Combine(Application.StartupPath, "tags");
             string tagFile = Path.Combine(tagsDir, "list.tag");
             if (File.Exists(tagFile))

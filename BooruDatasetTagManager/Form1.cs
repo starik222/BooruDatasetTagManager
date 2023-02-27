@@ -56,6 +56,7 @@ namespace BooruDatasetTagManager
         private void Form1_Load(object sender, EventArgs e)
         {
             Text += " " + Application.ProductVersion;
+            gridViewDS.RowTemplate.Height = Program.Settings.PreviewSize + 10;
         }
 
         private void SetChangedStatus(bool changed)
@@ -1010,7 +1011,7 @@ namespace BooruDatasetTagManager
                         }
                     }
                 }
-                else
+                else if (gridViewDS.SelectedRows.Count > 1)
                 {
                     if (string.IsNullOrEmpty((string)gridViewTags["Image", e.RowIndex].Value))
                     {
@@ -1227,6 +1228,16 @@ namespace BooruDatasetTagManager
                     }
                 }
             }
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form_settings settings = new Form_settings();
+            if (settings.ShowDialog() == DialogResult.OK)
+            {
+                statusLabel.Text = "Settings have been saved";
+            }
+            settings.Close();
         }
     }
 }

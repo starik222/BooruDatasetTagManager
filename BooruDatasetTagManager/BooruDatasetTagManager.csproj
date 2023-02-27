@@ -102,6 +102,12 @@
     <Compile Include="Form_replaceAll.Designer.cs">
       <DependentUpon>Form_replaceAll.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form_settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_settings.Designer.cs">
+      <DependentUpon>Form_settings.cs</DependentUpon>
+    </Compile>
     <Compile Include="OpenFolderDialog.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -121,6 +127,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form_replaceAll.resx">
       <DependentUpon>Form_replaceAll.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_settings.resx">
+      <DependentUpon>Form_settings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
