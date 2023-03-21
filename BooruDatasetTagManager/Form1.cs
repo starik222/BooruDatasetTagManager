@@ -823,12 +823,16 @@ namespace BooruDatasetTagManager
         {
             if (gridViewTags.CurrentCell.ColumnIndex == 0)
             {
-                TextBox autoText = e.Control as TextBox;
+                AutoCompleteTextBox autoText = e.Control as AutoCompleteTextBox;
                 if (autoText != null)
                 {
-                    autoText.AutoCompleteMode = AutoCompleteMode.Suggest;
-                    autoText.AutoCompleteSource = AutoCompleteSource.CustomSource;
-                    autoText.AutoCompleteCustomSource = Program.TagsList.Tags;
+                    //autoText.SetParent(gridViewTags);
+                    autoText.Values = Program.TagsList.tagList;
+                    //autoText.Location = new Point(10, 10);
+                    //autoText.Size = new Size(25, 75);
+                    //autoText.AutoCompleteMode = AutoCompleteMode.Suggest;
+                    //autoText.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                    //autoText.AutoCompleteCustomSource = Program.TagsList.Tags;
                 }
             }
         }
@@ -1238,6 +1242,11 @@ namespace BooruDatasetTagManager
                 statusLabel.Text = "Settings have been saved";
             }
             settings.Close();
+        }
+
+        private void gridViewTags_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
         }
     }
 }

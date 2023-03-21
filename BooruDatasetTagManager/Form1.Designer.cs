@@ -32,7 +32,7 @@ namespace BooruDatasetTagManager
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.gridViewTags = new System.Windows.Forms.DataGridView();
-            this.ImageTags = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ImageTags = new BooruDatasetTagManager.CustomTextBoxColumn();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
@@ -55,6 +55,7 @@ namespace BooruDatasetTagManager
             this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAllChangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadLossFromFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showPreviewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.translateTagsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,7 +83,7 @@ namespace BooruDatasetTagManager
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.gridViewDS = new System.Windows.Forms.DataGridView();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.customTextBoxColumn1 = new BooruDatasetTagManager.CustomTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewTags)).BeginInit();
             this.toolStrip2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -143,6 +144,8 @@ namespace BooruDatasetTagManager
             this.ImageTags.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.ImageTags.HeaderText = "Tags";
             this.ImageTags.Name = "ImageTags";
+            this.ImageTags.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ImageTags.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // toolStrip2
             // 
@@ -338,23 +341,30 @@ namespace BooruDatasetTagManager
             // openFolderToolStripMenuItem
             // 
             this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
-            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.openFolderToolStripMenuItem.Text = "Load folder...";
             this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.openFolderToolStripMenuItem_Click);
             // 
             // saveAllChangesToolStripMenuItem
             // 
             this.saveAllChangesToolStripMenuItem.Name = "saveAllChangesToolStripMenuItem";
-            this.saveAllChangesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveAllChangesToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.saveAllChangesToolStripMenuItem.Text = "Save all changes";
             this.saveAllChangesToolStripMenuItem.Click += new System.EventHandler(this.saveAllChangesToolStripMenuItem_Click);
             // 
             // loadLossFromFileToolStripMenuItem
             // 
             this.loadLossFromFileToolStripMenuItem.Name = "loadLossFromFileToolStripMenuItem";
-            this.loadLossFromFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadLossFromFileToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.loadLossFromFileToolStripMenuItem.Text = "Load loss from file";
             this.loadLossFromFileToolStripMenuItem.Click += new System.EventHandler(this.loadLossFromFileToolStripMenuItem_Click);
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.settingsToolStripMenuItem.Text = "Settings...";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -665,12 +675,13 @@ namespace BooruDatasetTagManager
             this.gridViewDS.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridViewDS_ColumnHeaderMouseClick);
             this.gridViewDS.SelectionChanged += new System.EventHandler(this.dataGridView3_SelectionChanged);
             // 
-            // settingsToolStripMenuItem
+            // customTextBoxColumn1
             // 
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.settingsToolStripMenuItem.Text = "Settings...";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            this.customTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.customTextBoxColumn1.HeaderText = "Tags";
+            this.customTextBoxColumn1.Name = "customTextBoxColumn1";
+            this.customTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.customTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // Form1
             // 
@@ -726,7 +737,6 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ImageTags;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showPreviewToolStripMenuItem;
         private System.Windows.Forms.DataGridView gridViewAllTags;
@@ -764,6 +774,8 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripButton toolStripButton23;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private CustomTextBoxColumn ImageTags;
+        private CustomTextBoxColumn customTextBoxColumn1;
     }
 }
 

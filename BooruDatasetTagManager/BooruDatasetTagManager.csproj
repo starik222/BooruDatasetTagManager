@@ -69,6 +69,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppSettings.cs" />
+    <Compile Include="AutoCompleteTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomTextBoxColumn.cs" />
     <Compile Include="DatasetManager.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="FileNamesComparer.cs" />

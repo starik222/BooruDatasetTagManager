@@ -11,6 +11,7 @@ namespace BooruDatasetTagManager
     public class TagsDB
     {
         public AutoCompleteStringCollection Tags;
+        public string[] tagList;
 
         public TagsDB()
         {
@@ -41,6 +42,7 @@ namespace BooruDatasetTagManager
             if (!append)
                 Tags.Clear();
             Tags.AddRange(lines);
+            tagList = lines;
         }
 
         public void SaveTags(string fPath)
