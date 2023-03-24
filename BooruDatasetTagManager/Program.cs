@@ -19,31 +19,50 @@ namespace BooruDatasetTagManager
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
             tools = new TextTool(Application.StartupPath);
             Settings = new AppSettings(Application.StartupPath);
-            TagsList = new TagsDB();
-            string tagsDir = Path.Combine(Application.StartupPath, "tags");
-            string tagFile = Path.Combine(tagsDir, "list.tag");
-            if (File.Exists(tagFile))
+            #region waitForm
+            Form f_wait = new Form();
+            f_wait.Width = 300;
+            f_wait.Height = 100;
+            f_wait.FormBorderStyle = FormBorderStyle.FixedDialog;
+            f_wait.ControlBox = false;
+            f_wait.StartPosition = FormStartPosition.CenterScreen;
+            Label mes = new Label();
+            mes.Text = "Please wait while the tags are loading.\nWhen changing csv or txt files,\nthe initial loading of tags may take a long time.";
+            mes.Location = new System.Drawing.Point(10, 10);
+            mes.AutoSize = true;
+            f_wait.Controls.Add(mes);
+            
+            f_wait.Shown += async (o, i) =>
             {
-                TagsList.LoadFromTagFile(tagFile, false);
-            }
-            else
-            {
-                if (Directory.Exists(tagsDir))
+                await Task.Run(() =>
                 {
-                    string[] csvFiles = Directory.GetFiles(tagsDir, "*.csv");
-                    foreach (var item in csvFiles)
+                    string tagsDir = Path.Combine(Application.StartupPath, "Tags");
+                    if(!Directory.Exists(tagsDir))
+                        Directory.CreateDirectory(tagsDir);
+                    string translationsDir = Path.Combine(Application.StartupPath, "Translations");
+                    if(!Directory.Exists(translationsDir))
+                        Directory.CreateDirectory(translationsDir);
+                    string tagFile = Path.Combine(tagsDir, "List.tdb");
+                    TagsList = TagsDB.LoadFromTagFile(tagFile);
+                    if (TagsList.IsNeedUpdate(tagsDir))
                     {
-                        TagsList.LoadFromCSVFile(item, true);
+                        TagsList.LoadCSVFromDir(tagsDir);
+                        TagsList.SaveTags(tagFile);
                     }
-                    List<string> temp = new List<string>(TagsList.Tags.Cast<string>());
-                    temp.Sort();
-                    TagsList.Tags.Clear();
-                    TagsList.Tags.AddRange(temp.ToArray());
-                    TagsList.SaveTags(tagFile);
-                }
-            }
+                    TagsList.LoadTranslation(Path.Combine(translationsDir, Settings.TranslationLanguage + ".txt"));
+                });
+                f_wait.Close();
+            };
+            f_wait.ShowDialog();
+            #endregion
+            //string tagsDir = Path.Combine(Application.StartupPath, "tags");
+            //string tagFile = Path.Combine(tagsDir, "list.tdb");
+
+
+
             Application.Run(new Form1());
         }
 

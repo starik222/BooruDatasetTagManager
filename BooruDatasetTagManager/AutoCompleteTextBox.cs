@@ -14,7 +14,7 @@ namespace BooruDatasetTagManager
         private bool _isAdded;
         private String[] _values;
         private String _formerValue = String.Empty;
-        //private Control _parent;
+        private AutocompleteMode _mode = AutocompleteMode.StartWithAndContains;
 
         public AutoCompleteTextBox()
         {
@@ -63,10 +63,10 @@ namespace BooruDatasetTagManager
             }
         }
 
-        //public void SetParent(Control parentControl)
-        //{
-        //    _parent = parentControl;
-        //}
+        public void SetAutocompleteMode(AutocompleteMode mode)
+        {
+            _mode = mode;
+        }
 
         private void ShowListBox()
         {
@@ -175,8 +175,17 @@ namespace BooruDatasetTagManager
 
             if (_values != null && word.Length > 2)
             {
-                string[] matches = Array.FindAll(_values,
-                    x => (x.ToLower().Contains(word.ToLower())));
+                string[] matches = null;
+                if (_mode == AutocompleteMode.StartWith)
+                {
+                    matches = Array.FindAll(_values, x => (x.ToLower().StartsWith(word.ToLower())));
+                }
+                else
+                {
+                    matches = Array.FindAll(_values, x => (x.ToLower().StartsWith(word.ToLower())));
+
+                }
+                //matches = Array.FindAll(_values, x => (x.ToLower().Contains(word.ToLower())));
                 if (matches.Length > 0)
                 {
                     ShowListBox();
@@ -189,7 +198,7 @@ namespace BooruDatasetTagManager
                     Focus();
 
                     int upMaxSize = Parent.Top;
-                    int downMaxSize = Parent.Parent.Height - Parent.Top + Parent.Height;
+                    int downMaxSize = Parent.Parent.Height - (Parent.Top + Parent.Height);
                     int maxSize = 0;
                     bool isDown = false;
                     if (upMaxSize > downMaxSize)
@@ -203,7 +212,7 @@ namespace BooruDatasetTagManager
                     }
                     for (int i = 0; i < _listBox.Items.Count; i++)
                     {
-                        if (i < 20 && _listBox.Height < maxSize)
+                        if (i < 20 && _listBox.Height + _listBox.GetItemHeight(i) < maxSize)
                             _listBox.Height += _listBox.GetItemHeight(i);
                         _listBox.Width = this.Width;
                     }
@@ -264,6 +273,13 @@ namespace BooruDatasetTagManager
                 String[] result = Text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 return new List<String>(result);
             }
+        }
+
+
+        public enum AutocompleteMode
+        {
+            StartWith,
+            StartWithAndContains
         }
     }
 }

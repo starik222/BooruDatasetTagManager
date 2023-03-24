@@ -49,141 +49,143 @@ namespace BooruDatasetTagManager
 
         public void InitAvaibleLangs()
         {
-            AvaibleLanguages = new List<LanguageItem>();
-            AvaibleLanguages.Add(new LanguageItem("Afrikaans", "af"));
-            AvaibleLanguages.Add(new LanguageItem("Albanian", "sq"));
-            AvaibleLanguages.Add(new LanguageItem("Amharic", "am"));
-            AvaibleLanguages.Add(new LanguageItem("Arabic", "ar"));
-            AvaibleLanguages.Add(new LanguageItem("Armenian", "hy"));
-            AvaibleLanguages.Add(new LanguageItem("Assamese", "as"));
-            AvaibleLanguages.Add(new LanguageItem("Aymara", "ay"));
-            AvaibleLanguages.Add(new LanguageItem("Azerbaijani", "az"));
-            AvaibleLanguages.Add(new LanguageItem("Bambara", "bm"));
-            AvaibleLanguages.Add(new LanguageItem("Basque", "eu"));
-            AvaibleLanguages.Add(new LanguageItem("Belarusian", "be"));
-            AvaibleLanguages.Add(new LanguageItem("Bengali", "bn"));
-            AvaibleLanguages.Add(new LanguageItem("Bhojpuri", "bho"));
-            AvaibleLanguages.Add(new LanguageItem("Bosnian", "bs"));
-            AvaibleLanguages.Add(new LanguageItem("Bulgarian", "bg"));
-            AvaibleLanguages.Add(new LanguageItem("Catalan", "ca"));
-            AvaibleLanguages.Add(new LanguageItem("Cebuano", "ceb"));
-            AvaibleLanguages.Add(new LanguageItem("Chinese (Simplified)", "zh-CN"));
-            AvaibleLanguages.Add(new LanguageItem("Chinese (Traditional)", "zh-TW"));
-            AvaibleLanguages.Add(new LanguageItem("Corsican", "co"));
-            AvaibleLanguages.Add(new LanguageItem("Croatian", "hr"));
-            AvaibleLanguages.Add(new LanguageItem("Czech", "cs"));
-            AvaibleLanguages.Add(new LanguageItem("Danish", "da"));
-            AvaibleLanguages.Add(new LanguageItem("Dhivehi", "dv"));
-            AvaibleLanguages.Add(new LanguageItem("Dogri", "doi"));
-            AvaibleLanguages.Add(new LanguageItem("Dutch", "nl"));
-            AvaibleLanguages.Add(new LanguageItem("English", "en"));
-            AvaibleLanguages.Add(new LanguageItem("Esperanto", "eo"));
-            AvaibleLanguages.Add(new LanguageItem("Estonian", "et"));
-            AvaibleLanguages.Add(new LanguageItem("Ewe", "ee"));
-            AvaibleLanguages.Add(new LanguageItem("Filipino (Tagalog)", "fil"));
-            AvaibleLanguages.Add(new LanguageItem("Finnish", "fi"));
-            AvaibleLanguages.Add(new LanguageItem("French", "fr"));
-            AvaibleLanguages.Add(new LanguageItem("Frisian", "fy"));
-            AvaibleLanguages.Add(new LanguageItem("Galician", "gl"));
-            AvaibleLanguages.Add(new LanguageItem("Georgian", "ka"));
-            AvaibleLanguages.Add(new LanguageItem("German", "de"));
-            AvaibleLanguages.Add(new LanguageItem("Greek", "el"));
-            AvaibleLanguages.Add(new LanguageItem("Guarani", "gn"));
-            AvaibleLanguages.Add(new LanguageItem("Gujarati", "gu"));
-            AvaibleLanguages.Add(new LanguageItem("Haitian Creole", "ht"));
-            AvaibleLanguages.Add(new LanguageItem("Hausa", "ha"));
-            AvaibleLanguages.Add(new LanguageItem("Hawaiian", "haw"));
-            AvaibleLanguages.Add(new LanguageItem("Hebrew", "he"));
-            AvaibleLanguages.Add(new LanguageItem("Hindi", "hi"));
-            AvaibleLanguages.Add(new LanguageItem("Hmong", "hmn"));
-            AvaibleLanguages.Add(new LanguageItem("Hungarian", "hu"));
-            AvaibleLanguages.Add(new LanguageItem("Icelandic", "is"));
-            AvaibleLanguages.Add(new LanguageItem("Igbo", "ig"));
-            AvaibleLanguages.Add(new LanguageItem("Ilocano", "ilo"));
-            AvaibleLanguages.Add(new LanguageItem("Indonesian", "id"));
-            AvaibleLanguages.Add(new LanguageItem("Irish", "ga"));
-            AvaibleLanguages.Add(new LanguageItem("Italian", "it"));
-            AvaibleLanguages.Add(new LanguageItem("Japanese", "ja"));
-            AvaibleLanguages.Add(new LanguageItem("Javanese", "jv"));
-            AvaibleLanguages.Add(new LanguageItem("Kannada", "kn"));
-            AvaibleLanguages.Add(new LanguageItem("Kazakh", "kk"));
-            AvaibleLanguages.Add(new LanguageItem("Khmer", "km"));
-            AvaibleLanguages.Add(new LanguageItem("Kinyarwanda", "rw"));
-            AvaibleLanguages.Add(new LanguageItem("Konkani", "gom"));
-            AvaibleLanguages.Add(new LanguageItem("Korean", "ko"));
-            AvaibleLanguages.Add(new LanguageItem("Krio", "kri"));
-            AvaibleLanguages.Add(new LanguageItem("Kurdish", "ku"));
-            AvaibleLanguages.Add(new LanguageItem("Kurdish (Sorani)", "ckb"));
-            AvaibleLanguages.Add(new LanguageItem("Kyrgyz", "ky"));
-            AvaibleLanguages.Add(new LanguageItem("Lao", "lo"));
-            AvaibleLanguages.Add(new LanguageItem("Latin", "la"));
-            AvaibleLanguages.Add(new LanguageItem("Latvian", "lv"));
-            AvaibleLanguages.Add(new LanguageItem("Lingala", "ln"));
-            AvaibleLanguages.Add(new LanguageItem("Lithuanian", "lt"));
-            AvaibleLanguages.Add(new LanguageItem("Luganda", "lg"));
-            AvaibleLanguages.Add(new LanguageItem("Luxembourgish", "lb"));
-            AvaibleLanguages.Add(new LanguageItem("Macedonian", "mk"));
-            AvaibleLanguages.Add(new LanguageItem("Maithili", "mai"));
-            AvaibleLanguages.Add(new LanguageItem("Malagasy", "mg"));
-            AvaibleLanguages.Add(new LanguageItem("Malay", "ms"));
-            AvaibleLanguages.Add(new LanguageItem("Malayalam", "ml"));
-            AvaibleLanguages.Add(new LanguageItem("Maltese", "mt"));
-            AvaibleLanguages.Add(new LanguageItem("Maori", "mi"));
-            AvaibleLanguages.Add(new LanguageItem("Marathi", "mr"));
-            AvaibleLanguages.Add(new LanguageItem("Meiteilon (Manipuri)", "mni-Mtei"));
-            AvaibleLanguages.Add(new LanguageItem("Mizo", "lus"));
-            AvaibleLanguages.Add(new LanguageItem("Mongolian", "mn"));
-            AvaibleLanguages.Add(new LanguageItem("Myanmar (Burmese)", "my"));
-            AvaibleLanguages.Add(new LanguageItem("Nepali", "ne"));
-            AvaibleLanguages.Add(new LanguageItem("Norwegian", "no"));
-            AvaibleLanguages.Add(new LanguageItem("Nyanja (Chichewa)", "ny"));
-            AvaibleLanguages.Add(new LanguageItem("Odia (Oriya)", "or"));
-            AvaibleLanguages.Add(new LanguageItem("Oromo", "om"));
-            AvaibleLanguages.Add(new LanguageItem("Pashto", "ps"));
-            AvaibleLanguages.Add(new LanguageItem("Persian", "fa"));
-            AvaibleLanguages.Add(new LanguageItem("Polish", "pl"));
-            AvaibleLanguages.Add(new LanguageItem("Portuguese (Portugal, Brazil)", "pt"));
-            AvaibleLanguages.Add(new LanguageItem("Punjabi", "pa"));
-            AvaibleLanguages.Add(new LanguageItem("Quechua", "qu"));
-            AvaibleLanguages.Add(new LanguageItem("Romanian", "ro"));
-            AvaibleLanguages.Add(new LanguageItem("Russian", "ru"));
-            AvaibleLanguages.Add(new LanguageItem("Samoan", "sm"));
-            AvaibleLanguages.Add(new LanguageItem("Sanskrit", "sa"));
-            AvaibleLanguages.Add(new LanguageItem("Scots Gaelic", "gd"));
-            AvaibleLanguages.Add(new LanguageItem("Sepedi", "nso"));
-            AvaibleLanguages.Add(new LanguageItem("Serbian", "sr"));
-            AvaibleLanguages.Add(new LanguageItem("Sesotho", "st"));
-            AvaibleLanguages.Add(new LanguageItem("Shona", "sn"));
-            AvaibleLanguages.Add(new LanguageItem("Sindhi", "sd"));
-            AvaibleLanguages.Add(new LanguageItem("Sinhala (Sinhalese)", "si"));
-            AvaibleLanguages.Add(new LanguageItem("Slovak", "sk"));
-            AvaibleLanguages.Add(new LanguageItem("Slovenian", "sl"));
-            AvaibleLanguages.Add(new LanguageItem("Somali", "so"));
-            AvaibleLanguages.Add(new LanguageItem("Spanish", "es"));
-            AvaibleLanguages.Add(new LanguageItem("Sundanese", "su"));
-            AvaibleLanguages.Add(new LanguageItem("Swahili", "sw"));
-            AvaibleLanguages.Add(new LanguageItem("Swedish", "sv"));
-            AvaibleLanguages.Add(new LanguageItem("Tagalog (Filipino)", "tl"));
-            AvaibleLanguages.Add(new LanguageItem("Tajik", "tg"));
-            AvaibleLanguages.Add(new LanguageItem("Tamil", "ta"));
-            AvaibleLanguages.Add(new LanguageItem("Tatar", "tt"));
-            AvaibleLanguages.Add(new LanguageItem("Telugu", "te"));
-            AvaibleLanguages.Add(new LanguageItem("Thai", "th"));
-            AvaibleLanguages.Add(new LanguageItem("Tigrinya", "ti"));
-            AvaibleLanguages.Add(new LanguageItem("Tsonga", "ts"));
-            AvaibleLanguages.Add(new LanguageItem("Turkish", "tr"));
-            AvaibleLanguages.Add(new LanguageItem("Turkmen", "tk"));
-            AvaibleLanguages.Add(new LanguageItem("Twi (Akan)", "ak"));
-            AvaibleLanguages.Add(new LanguageItem("Ukrainian", "uk"));
-            AvaibleLanguages.Add(new LanguageItem("Urdu", "ur"));
-            AvaibleLanguages.Add(new LanguageItem("Uyghur", "ug"));
-            AvaibleLanguages.Add(new LanguageItem("Uzbek", "uz"));
-            AvaibleLanguages.Add(new LanguageItem("Vietnamese", "vi"));
-            AvaibleLanguages.Add(new LanguageItem("Welsh", "cy"));
-            AvaibleLanguages.Add(new LanguageItem("Xhosa", "xh"));
-            AvaibleLanguages.Add(new LanguageItem("Yiddish", "yi"));
-            AvaibleLanguages.Add(new LanguageItem("Yoruba", "yo"));
-            AvaibleLanguages.Add(new LanguageItem("Zulu", "zu"));
+            AvaibleLanguages = new List<LanguageItem>
+            {
+                new LanguageItem("Afrikaans", "af"),
+                new LanguageItem("Albanian", "sq"),
+                new LanguageItem("Amharic", "am"),
+                new LanguageItem("Arabic", "ar"),
+                new LanguageItem("Armenian", "hy"),
+                new LanguageItem("Assamese", "as"),
+                new LanguageItem("Aymara", "ay"),
+                new LanguageItem("Azerbaijani", "az"),
+                new LanguageItem("Bambara", "bm"),
+                new LanguageItem("Basque", "eu"),
+                new LanguageItem("Belarusian", "be"),
+                new LanguageItem("Bengali", "bn"),
+                new LanguageItem("Bhojpuri", "bho"),
+                new LanguageItem("Bosnian", "bs"),
+                new LanguageItem("Bulgarian", "bg"),
+                new LanguageItem("Catalan", "ca"),
+                new LanguageItem("Cebuano", "ceb"),
+                new LanguageItem("Chinese (Simplified)", "zh-CN"),
+                new LanguageItem("Chinese (Traditional)", "zh-TW"),
+                new LanguageItem("Corsican", "co"),
+                new LanguageItem("Croatian", "hr"),
+                new LanguageItem("Czech", "cs"),
+                new LanguageItem("Danish", "da"),
+                new LanguageItem("Dhivehi", "dv"),
+                new LanguageItem("Dogri", "doi"),
+                new LanguageItem("Dutch", "nl"),
+                new LanguageItem("English", "en"),
+                new LanguageItem("Esperanto", "eo"),
+                new LanguageItem("Estonian", "et"),
+                new LanguageItem("Ewe", "ee"),
+                new LanguageItem("Filipino (Tagalog)", "fil"),
+                new LanguageItem("Finnish", "fi"),
+                new LanguageItem("French", "fr"),
+                new LanguageItem("Frisian", "fy"),
+                new LanguageItem("Galician", "gl"),
+                new LanguageItem("Georgian", "ka"),
+                new LanguageItem("German", "de"),
+                new LanguageItem("Greek", "el"),
+                new LanguageItem("Guarani", "gn"),
+                new LanguageItem("Gujarati", "gu"),
+                new LanguageItem("Haitian Creole", "ht"),
+                new LanguageItem("Hausa", "ha"),
+                new LanguageItem("Hawaiian", "haw"),
+                new LanguageItem("Hebrew", "he"),
+                new LanguageItem("Hindi", "hi"),
+                new LanguageItem("Hmong", "hmn"),
+                new LanguageItem("Hungarian", "hu"),
+                new LanguageItem("Icelandic", "is"),
+                new LanguageItem("Igbo", "ig"),
+                new LanguageItem("Ilocano", "ilo"),
+                new LanguageItem("Indonesian", "id"),
+                new LanguageItem("Irish", "ga"),
+                new LanguageItem("Italian", "it"),
+                new LanguageItem("Japanese", "ja"),
+                new LanguageItem("Javanese", "jv"),
+                new LanguageItem("Kannada", "kn"),
+                new LanguageItem("Kazakh", "kk"),
+                new LanguageItem("Khmer", "km"),
+                new LanguageItem("Kinyarwanda", "rw"),
+                new LanguageItem("Konkani", "gom"),
+                new LanguageItem("Korean", "ko"),
+                new LanguageItem("Krio", "kri"),
+                new LanguageItem("Kurdish", "ku"),
+                new LanguageItem("Kurdish (Sorani)", "ckb"),
+                new LanguageItem("Kyrgyz", "ky"),
+                new LanguageItem("Lao", "lo"),
+                new LanguageItem("Latin", "la"),
+                new LanguageItem("Latvian", "lv"),
+                new LanguageItem("Lingala", "ln"),
+                new LanguageItem("Lithuanian", "lt"),
+                new LanguageItem("Luganda", "lg"),
+                new LanguageItem("Luxembourgish", "lb"),
+                new LanguageItem("Macedonian", "mk"),
+                new LanguageItem("Maithili", "mai"),
+                new LanguageItem("Malagasy", "mg"),
+                new LanguageItem("Malay", "ms"),
+                new LanguageItem("Malayalam", "ml"),
+                new LanguageItem("Maltese", "mt"),
+                new LanguageItem("Maori", "mi"),
+                new LanguageItem("Marathi", "mr"),
+                new LanguageItem("Meiteilon (Manipuri)", "mni-Mtei"),
+                new LanguageItem("Mizo", "lus"),
+                new LanguageItem("Mongolian", "mn"),
+                new LanguageItem("Myanmar (Burmese)", "my"),
+                new LanguageItem("Nepali", "ne"),
+                new LanguageItem("Norwegian", "no"),
+                new LanguageItem("Nyanja (Chichewa)", "ny"),
+                new LanguageItem("Odia (Oriya)", "or"),
+                new LanguageItem("Oromo", "om"),
+                new LanguageItem("Pashto", "ps"),
+                new LanguageItem("Persian", "fa"),
+                new LanguageItem("Polish", "pl"),
+                new LanguageItem("Portuguese (Portugal, Brazil)", "pt"),
+                new LanguageItem("Punjabi", "pa"),
+                new LanguageItem("Quechua", "qu"),
+                new LanguageItem("Romanian", "ro"),
+                new LanguageItem("Russian", "ru"),
+                new LanguageItem("Samoan", "sm"),
+                new LanguageItem("Sanskrit", "sa"),
+                new LanguageItem("Scots Gaelic", "gd"),
+                new LanguageItem("Sepedi", "nso"),
+                new LanguageItem("Serbian", "sr"),
+                new LanguageItem("Sesotho", "st"),
+                new LanguageItem("Shona", "sn"),
+                new LanguageItem("Sindhi", "sd"),
+                new LanguageItem("Sinhala (Sinhalese)", "si"),
+                new LanguageItem("Slovak", "sk"),
+                new LanguageItem("Slovenian", "sl"),
+                new LanguageItem("Somali", "so"),
+                new LanguageItem("Spanish", "es"),
+                new LanguageItem("Sundanese", "su"),
+                new LanguageItem("Swahili", "sw"),
+                new LanguageItem("Swedish", "sv"),
+                new LanguageItem("Tagalog (Filipino)", "tl"),
+                new LanguageItem("Tajik", "tg"),
+                new LanguageItem("Tamil", "ta"),
+                new LanguageItem("Tatar", "tt"),
+                new LanguageItem("Telugu", "te"),
+                new LanguageItem("Thai", "th"),
+                new LanguageItem("Tigrinya", "ti"),
+                new LanguageItem("Tsonga", "ts"),
+                new LanguageItem("Turkish", "tr"),
+                new LanguageItem("Turkmen", "tk"),
+                new LanguageItem("Twi (Akan)", "ak"),
+                new LanguageItem("Ukrainian", "uk"),
+                new LanguageItem("Urdu", "ur"),
+                new LanguageItem("Uyghur", "ug"),
+                new LanguageItem("Uzbek", "uz"),
+                new LanguageItem("Vietnamese", "vi"),
+                new LanguageItem("Welsh", "cy"),
+                new LanguageItem("Xhosa", "xh"),
+                new LanguageItem("Yiddish", "yi"),
+                new LanguageItem("Yoruba", "yo"),
+                new LanguageItem("Zulu", "zu")
+            };
         }
     }
 

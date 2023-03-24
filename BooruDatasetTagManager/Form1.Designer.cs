@@ -662,14 +662,14 @@ namespace BooruDatasetTagManager
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gridViewDS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridViewDS.Location = new System.Drawing.Point(6, 25);
+            this.gridViewDS.Location = new System.Drawing.Point(6, 19);
             this.gridViewDS.Name = "gridViewDS";
             this.gridViewDS.ReadOnly = true;
             this.gridViewDS.RowTemplate.Height = 140;
             this.gridViewDS.RowTemplate.ReadOnly = true;
             this.gridViewDS.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.gridViewDS.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridViewDS.Size = new System.Drawing.Size(201, 443);
+            this.gridViewDS.Size = new System.Drawing.Size(201, 460);
             this.gridViewDS.TabIndex = 6;
             this.gridViewDS.DataSourceChanged += new System.EventHandler(this.dataGridView3_DataSourceChanged);
             this.gridViewDS.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridViewDS_ColumnHeaderMouseClick);

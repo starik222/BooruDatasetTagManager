@@ -827,7 +827,7 @@ namespace BooruDatasetTagManager
                 if (autoText != null)
                 {
                     //autoText.SetParent(gridViewTags);
-                    autoText.Values = Program.TagsList.tagList;
+                    //autoText.Values = Program.TagsList.tagList;
                     //autoText.Location = new Point(10, 10);
                     //autoText.Size = new Size(25, 75);
                     //autoText.AutoCompleteMode = AutoCompleteMode.Suggest;
@@ -1242,11 +1242,6 @@ namespace BooruDatasetTagManager
                 statusLabel.Text = "Settings have been saved";
             }
             settings.Close();
-        }
-
-        private void gridViewTags_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
         }
     }
 }
