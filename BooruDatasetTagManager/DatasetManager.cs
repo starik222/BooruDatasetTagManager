@@ -66,6 +66,11 @@ namespace BooruDatasetTagManager
                 .ToList();
         }
 
+        public bool Remove(string name)
+        {
+            return DataSet.TryRemove(name, out _);
+        }
+
         private IEnumerable<DataItem> GetEnumerator(bool useFilter)
         {
             IEnumerable<DataItem> lst = null;
@@ -269,7 +274,7 @@ namespace BooruDatasetTagManager
             imgs.AsParallel().ForAll(x =>
             {
                 var dt = new DataItem(x, imgSize);
-                DataSet.TryAdd(dt.Name, dt);
+                DataSet.TryAdd(dt.ImageFilePath, dt);
             });
             UpdateDatasetHash();
             IsLossLoaded = false;
@@ -303,49 +308,38 @@ namespace BooruDatasetTagManager
             string lossPattern = "loss:([0-9]*[.]?[0-9]+)±";
             string lastlossPrefix = "recent";
             string lastLossPattern = "recent \\d+ loss:([0-9]*[.]?[0-9]+)±";
-
-            string[] lines = File.ReadAllLines(fPath);
-            for (int i = 0; i+2 < lines.Length; i++)
+            try
             {
-                if (lines[i].StartsWith(lossStatPrefix))
+                string[] lines = File.ReadAllLines(fPath);
+                for (int i = 0; i + 2 < lines.Length; i++)
                 {
-                    string fName = Path.GetFileNameWithoutExtension(lines[i].Replace(lossStatPrefix, ""));
-                    if (lines[i + 1].StartsWith(lossPrefix))
-                    {
-                        var m1 = Regex.Match(lines[i + 1], lossPattern, RegexOptions.IgnoreCase);
-                        if (m1.Success)
-                        {
-                            float loss = (float)Convert.ToDouble(m1.Groups[1].Value.Replace('.', ','));
-
-                            if (lines[i + 2].StartsWith(lastlossPrefix))
-                            {
-                                var m2 = Regex.Match(lines[i + 2], lastLossPattern, RegexOptions.IgnoreCase);
-                                if (m2.Success)
-                                {
-                                    float lastLoss = (float)Convert.ToDouble(m2.Groups[1].Value.Replace('.', ','));
-                                    if (DataSet.ContainsKey(fName))
-                                    {
-                                        DataSet[fName].Loss = loss;
-                                        DataSet[fName].LastLoss = lastLoss;
-                                        i += 2;
-                                    }
-                                    else
-                                        continue;
-                                }
-                                else
-                                    continue;
-                            }
-                            else
-                                continue;
-                        }
-                        else
-                            continue;
-                    }
-                    else
+                    if (!lines[i].StartsWith(lossStatPrefix))
                         continue;
+                    string fName = lines[i].Replace(lossStatPrefix, "");
+                    if (!lines[i + 1].StartsWith(lossPrefix))
+                        continue;
+                    var m1 = Regex.Match(lines[i + 1], lossPattern, RegexOptions.IgnoreCase);
+                    if (!m1.Success)
+                        continue;
+                    float loss = (float)Convert.ToDouble(m1.Groups[1].Value.Replace('.', ','));
+
+                    if (!lines[i + 2].StartsWith(lastlossPrefix))
+                        continue;
+                    var m2 = Regex.Match(lines[i + 2], lastLossPattern, RegexOptions.IgnoreCase);
+                    if (!m2.Success)
+                        continue;
+                    float lastLoss = (float)Convert.ToDouble(m2.Groups[1].Value.Replace('.', ','));
+                    if (!DataSet.ContainsKey(fName))
+                        continue;
+                    DataSet[fName].Loss = loss;
+                    DataSet[fName].LastLoss = lastLoss;
+                    i += 2;
+
                 }
-                else
-                    continue;
+            }
+            catch
+            {
+
             }
             IsLossLoaded = true;
         }
@@ -387,7 +381,7 @@ namespace BooruDatasetTagManager
             public List<string> Tags { get; set; }
             [Browsable(false)]
             public string TextFilePath { get; set; }
-            [Browsable(false)]
+            //[Browsable(false)]
             public string ImageFilePath { get; set; }
 
             public float Loss { get; set; }
