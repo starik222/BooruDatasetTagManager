@@ -197,6 +197,11 @@ namespace BooruDatasetTagManager
             {
                 Aliases = new List<string>();
             }
+
+            public override string ToString()
+            {
+                return Tag;
+            }
         }
 
     }

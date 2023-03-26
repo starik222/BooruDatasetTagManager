@@ -12,7 +12,8 @@ namespace BooruDatasetTagManager
     {
         private ListBox _listBox;
         private bool _isAdded;
-        private String[] _values;
+        //private String[] _values;
+        private List<TagsDB.TagItem> _values;
         private String _formerValue = String.Empty;
         private AutocompleteMode _mode = AutocompleteMode.StartWithAndContains;
 
@@ -175,15 +176,17 @@ namespace BooruDatasetTagManager
 
             if (_values != null && word.Length > 2)
             {
-                string[] matches = null;
+                //string[] matches = null;
+                TagsDB.TagItem[] matches = null;
                 if (_mode == AutocompleteMode.StartWith)
                 {
-                    matches = Array.FindAll(_values, x => (x.ToLower().StartsWith(word.ToLower())));
+                    //matches = Array.FindAll(_values, x => (x.ToLower().StartsWith(word.ToLower())));
+                    matches = _values.Where(a => a.Tag.StartsWith(word)).ToArray();
                 }
                 else
                 {
-                    matches = Array.FindAll(_values, x => (x.ToLower().StartsWith(word.ToLower())));
-
+                    //matches = Array.FindAll(_values, x => (x.ToLower().StartsWith(word.ToLower())));
+                    matches = _values.Where(a => a.Tag.StartsWith(word)).ToArray();
                 }
                 //matches = Array.FindAll(_values, x => (x.ToLower().Contains(word.ToLower())));
                 if (matches.Length > 0)
@@ -191,7 +194,8 @@ namespace BooruDatasetTagManager
                     ShowListBox();
                     _listBox.BeginUpdate();
                     _listBox.Items.Clear();
-                    Array.ForEach(matches, x => _listBox.Items.Add(x));
+                    //Array.ForEach(matches, x => _listBox.Items.Add(x));
+                    _listBox.Items.AddRange(matches);
                     _listBox.SelectedIndex = 0;
                     _listBox.Height = 0;
                     _listBox.Width = 0;
@@ -254,7 +258,19 @@ namespace BooruDatasetTagManager
             }
         }
 
-        public String[] Values
+        //public String[] Values
+        //{
+        //    get
+        //    {
+        //        return _values;
+        //    }
+        //    set
+        //    {
+        //        _values = value;
+        //    }
+        //}
+
+        public List<TagsDB.TagItem> Values
         {
             get
             {
