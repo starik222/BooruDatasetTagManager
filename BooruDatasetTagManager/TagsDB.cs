@@ -79,33 +79,41 @@ namespace BooruDatasetTagManager
                 Match match = r.Match(item);
                 if (match.Success)
                 {
-                    TagItem tag = new TagItem();
-                    tag.Tag = match.Groups[1].Value;
-
-                    tag.Tag = tag.Tag.Replace('_', ' ');
-                    tag.Tag = tag.Tag.Replace("(", "\\(");
-                    tag.Tag = tag.Tag.Replace(")", "\\)");
-
-                    tag.Count = Convert.ToInt32(match.Groups[3].Value);
+                    string tagName = match.Groups[1].Value;
+                    tagName = tagName.Replace('_', ' ');
+                    tagName = tagName.Replace("(", "\\(");
+                    tagName = tagName.Replace(")", "\\)");
                     string[] aliases = match.Groups[4].Value.Replace("\"", "").Split(splitter, StringSplitOptions.RemoveEmptyEntries);
-                    tag.Aliases = new List<string>(aliases);
-
-                    int existTagIndex = Tags.FindIndex(a => a.Tag == tag.Tag);
-                    if (existTagIndex == -1)
-                        Tags.Add(tag);
-                    else
+                    AddTag(tagName, Convert.ToInt32(match.Groups[3].Value));
+                    foreach (var al in aliases)
                     {
-                        Tags[existTagIndex].Count += tag.Count;
-
-                        foreach (var al in tag.Aliases)
-                        {
-                            if (!Tags[existTagIndex].Aliases.Contains(al))
-                                Tags[existTagIndex].Aliases.Add(al);
-                        }
+                        AddTag(al, Convert.ToInt32(match.Groups[3].Value), true, tagName);
                     }
-
                 }
             }
+        }
+
+        private void AddTag(string tag, int count, bool isAlias = false, string parent = null)
+        {
+            if (Tags.Exists(a => a.Parent == tag))
+                return;
+            tag = tag.Trim().ToLower();
+            int existTagIndex = Tags.FindIndex(a => a.Tag == tag);
+            TagItem tagItem = null;
+            if (existTagIndex != -1)
+            {
+                tagItem = Tags[existTagIndex];
+                tagItem.Count += count;
+            }
+            else
+            {
+                tagItem = new TagItem();
+                tagItem.Tag = tag;
+                tagItem.Count = count;
+            }
+            tagItem.IsAlias = isAlias;
+            tagItem.Parent = parent;
+            Tags.Add(tagItem);
         }
 
         public bool IsNeedUpdate(string dirToCheck)
@@ -190,17 +198,31 @@ namespace BooruDatasetTagManager
         {
             public string Tag;
             public int Count;
-            public List<string> Aliases;
+            //public List<string> Aliases;
+            public bool IsAlias;
+            public string Parent;
+
             public string Translation;
 
             public TagItem()
             {
-                Aliases = new List<string>();
+                //Aliases = new List<string>();
+            }
+
+            public string GetTag()
+            {
+                if (IsAlias)
+                    return Parent;
+                else
+                    return Tag;
             }
 
             public override string ToString()
             {
-                return Tag;
+                if (IsAlias)
+                    return $"{Tag} -> {Parent}";
+                else
+                    return Tag;
             }
         }
 

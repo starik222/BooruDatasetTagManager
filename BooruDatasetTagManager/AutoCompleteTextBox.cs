@@ -36,7 +36,7 @@ namespace BooruDatasetTagManager
         {
             if (_listBox.Visible)
             {
-                Text = _listBox.SelectedItem.ToString();
+                Text = ((TagsDB.TagItem)_listBox.SelectedItem).GetTag();
                 ResetListBox();
                 _formerValue = Text;
                 //_parent.Focus();
@@ -52,7 +52,7 @@ namespace BooruDatasetTagManager
             {
                 if (_listBox.Visible)
                 {
-                    Text = _listBox.SelectedItem.ToString();
+                    Text = ((TagsDB.TagItem)_listBox.SelectedItem).GetTag();
                     ResetListBox();
                     _formerValue = Text;
                     //this.Select(this.Text.Length, 0);
@@ -125,7 +125,7 @@ namespace BooruDatasetTagManager
                     {
                         if (_listBox.Visible)
                         {
-                            Text = _listBox.SelectedItem.ToString();
+                            Text = ((TagsDB.TagItem)_listBox.SelectedItem).GetTag();
                             ResetListBox();
                             _formerValue = Text;
                             this.Select(this.Text.Length, 0);
