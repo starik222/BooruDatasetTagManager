@@ -23,6 +23,8 @@ namespace BooruDatasetTagManager
             comboBox1.DisplayMember = "Name";
             comboBox1.ValueMember = "Code";
             comboBox1.SelectedValue = Program.Settings.TranslationLanguage;
+            comboBox2.Items.AddRange(Enum.GetNames(typeof(TranslationService)));
+            comboBox2.SelectedItem = Program.Settings.TransService.ToString();
 
             numericUpDown1.Value = Program.Settings.PreviewSize;
         }
@@ -40,6 +42,7 @@ namespace BooruDatasetTagManager
                     "file\nto see the translation of strings already translated into another language.");
             }
             Program.Settings.TranslationLanguage = (string)comboBox1.SelectedValue;
+            Program.Settings.TransService = (TranslationService)Enum.Parse(typeof(TranslationService), comboBox2.SelectedItem.ToString(), true);
             Program.Settings.SaveSettings();
             DialogResult = DialogResult.OK;
         }

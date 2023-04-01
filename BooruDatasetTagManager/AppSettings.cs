@@ -14,6 +14,7 @@ namespace BooruDatasetTagManager
         public int PreviewSize { get; set; } = 130;
         [JsonIgnore]
         public List<LanguageItem> AvaibleLanguages;
+        public TranslationService TransService { get; set; } = TranslationService.GoogleTranslate;
         private string settingsFile;
 
         public AppSettings(string appDir)
@@ -39,6 +40,7 @@ namespace BooruDatasetTagManager
                 var tempSettings = JsonConvert.DeserializeObject<AppSettings>(File.ReadAllText(settingsFile));
                 TranslationLanguage = tempSettings.TranslationLanguage;
                 PreviewSize = tempSettings.PreviewSize;
+                TransService = tempSettings.TransService;
             }
         }
 

@@ -68,10 +68,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractTranslator.cs" />
     <Compile Include="AppSettings.cs" />
     <Compile Include="AutoCompleteTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ChineseTranslator.cs" />
     <Compile Include="CustomTextBoxColumn.cs" />
     <Compile Include="DatasetManager.cs" />
     <Compile Include="Extensions.cs" />
@@ -112,6 +114,8 @@
     <Compile Include="Form_settings.Designer.cs">
       <DependentUpon>Form_settings.cs</DependentUpon>
     </Compile>
+    <Compile Include="GlobalEnums.cs" />
+    <Compile Include="GoogleTranslator.cs" />
     <Compile Include="OpenFolderDialog.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

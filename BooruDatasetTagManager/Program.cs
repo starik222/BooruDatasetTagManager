@@ -39,12 +39,14 @@ namespace BooruDatasetTagManager
             {
                 await Task.Run(() =>
                 {
+                    string translationsDir = Path.Combine(Application.StartupPath, "Translations");
+                    if (!Directory.Exists(translationsDir))
+                        Directory.CreateDirectory(translationsDir);
+                    TransManager = new TranslationManager(Program.Settings.TranslationLanguage, Program.Settings.TransService, translationsDir);
+                    TransManager.LoadTranslations();
                     string tagsDir = Path.Combine(Application.StartupPath, "Tags");
                     if(!Directory.Exists(tagsDir))
                         Directory.CreateDirectory(tagsDir);
-                    string translationsDir = Path.Combine(Application.StartupPath, "Translations");
-                    if(!Directory.Exists(translationsDir))
-                        Directory.CreateDirectory(translationsDir);
                     string tagFile = Path.Combine(tagsDir, "List.tdb");
                     TagsList = TagsDB.LoadFromTagFile(tagFile);
                     if (TagsList.IsNeedUpdate(tagsDir))
@@ -52,7 +54,7 @@ namespace BooruDatasetTagManager
                         TagsList.LoadCSVFromDir(tagsDir);
                         TagsList.SaveTags(tagFile);
                     }
-                    TagsList.LoadTranslation(Path.Combine(translationsDir, Settings.TranslationLanguage + ".txt"));
+                    TagsList.LoadTranslation(TransManager);
                 });
                 f_wait.Close();
             };
@@ -65,6 +67,7 @@ namespace BooruDatasetTagManager
 
             Application.Run(new Form1());
         }
+        public static TranslationManager TransManager;
 
         public static DatasetManager DataManager;
 

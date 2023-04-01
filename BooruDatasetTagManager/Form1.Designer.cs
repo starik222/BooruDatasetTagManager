@@ -128,14 +128,13 @@ namespace BooruDatasetTagManager
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.gridViewTags.DefaultCellStyle = dataGridViewCellStyle1;
             this.gridViewTags.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridViewTags.Location = new System.Drawing.Point(0, 40);
-            this.gridViewTags.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.gridViewTags.Location = new System.Drawing.Point(0, 24);
             this.gridViewTags.MultiSelect = false;
             this.gridViewTags.Name = "gridViewTags";
             this.gridViewTags.RowHeadersVisible = false;
             this.gridViewTags.RowHeadersWidth = 72;
             this.gridViewTags.RowTemplate.Height = 28;
-            this.gridViewTags.Size = new System.Drawing.Size(652, 897);
+            this.gridViewTags.Size = new System.Drawing.Size(311, 556);
             this.gridViewTags.TabIndex = 2;
             this.gridViewTags.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridViewTags_CellEndEdit);
             this.gridViewTags.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewTags_CellMouseEnter);
@@ -180,10 +179,10 @@ namespace BooruDatasetTagManager
             this.toolStripSeparator7,
             this.toolStripButton23});
             this.toolStrip2.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
-            this.toolStrip2.Location = new System.Drawing.Point(652, 40);
+            this.toolStrip2.Location = new System.Drawing.Point(311, 24);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.toolStrip2.Size = new System.Drawing.Size(44, 897);
+            this.toolStrip2.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.toolStrip2.Size = new System.Drawing.Size(38, 556);
             this.toolStrip2.TabIndex = 3;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -193,7 +192,7 @@ namespace BooruDatasetTagManager
             this.toolStripButton2.Image = global::BooruDatasetTagManager.Properties.Resources.Add;
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(35, 36);
+            this.toolStripButton2.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton2.Text = "Add";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
@@ -203,7 +202,7 @@ namespace BooruDatasetTagManager
             this.toolStripButton3.Image = global::BooruDatasetTagManager.Properties.Resources.Delete;
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(35, 36);
+            this.toolStripButton3.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton3.Text = "Delete";
             this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
@@ -213,7 +212,7 @@ namespace BooruDatasetTagManager
             this.toolStripButton1.Image = global::BooruDatasetTagManager.Properties.Resources.Apply;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(35, 36);
+            this.toolStripButton1.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton1.Text = "Apply";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
@@ -223,14 +222,14 @@ namespace BooruDatasetTagManager
             this.toolStripButton11.Image = global::BooruDatasetTagManager.Properties.Resources.Reset;
             this.toolStripButton11.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton11.Name = "toolStripButton11";
-            this.toolStripButton11.Size = new System.Drawing.Size(35, 36);
+            this.toolStripButton11.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton11.Text = "Reset";
             this.toolStripButton11.Click += new System.EventHandler(this.toolStripButton11_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(35, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(33, 6);
             // 
             // toolStripButton9
             // 
@@ -238,7 +237,7 @@ namespace BooruDatasetTagManager
             this.toolStripButton9.Image = global::BooruDatasetTagManager.Properties.Resources.Copy;
             this.toolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton9.Name = "toolStripButton9";
-            this.toolStripButton9.Size = new System.Drawing.Size(35, 36);
+            this.toolStripButton9.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton9.Text = "Copy tags";
             this.toolStripButton9.Click += new System.EventHandler(this.toolStripButton9_Click);
             // 
@@ -248,7 +247,7 @@ namespace BooruDatasetTagManager
             this.toolStripButton10.Image = global::BooruDatasetTagManager.Properties.Resources.Paste;
             this.toolStripButton10.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton10.Name = "toolStripButton10";
-            this.toolStripButton10.Size = new System.Drawing.Size(35, 36);
+            this.toolStripButton10.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton10.Text = "Paste tags";
             this.toolStripButton10.Click += new System.EventHandler(this.toolStripButton10_Click);
             // 
@@ -258,14 +257,14 @@ namespace BooruDatasetTagManager
             this.toolStripButton17.Image = global::BooruDatasetTagManager.Properties.Resources.SetToAll;
             this.toolStripButton17.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton17.Name = "toolStripButton17";
-            this.toolStripButton17.Size = new System.Drawing.Size(35, 36);
+            this.toolStripButton17.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton17.Text = "Set current tag list to all";
             this.toolStripButton17.Click += new System.EventHandler(this.toolStripButton17_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(35, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(33, 6);
             // 
             // toolStripButton15
             // 
@@ -273,7 +272,7 @@ namespace BooruDatasetTagManager
             this.toolStripButton15.Image = global::BooruDatasetTagManager.Properties.Resources.PasteClipboard;
             this.toolStripButton15.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton15.Name = "toolStripButton15";
-            this.toolStripButton15.Size = new System.Drawing.Size(35, 36);
+            this.toolStripButton15.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton15.Text = "Paste from clipboard";
             this.toolStripButton15.Click += new System.EventHandler(this.toolStripButton15_Click);
             // 
@@ -283,14 +282,14 @@ namespace BooruDatasetTagManager
             this.toolStripButton16.Image = global::BooruDatasetTagManager.Properties.Resources.print;
             this.toolStripButton16.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton16.Name = "toolStripButton16";
-            this.toolStripButton16.Size = new System.Drawing.Size(35, 36);
+            this.toolStripButton16.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton16.Text = "Show formed tag text";
             this.toolStripButton16.Click += new System.EventHandler(this.toolStripButton16_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(35, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(33, 6);
             // 
             // toolStripButton4
             // 
@@ -298,7 +297,7 @@ namespace BooruDatasetTagManager
             this.toolStripButton4.Image = global::BooruDatasetTagManager.Properties.Resources.Up;
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(35, 36);
+            this.toolStripButton4.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton4.Text = "Up";
             this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
             // 
@@ -308,14 +307,14 @@ namespace BooruDatasetTagManager
             this.toolStripButton5.Image = global::BooruDatasetTagManager.Properties.Resources.Down;
             this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(35, 36);
+            this.toolStripButton5.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton5.Text = "Down";
             this.toolStripButton5.Click += new System.EventHandler(this.toolStripButton5_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(35, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(33, 6);
             // 
             // toolStripButton23
             // 
@@ -323,22 +322,21 @@ namespace BooruDatasetTagManager
             this.toolStripButton23.Image = global::BooruDatasetTagManager.Properties.Resources.Find;
             this.toolStripButton23.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton23.Name = "toolStripButton23";
-            this.toolStripButton23.Size = new System.Drawing.Size(35, 36);
+            this.toolStripButton23.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton23.Text = "Fing tag in \"All tags\"";
             this.toolStripButton23.Click += new System.EventHandler(this.toolStripButton23_Click);
             // 
             // menuStrip1
             // 
             this.menuStrip1.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F);
-            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(28, 28);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.viewToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(0, 3, 0, 3);
-            this.menuStrip1.Size = new System.Drawing.Size(2100, 46);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(1049, 29);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -350,34 +348,34 @@ namespace BooruDatasetTagManager
             this.loadLossFromFileToolStripMenuItem,
             this.settingsToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(78, 40);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(48, 25);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // openFolderToolStripMenuItem
             // 
             this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
-            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(380, 44);
+            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
             this.openFolderToolStripMenuItem.Text = "Load folder...";
             this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.openFolderToolStripMenuItem_Click);
             // 
             // saveAllChangesToolStripMenuItem
             // 
             this.saveAllChangesToolStripMenuItem.Name = "saveAllChangesToolStripMenuItem";
-            this.saveAllChangesToolStripMenuItem.Size = new System.Drawing.Size(380, 44);
+            this.saveAllChangesToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
             this.saveAllChangesToolStripMenuItem.Text = "Save all changes";
             this.saveAllChangesToolStripMenuItem.Click += new System.EventHandler(this.saveAllChangesToolStripMenuItem_Click);
             // 
             // loadLossFromFileToolStripMenuItem
             // 
             this.loadLossFromFileToolStripMenuItem.Name = "loadLossFromFileToolStripMenuItem";
-            this.loadLossFromFileToolStripMenuItem.Size = new System.Drawing.Size(380, 44);
+            this.loadLossFromFileToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
             this.loadLossFromFileToolStripMenuItem.Text = "Load loss from file";
             this.loadLossFromFileToolStripMenuItem.Click += new System.EventHandler(this.loadLossFromFileToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(380, 44);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
             this.settingsToolStripMenuItem.Text = "Settings...";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
@@ -387,20 +385,20 @@ namespace BooruDatasetTagManager
             this.showPreviewToolStripMenuItem,
             this.translateTagsToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(97, 40);
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(59, 25);
             this.viewToolStripMenuItem.Text = "View";
             // 
             // showPreviewToolStripMenuItem
             // 
             this.showPreviewToolStripMenuItem.Name = "showPreviewToolStripMenuItem";
-            this.showPreviewToolStripMenuItem.Size = new System.Drawing.Size(321, 44);
+            this.showPreviewToolStripMenuItem.Size = new System.Drawing.Size(186, 26);
             this.showPreviewToolStripMenuItem.Text = "Show preview";
             this.showPreviewToolStripMenuItem.Click += new System.EventHandler(this.showPreviewToolStripMenuItem_Click);
             // 
             // translateTagsToolStripMenuItem
             // 
             this.translateTagsToolStripMenuItem.Name = "translateTagsToolStripMenuItem";
-            this.translateTagsToolStripMenuItem.Size = new System.Drawing.Size(321, 44);
+            this.translateTagsToolStripMenuItem.Size = new System.Drawing.Size(186, 26);
             this.translateTagsToolStripMenuItem.Text = "Translate tags";
             this.translateTagsToolStripMenuItem.Click += new System.EventHandler(this.translateTagsToolStripMenuItem_Click);
             // 
@@ -408,12 +406,12 @@ namespace BooruDatasetTagManager
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Margin = new System.Windows.Forms.Padding(6);
+            this.label1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.label1.Name = "label1";
-            this.label1.Padding = new System.Windows.Forms.Padding(6);
-            this.label1.Size = new System.Drawing.Size(122, 40);
+            this.label1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.label1.Size = new System.Drawing.Size(69, 24);
             this.label1.TabIndex = 5;
             this.label1.Text = "Dataset";
             // 
@@ -421,12 +419,12 @@ namespace BooruDatasetTagManager
             // 
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.Location = new System.Drawing.Point(0, 0);
-            this.label2.Margin = new System.Windows.Forms.Padding(6);
+            this.label2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.label2.Name = "label2";
-            this.label2.Padding = new System.Windows.Forms.Padding(6);
-            this.label2.Size = new System.Drawing.Size(164, 40);
+            this.label2.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.label2.Size = new System.Drawing.Size(93, 24);
             this.label2.TabIndex = 5;
             this.label2.Text = "Image tags";
             // 
@@ -448,15 +446,14 @@ namespace BooruDatasetTagManager
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.gridViewAllTags.DefaultCellStyle = dataGridViewCellStyle2;
             this.gridViewAllTags.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridViewAllTags.Location = new System.Drawing.Point(0, 40);
-            this.gridViewAllTags.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.gridViewAllTags.Location = new System.Drawing.Point(0, 24);
             this.gridViewAllTags.Name = "gridViewAllTags";
             this.gridViewAllTags.ReadOnly = true;
             this.gridViewAllTags.RowHeadersVisible = false;
             this.gridViewAllTags.RowHeadersWidth = 72;
             this.gridViewAllTags.RowTemplate.Height = 28;
             this.gridViewAllTags.RowTemplate.ReadOnly = true;
-            this.gridViewAllTags.Size = new System.Drawing.Size(638, 897);
+            this.gridViewAllTags.Size = new System.Drawing.Size(310, 556);
             this.gridViewAllTags.TabIndex = 2;
             this.gridViewAllTags.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellDoubleClick);
             this.gridViewAllTags.Enter += new System.EventHandler(this.gridView_Enter);
@@ -466,12 +463,12 @@ namespace BooruDatasetTagManager
             // 
             this.label3.AutoSize = true;
             this.label3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.Location = new System.Drawing.Point(0, 0);
-            this.label3.Margin = new System.Windows.Forms.Padding(6);
+            this.label3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.label3.Name = "label3";
-            this.label3.Padding = new System.Windows.Forms.Padding(6);
-            this.label3.Size = new System.Drawing.Size(136, 40);
+            this.label3.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.label3.Size = new System.Drawing.Size(77, 24);
             this.label3.TabIndex = 5;
             this.label3.Text = "All tags";
             // 
@@ -495,10 +492,10 @@ namespace BooruDatasetTagManager
             this.toolStripButton13,
             this.toolStripButton14});
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
-            this.toolStrip1.Location = new System.Drawing.Point(638, 40);
+            this.toolStrip1.Location = new System.Drawing.Point(310, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.toolStrip1.Size = new System.Drawing.Size(58, 897);
+            this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.toolStrip1.Size = new System.Drawing.Size(38, 556);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip2";
             // 
@@ -508,7 +505,7 @@ namespace BooruDatasetTagManager
             this.toolStripButton6.Image = global::BooruDatasetTagManager.Properties.Resources.Change;
             this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton6.Name = "toolStripButton6";
-            this.toolStripButton6.Size = new System.Drawing.Size(49, 36);
+            this.toolStripButton6.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton6.Text = "Change all tags/common tags";
             this.toolStripButton6.Click += new System.EventHandler(this.toolStripButton6_Click);
             // 
@@ -518,7 +515,7 @@ namespace BooruDatasetTagManager
             this.toolStripButton7.Image = global::BooruDatasetTagManager.Properties.Resources.Add;
             this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton7.Name = "toolStripButton7";
-            this.toolStripButton7.Size = new System.Drawing.Size(49, 36);
+            this.toolStripButton7.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton7.Text = "Add to all";
             this.toolStripButton7.Click += new System.EventHandler(this.toolStripButton7_Click);
             // 
@@ -528,7 +525,7 @@ namespace BooruDatasetTagManager
             this.toolStripButton12.Image = global::BooruDatasetTagManager.Properties.Resources.Delete;
             this.toolStripButton12.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton12.Name = "toolStripButton12";
-            this.toolStripButton12.Size = new System.Drawing.Size(49, 36);
+            this.toolStripButton12.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton12.Text = "Remove from all";
             this.toolStripButton12.Click += new System.EventHandler(this.toolStripButton12_Click);
             // 
@@ -538,14 +535,14 @@ namespace BooruDatasetTagManager
             this.toolStripButton8.Image = global::BooruDatasetTagManager.Properties.Resources.ReplaceTags;
             this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton8.Name = "toolStripButton8";
-            this.toolStripButton8.Size = new System.Drawing.Size(49, 36);
+            this.toolStripButton8.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton8.Text = "Replace tag";
             this.toolStripButton8.Click += new System.EventHandler(this.toolStripButton8_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(49, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(33, 6);
             // 
             // toolStripButton19
             // 
@@ -553,7 +550,7 @@ namespace BooruDatasetTagManager
             this.toolStripButton19.Image = global::BooruDatasetTagManager.Properties.Resources.AddSelToTags;
             this.toolStripButton19.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton19.Name = "toolStripButton19";
-            this.toolStripButton19.Size = new System.Drawing.Size(49, 36);
+            this.toolStripButton19.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton19.Text = "Add selected \'All tags\' to image tags";
             this.toolStripButton19.Click += new System.EventHandler(this.toolStripButton19_Click);
             // 
@@ -563,14 +560,14 @@ namespace BooruDatasetTagManager
             this.toolStripButton20.Image = global::BooruDatasetTagManager.Properties.Resources.DelSelFromTags;
             this.toolStripButton20.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton20.Name = "toolStripButton20";
-            this.toolStripButton20.Size = new System.Drawing.Size(49, 36);
+            this.toolStripButton20.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton20.Text = "Remove selected \'All tags\' from image tags";
             this.toolStripButton20.Click += new System.EventHandler(this.toolStripButton20_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(49, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(33, 6);
             // 
             // toolStripButton21
             // 
@@ -578,7 +575,7 @@ namespace BooruDatasetTagManager
             this.toolStripButton21.Image = global::BooruDatasetTagManager.Properties.Resources.AddToFiltered;
             this.toolStripButton21.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton21.Name = "toolStripButton21";
-            this.toolStripButton21.Size = new System.Drawing.Size(49, 36);
+            this.toolStripButton21.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton21.Text = "Add to filtered";
             this.toolStripButton21.Click += new System.EventHandler(this.toolStripButton21_Click);
             // 
@@ -588,14 +585,14 @@ namespace BooruDatasetTagManager
             this.toolStripButton22.Image = global::BooruDatasetTagManager.Properties.Resources.DelFromFiltered;
             this.toolStripButton22.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton22.Name = "toolStripButton22";
-            this.toolStripButton22.Size = new System.Drawing.Size(49, 36);
+            this.toolStripButton22.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton22.Text = "Remove from filtered";
             this.toolStripButton22.Click += new System.EventHandler(this.toolStripButton22_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(49, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(33, 6);
             // 
             // toolStripButton18
             // 
@@ -603,7 +600,7 @@ namespace BooruDatasetTagManager
             this.toolStripButton18.Image = global::BooruDatasetTagManager.Properties.Resources.ORIcon;
             this.toolStripButton18.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton18.Name = "toolStripButton18";
-            this.toolStripButton18.Size = new System.Drawing.Size(49, 36);
+            this.toolStripButton18.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton18.Text = "Multi-tag filtering mode";
             this.toolStripButton18.Click += new System.EventHandler(this.toolStripButton18_Click);
             // 
@@ -613,7 +610,7 @@ namespace BooruDatasetTagManager
             this.toolStripButton13.Image = global::BooruDatasetTagManager.Properties.Resources.Find;
             this.toolStripButton13.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton13.Name = "toolStripButton13";
-            this.toolStripButton13.Size = new System.Drawing.Size(49, 36);
+            this.toolStripButton13.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton13.Text = "Find in dataset";
             this.toolStripButton13.Click += new System.EventHandler(this.toolStripButton13_Click);
             // 
@@ -624,7 +621,7 @@ namespace BooruDatasetTagManager
             this.toolStripButton14.Image = global::BooruDatasetTagManager.Properties.Resources.ResetFilter;
             this.toolStripButton14.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton14.Name = "toolStripButton14";
-            this.toolStripButton14.Size = new System.Drawing.Size(49, 36);
+            this.toolStripButton14.Size = new System.Drawing.Size(33, 36);
             this.toolStripButton14.Text = "Reset filter";
             this.toolStripButton14.Click += new System.EventHandler(this.toolStripButton14_Click);
             // 
@@ -633,24 +630,22 @@ namespace BooruDatasetTagManager
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(28, 28);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 983);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 609);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 26, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(2100, 37);
+            this.statusStrip1.Size = new System.Drawing.Size(1049, 22);
             this.statusStrip1.TabIndex = 6;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // statusLabel
             // 
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(21, 28);
+            this.statusLabel.Size = new System.Drawing.Size(12, 17);
             this.statusLabel.Text = "-";
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 46);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 29);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -662,16 +657,14 @@ namespace BooruDatasetTagManager
             this.splitContainer1.Panel2.Controls.Add(this.gridViewAllTags);
             this.splitContainer1.Panel2.Controls.Add(this.toolStrip1);
             this.splitContainer1.Panel2.Controls.Add(this.label3);
-            this.splitContainer1.Size = new System.Drawing.Size(2100, 937);
-            this.splitContainer1.SplitterDistance = 1396;
-            this.splitContainer1.SplitterWidth = 8;
+            this.splitContainer1.Size = new System.Drawing.Size(1049, 580);
+            this.splitContainer1.SplitterDistance = 697;
             this.splitContainer1.TabIndex = 7;
             // 
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.splitContainer2.Name = "splitContainer2";
             // 
             // splitContainer2.Panel1
@@ -684,9 +677,8 @@ namespace BooruDatasetTagManager
             this.splitContainer2.Panel2.Controls.Add(this.gridViewTags);
             this.splitContainer2.Panel2.Controls.Add(this.toolStrip2);
             this.splitContainer2.Panel2.Controls.Add(this.label2);
-            this.splitContainer2.Size = new System.Drawing.Size(1396, 937);
-            this.splitContainer2.SplitterDistance = 692;
-            this.splitContainer2.SplitterWidth = 8;
+            this.splitContainer2.Size = new System.Drawing.Size(697, 580);
+            this.splitContainer2.SplitterDistance = 344;
             this.splitContainer2.TabIndex = 6;
             // 
             // gridViewDS
@@ -698,8 +690,7 @@ namespace BooruDatasetTagManager
             this.gridViewDS.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.gridViewDS.ColumnHeadersHeight = 40;
             this.gridViewDS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridViewDS.Location = new System.Drawing.Point(0, 40);
-            this.gridViewDS.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.gridViewDS.Location = new System.Drawing.Point(0, 24);
             this.gridViewDS.Name = "gridViewDS";
             this.gridViewDS.ReadOnly = true;
             this.gridViewDS.RowHeadersVisible = false;
@@ -711,7 +702,7 @@ namespace BooruDatasetTagManager
             this.gridViewDS.RowTemplate.ReadOnly = true;
             this.gridViewDS.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.gridViewDS.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridViewDS.Size = new System.Drawing.Size(692, 897);
+            this.gridViewDS.Size = new System.Drawing.Size(344, 556);
             this.gridViewDS.TabIndex = 6;
             this.gridViewDS.DataSourceChanged += new System.EventHandler(this.dataGridView3_DataSourceChanged);
             this.gridViewDS.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridViewDS_CellMouseDown);
@@ -738,31 +729,30 @@ namespace BooruDatasetTagManager
             this.toolStripMenuItem1,
             this.toolStripMenuItem2});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(313, 72);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(192, 48);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(312, 34);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(191, 22);
             this.toolStripMenuItem1.Text = "Open folder";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(312, 34);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(191, 22);
             this.toolStripMenuItem2.Text = "Delete image and tags";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 21F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2100, 1020);
+            this.ClientSize = new System.Drawing.Size(1049, 631);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
-            this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.Name = "Form1";
             this.Text = "BooruDatasetTagManager";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);

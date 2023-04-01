@@ -71,28 +71,6 @@ namespace BooruDatasetTagManager
             Text += " " + Application.ProductVersion;
             gridViewDS.RowTemplate.Height = Program.Settings.PreviewSize + 10;
             splitContainer2.SplitterDistance = Width / 3;
-            LoadTrans();
-        }
-
-        private void LoadTrans()
-        {
-            Trans.Clear();
-            if (File.Exists(TransPath))
-            {
-                lastTransFile = TransPath;
-                string[] list = File.ReadAllLines(TransPath);
-                foreach (var item in list)
-                {
-                    string[] kv = item.Split('-');
-                    if (kv.Length == 2)
-                    {
-                        if (!Trans.ContainsKey(kv[0]))
-                        {
-                            Trans.Add(kv[0], kv[1]);
-                        }
-                    }
-                }
-            }
         }
 
         private void SetChangedStatus(bool changed)
@@ -121,7 +99,6 @@ namespace BooruDatasetTagManager
         {
             LockEdit(true);
             SetStatus("Translating, please wait...");
-            string transLang = Program.Settings.TranslationLanguage;
             try
             {
                 HttpClient client = new HttpClient();
@@ -129,7 +106,7 @@ namespace BooruDatasetTagManager
                 {
                     SetStatus($"Translation {i}/{grid.RowCount}");
                     grid["Translation", i].ReadOnly = true;
-                    grid["Translation", i].Value = await Translation(client, transLang, grid[0, i].Value as string);
+                    grid["Translation", i].Value = await Program.TransManager.TranslateAsync(grid[0, i].Value as string);
                 }
             }
             catch (Exception ex)
@@ -138,49 +115,6 @@ namespace BooruDatasetTagManager
             }
             SetStatus("Translation completed");
             LockEdit(false);
-        }
-
-        private async Task<string> Translation(HttpClient client, string transLang, string transString)
-        {
-            if (string.IsNullOrWhiteSpace(transString))
-                return null;
-            string key = transString.ToLower();
-            if(lastTransFile != TransPath)
-            {
-                LoadTrans();
-            }
-            if (Trans.TryGetValue(key, out string value))
-            {
-                return value;
-            }
-            transLang = transLang.Replace("-CN", "").Replace("-TW", "");
-            FormUrlEncodedContent content = new FormUrlEncodedContent(new KeyValuePair<string, string>[]
-                   {
-                       new KeyValuePair<string, string>("appid","105"),
-                       new KeyValuePair<string, string>("sgid","auto"),
-                       new KeyValuePair<string, string>("sbid","auto"),
-                       new KeyValuePair<string, string>("egid",transLang),
-                       new KeyValuePair<string, string>("ebid",transLang),
-                       new KeyValuePair<string, string>("content",transString.Replace('-',' ').Replace('_',' ')),
-                       new KeyValuePair<string, string>("type","2"),
-                   });
-            var ret = await client.PostAsync($"https://translate-api-fykz.xiangtatech.com/translation/webs/index", content);
-            if (ret.IsSuccessStatusCode)
-            {
-                string json = await ret.Content.ReadAsStringAsync();
-                int begin = json.IndexOf("\"by\":\"");
-                if (begin == -1)
-                    return null;
-                begin += 6;
-                int end = json.IndexOf("\"", begin);
-                if (end == -1)
-                    return null;
-                value = json.Substring(begin, end - begin);
-                Trans[key] = value;
-                File.AppendAllText(TransPath, $"{key}-{value}\r\n", Encoding.UTF8);
-                return value;
-            }
-            return null;
         }
 
         private void LockEdit(bool locked)
@@ -646,7 +580,7 @@ namespace BooruDatasetTagManager
                     string transString = null;
                     if (isTranslate)
                     {
-                        transString = await Translation(new HttpClient(), Program.Settings.TranslationLanguage, addTag.textBox1.Text);
+                        transString = await Program.TransManager.TranslateAsync(addTag.textBox1.Text);
                         gridViewTags.Rows[insertIndex].Cells[1].Value = transString;
                     }
 

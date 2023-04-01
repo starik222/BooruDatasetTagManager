@@ -95,6 +95,8 @@ namespace BooruDatasetTagManager
 
         private void AddTag(string tag, int count, bool isAlias = false, string parent = null)
         {
+            if (string.IsNullOrWhiteSpace(tag))
+                return;
             if (Tags.Exists(a => a.Parent == tag))
                 return;
             tag = tag.Trim().ToLower();
@@ -108,7 +110,7 @@ namespace BooruDatasetTagManager
             else
             {
                 tagItem = new TagItem();
-                tagItem.Tag = tag;
+                tagItem.SetTag(tag);
                 tagItem.Count = count;
             }
             tagItem.IsAlias = isAlias;
@@ -133,48 +135,11 @@ namespace BooruDatasetTagManager
             return false;
         }
 
-        public void LoadTranslation(string fName)
+        public void LoadTranslation(TranslationManager transManager)
         {
-            if (!File.Exists(fName))
-            {
-                var sw = File.CreateText(fName);
-                sw.WriteLine("//Translation format: <original>=<translation>");
-                sw.Dispose();
-                return;
-            }
-            //FileInfo[] txtFiles = new DirectoryInfo(dir).GetFiles("*.txt", SearchOption.TopDirectoryOnly);
-            Dictionary<string, string> allTranslations = new Dictionary<string, string>();
-            string[] lines = File.ReadAllLines(fName);
-            foreach (var item in lines)
-            {
-                if (item.Trim().StartsWith("//"))
-                    continue;
-                int index = item.LastIndexOf('=');
-                if (index == -1)
-                    continue;
-                string orig = item.Substring(0, index).Trim();
-                string trans = item.Substring(index + 1).Trim();
-                if (!allTranslations.ContainsKey(orig))
-                    allTranslations[orig] = trans;
-            }
-            //foreach (var txt in txtFiles)
-            //{
-            //    string[] lines = File.ReadAllLines(txt.FullName);
-            //    foreach (var item in lines)
-            //    {
-            //        int index = item.LastIndexOf('=');
-            //        if (index == -1) 
-            //            continue;
-            //        string orig = item.Substring(0, index);
-            //        string trans = item.Substring(index + 1);
-            //        if (!allTranslations.ContainsKey(orig))
-            //            allTranslations[orig] = trans;
-            //    }
-            //}
             foreach (var tag in Tags)
             {
-                if(allTranslations.ContainsKey(tag.Tag))
-                    tag.Translation = allTranslations[tag.Tag];
+                tag.Translation = transManager.GetTranslation(tag.TagHash);
             }
         }
 
@@ -196,7 +161,8 @@ namespace BooruDatasetTagManager
         [Serializable]
         public class TagItem
         {
-            public string Tag;
+            public string Tag { get; private set; }
+            public int TagHash { get; private set; }
             public int Count;
             //public List<string> Aliases;
             public bool IsAlias;
@@ -207,6 +173,12 @@ namespace BooruDatasetTagManager
             public TagItem()
             {
                 //Aliases = new List<string>();
+            }
+
+            public void SetTag(string tag)
+            {
+                Tag = tag.Trim().ToLower();
+                TagHash = Tag.GetHashCode();
             }
 
             public string GetTag()
