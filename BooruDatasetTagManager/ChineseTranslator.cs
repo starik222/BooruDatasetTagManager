@@ -30,7 +30,7 @@ namespace BooruDatasetTagManager
                        //new KeyValuePair<string, string>("sbid","auto"),
                        new KeyValuePair<string, string>("egid",toLang),
                        new KeyValuePair<string, string>("ebid",toLang),
-                       new KeyValuePair<string, string>("content",toLang.Replace('-',' ').Replace('_',' ')),
+                       new KeyValuePair<string, string>("content",text.Replace('-',' ').Replace('_',' ')),
                        new KeyValuePair<string, string>("type","2"),
                    });
             var ret = await client.PostAsync($"https://translate-api-fykz.xiangtatech.com/translation/webs/index", content);

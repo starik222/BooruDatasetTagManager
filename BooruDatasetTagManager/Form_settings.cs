@@ -31,16 +31,13 @@ namespace BooruDatasetTagManager
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (Program.Settings.PreviewSize != (int)numericUpDown1.Value)
+            if (Program.Settings.PreviewSize != (int)numericUpDown1.Value ||
+                Program.Settings.TranslationLanguage != (string)comboBox1.SelectedValue || 
+                Program.Settings.TransService.ToString() != comboBox2.SelectedItem.ToString())
             {
                 MessageBox.Show("You must restart the application for the settings to take effect.");
             }
             Program.Settings.PreviewSize = (int)numericUpDown1.Value;
-            if (Program.Settings.TranslationLanguage != (string)comboBox1.SelectedValue)
-            {
-                MessageBox.Show("Since the translation is cached, you may need to delete the cache.dt2 " +
-                    "file\nto see the translation of strings already translated into another language.");
-            }
             Program.Settings.TranslationLanguage = (string)comboBox1.SelectedValue;
             Program.Settings.TransService = (TranslationService)Enum.Parse(typeof(TranslationService), comboBox2.SelectedItem.ToString(), true);
             Program.Settings.SaveSettings();
