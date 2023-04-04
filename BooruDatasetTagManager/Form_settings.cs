@@ -25,21 +25,23 @@ namespace BooruDatasetTagManager
             comboBox1.SelectedValue = Program.Settings.TranslationLanguage;
             comboBox2.Items.AddRange(Enum.GetNames(typeof(TranslationService)));
             comboBox2.SelectedItem = Program.Settings.TransService.ToString();
-
+            checkBox1.Checked = Program.Settings.OnlyManualTransInAutocomplete;
+            comboBox3.Items.AddRange(Enum.GetNames(typeof(AutocompleteMode)));
+            comboBox3.SelectedItem = Program.Settings.AutocompleteMode.ToString();
+            comboBox4.Items.AddRange(Enum.GetNames(typeof(AutocompleteSort)));
+            comboBox4.SelectedItem = Program.Settings.AutocompleteSort.ToString();
             numericUpDown1.Value = Program.Settings.PreviewSize;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (Program.Settings.PreviewSize != (int)numericUpDown1.Value ||
-                Program.Settings.TranslationLanguage != (string)comboBox1.SelectedValue || 
-                Program.Settings.TransService.ToString() != comboBox2.SelectedItem.ToString())
-            {
-                MessageBox.Show("You must restart the application for the settings to take effect.");
-            }
+            MessageBox.Show("You must restart the application for the settings to take effect.");
             Program.Settings.PreviewSize = (int)numericUpDown1.Value;
             Program.Settings.TranslationLanguage = (string)comboBox1.SelectedValue;
             Program.Settings.TransService = (TranslationService)Enum.Parse(typeof(TranslationService), comboBox2.SelectedItem.ToString(), true);
+            Program.Settings.OnlyManualTransInAutocomplete = checkBox1.Checked;
+            Program.Settings.AutocompleteMode = (AutocompleteMode)Enum.Parse(typeof(AutocompleteMode), comboBox3.SelectedItem.ToString(), true);
+            Program.Settings.AutocompleteSort = (AutocompleteSort)Enum.Parse(typeof(AutocompleteSort), comboBox4.SelectedItem.ToString(), true);
             Program.Settings.SaveSettings();
             DialogResult = DialogResult.OK;
         }

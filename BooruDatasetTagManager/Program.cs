@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using Translator;
 using Newtonsoft.Json;
 using System.IO;
+using System.Diagnostics;
 
 namespace BooruDatasetTagManager
 {
@@ -51,7 +52,11 @@ namespace BooruDatasetTagManager
                     TagsList = TagsDB.LoadFromTagFile(tagFile);
                     if (TagsList.IsNeedUpdate(tagsDir))
                     {
+                        TagsList.ClearDb();
+                        TagsList.ClearLoadedFiles();
                         TagsList.LoadCSVFromDir(tagsDir);
+                        TagsList.LoadTxtFromDir(tagsDir);
+                        TagsList.SortTags();
                         TagsList.SaveTags(tagFile);
                     }
                     TagsList.LoadTranslation(TransManager);

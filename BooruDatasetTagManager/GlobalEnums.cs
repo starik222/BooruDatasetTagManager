@@ -11,4 +11,19 @@ namespace BooruDatasetTagManager
         GoogleTranslate,
         ChineseTranslate
     }
+
+    public enum AutocompleteMode
+    {
+        Disable,
+        StartWith,
+        StartWithAndContains,
+        StartWithIncludeTranslations,
+        StartWithAndContainsIncludeTranslations
+    }
+
+    public enum AutocompleteSort
+    {
+        Alphabetical,
+        ByCount
+    }
 }

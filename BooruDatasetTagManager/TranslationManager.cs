@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Translator.Crypto;
@@ -72,6 +73,20 @@ namespace BooruDatasetTagManager
             return res.Trans;
         }
 
+        public string GetTranslation(int hash, bool onlyManual)
+        {
+            if (onlyManual)
+            {
+                var res = Translations.FirstOrDefault(a => a.OrigHash == hash && a.IsManual == onlyManual);
+                if (res == null)
+                    return null;
+                return res.Trans;
+            }
+            else
+                return GetTranslation(hash);
+
+        }
+
         public async Task<string> GetTranslationAsync(string text)
         {
             return await Task.Run(() =>
@@ -79,18 +94,18 @@ namespace BooruDatasetTagManager
                 return GetTranslation(text);
             });
         }
-        public void AddTranslation(string orig, string trans)
+        public void AddTranslation(string orig, string trans, bool isManual)
         {
             File.AppendAllText(translationFilePath, $"{orig}={trans}\r\n", Encoding.UTF8);
-            Translations.Add(new TransItem(orig, trans));
+            Translations.Add(new TransItem(orig, trans, isManual));
         }
 
-        public async Task AddTranslationAsync(string orig, string trans)
+        public async Task AddTranslationAsync(string orig, string trans, bool isManual)
         {
             StreamWriter sw = new StreamWriter(translationFilePath, true, Encoding.UTF8);
-            await sw.WriteLineAsync($"{orig}={trans}");
+            await sw.WriteLineAsync($"{(isManual ? "*" : "")}{orig}={trans}");
             sw.Close();
-            Translations.Add(new TransItem(orig, trans));
+            Translations.Add(new TransItem(orig, trans, isManual));
         }
 
         public async Task<string> TranslateAsync(string text)
@@ -99,7 +114,7 @@ namespace BooruDatasetTagManager
             if (result != null)
                 return result;
             result = await translator.TranslateAsync(text, "en", _language);
-            await AddTranslationAsync(text, result);
+            await AddTranslationAsync(text, result, false);
             return result;
         }
 
@@ -109,22 +124,30 @@ namespace BooruDatasetTagManager
             public string Orig { get; private set; }
             public string Trans {get; set; }
             public int OrigHash { get; private set; }
+            public bool IsManual { get; private set; }
 
-            public TransItem(string orig, string trans)
+            public TransItem(string orig, string trans, bool isManual)
             {
                 Orig = orig;
                 Trans = trans;
                 OrigHash = orig.ToLower().GetHashCode();
+                IsManual = isManual;
             }
 
             public static TransItem Create(string text)
             {
+                bool manual = false;
+                if (text.StartsWith("*"))
+                {
+                    text = text.Substring(1);
+                    manual = true;
+                }
                 int index = text.LastIndexOf('=');
                 if (index == -1)
                     return null;
                 string orig = text.Substring(0, index).Trim();
                 string trans = text.Substring(index + 1).Trim();
-                return new TransItem(orig, trans);
+                return new TransItem(orig, trans, manual);
             }
 
 

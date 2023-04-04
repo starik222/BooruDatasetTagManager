@@ -17,10 +17,13 @@ namespace BooruDatasetTagManager
         public List<TagItem> Tags;
         public Dictionary<string, long> LoadedFiles;
 
+        private Dictionary<int, int> hashes;
+
         public TagsDB()
         {
             Tags = new List<TagItem>();
             LoadedFiles = new Dictionary<string, long>();
+            hashes = new Dictionary<int, int>();
         }
 
         private string[] ReadAllLines(byte[] data, Encoding encoding)
@@ -41,13 +44,55 @@ namespace BooruDatasetTagManager
             return list.ToArray();
         }
 
+        public void ClearDb()
+        {
+            Tags.Clear();
+        }
+
+        public void ClearLoadedFiles()
+        {
+            LoadedFiles.Clear();
+        }
+
         public void LoadCSVFromDir(string dir)
         {
             FileInfo[] csvFiles = new DirectoryInfo(dir).GetFiles("*.csv", SearchOption.TopDirectoryOnly);
-            Tags.Clear();
-            LoadedFiles.Clear();
             foreach (var item in csvFiles)
                 LoadFromCSVFile(item.FullName);
+        }
+
+        public void LoadTxtFromDir(string dir)
+        {
+            FileInfo[] txtFiles = new DirectoryInfo(dir).GetFiles("*.txt", SearchOption.TopDirectoryOnly);
+            foreach (var item in txtFiles)
+                LoadFromTxtFile(item.FullName);
+        }
+
+        public void LoadFromTxtFile(string fPath, bool append = true)
+        {
+            byte[] data = File.ReadAllBytes(fPath);
+            long hash = Adler32.GenerateHash(data);
+            string fName = Path.GetFileName(fPath);
+            if (LoadedFiles.ContainsKey(fName))
+            {
+                if (LoadedFiles[fName] == hash)
+                    return;
+                else
+                    LoadedFiles[fName] = hash;
+            }
+            else
+            {
+                LoadedFiles.Add(fName, hash);
+            }
+
+
+            string[] lines = ReadAllLines(data, Encoding.UTF8);
+            if (!append)
+                ClearDb();
+            foreach (var item in lines)
+            {
+                AddTag(item, 0);
+            }
         }
 
 
@@ -93,6 +138,11 @@ namespace BooruDatasetTagManager
             }
         }
 
+        public void SortTags()
+        {
+            Tags.Sort((a, b) => a.Tag.CompareTo(b.Tag));
+        }
+
         private void AddTag(string tag, int count, bool isAlias = false, string parent = null)
         {
             if (string.IsNullOrWhiteSpace(tag))
@@ -100,9 +150,11 @@ namespace BooruDatasetTagManager
             if (Tags.Exists(a => a.Parent == tag))
                 return;
             tag = tag.Trim().ToLower();
-            int existTagIndex = Tags.FindIndex(a => a.Tag == tag);
+            int tagHash = tag.GetHashCode();
+
+            int existTagIndex = -1;
             TagItem tagItem = null;
-            if (existTagIndex != -1)
+            if (hashes.TryGetValue(tagHash, out existTagIndex))
             {
                 tagItem = Tags[existTagIndex];
                 tagItem.Count += count;
@@ -112,18 +164,22 @@ namespace BooruDatasetTagManager
                 tagItem = new TagItem();
                 tagItem.SetTag(tag);
                 tagItem.Count = count;
+                tagItem.IsAlias = isAlias;
+                tagItem.Parent = parent;
+                hashes.Add(tagItem.TagHash, Tags.Count);
+                Tags.Add(tagItem);
             }
-            tagItem.IsAlias = isAlias;
-            tagItem.Parent = parent;
-            Tags.Add(tagItem);
         }
 
         public bool IsNeedUpdate(string dirToCheck)
         {
-            FileInfo[] csvFiles = new DirectoryInfo(dirToCheck).GetFiles("*.csv", SearchOption.TopDirectoryOnly);
-            if (LoadedFiles.Count != csvFiles.Length)
+            FileInfo[] tagFiles = new DirectoryInfo(dirToCheck).GetFiles("*.csv", SearchOption.TopDirectoryOnly).
+                Concat(new DirectoryInfo(dirToCheck).GetFiles("*.txt", SearchOption.TopDirectoryOnly)).ToArray();
+            if (tagFiles.Length == 0)
+                return false;
+            if (LoadedFiles.Count != tagFiles.Length)
                 return true;
-            foreach (var item in csvFiles)
+            foreach (var item in tagFiles)
             {
                 byte[] data = File.ReadAllBytes(item.FullName);
                 long hash = Adler32.GenerateHash(data);
@@ -137,9 +193,10 @@ namespace BooruDatasetTagManager
 
         public void LoadTranslation(TranslationManager transManager)
         {
+            bool onlyManual = Program.Settings.OnlyManualTransInAutocomplete;
             foreach (var tag in Tags)
             {
-                tag.Translation = transManager.GetTranslation(tag.TagHash);
+                tag.Translation = transManager.GetTranslation(tag.TagHash, onlyManual);
             }
         }
 
@@ -192,9 +249,9 @@ namespace BooruDatasetTagManager
             public override string ToString()
             {
                 if (IsAlias)
-                    return $"{Tag} -> {Parent}";
+                    return $"{Tag} -> {Parent}{$" ({Count})"}{(string.IsNullOrEmpty(Translation) ? "" : $" [{Translation}]")}";
                 else
-                    return Tag;
+                    return $"{Tag}{$" ({Count})"}{(string.IsNullOrEmpty(Translation) ? "" : $" [{Translation}]")}";
             }
         }
 

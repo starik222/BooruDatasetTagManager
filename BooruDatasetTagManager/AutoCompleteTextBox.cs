@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,6 +17,7 @@ namespace BooruDatasetTagManager
         private List<TagsDB.TagItem> _values;
         private String _formerValue = String.Empty;
         private AutocompleteMode _mode = AutocompleteMode.StartWithAndContains;
+        private AutocompleteSort _sort = AutocompleteSort.Alphabetical;
 
         public AutoCompleteTextBox()
         {
@@ -64,9 +66,10 @@ namespace BooruDatasetTagManager
             }
         }
 
-        public void SetAutocompleteMode(AutocompleteMode mode)
+        public void SetAutocompleteMode(AutocompleteMode mode, AutocompleteSort sort)
         {
             _mode = mode;
+            _sort = sort;
         }
 
         private void ShowListBox()
@@ -178,23 +181,63 @@ namespace BooruDatasetTagManager
             {
                 //string[] matches = null;
                 TagsDB.TagItem[] matches = null;
+                IEnumerable<TagsDB.TagItem> tempMatches = null;
                 if (_mode == AutocompleteMode.StartWith)
                 {
-                    //matches = Array.FindAll(_values, x => (x.ToLower().StartsWith(word.ToLower())));
-                    matches = _values.Where(a => a.Tag.StartsWith(word)).ToArray();
+                    tempMatches = _values.Where(a => a.Tag.StartsWith(word));
+                    if (_sort == AutocompleteSort.Alphabetical)
+                        matches = tempMatches.OrderBy(a => a.Tag).ToArray();
+                    else
+                        matches = tempMatches.OrderByDescending(a => a.Count).ToArray();
+
                 }
-                else
+                else if (_mode == AutocompleteMode.StartWithIncludeTranslations)
                 {
-                    //matches = Array.FindAll(_values, x => (x.ToLower().StartsWith(word.ToLower())));
-                    matches = _values.Where(a => a.Tag.StartsWith(word)).ToArray();
+                    tempMatches = _values.Where(a => a.Tag.StartsWith(word) || (a.Translation != null && a.Translation.StartsWith(word)));
+                    if (_sort == AutocompleteSort.Alphabetical)
+                        matches = tempMatches.OrderBy(a => a.Tag).ToArray();
+                    else
+                        matches = tempMatches.OrderByDescending(a => a.Count).ToArray();
                 }
-                //matches = Array.FindAll(_values, x => (x.ToLower().Contains(word.ToLower())));
+                else if(_mode == AutocompleteMode.StartWithAndContains)
+                {
+                    if (_sort == AutocompleteSort.ByCount)
+                    {
+                        matches = _values.Where(a => a.Tag.StartsWith(word))
+                            .OrderByDescending(a => a.Count)
+                            .Concat(_values.Where(a => a.Tag.Contains(word)).OrderByDescending(a => a.Count))
+                            .Distinct().ToArray();
+                    }
+                    else
+                    {
+                        matches = _values.Where(a => a.Tag.StartsWith(word))
+                            .OrderBy(a => a.Tag)
+                            .Concat(_values.Where(a => a.Tag.Contains(word)).OrderBy(a => a.Tag))
+                            .Distinct().ToArray();
+                    }
+                }
+                else if (_mode == AutocompleteMode.StartWithAndContainsIncludeTranslations)
+                {
+                    if (_sort == AutocompleteSort.ByCount)
+                    {
+                        matches = _values.Where(a => a.Tag.StartsWith(word) || (a.Translation != null && a.Translation.StartsWith(word)))
+                            .OrderByDescending(a => a.Count)
+                            .Concat(_values.Where(a => a.Tag.Contains(word)).OrderByDescending(a => a.Count))
+                            .Distinct().ToArray();
+                    }
+                    else
+                    {
+                        matches = _values.Where(a => a.Tag.StartsWith(word) || (a.Translation != null && a.Translation.StartsWith(word)))
+                            .OrderBy(a => a.Tag)
+                            .Concat(_values.Where(a => a.Tag.Contains(word) || (a.Translation != null && a.Translation.Contains(word))).OrderBy(a => a.Tag))
+                            .Distinct().ToArray();
+                    }
+                }
                 if (matches.Length > 0)
                 {
                     ShowListBox();
                     _listBox.BeginUpdate();
                     _listBox.Items.Clear();
-                    //Array.ForEach(matches, x => _listBox.Items.Add(x));
                     _listBox.Items.AddRange(matches);
                     _listBox.SelectedIndex = 0;
                     _listBox.Height = 0;
@@ -258,18 +301,6 @@ namespace BooruDatasetTagManager
             }
         }
 
-        //public String[] Values
-        //{
-        //    get
-        //    {
-        //        return _values;
-        //    }
-        //    set
-        //    {
-        //        _values = value;
-        //    }
-        //}
-
         public List<TagsDB.TagItem> Values
         {
             get
@@ -289,13 +320,6 @@ namespace BooruDatasetTagManager
                 String[] result = Text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 return new List<String>(result);
             }
-        }
-
-
-        public enum AutocompleteMode
-        {
-            StartWith,
-            StartWithAndContains
         }
     }
 }

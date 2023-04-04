@@ -17,7 +17,9 @@ namespace BooruDatasetTagManager
 
         public override async Task<string> TranslateAsync(string text, string fromLang, string toLang)
         {
-            string res =  await translatorV2.Translate(text, fromLang, toLang);
+            string res =  await translatorV2.Translate(text.Replace('_', ' ').Replace('-', ' ').Replace("\\(", "(").Replace("\\)", ")"), 
+                fromLang, toLang);
+            await Task.Delay(500);//antispam:)
             if (res == "error")
                 return null;
             return res;

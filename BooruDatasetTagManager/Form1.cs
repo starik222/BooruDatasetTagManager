@@ -918,7 +918,11 @@ namespace BooruDatasetTagManager
                 if (autoText != null)
                 {
                     //autoText.SetParent(gridViewTags);
-                    autoText.Values = Program.TagsList.Tags;
+                    if (Program.Settings.AutocompleteMode != AutocompleteMode.Disable && autoText.Values == null)
+                    {
+                        autoText.SetAutocompleteMode(Program.Settings.AutocompleteMode, Program.Settings.AutocompleteSort);
+                        autoText.Values = Program.TagsList.Tags;
+                    }
                     //autoText.Location = new Point(10, 10);
                     //autoText.Size = new Size(25, 75);
                     //autoText.AutoCompleteMode = AutoCompleteMode.Suggest;

@@ -15,6 +15,9 @@ namespace BooruDatasetTagManager
         [JsonIgnore]
         public List<LanguageItem> AvaibleLanguages;
         public TranslationService TransService { get; set; } = TranslationService.GoogleTranslate;
+        public bool OnlyManualTransInAutocomplete { get; set; } = false;
+        public AutocompleteMode AutocompleteMode { get; set; } = AutocompleteMode.StartWith;
+        public AutocompleteSort AutocompleteSort { get; set; } = AutocompleteSort.Alphabetical;
         private string settingsFile;
 
         public AppSettings(string appDir)
@@ -41,6 +44,9 @@ namespace BooruDatasetTagManager
                 TranslationLanguage = tempSettings.TranslationLanguage;
                 PreviewSize = tempSettings.PreviewSize;
                 TransService = tempSettings.TransService;
+                OnlyManualTransInAutocomplete = tempSettings.OnlyManualTransInAutocomplete;
+                AutocompleteMode = tempSettings.AutocompleteMode;
+                AutocompleteSort = tempSettings.AutocompleteSort;
             }
         }
 
