@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooruDatasetTagManager", "BooruDatasetTagManager\BooruDatasetTagManager.csproj", "{CE86C8BB-F297-44CD-928D-E33FC290F3B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooruDatasetTagManager", "BooruDatasetTagManager\BooruDatasetTagManager.csproj", "{CE86C8BB-F297-44CD-928D-E33FC290F3B4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{1AC6D928-D781-45DE-8C5D-567E7821FDF7}"
 	ProjectSection(SolutionItems) = preProject

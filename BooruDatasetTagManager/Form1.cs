@@ -63,8 +63,6 @@ namespace BooruDatasetTagManager
 
 
         Dictionary<string, string> Trans = new Dictionary<string, string>();
-        string TransPath => "trans_" + Program.Settings.TranslationLanguage;
-        string lastTransFile = null;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -499,8 +497,8 @@ namespace BooruDatasetTagManager
                 if (all.Contains(item.Tag))
                     dgv.Rows[row].Selected = true;
             }
-            
-            if(scroll >= dgv.RowCount)
+
+            if (scroll >= dgv.RowCount)
             {
                 scroll = dgv.Rows.Count - 1;
             }
@@ -1236,7 +1234,7 @@ namespace BooruDatasetTagManager
             {
                 var row = gridViewAllTags.SelectedCells[i].RowIndex;
                 var tag = (string)gridViewAllTags.Rows[row].Cells[0].Value;
-                if(!selectedTags.Contains(tag))
+                if (!selectedTags.Contains(tag))
                     selectedTags.Add(tag);
             }
             return selectedTags;
@@ -1363,7 +1361,7 @@ namespace BooruDatasetTagManager
 
                 var scroll = gridViewDS.FirstDisplayedScrollingRowIndex;
                 var select = gridViewDS.SelectedRows[0].Index;
-                var selects = new List<DataItem>(); 
+                var selects = new List<DataItem>();
                 var list = gridViewDS.DataSource as List<DataItem>;
                 foreach (DataGridViewRow item in gridViewDS.SelectedRows)
                 {
@@ -1405,7 +1403,7 @@ namespace BooruDatasetTagManager
 
         private void gridViewDS_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if(e.Button == MouseButtons.Left && gridViewDS.SelectedRows.Count > 0)
+            if (e.Button == MouseButtons.Left && gridViewDS.SelectedRows.Count > 0)
             {
                 var file = (string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value;
                 ShowPreview(file);
@@ -1460,7 +1458,7 @@ namespace BooruDatasetTagManager
                 return;
             }
 
-            if(Directory.Exists(filePath))
+            if (Directory.Exists(filePath))
             {
                 Process.Start(@"explorer.exe", "/select,\"" + filePath + "\"");
                 return;

@@ -18,6 +18,7 @@ namespace BooruDatasetTagManager
         static void Main()
         {
             Application.EnableVisualStyles();
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.SetCompatibleTextRenderingDefault(false);
             Settings = new AppSettings(Application.StartupPath);
             #region waitForm
@@ -62,10 +63,6 @@ namespace BooruDatasetTagManager
             };
             f_wait.ShowDialog();
             #endregion
-            //string tagsDir = Path.Combine(Application.StartupPath, "tags");
-            //string tagFile = Path.Combine(tagsDir, "list.tdb");
-
-
 
             Application.Run(new Form1());
         }
