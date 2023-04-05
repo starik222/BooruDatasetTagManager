@@ -18,6 +18,7 @@ namespace BooruDatasetTagManager
         public bool OnlyManualTransInAutocomplete { get; set; } = false;
         public AutocompleteMode AutocompleteMode { get; set; } = AutocompleteMode.StartWith;
         public AutocompleteSort AutocompleteSort { get; set; } = AutocompleteSort.Alphabetical;
+        public bool FixTagsOnLoad { get; set; } = true;
         private string settingsFile;
 
         public AppSettings(string appDir)
@@ -47,6 +48,7 @@ namespace BooruDatasetTagManager
                 OnlyManualTransInAutocomplete = tempSettings.OnlyManualTransInAutocomplete;
                 AutocompleteMode = tempSettings.AutocompleteMode;
                 AutocompleteSort = tempSettings.AutocompleteSort;
+                FixTagsOnLoad = tempSettings.FixTagsOnLoad;
             }
         }
 

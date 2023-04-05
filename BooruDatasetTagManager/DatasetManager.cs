@@ -264,7 +264,7 @@ namespace BooruDatasetTagManager
             return delList;
         }
 
-        public void LoadFromFolder(string folder)
+        public void LoadFromFolder(string folder, bool fixTags)
         {
             List<string> imagesExt = new List<string>() { ".jpg", ".png", ".bmp", ".jpeg" };
             string[] imgs = Directory.GetFiles(folder, "*.*", SearchOption.AllDirectories);
@@ -273,7 +273,7 @@ namespace BooruDatasetTagManager
             int imgSize = Program.Settings.PreviewSize;
             imgs.AsParallel().ForAll(x =>
             {
-                var dt = new DataItem(x, imgSize);
+                var dt = new DataItem(x, imgSize, fixTags);
                 DataSet.TryAdd(dt.ImageFilePath, dt);
             });
             UpdateDatasetHash();
@@ -407,14 +407,14 @@ namespace BooruDatasetTagManager
                 LastLoss = -1;
             }
 
-            public DataItem(string imagePath, int imageSize)
+            public DataItem(string imagePath, int imageSize, bool fixTags)
             {
                 Tags = new List<string>();
                 ImageFilePath = imagePath;
                 Name = Path.GetFileNameWithoutExtension(imagePath);
                 ImageModifyTime = File.GetLastWriteTime(imagePath);
                 TextFilePath = Path.Combine(Path.GetDirectoryName(imagePath), Name + ".txt");
-                GetTagsFromFile();
+                GetTagsFromFile(fixTags);
                 Img = MakeThumb(imagePath, imageSize);
             }
 
@@ -445,7 +445,7 @@ namespace BooruDatasetTagManager
                 }
             }
 
-            public void GetTagsFromFile()
+            public void GetTagsFromFile(bool fixTags)
             {
                 if (File.Exists(TextFilePath))
                 {
@@ -453,7 +453,13 @@ namespace BooruDatasetTagManager
                     string text = File.ReadAllText(TextFilePath);
                     Tags = text.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
                     for (int i = 0; i < Tags.Count; i++)
+                    {
                         Tags[i] = Tags[i].Trim();
+                        if (fixTags)
+                        {
+                            Tags[i] = Tags[i].Replace('_', ' ').Replace("(", "\\(").Replace(")", "\\)");
+                        }
+                    }
                 }
                 else
                 {

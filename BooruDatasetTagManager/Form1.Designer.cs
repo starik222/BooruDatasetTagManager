@@ -653,7 +653,6 @@ namespace BooruDatasetTagManager
             // 
             gridViewDS.AllowUserToAddRows = false;
             gridViewDS.AllowUserToDeleteRows = false;
-            gridViewDS.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             gridViewDS.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             gridViewDS.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             gridViewDS.ColumnHeadersHeight = 40;

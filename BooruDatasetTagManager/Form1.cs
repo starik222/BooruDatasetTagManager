@@ -84,13 +84,14 @@ namespace BooruDatasetTagManager
                 return;
             isLoading = true;
             Program.DataManager = new DatasetManager();
-            Program.DataManager.LoadFromFolder(openFolderDialog.Folder);
+            Program.DataManager.LoadFromFolder(openFolderDialog.Folder, Program.Settings.FixTagsOnLoad);
 
             gridViewDS.DataSource = Program.DataManager.GetDataSource();
             Program.DataManager.UpdateData();
             BindTagList();
             ApplyDataSetGridStyle();
             isLoading = false;
+            gridViewDS.AutoResizeColumns();
         }
 
         private async Task FillTranslation(DataGridView grid)
