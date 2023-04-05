@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Translator;
 using Newtonsoft.Json;
 using System.IO;
 using System.Diagnostics;
@@ -20,8 +19,6 @@ namespace BooruDatasetTagManager
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            tools = new TextTool(Application.StartupPath);
             Settings = new AppSettings(Application.StartupPath);
             #region waitForm
             Form f_wait = new Form();
@@ -75,8 +72,6 @@ namespace BooruDatasetTagManager
         public static TranslationManager TransManager;
 
         public static DatasetManager DataManager;
-
-        public static TextTool tools;
 
         public static AppSettings Settings;
 

@@ -5,9 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Translator.Crypto;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace BooruDatasetTagManager
 {
@@ -204,7 +202,7 @@ namespace BooruDatasetTagManager
         {
             if (File.Exists(fPath))
             {
-                return (TagsDB)Translator.IO.Extensions.LoadDataSet(File.ReadAllBytes(fPath));
+                return (TagsDB)Extensions.LoadDataSet(File.ReadAllBytes(fPath));
             }
             else
                 return new TagsDB();
@@ -212,7 +210,7 @@ namespace BooruDatasetTagManager
 
         public void SaveTags(string fPath)
         {
-            Translator.IO.Extensions.SaveDataSet(this, fPath);
+            Extensions.SaveDataSet(this, fPath);
         }
 
         [Serializable]
