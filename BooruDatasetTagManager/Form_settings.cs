@@ -31,19 +31,25 @@ namespace BooruDatasetTagManager
             comboBox4.Items.AddRange(Enum.GetNames(typeof(AutocompleteSort)));
             comboBox4.SelectedItem = Program.Settings.AutocompleteSort.ToString();
             checkBox2.Checked = Program.Settings.FixTagsOnLoad;
+            textBox1.Text = Program.Settings.SeparatorOnLoad;
+            textBox2.Text = Program.Settings.SeparatorOnSave;
             numericUpDown1.Value = Program.Settings.PreviewSize;
+            numericUpDown2.Value = Program.Settings.ShowAutocompleteAfterCharCount;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             MessageBox.Show("You must restart the application for the settings to take effect.");
             Program.Settings.PreviewSize = (int)numericUpDown1.Value;
+            Program.Settings.ShowAutocompleteAfterCharCount = (int)numericUpDown2.Value;
             Program.Settings.TranslationLanguage = (string)comboBox1.SelectedValue;
             Program.Settings.TransService = (TranslationService)Enum.Parse(typeof(TranslationService), comboBox2.SelectedItem.ToString(), true);
             Program.Settings.OnlyManualTransInAutocomplete = checkBox1.Checked;
             Program.Settings.AutocompleteMode = (AutocompleteMode)Enum.Parse(typeof(AutocompleteMode), comboBox3.SelectedItem.ToString(), true);
             Program.Settings.AutocompleteSort = (AutocompleteSort)Enum.Parse(typeof(AutocompleteSort), comboBox4.SelectedItem.ToString(), true);
             Program.Settings.FixTagsOnLoad = checkBox2.Checked;
+            Program.Settings.SeparatorOnLoad = textBox1.Text;
+            Program.Settings.SeparatorOnSave = textBox2.Text;
             Program.Settings.SaveSettings();
             DialogResult = DialogResult.OK;
         }

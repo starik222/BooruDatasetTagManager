@@ -16,7 +16,9 @@ namespace BooruDatasetTagManager
         {
             InitializeComponent();
             this.MouseWheel += Form_preview_MouseWheel;
+            loaded = false;
         }
+        private bool loaded;
         private void Form_preview_MouseWheel(object sender, MouseEventArgs e)
         {
             var scale = 1 + (e.Delta > 0 ? 0.1f : -0.1f);
@@ -28,10 +30,15 @@ namespace BooruDatasetTagManager
         public void Show(string img)
         {
             pictureBox1.Image = Image.FromFile(img);
-            this.AutoSize = false;
-            this.ClientSize = pictureBox1.Image.Size;
-            this.pictureBox1.Dock = DockStyle.Fill;
-            this.pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            
+            if (!loaded)
+            {
+                this.AutoSize = false;
+                this.ClientSize = pictureBox1.Image.Size;
+                this.pictureBox1.Dock = DockStyle.Fill;
+                this.pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+                loaded = true;
+            }
             this.Show();
         }
 

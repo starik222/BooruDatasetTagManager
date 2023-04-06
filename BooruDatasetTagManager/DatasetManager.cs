@@ -41,7 +41,7 @@ namespace BooruDatasetTagManager
                 if (item.Value.IsModified)
                 {
                     item.Value.DeduplicateTags();
-                    File.WriteAllText(item.Value.TextFilePath, string.Join(", ", item.Value.Tags));
+                    File.WriteAllText(item.Value.TextFilePath, string.Join(Program.Settings.SeparatorOnSave, item.Value.Tags));
                     saved = true;
                 }
             }
@@ -451,7 +451,7 @@ namespace BooruDatasetTagManager
                 {
                     TagsModifyTime = File.GetLastWriteTime(TextFilePath);
                     string text = File.ReadAllText(TextFilePath);
-                    Tags = text.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                    Tags = text.Split(new string[] { Program.Settings.SeparatorOnLoad }, StringSplitOptions.RemoveEmptyEntries).ToList();
                     for (int i = 0; i < Tags.Count; i++)
                     {
                         Tags[i] = Tags[i].Trim();
@@ -472,7 +472,7 @@ namespace BooruDatasetTagManager
 
             public override string ToString()
             {
-                return String.Join(", ", Tags);
+                return String.Join(Program.Settings.SeparatorOnSave, Tags);
             }
 
             public override int GetHashCode()

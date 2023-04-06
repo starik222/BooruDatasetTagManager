@@ -177,7 +177,7 @@ namespace BooruDatasetTagManager
             _formerValue = this.Text;
             string word = this.Text;
 
-            if (_values != null && word.Length > 2)
+            if (_values != null && word.Length > 0 && word.Length >= Program.Settings.ShowAutocompleteAfterCharCount)
             {
                 //string[] matches = null;
                 TagsDB.TagItem[] matches = null;
