@@ -21,7 +21,6 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <ApplicationIcon>BDTM.ico</ApplicationIcon>
-	<PublishTrimmed>true</PublishTrimmed>
   </PropertyGroup>
   <ItemGroup>
     <Compile Update="AutoCompleteTextBox.cs">
