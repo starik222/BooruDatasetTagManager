@@ -86,6 +86,8 @@ namespace BooruDatasetTagManager
             splitContainer1 = new System.Windows.Forms.SplitContainer();
             splitContainer2 = new System.Windows.Forms.SplitContainer();
             gridViewDS = new System.Windows.Forms.DataGridView();
+            button1 = new System.Windows.Forms.Button();
+            textBox1 = new System.Windows.Forms.TextBox();
             customTextBoxColumn1 = new CustomTextBoxColumn();
             contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(components);
             toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -434,7 +436,9 @@ namespace BooruDatasetTagManager
             gridViewAllTags.Size = new System.Drawing.Size(368, 647);
             gridViewAllTags.TabIndex = 2;
             gridViewAllTags.CellDoubleClick += dataGridView2_CellDoubleClick;
+            gridViewAllTags.SelectionChanged += gridViewAllTags_SelectionChanged;
             gridViewAllTags.Enter += gridView_Enter;
+            gridViewAllTags.KeyPress += gridViewAllTags_KeyPress;
             gridViewAllTags.Leave += gridView_Leave;
             // 
             // label3
@@ -619,6 +623,8 @@ namespace BooruDatasetTagManager
             // 
             // splitContainer1.Panel2
             // 
+            splitContainer1.Panel2.Controls.Add(button1);
+            splitContainer1.Panel2.Controls.Add(textBox1);
             splitContainer1.Panel2.Controls.Add(gridViewAllTags);
             splitContainer1.Panel2.Controls.Add(toolStrip1);
             splitContainer1.Panel2.Controls.Add(label3);
@@ -680,6 +686,26 @@ namespace BooruDatasetTagManager
             gridViewDS.KeyDown += gridViewDS_KeyDown;
             gridViewDS.Leave += gridView_Leave;
             gridViewDS.MouseDoubleClick += gridViewDS_MouseDoubleClick;
+            // 
+            // button1
+            // 
+            button1.Location = new System.Drawing.Point(344, 4);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(24, 23);
+            button1.TabIndex = 7;
+            button1.Text = "X";
+            button1.UseVisualStyleBackColor = true;
+            button1.Visible = false;
+            button1.Click += button1_Click;
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new System.Drawing.Point(76, 4);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new System.Drawing.Size(268, 23);
+            textBox1.TabIndex = 6;
+            textBox1.Visible = false;
+            textBox1.KeyDown += textBox1_KeyDown;
             // 
             // customTextBoxColumn1
             // 
@@ -809,6 +835,8 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private CustomTextBoxColumn ImageTags;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

@@ -60,6 +60,7 @@ namespace BooruDatasetTagManager
         private bool filterAnd = false;
         private int lastGridViewTagsHash = -1;
         private bool isLoading = false;
+        private List<string> selectedFiles = new List<string>();
 
 
         Dictionary<string, string> Trans = new Dictionary<string, string>();
@@ -828,19 +829,53 @@ namespace BooruDatasetTagManager
             return findTags;
         }
 
+        private void SaveSelectedInViewDs()
+        {
+            selectedFiles.Clear();
+            for (int i = 0; i < gridViewDS.SelectedRows.Count; i++)
+            {
+                selectedFiles.Add((string)gridViewDS.SelectedRows[i].Cells["ImageFilePath"].Value);
+            }
+        }
+
+        private void LoadSelectedInViewDs()
+        {
+            gridViewDS.ClearSelection();
+            bool foundSelected = false;
+            int firstDisplayed = 0;
+            for (int i = 0; i < gridViewDS.RowCount; i++)
+            {
+                if (selectedFiles.Contains((string)gridViewDS["ImageFilePath", i].Value))
+                {
+                    if (firstDisplayed == 0)
+                        firstDisplayed = i;
+                    gridViewDS.Rows[i].Selected = true;
+                    foundSelected = true;
+                }
+            }
+            if (!foundSelected && gridViewDS.RowCount > 0)
+            {
+                gridViewDS.Rows[0].Selected = true;
+            }
+            gridViewDS.FirstDisplayedScrollingRowIndex = firstDisplayed;
+        }
+
         private void SetFilter()
         {
             isLoading = true;
             if (gridViewAllTags.SelectedCells.Count > 0)
             {
+                SaveSelectedInViewDs();
                 if (isFiltered)
                 {
                     ResetFilter();
                 }
+
                 gridViewDS.DataSource = Program.DataManager.GetDataSource(DatasetManager.OrderType.Name, filterAnd, GetSelectedTags());
                 if (gridViewDS.RowCount == 0)
                     gridViewTags.Rows.Clear();
                 isFiltered = true;
+                LoadSelectedInViewDs();
                 toolStripButton14.Enabled = true;
             }
             isLoading = false;
@@ -851,9 +886,11 @@ namespace BooruDatasetTagManager
             isLoading = true;
             if (isFiltered)
             {
+                SaveSelectedInViewDs();
                 gridViewDS.DataSource = Program.DataManager.GetDataSource();
                 isFiltered = false;
                 toolStripButton14.Enabled = false;
+                LoadSelectedInViewDs();
             }
             isLoading = false;
         }
@@ -1486,6 +1523,82 @@ namespace BooruDatasetTagManager
         {
             if (sender is DataGridView grid)
                 grid.BorderStyle = BorderStyle.Fixed3D;
+        }
+
+        private void ShowAllTagsFilter(bool show)
+        {
+            if (!show)
+                textBox1.TextChanged -= TextBox1_TextChanged;
+            textBox1.Clear();
+            textBox1.Visible = show;
+            button1.Visible = show;
+            if (show)
+            {
+                textBox1.Focus();
+                textBox1.TextChanged += TextBox1_TextChanged;
+            }
+            else
+            {
+                gridViewAllTags.Focus();
+            }
+        }
+
+        private void TextBox1_TextChanged(object sender, EventArgs e)
+        {
+            if (textBox1.Text.Length > 0)
+            {
+                isLoading = true;
+                int index = Program.DataManager.AllTags.FindIndex(a => a.Tag.StartsWith(textBox1.Text));
+                if (index != -1)
+                {
+                    //gridViewAllTags.ClearSelection();
+                    //gridViewAllTags.Rows[index].Selected = true;
+                    gridViewAllTags.CurrentCell = gridViewAllTags.Rows[index].Cells[0];
+                    if (index < gridViewAllTags.FirstDisplayedScrollingRowIndex || index > gridViewAllTags.FirstDisplayedScrollingRowIndex + gridViewAllTags.DisplayedRowCount(false))
+                    {
+                        gridViewAllTags.FirstDisplayedScrollingRowIndex = index;
+                    }
+                }
+                else
+                {
+                    textBox1.Text = textBox1.Text.Substring(0, textBox1.Text.Length - 1);
+                    textBox1.SelectionStart = textBox1.TextLength;
+                }
+                isLoading = false;
+            }
+        }
+
+        private void gridViewAllTags_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ShowAllTagsFilter(true);
+            textBox1.Text = e.KeyChar.ToString();
+            textBox1.SelectionStart = 1;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ShowAllTagsFilter(false);
+        }
+
+        private void gridViewAllTags_SelectionChanged(object sender, EventArgs e)
+        {
+            if (!isLoading)
+                ShowAllTagsFilter(false);
+        }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            int pos = -1;
+            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
+            {
+                ShowAllTagsFilter(false);
+                if (e.KeyCode == Keys.Down)
+                    pos = 1;
+                int index = gridViewAllTags.CurrentCell.RowIndex;
+                gridViewAllTags.CurrentCell = gridViewAllTags.Rows[index + pos].Cells[0];
+            }
+
+
         }
     }
 }
