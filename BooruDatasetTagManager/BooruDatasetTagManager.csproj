@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFrameworks>net6.0-windows;net472</TargetFrameworks>
     <OutputType>WinExe</OutputType>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -44,6 +44,10 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+    <!-- Conditionally obtain references for the .NET Framework 4.7.2 target -->
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net472' ">
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="BDTM.ico" />
   </ItemGroup>
@@ -51,10 +55,7 @@
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-    <PackageReference Include="Microsoft.Windows.Compatibility" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Properties\Settings.settings">

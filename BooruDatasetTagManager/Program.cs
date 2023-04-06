@@ -18,7 +18,9 @@ namespace BooruDatasetTagManager
         static void Main()
         {
             Application.EnableVisualStyles();
+#if NET5_0_OR_GREATER
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
+#endif
             Application.SetCompatibleTextRenderingDefault(false);
             Settings = new AppSettings(Application.StartupPath);
             #region waitForm
