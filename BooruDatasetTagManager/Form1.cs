@@ -214,13 +214,13 @@ namespace BooruDatasetTagManager
                     {
                         int rowIndex = gridViewTags.Rows.Add();
                         DataGridViewRow row = gridViewTags.Rows[rowIndex];
-                        row.Tag = item.Key;
-                        row.Cells["ImageTags"].Value = i == 0 ? item.Key : "";
-                        row.Cells["ImageTags"].Tag = item.Value[i];
-                        row.Cells["Image"].Value = item.Value[i].ImageFilePath;
-                        row.Cells["Image"].Tag = item.Key;
-                        row.Cells["Name"].Value = item.Value[i].Name;
-                        row.Cells["Image"].Tag = item.Key;
+                        row.Tag = item.Key;//tag
+                        row.Cells["ImageTags"].Value = i == 0 ? item.Key : "";//tag
+                        row.Cells["ImageTags"].Tag = item.Value[i];//tagItem
+                        row.Cells["Image"].Value = item.Value[i].ImageFilePath;//ImgName
+                        row.Cells["Image"].Tag = item.Key;//tag
+                        row.Cells["Name"].Value = item.Value[i].Name;//ImgName
+                        row.Cells["Name"].Tag = item.Key;//tag
                     }
                 }
             }
@@ -252,6 +252,7 @@ namespace BooruDatasetTagManager
                     gridViewTags.Columns["Image"].Visible = false;
                     gridViewTags.Columns.Add("Name", "Name");
                     gridViewTags.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+                    gridViewTags.Columns["ImageTags"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 }
             }
         }
@@ -372,17 +373,17 @@ namespace BooruDatasetTagManager
             if (gridViewTags.SelectedCells.Count == 0 || gridViewTags.SelectedCells[0].RowIndex == 0)
                 return;
             int curIndex = gridViewTags.SelectedCells[0].RowIndex;
-            string upperValue = (string)gridViewTags[0, curIndex - 1].Value;
+            string upperValue = (string)gridViewTags["ImageTags", curIndex - 1].Value;
             if (isTranslate)
             {
-                string upperValueTrans = (string)gridViewTags[1, curIndex - 1].Value;
-                gridViewTags[1, curIndex - 1].Value = gridViewTags[1, curIndex].Value;
-                gridViewTags[1, curIndex].Value = upperValueTrans;
+                string upperValueTrans = (string)gridViewTags["Translation", curIndex - 1].Value;
+                gridViewTags["Translation", curIndex - 1].Value = gridViewTags[1, curIndex].Value;
+                gridViewTags["Translation", curIndex].Value = upperValueTrans;
             }
-            gridViewTags[0, curIndex - 1].Value = gridViewTags[0, curIndex].Value;
-            gridViewTags[0, curIndex].Value = upperValue;
+            gridViewTags["ImageTags", curIndex - 1].Value = gridViewTags["ImageTags", curIndex].Value;
+            gridViewTags["ImageTags", curIndex].Value = upperValue;
             gridViewTags.ClearSelection();
-            gridViewTags[0, curIndex - 1].Selected = true;
+            gridViewTags["ImageTags", curIndex - 1].Selected = true;
         }
 
         private void toolStripButton5_Click(object sender, EventArgs e)
@@ -390,19 +391,19 @@ namespace BooruDatasetTagManager
             if (gridViewTags.SelectedCells.Count == 0 || gridViewTags.SelectedCells[0].RowIndex == gridViewTags.RowCount - 1)
                 return;
             int curIndex = gridViewTags.SelectedCells[0].RowIndex;
-            string lowerValue = (string)gridViewTags[0, curIndex + 1].Value;
+            string lowerValue = (string)gridViewTags["ImageTags", curIndex + 1].Value;
 
             if (isTranslate)
             {
-                string lowerValueTrans = (string)gridViewTags[1, curIndex + 1].Value;
-                gridViewTags[1, curIndex + 1].Value = gridViewTags[1, curIndex].Value;
-                gridViewTags[1, curIndex].Value = lowerValueTrans;
+                string lowerValueTrans = (string)gridViewTags["Translation", curIndex + 1].Value;
+                gridViewTags["Translation", curIndex + 1].Value = gridViewTags[1, curIndex].Value;
+                gridViewTags["Translation", curIndex].Value = lowerValueTrans;
             }
 
-            gridViewTags[0, curIndex + 1].Value = gridViewTags[0, curIndex].Value;
-            gridViewTags[0, curIndex].Value = lowerValue;
+            gridViewTags["ImageTags", curIndex + 1].Value = gridViewTags[0, curIndex].Value;
+            gridViewTags["ImageTags", curIndex].Value = lowerValue;
             gridViewTags.ClearSelection();
-            gridViewTags[0, curIndex + 1].Selected = true;
+            gridViewTags["ImageTags", curIndex + 1].Selected = true;
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -422,7 +423,7 @@ namespace BooruDatasetTagManager
                 List<string> nTags = new List<string>();
                 for (int i = 0; i < gridViewTags.RowCount; i++)
                 {
-                    nTags.Add((string)gridViewTags[0, i].Value);
+                    nTags.Add((string)gridViewTags["ImageTags", i].Value);
                 }
                 Program.DataManager.DataSet[(string)gridViewTags.Tag].Tags = nTags;
             }
@@ -706,7 +707,7 @@ namespace BooruDatasetTagManager
                 tagsBuffer.Clear();
                 for (int i = 0; i < gridViewTags.RowCount; i++)
                 {
-                    tagsBuffer.Add((string)gridViewTags[0, i].Value);
+                    tagsBuffer.Add((string)gridViewTags["ImageTags", i].Value);
                 }
                 SetStatus("Copied!");
             }
@@ -775,7 +776,8 @@ namespace BooruDatasetTagManager
             {
                 Program.DataManager.DeleteTagFromAll(item.Value, filtered);
                 RemoveTagFromImageTags(item.Value);
-                gridViewAllTags.Rows.RemoveAt(item.Key);
+                if (!Program.DataManager.AllTags.Exists(a => a.Tag == item.Value))
+                    gridViewAllTags.Rows.RemoveAt(item.Key);
             }
             Program.DataManager.UpdateData();
         }
@@ -927,7 +929,7 @@ namespace BooruDatasetTagManager
             {
                 gridViewTags.Rows.Clear();
                 string text = Clipboard.GetText();
-                string[] lines = text.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                string[] lines = text.Split(new string[] { Program.Settings.SeparatorOnLoad }, StringSplitOptions.RemoveEmptyEntries);
                 for (int i = 0; i < lines.Length; i++)
                     gridViewTags.Rows.Add(lines[i].ToLower().Trim());
 
@@ -940,9 +942,9 @@ namespace BooruDatasetTagManager
         {
             List<string> lines = new List<string>();
             for (int i = 0; i < gridViewTags.RowCount; i++)
-                lines.Add((string)gridViewTags[0, i].Value);
+                lines.Add((string)gridViewTags["ImageTags", i].Value);
             Form_Edit fPrint = new Form_Edit();
-            fPrint.textBox1.Text = string.Join(", ", lines.Distinct().Where(a => !String.IsNullOrWhiteSpace(a)));
+            fPrint.textBox1.Text = string.Join(Program.Settings.SeparatorOnSave, lines.Distinct().Where(a => !String.IsNullOrWhiteSpace(a)));
             fPrint.Show();
         }
 
@@ -978,7 +980,7 @@ namespace BooruDatasetTagManager
             List<string> tags = new List<string>();
             for (int i = 0; i < gridViewTags.RowCount; i++)
             {
-                tags.Add((string)gridViewTags[0, i].Value);
+                tags.Add((string)gridViewTags["ImageTags", i].Value);
             }
             if (MessageBox.Show("Set tag list to empty images only?\nYes - only empty, No - to all images.", "Tag setting option", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
@@ -1079,7 +1081,8 @@ namespace BooruDatasetTagManager
                 {
                     if (e.RowIndex != previewRowIndex)
                     {
-                        var dataItem = Program.DataManager.DataSet[(string)gridViewTags["Image", e.RowIndex].Value];
+                        //var dataItem = Program.DataManager.DataSet[(string)gridViewTags["Image", e.RowIndex].Value];
+                        var dataItem = (DataItem)gridViewTags["ImageTags", e.RowIndex].Tag;
                         previewPicBox.Size = new Size(Program.Settings.PreviewSize, Program.Settings.PreviewSize);
                         previewPicBox.Image = dataItem.Img;
                         previewPicBox.SizeMode = PictureBoxSizeMode.AutoSize;
@@ -1152,6 +1155,7 @@ namespace BooruDatasetTagManager
                     else
                     {
                         gridViewTags["Image", e.RowIndex].Tag = gridViewTags["ImageTags", e.RowIndex].Value;
+                        gridViewTags["Name", e.RowIndex].Tag = gridViewTags["ImageTags", e.RowIndex].Value;
                     }
                 }
             }
@@ -1187,22 +1191,27 @@ namespace BooruDatasetTagManager
                 statusLabel.Text = "The number of selected images must be greater than 1";
                 return;
             }
-            List<string> selectedImages = new List<string>();
+            //List<string> selectedImages = new List<string>();
+            //for (int i = 0; i < gridViewDS.SelectedRows.Count; i++)
+            //{
+            //    selectedImages.Add((string)gridViewDS.SelectedRows[i].Cells["Name"].Value);
+            //}
+            List<DataItem> selectedImages = new List<DataItem>();
             for (int i = 0; i < gridViewDS.SelectedRows.Count; i++)
             {
-                selectedImages.Add((string)gridViewDS.SelectedRows[i].Cells["Name"].Value);
+                selectedImages.Add(Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[i].Cells["ImageFilePath"].Value]);
             }
 
-            selectedImages.Sort(new FileNamesComparer());
+            selectedImages.Sort((a, b) => FileNamesComparer.StrCmpLogicalW(a.Name, b.Name));
 
-            List<KeyValuePair<int, string>> alreadyContainsImages = new List<KeyValuePair<int, string>>();
+            List<KeyValuePair<int, DataItem>> alreadyContainsImages = new List<KeyValuePair<int, DataItem>>();
 
 
             for (int i = 0; i < gridViewTags.RowCount; i++)
             {
                 if ((string)gridViewTags.Rows[i].Tag == tag)
                 {
-                    alreadyContainsImages.Add(new KeyValuePair<int, string>(i, (string)gridViewTags["Image", i].Value));
+                    alreadyContainsImages.Add(new KeyValuePair<int, DataItem>(i, (DataItem)gridViewTags["ImageTags", i].Tag));
                 }
             }
             if (alreadyContainsImages.Count > 0)
@@ -1214,10 +1223,15 @@ namespace BooruDatasetTagManager
                 int insertIndex = alreadyContainsImages.Max(a => a.Key) + 1;
                 for (int i = 0; i < selectedImages.Count; i++)
                 {
-                    gridViewTags.Rows.Insert(insertIndex, "", selectedImages[i]);
-                    gridViewTags.Rows[insertIndex].Tag = tag;
-                    gridViewTags["ImageTags", insertIndex].Tag = selectedImages[i];
-                    gridViewTags["Image", insertIndex].Tag = tag;
+                    gridViewTags.Rows.Insert(insertIndex, 1);
+                    DataGridViewRow row = gridViewTags.Rows[insertIndex];
+                    row.Tag = tag;
+                    row.Cells["ImageTags"].Value = "";
+                    row.Cells["ImageTags"].Tag = selectedImages[i];
+                    row.Cells["Image"].Value = selectedImages[i].ImageFilePath;
+                    row.Cells["Image"].Tag = tag;
+                    row.Cells["Name"].Value = selectedImages[i].Name;
+                    row.Cells["Name"].Tag = tag;
                     insertIndex++;
                 }
             }
@@ -1230,8 +1244,10 @@ namespace BooruDatasetTagManager
                     row.Tag = tag;
                     row.Cells["ImageTags"].Value = i == 0 ? tag : "";
                     row.Cells["ImageTags"].Tag = selectedImages[i];
-                    row.Cells["Image"].Value = selectedImages[i];
+                    row.Cells["Image"].Value = selectedImages[i].ImageFilePath;
                     row.Cells["Image"].Tag = tag;
+                    row.Cells["Name"].Value = selectedImages[i].Name;
+                    row.Cells["Name"].Tag = tag;
                 }
             }
         }

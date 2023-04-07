@@ -217,6 +217,7 @@ namespace BooruDatasetTagManager
                 if (item.Tags.Contains(tag))
                     item.Tags.Remove(tag);
             }
+            UpdateData();
         }
 
 
