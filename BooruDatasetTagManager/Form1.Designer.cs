@@ -136,7 +136,7 @@ namespace BooruDatasetTagManager
             gridViewTags.Name = "gridViewTags";
             gridViewTags.RowHeadersVisible = false;
             gridViewTags.RowHeadersWidth = 72;
-            gridViewTags.RowTemplate.Height = 28;
+            gridViewTags.RowTemplate.Height = 29;
             gridViewTags.Size = new System.Drawing.Size(369, 647);
             gridViewTags.TabIndex = 2;
             gridViewTags.CellEndEdit += gridViewTags_CellEndEdit;
@@ -431,7 +431,7 @@ namespace BooruDatasetTagManager
             gridViewAllTags.ReadOnly = true;
             gridViewAllTags.RowHeadersVisible = false;
             gridViewAllTags.RowHeadersWidth = 72;
-            gridViewAllTags.RowTemplate.Height = 28;
+            gridViewAllTags.RowTemplate.Height = 29;
             gridViewAllTags.RowTemplate.ReadOnly = true;
             gridViewAllTags.Size = new System.Drawing.Size(368, 647);
             gridViewAllTags.TabIndex = 2;
