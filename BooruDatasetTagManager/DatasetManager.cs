@@ -272,10 +272,14 @@ namespace BooruDatasetTagManager
 
             imgs = imgs.Where(a => imagesExt.Contains(Path.GetExtension(a).ToLower())).OrderBy(a => a, new FileNamesComparer()).ToArray();
             int imgSize = Program.Settings.PreviewSize;
+            object locker = new object();
             imgs.AsParallel().ForAll(x =>
             {
-                var dt = new DataItem(x, imgSize, fixTags);
-                DataSet.TryAdd(dt.ImageFilePath, dt);
+                lock (locker)
+                {
+                    var dt = new DataItem(x, imgSize, fixTags);
+                    DataSet.TryAdd(dt.ImageFilePath, dt);
+                }
             });
             UpdateDatasetHash();
             IsLossLoaded = false;
@@ -458,7 +462,11 @@ namespace BooruDatasetTagManager
                         Tags[i] = Tags[i].Trim();
                         if (fixTags)
                         {
-                            Tags[i] = Tags[i].Replace('_', ' ').Replace("(", "\\(").Replace(")", "\\)");
+                            Tags[i] = Tags[i].Replace('_', ' ');
+                            if (!Tags[i].Contains("\\(") && Tags[i].Contains('('))
+                                Tags[i] = Tags[i].Replace("(", "\\(");
+                            if (!Tags[i].Contains("\\)") && Tags[i].Contains(')'))
+                                Tags[i] = Tags[i].Replace(")", "\\)");
                         }
                     }
                 }
