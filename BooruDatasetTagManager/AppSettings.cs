@@ -22,6 +22,7 @@ namespace BooruDatasetTagManager
         public string SeparatorOnLoad { get; set; } = ",";
         public string SeparatorOnSave { get; set; } = ", ";
         public int ShowAutocompleteAfterCharCount { get; set; } = 3;
+        public bool AskSaveChanges { get; set; } = true;
         private string settingsFile;
 
         public AppSettings(string appDir)
@@ -55,6 +56,7 @@ namespace BooruDatasetTagManager
                 SeparatorOnLoad = tempSettings.SeparatorOnLoad;
                 SeparatorOnSave = tempSettings.SeparatorOnSave;
                 ShowAutocompleteAfterCharCount = tempSettings.ShowAutocompleteAfterCharCount;
+                AskSaveChanges = tempSettings.AskSaveChanges;
             }
         }
 

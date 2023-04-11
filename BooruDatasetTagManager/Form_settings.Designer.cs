@@ -53,6 +53,7 @@ namespace BooruDatasetTagManager
             checkBox1 = new System.Windows.Forms.CheckBox();
             label3 = new System.Windows.Forms.Label();
             comboBox2 = new System.Windows.Forms.ComboBox();
+            checkBox3 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
@@ -140,6 +141,7 @@ namespace BooruDatasetTagManager
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(checkBox3);
             tabPage1.Controls.Add(textBox2);
             tabPage1.Controls.Add(label7);
             tabPage1.Controls.Add(textBox1);
@@ -323,6 +325,16 @@ namespace BooruDatasetTagManager
             comboBox2.Size = new System.Drawing.Size(263, 23);
             comboBox2.TabIndex = 1;
             // 
+            // checkBox3
+            // 
+            checkBox3.AutoSize = true;
+            checkBox3.Location = new System.Drawing.Point(7, 218);
+            checkBox3.Name = "checkBox3";
+            checkBox3.Size = new System.Drawing.Size(288, 19);
+            checkBox3.TabIndex = 9;
+            checkBox3.Text = "Prompt to save changes when changing selection";
+            checkBox3.UseVisualStyleBackColor = true;
+            // 
             // Form_settings
             // 
             AcceptButton = button1;
@@ -374,5 +386,6 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.CheckBox checkBox3;
     }
 }

@@ -1053,11 +1053,16 @@ namespace BooruDatasetTagManager
                 {
                     if (lastGridViewTagsHash != GetgridViewTagsHash())
                     {
-                        if (MessageBox.Show("The list of tags has been changed. Save changes?", "Saving changes",
-                            MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        if (Program.Settings.AskSaveChanges)
                         {
-                            ApplyTagsChanges();
+                            if (MessageBox.Show("The list of tags has been changed. Save changes?", "Saving changes",
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                            {
+                                ApplyTagsChanges();
+                            }
                         }
+                        else
+                            ApplyTagsChanges();
                     }
                 }
                 LoadSelectedImageToGrid();

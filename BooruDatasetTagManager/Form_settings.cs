@@ -35,6 +35,7 @@ namespace BooruDatasetTagManager
             textBox2.Text = Program.Settings.SeparatorOnSave;
             numericUpDown1.Value = Program.Settings.PreviewSize;
             numericUpDown2.Value = Program.Settings.ShowAutocompleteAfterCharCount;
+            checkBox3.Checked = Program.Settings.AskSaveChanges;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -50,6 +51,7 @@ namespace BooruDatasetTagManager
             Program.Settings.FixTagsOnLoad = checkBox2.Checked;
             Program.Settings.SeparatorOnLoad = textBox1.Text;
             Program.Settings.SeparatorOnSave = textBox2.Text;
+            Program.Settings.AskSaveChanges = checkBox3.Checked;
             Program.Settings.SaveSettings();
             DialogResult = DialogResult.OK;
         }

@@ -272,14 +272,10 @@ namespace BooruDatasetTagManager
 
             imgs = imgs.Where(a => imagesExt.Contains(Path.GetExtension(a).ToLower())).OrderBy(a => a, new FileNamesComparer()).ToArray();
             int imgSize = Program.Settings.PreviewSize;
-            object locker = new object();
             imgs.AsParallel().ForAll(x =>
             {
-                lock (locker)
-                {
-                    var dt = new DataItem(x, imgSize, fixTags);
-                    DataSet.TryAdd(dt.ImageFilePath, dt);
-                }
+                var dt = new DataItem(x, imgSize, fixTags);
+                DataSet.TryAdd(dt.ImageFilePath, dt);
             });
             UpdateDatasetHash();
             IsLossLoaded = false;
