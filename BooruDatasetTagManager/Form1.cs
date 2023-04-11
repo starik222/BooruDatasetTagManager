@@ -982,13 +982,16 @@ namespace BooruDatasetTagManager
             {
                 tags.Add((string)gridViewTags["ImageTags", i].Value);
             }
-            if (MessageBox.Show("Set tag list to empty images only?\nYes - only empty, No - to all images.", "Tag setting option", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            switch (MessageBox.Show("Set tag list to empty images only?\nYes - only empty, No - to all images, Cancel - do nothing.", "Tag setting option", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
             {
-                Program.DataManager.SetTagListToAll(tags, true);
-            }
-            else
-            {
-                Program.DataManager.SetTagListToAll(tags, false);
+                case DialogResult.Yes:
+                    Program.DataManager.SetTagListToAll(tags, true);
+                    break;
+                case DialogResult.No:
+                    Program.DataManager.SetTagListToAll(tags, false);
+                    break;
+                case DialogResult.Cancel:
+                    return;
             }
             Program.DataManager.UpdateData();
             BindTagList();
