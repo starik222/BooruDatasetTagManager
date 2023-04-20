@@ -123,9 +123,6 @@ namespace BooruDatasetTagManager
                 if (match.Success)
                 {
                     string tagName = match.Groups[1].Value;
-                    tagName = tagName.Replace('_', ' ');
-                    tagName = tagName.Replace("(", "\\(");
-                    tagName = tagName.Replace(")", "\\)");
                     string[] aliases = match.Groups[4].Value.Replace("\"", "").Split(splitter, StringSplitOptions.RemoveEmptyEntries);
                     AddTag(tagName, Convert.ToInt32(match.Groups[3].Value));
                     foreach (var al in aliases)
@@ -145,6 +142,9 @@ namespace BooruDatasetTagManager
         {
             if (string.IsNullOrWhiteSpace(tag))
                 return;
+            tag = tag.Replace('_', ' ');
+            tag = tag.Replace("\\(", "(");
+            tag = tag.Replace("\\)", ")");
             if (Tags.Exists(a => a.Parent == tag))
                 return;
             tag = tag.Trim().ToLower();

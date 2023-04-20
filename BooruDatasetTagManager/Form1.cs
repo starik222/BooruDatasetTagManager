@@ -668,7 +668,7 @@ namespace BooruDatasetTagManager
                 return;
             }
             ApplyTagsChanges();
-            Program.DataManager.SaveAll();
+            Program.DataManager.SaveAll(Program.Settings.FixTagsOnSave);
             Program.DataManager.UpdateDatasetHash();
             SetStatus("Saved!");
             MessageBox.Show("Saved!");
@@ -1004,7 +1004,7 @@ namespace BooruDatasetTagManager
                 DialogResult result = MessageBox.Show("The dataset has been changed,\ndo you want to save the changes?", "Saving changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    Program.DataManager.SaveAll();
+                    Program.DataManager.SaveAll(Program.Settings.FixTagsOnSave);
                 }
                 else if (result == DialogResult.Cancel)
                     e.Cancel = true;

@@ -31,6 +31,7 @@ namespace BooruDatasetTagManager
             comboBox4.Items.AddRange(Enum.GetNames(typeof(AutocompleteSort)));
             comboBox4.SelectedItem = Program.Settings.AutocompleteSort.ToString();
             checkBox2.Checked = Program.Settings.FixTagsOnLoad;
+            checkBox4.Checked = Program.Settings.FixTagsOnSave;
             textBox1.Text = Program.Settings.SeparatorOnLoad;
             textBox2.Text = Program.Settings.SeparatorOnSave;
             numericUpDown1.Value = Program.Settings.PreviewSize;
@@ -49,6 +50,7 @@ namespace BooruDatasetTagManager
             Program.Settings.AutocompleteMode = (AutocompleteMode)Enum.Parse(typeof(AutocompleteMode), comboBox3.SelectedItem.ToString(), true);
             Program.Settings.AutocompleteSort = (AutocompleteSort)Enum.Parse(typeof(AutocompleteSort), comboBox4.SelectedItem.ToString(), true);
             Program.Settings.FixTagsOnLoad = checkBox2.Checked;
+            Program.Settings.FixTagsOnSave = checkBox4.Checked;
             Program.Settings.SeparatorOnLoad = textBox1.Text;
             Program.Settings.SeparatorOnSave = textBox2.Text;
             Program.Settings.AskSaveChanges = checkBox3.Checked;

@@ -33,7 +33,7 @@ namespace BooruDatasetTagManager
             CommonTags = new List<TagValue>();
         }
 
-        public bool SaveAll()
+        public bool SaveAll(bool fixTags)
         {
             bool saved = false;
             foreach (var item in DataSet)
@@ -41,7 +41,20 @@ namespace BooruDatasetTagManager
                 if (item.Value.IsModified)
                 {
                     item.Value.DeduplicateTags();
-                    File.WriteAllText(item.Value.TextFilePath, string.Join(Program.Settings.SeparatorOnSave, item.Value.Tags));
+                    if (!fixTags)
+                        File.WriteAllText(item.Value.TextFilePath, string.Join(Program.Settings.SeparatorOnSave, item.Value.Tags));
+                    else
+                    {
+                        List<string> tags = new List<string>(item.Value.Tags);
+                        for (int i = 0; i < tags.Count; i++)
+                        {
+                            if (!tags[i].Contains("\\(") && tags[i].Contains('('))
+                                tags[i] = tags[i].Replace("(", "\\(");
+                            if (!tags[i].Contains("\\)") && tags[i].Contains(')'))
+                                tags[i] = tags[i].Replace(")", "\\)");
+                        }
+                        File.WriteAllText(item.Value.TextFilePath, string.Join(Program.Settings.SeparatorOnSave, tags));
+                    }
                     saved = true;
                 }
             }
@@ -459,10 +472,8 @@ namespace BooruDatasetTagManager
                         if (fixTags)
                         {
                             Tags[i] = Tags[i].Replace('_', ' ');
-                            if (!Tags[i].Contains("\\(") && Tags[i].Contains('('))
-                                Tags[i] = Tags[i].Replace("(", "\\(");
-                            if (!Tags[i].Contains("\\)") && Tags[i].Contains(')'))
-                                Tags[i] = Tags[i].Replace(")", "\\)");
+                            Tags[i] = Tags[i].Replace("\\(", "(");
+                            Tags[i] = Tags[i].Replace("\\)", ")");
                         }
                     }
                 }
