@@ -23,7 +23,7 @@ namespace BooruDatasetTagManager
 
         public bool IsLossLoaded { get; private set; }
 
-        private bool lastAndOperation = false;
+        private FilterType lastAndOperation = FilterType.Or;
         private IEnumerable<string> lastTagsFilter = null;
 
         public DatasetManager()
@@ -89,15 +89,7 @@ namespace BooruDatasetTagManager
             IEnumerable<DataItem> lst = null;
             if (useFilter)
             {
-                if (lastTagsFilter == null)
-                    lst = DataSet.Select(a => a.Value);
-                else
-                {
-                    if (lastAndOperation)
-                        lst = DataSet.Values.Where(a => lastTagsFilter.All(t => a.Tags.Contains(t))).ToList();
-                    else
-                        lst = DataSet.Values.Where(a => lastTagsFilter.Any(t => a.Tags.Contains(t))).ToList();
-                }
+                lst = FilterLogic(lastAndOperation, lastTagsFilter);
             }
             else
                 lst = DataSet.Select(a => a.Value);
@@ -175,48 +167,95 @@ namespace BooruDatasetTagManager
             return GetDataSource(orderBy, lastAndOperation, lastTagsFilter);
         }
 
-        public List<DataItem> GetDataSource(OrderType orderBy = OrderType.Name, bool andOp = false, IEnumerable<string> filterByTags = null)
+        /// <summary>
+        /// Retrieves a list of DataItem objects, filtered and ordered based on the given parameters.
+        /// </summary>
+        /// <param name="orderBy">An optional parameter that specifies how the resulting list should be sorted.</param>
+        /// <param name="andOp">An optional parameter that determines the logical operation to be used when filtering by tags.</param>
+        /// <param name="filterByTags">An optional parameter that contains a list of tags to filter the data items by.</param>
+        /// <returns>A filtered and ordered list of DataItem objects.</returns>
+        public List<DataItem> GetDataSource(OrderType orderBy = OrderType.Name, FilterType andOp = FilterType.Or, IEnumerable<string> filterByTags = null)
         {
-            List<DataItem> items = null;
-            lastAndOperation = andOp;
+            // Store the last set of tags used for filtering. FilterLogic will use this value unless passed custom one
             lastTagsFilter = filterByTags;
-            if (filterByTags != null)
-            {
-                if (andOp)
-                    items = DataSet.Values.Where(a => filterByTags.All(t => a.Tags.Contains(t))).ToList();
-                else
-                    items = DataSet.Values.Where(a => filterByTags.Any(t => a.Tags.Contains(t))).ToList();
-            }
-            else
-                items = DataSet.Values.ToList();
+
+            // Declare a list to store the filtered and ordered DataItem objects.
+            List<DataItem> items = FilterLogic(andOp);
+
+            // Sort the data items based on the orderBy parameter.
             switch (orderBy)
             {
                 case OrderType.Name:
                     {
+                        // Sort data items by their Name property using a custom string comparison method.
                         items.Sort((a, b) => FileNamesComparer.StrCmpLogicalW(a.Name, b.Name));
                         break;
                     }
                 case OrderType.Loss:
                     {
+                        // Sort data items by their Loss property.
                         items.Sort((a, b) => a.Loss.CompareTo(b.Loss));
                         break;
                     }
                 case OrderType.LastLoss:
                     {
+                        // Sort data items by their LastLoss property.
                         items.Sort((a, b) => a.LastLoss.CompareTo(b.LastLoss));
                         break;
                     }
                 case OrderType.ImageModifyTime:
                     {
+                        // Sort data items by their ImageModifyTime property.
                         items.Sort((a, b) => a.ImageModifyTime.CompareTo(b.ImageModifyTime));
                         break;
                     }
                 case OrderType.TagsModifyTime:
                     {
+                        // Sort data items by their TagsModifyTime property.
                         items.Sort((a, b) => a.TagsModifyTime.CompareTo(b.TagsModifyTime));
                         break;
                     }
             }
+            // Return the filtered and sorted list of DataItem objects.
+            return items;
+        }
+
+        public List<DataItem> FilterLogic(FilterType andOp = FilterType.Or, IEnumerable<string> filterByTags = null)
+        {
+            List<DataItem> items = null;
+            if (filterByTags != null)
+                lastTagsFilter = filterByTags;
+            // Check if there are tags to filter by.
+            if (lastTagsFilter != null)
+            {
+                switch (andOp)
+                {
+                    case FilterType.And:
+                        // If the logical operation is AND, filter the data items by requiring all tags to be present.
+                        items = DataSet.Values.Where(a => lastTagsFilter.All(t => a.Tags.Contains(t))).ToList();
+                        break;
+                    case FilterType.Or:
+                        // If the logical operation is OR, filter the data items by requiring at least one tag to be present.
+                        items = DataSet.Values.Where(a => lastTagsFilter.Any(t => a.Tags.Contains(t))).ToList();
+                        break;
+                    case FilterType.Not:
+                        // If the logical operation is NOT, filter the data items by requiring none of the tags to be present.
+                        items = DataSet.Values.Where(a => lastTagsFilter.All(t => !a.Tags.Contains(t))).ToList();
+                        break;
+                    case FilterType.Xor:
+                        // If the logical operation is XOR, filter the data items by requiring exactly one tag to be present.
+                        items = DataSet.Values.Where(a => lastTagsFilter.Count(t => a.Tags.Contains(t)) == 1).ToList();
+                        break;
+                    default:
+                        throw new ArgumentException($"Invalid filter type: {andOp}");
+                }
+                // Store the last logical operation used for filtering, moved here so it is only updated if we actually perform the operation
+                lastAndOperation = andOp;
+            }
+            // If there are no tags to filter by, return all data items.
+            else
+                items = DataSet.Values.ToList();
+
             return items;
         }
 

@@ -26,4 +26,12 @@ namespace BooruDatasetTagManager
         Alphabetical,
         ByCount
     }
+
+    public enum FilterType
+    {
+        And,
+        Or,
+        Not,
+        Xor
+    }
 }

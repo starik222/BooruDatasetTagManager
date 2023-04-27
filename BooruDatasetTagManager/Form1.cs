@@ -57,7 +57,7 @@ namespace BooruDatasetTagManager
         private bool isShowPreview = false;
         private PictureBox previewPicBox;
         private int previewRowIndex = -1;
-        private bool filterAnd = false;
+        private FilterType filterAnd = FilterType.Or;
         private int lastGridViewTagsHash = -1;
         private bool isLoading = false;
         private List<string> selectedFiles = new List<string>();
@@ -859,7 +859,15 @@ namespace BooruDatasetTagManager
             {
                 gridViewDS.Rows[0].Selected = true;
             }
-            gridViewDS.FirstDisplayedScrollingRowIndex = firstDisplayed;
+            // Will throw an exception by itself if there is nothing found due to being set to -1 internally when the list is loaded in empty. Lazy bypass of 
+            try
+            {
+                gridViewDS.FirstDisplayedScrollingRowIndex = firstDisplayed;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
 
         private void SetFilter()
@@ -1126,16 +1134,28 @@ namespace BooruDatasetTagManager
 
         private void toolStripButton18_Click(object sender, EventArgs e)
         {
-            if (filterAnd)
+            switch (filterAnd)
             {
-                filterAnd = false;
-                toolStripButton18.Image = Properties.Resources.ORIcon;
+                case FilterType.Not:
+                    filterAnd = FilterType.Or;
+                    toolStripButton18.Image = Properties.Resources.ORIcon;
+                    break;
+                case FilterType.Or:
+                    filterAnd = FilterType.Xor;
+                    toolStripButton18.Image = Properties.Resources.XORIcon;
+                    break;
+                case FilterType.Xor:
+                    filterAnd = FilterType.And;
+                    toolStripButton18.Image = Properties.Resources.ANDIcon;
+                    break;
+                case FilterType.And:
+                    filterAnd = FilterType.Not;
+                    toolStripButton18.Image = Properties.Resources.NOTIcon;
+                    break;
+                default:
+                    throw new ArgumentException($"Invalid filter type: {filterAnd}");
             }
-            else
-            {
-                filterAnd = true;
-                toolStripButton18.Image = Properties.Resources.ANDIcon;
-            }
+            SetFilter();
         }
 
         private void gridViewTags_CellEndEdit(object sender, DataGridViewCellEventArgs e)
