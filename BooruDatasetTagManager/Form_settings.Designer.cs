@@ -42,6 +42,7 @@ namespace BooruDatasetTagManager
             label7 = new System.Windows.Forms.Label();
             textBox1 = new System.Windows.Forms.TextBox();
             label6 = new System.Windows.Forms.Label();
+            checkBox4 = new System.Windows.Forms.CheckBox();
             checkBox2 = new System.Windows.Forms.CheckBox();
             comboBox4 = new System.Windows.Forms.ComboBox();
             label5 = new System.Windows.Forms.Label();
@@ -50,15 +51,25 @@ namespace BooruDatasetTagManager
             label9 = new System.Windows.Forms.Label();
             label8 = new System.Windows.Forms.Label();
             numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            tabPage3 = new System.Windows.Forms.TabPage();
+            button4 = new System.Windows.Forms.Button();
+            numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            label14 = new System.Windows.Forms.Label();
+            label11 = new System.Windows.Forms.Label();
+            button3 = new System.Windows.Forms.Button();
+            label12 = new System.Windows.Forms.Label();
+            label13 = new System.Windows.Forms.Label();
+            label10 = new System.Windows.Forms.Label();
             tabPage2 = new System.Windows.Forms.TabPage();
             checkBox1 = new System.Windows.Forms.CheckBox();
             label3 = new System.Windows.Forms.Label();
             comboBox2 = new System.Windows.Forms.ComboBox();
-            checkBox4 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
+            tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown3).BeginInit();
             tabPage2.SuspendLayout();
             SuspendLayout();
             // 
@@ -132,6 +143,7 @@ namespace BooruDatasetTagManager
             // 
             tabControl1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             tabControl1.Controls.Add(tabPage1);
+            tabControl1.Controls.Add(tabPage3);
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Location = new System.Drawing.Point(1, 2);
             tabControl1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -208,6 +220,16 @@ namespace BooruDatasetTagManager
             label6.Size = new System.Drawing.Size(100, 15);
             label6.TabIndex = 7;
             label6.Text = "Separator on load";
+            // 
+            // checkBox4
+            // 
+            checkBox4.AutoSize = true;
+            checkBox4.Location = new System.Drawing.Point(8, 137);
+            checkBox4.Name = "checkBox4";
+            checkBox4.Size = new System.Drawing.Size(216, 19);
+            checkBox4.TabIndex = 6;
+            checkBox4.Text = "Fix tags on saving ('('->'\\(', ')'->'\\)' )";
+            checkBox4.UseVisualStyleBackColor = true;
             // 
             // checkBox2
             // 
@@ -290,6 +312,95 @@ namespace BooruDatasetTagManager
             numericUpDown2.TabIndex = 3;
             numericUpDown2.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
+            // tabPage3
+            // 
+            tabPage3.Controls.Add(button4);
+            tabPage3.Controls.Add(numericUpDown3);
+            tabPage3.Controls.Add(label14);
+            tabPage3.Controls.Add(label11);
+            tabPage3.Controls.Add(button3);
+            tabPage3.Controls.Add(label12);
+            tabPage3.Controls.Add(label13);
+            tabPage3.Controls.Add(label10);
+            tabPage3.Location = new System.Drawing.Point(4, 24);
+            tabPage3.Name = "tabPage3";
+            tabPage3.Size = new System.Drawing.Size(445, 303);
+            tabPage3.TabIndex = 2;
+            tabPage3.Text = "UI";
+            tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            button4.Location = new System.Drawing.Point(364, 54);
+            button4.Name = "button4";
+            button4.Size = new System.Drawing.Size(75, 23);
+            button4.TabIndex = 4;
+            button4.Text = "Change...";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
+            // numericUpDown3
+            // 
+            numericUpDown3.Location = new System.Drawing.Point(155, 32);
+            numericUpDown3.Name = "numericUpDown3";
+            numericUpDown3.Size = new System.Drawing.Size(62, 23);
+            numericUpDown3.TabIndex = 3;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new System.Drawing.Point(155, 58);
+            label14.Name = "label14";
+            label14.Size = new System.Drawing.Size(12, 15);
+            label14.TabIndex = 2;
+            label14.Text = "-";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new System.Drawing.Point(155, 11);
+            label11.Name = "label11";
+            label11.Size = new System.Drawing.Size(12, 15);
+            label11.TabIndex = 2;
+            label11.Text = "-";
+            // 
+            // button3
+            // 
+            button3.Location = new System.Drawing.Point(364, 8);
+            button3.Name = "button3";
+            button3.Size = new System.Drawing.Size(75, 23);
+            button3.TabIndex = 1;
+            button3.Text = "Change...";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new System.Drawing.Point(9, 34);
+            label12.Name = "label12";
+            label12.Size = new System.Drawing.Size(138, 15);
+            label12.TabIndex = 0;
+            label12.Text = "Tags gridview row height";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new System.Drawing.Point(9, 58);
+            label13.Name = "label13";
+            label13.Size = new System.Drawing.Size(108, 15);
+            label13.TabIndex = 0;
+            label13.Text = "Autocomplete font";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new System.Drawing.Point(9, 11);
+            label10.Name = "label10";
+            label10.Size = new System.Drawing.Size(103, 15);
+            label10.TabIndex = 0;
+            label10.Text = "Tags gridview font";
+            // 
             // tabPage2
             // 
             tabPage2.Controls.Add(checkBox1);
@@ -301,7 +412,7 @@ namespace BooruDatasetTagManager
             tabPage2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            tabPage2.Size = new System.Drawing.Size(438, 245);
+            tabPage2.Size = new System.Drawing.Size(445, 303);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Translations";
             tabPage2.UseVisualStyleBackColor = true;
@@ -337,16 +448,6 @@ namespace BooruDatasetTagManager
             comboBox2.Size = new System.Drawing.Size(263, 23);
             comboBox2.TabIndex = 1;
             // 
-            // checkBox4
-            // 
-            checkBox4.AutoSize = true;
-            checkBox4.Location = new System.Drawing.Point(8, 137);
-            checkBox4.Name = "checkBox4";
-            checkBox4.Size = new System.Drawing.Size(216, 19);
-            checkBox4.TabIndex = 6;
-            checkBox4.Text = "Fix tags on saving ('('->'\\(', ')'->'\\)' )";
-            checkBox4.UseVisualStyleBackColor = true;
-            // 
             // Form_settings
             // 
             AcceptButton = button1;
@@ -367,6 +468,9 @@ namespace BooruDatasetTagManager
             tabPage1.ResumeLayout(false);
             tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).EndInit();
+            tabPage3.ResumeLayout(false);
+            tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown3).EndInit();
             tabPage2.ResumeLayout(false);
             tabPage2.PerformLayout();
             ResumeLayout(false);
@@ -400,5 +504,14 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.NumericUpDown numericUpDown2;
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.NumericUpDown numericUpDown3;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
     }
 }

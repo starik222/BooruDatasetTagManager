@@ -16,7 +16,8 @@ namespace BooruDatasetTagManager
         {
             InitializeComponent();
         }
-
+        private FontSettings gridFontSettings = null;
+        private FontSettings autocompleteFontSettings = null;
         private void Form_settings_Load(object sender, EventArgs e)
         {
             comboBox1.DataSource = Program.Settings.AvaibleLanguages;
@@ -37,6 +38,14 @@ namespace BooruDatasetTagManager
             numericUpDown1.Value = Program.Settings.PreviewSize;
             numericUpDown2.Value = Program.Settings.ShowAutocompleteAfterCharCount;
             checkBox3.Checked = Program.Settings.AskSaveChanges;
+            //UI
+            numericUpDown3.Value = Program.Settings.GridViewRowHeight;
+            label11.Text = Program.Settings.GridViewFont.ToString();
+            gridFontSettings = Program.Settings.GridViewFont;
+            label14.Text = Program.Settings.AutocompleteFont.ToString();
+            autocompleteFontSettings = Program.Settings.AutocompleteFont;
+            //--
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -54,6 +63,10 @@ namespace BooruDatasetTagManager
             Program.Settings.SeparatorOnLoad = textBox1.Text;
             Program.Settings.SeparatorOnSave = textBox2.Text;
             Program.Settings.AskSaveChanges = checkBox3.Checked;
+            //UI
+            Program.Settings.GridViewRowHeight = (int)numericUpDown3.Value;
+            Program.Settings.GridViewFont = gridFontSettings;
+            Program.Settings.AutocompleteFont = autocompleteFontSettings;
             Program.Settings.SaveSettings();
             DialogResult = DialogResult.OK;
         }
@@ -61,6 +74,30 @@ namespace BooruDatasetTagManager
         private void button2_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            FontDialog dialog = new FontDialog();
+            dialog.Font = gridFontSettings.GetFont();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                gridFontSettings = FontSettings.Create(dialog.Font);
+                label11.Text = gridFontSettings.ToString();
+            }
+            dialog.Dispose();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            FontDialog dialog = new FontDialog();
+            dialog.Font = autocompleteFontSettings.GetFont();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                autocompleteFontSettings = FontSettings.Create(dialog.Font);
+                label14.Text = autocompleteFontSettings.ToString();
+            }
+            dialog.Dispose();
         }
     }
 }

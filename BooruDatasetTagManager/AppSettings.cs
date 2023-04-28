@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,9 @@ namespace BooruDatasetTagManager
         public string SeparatorOnSave { get; set; } = ", ";
         public int ShowAutocompleteAfterCharCount { get; set; } = 3;
         public bool AskSaveChanges { get; set; } = true;
+        public int GridViewRowHeight { get; set; } = 29;
+        public FontSettings GridViewFont { get; set; } = new FontSettings();
+        public FontSettings AutocompleteFont { get; set; } = new FontSettings() { Name = "Segoe UI", Size = 9, GdiCharSet = 1 };
         private string settingsFile;
 
         public AppSettings(string appDir)
@@ -59,6 +63,9 @@ namespace BooruDatasetTagManager
                 SeparatorOnSave = tempSettings.SeparatorOnSave;
                 ShowAutocompleteAfterCharCount = tempSettings.ShowAutocompleteAfterCharCount;
                 AskSaveChanges = tempSettings.AskSaveChanges;
+                GridViewRowHeight = tempSettings.GridViewRowHeight;
+                GridViewFont = tempSettings.GridViewFont;
+                AutocompleteFont = tempSettings.AutocompleteFont;
             }
         }
 
@@ -222,6 +229,53 @@ namespace BooruDatasetTagManager
         public override string ToString()
         {
             return Name;
+        }
+    }
+
+    public class FontSettings
+    {
+        public string Name { get; set; }    = "Tahoma";
+        public float Size { get; set; } = 14;
+        public bool Bold { get; set; } = false;
+        public byte GdiCharSet { get; set; } = 1;
+        public bool Italic { get; set; } = false;
+        public bool Strikeout { get; set; } = false;
+        public bool Underline { get; set; } = false;
+
+        public FontSettings() { }
+
+
+        public Font GetFont()
+        {
+            List<FontStyle> resStyle = new List<FontStyle>();
+            resStyle.Add(FontStyle.Regular);
+            if (Bold)
+                resStyle.Add(FontStyle.Bold);
+            if (Italic)
+                resStyle.Add(FontStyle.Italic);
+            if(Strikeout)
+                resStyle.Add(FontStyle.Strikeout);
+            if(Underline) 
+                resStyle.Add(FontStyle.Underline);
+            return new Font(Name, Size, resStyle.Aggregate((x, y) => x |= y), GraphicsUnit.Point, GdiCharSet, false);
+        }
+
+        public static FontSettings Create(Font fnt)
+        {
+            FontSettings fs = new FontSettings();
+            fs.Name = fnt.Name;
+            fs.Underline = fnt.Underline;
+            fs.GdiCharSet = fnt.GdiCharSet;
+            fs.Bold = fnt.Bold;
+            fs.Italic = fnt.Italic;
+            fs.Size = fnt.Size;
+            fs.Strikeout = fnt.Strikeout;
+            return fs;
+        }
+
+        public override string ToString()
+        {
+            return $"{Name}; {Size}pt;";
         }
     }
 }

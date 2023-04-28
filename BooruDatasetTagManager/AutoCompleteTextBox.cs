@@ -28,6 +28,7 @@ namespace BooruDatasetTagManager
         private void InitializeComponent()
         {
             _listBox = new ListBox();
+            _listBox.Font = Program.Settings.AutocompleteFont.GetFont();
             this.KeyDown += this_KeyDown;
             this.KeyUp += this_KeyUp;
             this.PreviewKeyDown += AutoCompleteTextBox_PreviewKeyDown;

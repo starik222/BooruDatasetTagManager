@@ -69,6 +69,11 @@ namespace BooruDatasetTagManager
         {
             Text += " " + Application.ProductVersion;
             gridViewDS.RowTemplate.Height = Program.Settings.PreviewSize + 10;
+            gridViewAllTags.RowTemplate.Height = Program.Settings.GridViewRowHeight;
+            gridViewTags.RowTemplate.Height = Program.Settings.GridViewRowHeight;
+            gridViewTags.DefaultCellStyle.Font = Program.Settings.GridViewFont.GetFont();
+            gridViewAllTags.DefaultCellStyle.Font = Program.Settings.GridViewFont.GetFont();
+            gridViewDS.DefaultCellStyle.Font = Program.Settings.GridViewFont.GetFont();
             splitContainer2.SplitterDistance = Width / 3;
         }
 
