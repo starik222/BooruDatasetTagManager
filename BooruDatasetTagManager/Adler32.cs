@@ -69,5 +69,11 @@ namespace Translator.Crypto
         {
             return adler32(adler, buf, 0, buf.Length);
         }
+
+		public static long GenerateHash(string text)
+		{
+			byte[] data = Encoding.UTF8.GetBytes(text);
+            return adler32(1, data, 0, data.Length);
+        }
     }
 }

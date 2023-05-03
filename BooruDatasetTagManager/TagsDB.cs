@@ -15,13 +15,13 @@ namespace BooruDatasetTagManager
         public List<TagItem> Tags;
         public Dictionary<string, long> LoadedFiles;
 
-        private Dictionary<int, int> hashes;
+        private Dictionary<long, int> hashes;
 
         public TagsDB()
         {
             Tags = new List<TagItem>();
             LoadedFiles = new Dictionary<string, long>();
-            hashes = new Dictionary<int, int>();
+            hashes = new Dictionary<long, int>();
         }
 
         private string[] ReadAllLines(byte[] data, Encoding encoding)
@@ -148,7 +148,7 @@ namespace BooruDatasetTagManager
             if (Tags.Exists(a => a.Parent == tag))
                 return;
             tag = tag.Trim().ToLower();
-            int tagHash = tag.GetHashCode();
+            long tagHash = tag.GetHash();
 
             int existTagIndex = -1;
             TagItem tagItem = null;
@@ -217,7 +217,7 @@ namespace BooruDatasetTagManager
         public class TagItem
         {
             public string Tag { get; private set; }
-            public int TagHash { get; private set; }
+            public long TagHash { get; private set; }
             public int Count;
             //public List<string> Aliases;
             public bool IsAlias;
@@ -233,7 +233,7 @@ namespace BooruDatasetTagManager
             public void SetTag(string tag)
             {
                 Tag = tag.Trim().ToLower();
-                TagHash = Tag.GetHashCode();
+                TagHash = Tag.GetHash();
             }
 
             public string GetTag()

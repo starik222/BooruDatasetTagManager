@@ -52,20 +52,20 @@ namespace BooruDatasetTagManager
 
         public bool Contains(string orig)
         {
-            return Translations.Exists(a => a.OrigHash == orig.ToLower().GetHashCode());
+            return Translations.Exists(a => a.OrigHash == orig.ToLower().GetHash());
         }
 
-        public bool Contains(int hash)
+        public bool Contains(long hash)
         {
             return Translations.Exists(a => a.OrigHash == hash);
         }
 
         public string GetTranslation(string text)
         {
-            return GetTranslation(text.ToLower().Trim().GetHashCode());
+            return GetTranslation(text.ToLower().Trim().GetHash());
         }
 
-        public string GetTranslation(int hash)
+        public string GetTranslation(long hash)
         {
             var res = Translations.FirstOrDefault(a => a.OrigHash == hash);
             if (res == null)
@@ -73,7 +73,7 @@ namespace BooruDatasetTagManager
             return res.Trans;
         }
 
-        public string GetTranslation(int hash, bool onlyManual)
+        public string GetTranslation(long hash, bool onlyManual)
         {
             if (onlyManual)
             {
@@ -123,14 +123,14 @@ namespace BooruDatasetTagManager
         {
             public string Orig { get; private set; }
             public string Trans {get; set; }
-            public int OrigHash { get; private set; }
+            public long OrigHash { get; private set; }
             public bool IsManual { get; private set; }
 
             public TransItem(string orig, string trans, bool isManual)
             {
                 Orig = orig;
                 Trans = trans;
-                OrigHash = orig.ToLower().GetHashCode();
+                OrigHash = orig.ToLower().GetHash();
                 IsManual = isManual;
             }
 

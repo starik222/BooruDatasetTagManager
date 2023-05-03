@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using Translator.Crypto;
 
 namespace BooruDatasetTagManager
 {
@@ -18,7 +19,10 @@ namespace BooruDatasetTagManager
                 list.Add(new TagValue(item));
         }
 
-
+        public static long GetHash(this string text)
+        {
+            return Adler32.GenerateHash(text);
+        }
 
         public static object LoadDataSet(string path)
         {
