@@ -45,6 +45,7 @@ namespace BooruDatasetTagManager
         public void ClearDb()
         {
             Tags.Clear();
+            hashes.Clear();
         }
 
         public void ClearLoadedFiles()
