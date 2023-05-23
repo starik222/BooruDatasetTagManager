@@ -350,7 +350,7 @@ namespace BooruDatasetTagManager
                     addTag.comboBox1.Enabled = false;
                     if (addTag.ShowDialog() == DialogResult.OK)
                     {
-                        AddTagMultiselectedMode(addTag.textBox1.Text);
+                        AddTagMultiselectedMode(addTag.tagTextBox.Text);
                     }
                     addTag.Close();
                 }
@@ -532,17 +532,17 @@ namespace BooruDatasetTagManager
             if (gridViewAllTags.SelectedCells.Count > 0)
             {
                 index = gridViewAllTags.SelectedCells[0].RowIndex;
-                addTag.textBox1.Text = (string)gridViewAllTags.Rows[index].Cells[0].Value;
-                addTag.textBox1.SelectAll();
+                addTag.tagTextBox.Text = (string)gridViewAllTags.Rows[index].Cells[0].Value;
+                addTag.tagTextBox.SelectAll();
             }
             if (addTag.ShowDialog() == DialogResult.OK)
             {
                 int customIndex = (int)addTag.numericUpDown1.Value;
 
                 DatasetManager.AddingType addType = (DatasetManager.AddingType)Enum.Parse(typeof(DatasetManager.AddingType), (string)addTag.comboBox1.SelectedItem);
-                Program.DataManager.AddTagToAll(addTag.textBox1.Text, addType, customIndex, filtered);
+                Program.DataManager.AddTagToAll(addTag.tagTextBox.Text, addType, customIndex, filtered);
                 Program.DataManager.UpdateData();
-                int valIndex = IndexOfValueInGrig(gridViewTags, "ImageTags", addTag.textBox1.Text);
+                int valIndex = IndexOfValueInGrig(gridViewTags, "ImageTags", addTag.tagTextBox.Text);
                 if (gridViewDS.SelectedRows.Count == 1)
                 {
                     if (valIndex != -1)
@@ -582,19 +582,19 @@ namespace BooruDatasetTagManager
                                 break;
                             }
                     }
-                    gridViewTags.Rows.Insert(insertIndex, addTag.textBox1.Text);
+                    gridViewTags.Rows.Insert(insertIndex, addTag.tagTextBox.Text);
                     string transString = null;
                     if (isTranslate)
                     {
-                        transString = await Program.TransManager.TranslateAsync(addTag.textBox1.Text);
+                        transString = await Program.TransManager.TranslateAsync(addTag.tagTextBox.Text);
                         gridViewTags.Rows[insertIndex].Cells[1].Value = transString;
                     }
 
-                    var allIndex = IndexOfValueInGrig(gridViewAllTags, "Tag", addTag.textBox1.Text);
+                    var allIndex = IndexOfValueInGrig(gridViewAllTags, "Tag", addTag.tagTextBox.Text);
                     if (allIndex == -1)
                     {
                         gridViewAllTags.Rows.Insert(index, 1);
-                        gridViewAllTags.Rows[index].Cells[0].Value = addTag.textBox1.Text;
+                        gridViewAllTags.Rows[index].Cells[0].Value = addTag.tagTextBox.Text;
                         if (isTranslate)
                         {
                             gridViewAllTags.Rows[index].Cells[1].Value = transString;
@@ -603,7 +603,7 @@ namespace BooruDatasetTagManager
                 }
                 else
                 {
-                    AddTagMultiselectedMode(addTag.textBox1.Text);
+                    AddTagMultiselectedMode(addTag.tagTextBox.Text);
                 }
                 //BindTagList();
             }

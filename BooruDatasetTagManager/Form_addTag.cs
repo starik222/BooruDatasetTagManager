@@ -15,11 +15,35 @@ namespace BooruDatasetTagManager
         public Form_addTag()
         {
             InitializeComponent();
+            tagTextBox = new AutoCompleteTextBox();
+            tagTextBox.SetAutocompleteMode(Program.Settings.AutocompleteMode, Program.Settings.AutocompleteSort);
+            tagTextBox.Values = Program.TagsList.Tags;
+            tagTextBox.Location = new Point(13, 82);
+            tagTextBox.Size = new Size(375, 23);
+            Controls.Add(tagTextBox);
+            comboBox1.Items.AddRange(Enum.GetNames(typeof(DatasetManager.AddingType)));
+            comboBox1.SelectedItem = "Down";
+            tagTextBox.ItemSelectionComplete += TagTextBox_ItemSelectionComplete;
         }
+
+        private void TagTextBox_ItemSelectionComplete(object sender, EventArgs e)
+        {
+            afterFocus = true;
+            button1.Focus();
+        }
+
+        private bool afterFocus = false;
+
+        public AutoCompleteTextBox tagTextBox;
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.OK;
+            if (afterFocus)
+            {
+                afterFocus = false;
+            }
+            else
+                DialogResult = DialogResult.OK;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -29,8 +53,7 @@ namespace BooruDatasetTagManager
 
         private void Form_addTag_Load(object sender, EventArgs e)
         {
-            comboBox1.Items.AddRange(Enum.GetNames(typeof(DatasetManager.AddingType)));
-            comboBox1.SelectedItem = "Down";
+
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -41,6 +64,17 @@ namespace BooruDatasetTagManager
             }
             else
                 numericUpDown1.Visible = false;
+        }
+
+        private void Form_addTag_Shown(object sender, EventArgs e)
+        {
+            tagTextBox.Focus();
+        }
+
+        private void Form_addTag_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (tagTextBox.IsListBoxVisible())
+                tagTextBox.ResetListBox();
         }
     }
 }

@@ -33,7 +33,16 @@ namespace BooruDatasetTagManager
             this.KeyUp += this_KeyUp;
             this.PreviewKeyDown += AutoCompleteTextBox_PreviewKeyDown;
             _listBox.MouseDoubleClick += AutoCompleteTextBox_MouseClick;
+            this.LostFocus += AutoCompleteTextBox_LostFocus;
         }
+
+        private void AutoCompleteTextBox_LostFocus(object sender, EventArgs e)
+        {
+            if (Parent is Form && !_listBox.Focused)
+                ResetListBox();
+        }
+
+        public event EventHandler ItemSelectionComplete;
 
         private void AutoCompleteTextBox_MouseClick(object sender, MouseEventArgs e)
         {
@@ -45,8 +54,19 @@ namespace BooruDatasetTagManager
                 //_parent.Focus();
                 //Parent.Parent.Focus();
                 _listBox.Parent.Focus();
+                ItemSelectionComplete?.Invoke(this, e);
                 //this.Select(this.Text.Length, 0);
             }
+        }
+
+        public bool IsListBoxFocused()
+        {
+            return _listBox.Focused;
+        }
+
+        public bool IsListBoxVisible()
+        {
+            return _listBox.Visible;
         }
 
         private void AutoCompleteTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -59,6 +79,7 @@ namespace BooruDatasetTagManager
                     ResetListBox();
                     _formerValue = Text;
                     //this.Select(this.Text.Length, 0);
+                    ItemSelectionComplete?.Invoke(this, e);
                 }
             }
             else if (e.KeyCode == Keys.Escape)
@@ -80,8 +101,16 @@ namespace BooruDatasetTagManager
                 //Parent.Controls.Add(_listBox);
                 //_parent.Controls.Add(_listBox);
                 //_listBox.Parent = Parent;
-
-                Parent.Parent.Controls.Add(_listBox);
+                if (Parent is Form)
+                {
+                    Parent.Controls.Add(_listBox);
+                    _listBox.Left = Left;
+                    _listBox.Top = Top + Height;
+                }
+                else
+                {
+                    Parent.Parent.Controls.Add(_listBox);
+                }
                 _isAdded = true;
             }
 
@@ -133,6 +162,7 @@ namespace BooruDatasetTagManager
                             ResetListBox();
                             _formerValue = Text;
                             this.Select(this.Text.Length, 0);
+                            ItemSelectionComplete?.Invoke(this, e);
                             e.Handled = true;
                         }
                         break;
@@ -246,7 +276,15 @@ namespace BooruDatasetTagManager
                     Focus();
 
                     int upMaxSize = Parent.Top;
-                    int downMaxSize = Parent.Parent.Height - (Parent.Top + Parent.Height);
+                    int downMaxSize = 0;
+                    if (Parent is Form)
+                    {
+                        upMaxSize = Parent.Height - (this.Top + this.Height + 40);
+                    }
+                    else
+                    {
+                        downMaxSize = Parent.Parent.Height - (Parent.Top + Parent.Height);
+                    }
                     int maxSize = 0;
                     bool isDown = false;
                     if (upMaxSize > downMaxSize)
@@ -262,8 +300,8 @@ namespace BooruDatasetTagManager
                     {
                         if (i < 20 && _listBox.Height + _listBox.GetItemHeight(i) < maxSize)
                             _listBox.Height += _listBox.GetItemHeight(i);
-                        _listBox.Width = this.Width;
                     }
+                    _listBox.Width = this.Width;
 
                     //using (Graphics graphics = _listBox.CreateGraphics())
                     //{
@@ -279,15 +317,18 @@ namespace BooruDatasetTagManager
                     //        _listBox.Width = (_listBox.Width < itemWidth) ? itemWidth : this.Width; ;
                     //    }
                     //}
-                    if (isDown)
+                    if (!(Parent is Form))
                     {
-                        _listBox.Left = Left;
-                        _listBox.Top = Parent.Top + Parent.Height;
-                    }
-                    else
-                    {
-                        _listBox.Left = Left;
-                        _listBox.Top = Parent.Top - _listBox.Height;
+                        if (isDown)
+                        {
+                            _listBox.Left = Left;
+                            _listBox.Top = Parent.Top + Parent.Height;
+                        }
+                        else
+                        {
+                            _listBox.Left = Left;
+                            _listBox.Top = Parent.Top - _listBox.Height;
+                        }
                     }
                     _listBox.EndUpdate();
                 }
