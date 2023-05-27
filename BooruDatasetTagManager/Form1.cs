@@ -62,6 +62,9 @@ namespace BooruDatasetTagManager
         private bool isLoading = false;
         private List<string> selectedFiles = new List<string>();
 
+        private bool isCtrlOrShiftPressed = false;
+        private bool needReloadTags = false;
+
 
         Dictionary<string, string> Trans = new Dictionary<string, string>();
 
@@ -178,10 +181,10 @@ namespace BooruDatasetTagManager
                 gridViewTags.AllowDrop = false;
                 gridViewTags.Rows.Clear();
                 ChageImageColumn(true);
-                gridViewTags.Columns["ImageTags"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+                //gridViewTags.Columns["ImageTags"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
                 if (gridViewTags.Columns.Contains("Translation"))
                 {
-                    gridViewTags.Columns["Translation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+                    gridViewTags.Columns["Translation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                     gridViewTags.Columns["Translation"].ReadOnly = true;
                 }
                 gridViewTags.Tag = "0";
@@ -256,7 +259,7 @@ namespace BooruDatasetTagManager
                     gridViewTags.Columns.Add("Image", "Image");
                     gridViewTags.Columns["Image"].Visible = false;
                     gridViewTags.Columns.Add("Name", "Name");
-                    gridViewTags.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+                    gridViewTags.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                     gridViewTags.Columns["ImageTags"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 }
             }
@@ -1048,6 +1051,12 @@ namespace BooruDatasetTagManager
 
         private void dataGridView3_SelectionChanged(object sender, EventArgs e)
         {
+            if (isCtrlOrShiftPressed)
+            {
+                needReloadTags = true;
+                return;
+            }
+            needReloadTags = false;
             if (isLoading)
             {
                 LoadSelectedImageToGrid();
@@ -1414,6 +1423,10 @@ namespace BooruDatasetTagManager
             {
                 DeleteImage();
             }
+            if (e.Control || e.Shift)
+            {
+                isCtrlOrShiftPressed = true;
+            }
         }
 
         private void DeleteImage()
@@ -1626,6 +1639,72 @@ namespace BooruDatasetTagManager
                 int index = gridViewAllTags.CurrentCell.RowIndex;
                 gridViewAllTags.CurrentCell = gridViewAllTags.Rows[index + pos].Cells[0];
             }
+
+
+        }
+
+        private void gridViewDS_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (isCtrlOrShiftPressed && !e.Control && !e.Shift)
+            {
+                isCtrlOrShiftPressed = false;
+                if (needReloadTags)
+                {
+                    dataGridView3_SelectionChanged(sender, EventArgs.Empty);
+                }
+            }
+        }
+
+        private void CreateDataGridViewTags()
+        {
+            DataGridView gridViewTags = new DataGridView();
+            DataGridViewTextBoxColumn tbc = new DataGridViewTextBoxColumn();
+            tbc.Name = "ImageTags";
+            tbc.HeaderText = "Tags";
+            tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            tbc.Resizable = DataGridViewTriState.False;
+            tbc.MinimumWidth = 9;
+            tbc.SortMode = DataGridViewColumnSortMode.Automatic;
+            gridViewTags.Columns.Add(tbc);
+            gridViewTags.BorderStyle = BorderStyle.Fixed3D;
+            gridViewTags.ColumnHeadersVisible = false;
+            gridViewTags.RowHeadersVisible = false;
+
+            DataGridViewCellStyle defCellStyle = new DataGridViewCellStyle();
+            defCellStyle.Font = new Font("Tahoma", 14);
+            defCellStyle.WrapMode = DataGridViewTriState.False;
+            defCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            gridViewTags.DefaultCellStyle = defCellStyle;
+            DataGridViewRow dgvr = new DataGridViewRow();
+            dgvr.Height = 29;
+            dgvr.DefaultCellStyle = new DataGridViewCellStyle();
+            gridViewTags.RowTemplate = dgvr;
+            gridViewTags.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            //gridViewTags.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            gridViewTags.Dock = DockStyle.Fill;
+            gridViewTags.Location = new Point(0, 30);
+            gridViewTags.Margin = new Padding(4, 3, 4, 3);
+            gridViewTags.RowHeadersWidth = 72;
+            gridViewTags.Size = new Size(369, 647);
+            gridViewTags.AllowDrop = true;
+            gridViewTags.AllowUserToAddRows = false;
+            gridViewTags.AllowUserToResizeColumns = false;
+            gridViewTags.AllowUserToResizeRows = false;
+            gridViewTags.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            gridViewTags.MultiSelect = false;
+            gridViewTags.TabIndex = 2;
+            gridViewTags.CellEndEdit += gridViewTags_CellEndEdit;
+            gridViewTags.EditingControlShowing += dataGridView1_EditingControlShowing;
+            gridViewTags.KeyDown += dataGridView1_KeyDown;
+            gridViewTags.CellMouseEnter += dataGridViewTags_CellMouseEnter;
+            gridViewTags.CellMouseLeave += dataGridViewTags_CellMouseLeave;
+            gridViewTags.MouseMove += dataGridView1_MouseMove;
+            gridViewTags.MouseDown += dataGridView1_MouseDown;
+            gridViewTags.DragDrop += dataGridView1_DragDrop;
+            gridViewTags.DragOver += dataGridView1_DragOver;
+            gridViewTags.Enter += gridView_Enter;
+            gridViewTags.Leave += gridView_Leave;
+
 
 
         }

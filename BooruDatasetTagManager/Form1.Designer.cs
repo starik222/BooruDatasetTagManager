@@ -684,6 +684,7 @@ namespace BooruDatasetTagManager
             gridViewDS.SelectionChanged += dataGridView3_SelectionChanged;
             gridViewDS.Enter += gridView_Enter;
             gridViewDS.KeyDown += gridViewDS_KeyDown;
+            gridViewDS.KeyUp += gridViewDS_KeyUp;
             gridViewDS.Leave += gridView_Leave;
             gridViewDS.MouseDoubleClick += gridViewDS_MouseDoubleClick;
             // 
