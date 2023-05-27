@@ -1655,58 +1655,55 @@ namespace BooruDatasetTagManager
             }
         }
 
-        private void CreateDataGridViewTags()
-        {
-            DataGridView gridViewTags = new DataGridView();
-            DataGridViewTextBoxColumn tbc = new DataGridViewTextBoxColumn();
-            tbc.Name = "ImageTags";
-            tbc.HeaderText = "Tags";
-            tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            tbc.Resizable = DataGridViewTriState.False;
-            tbc.MinimumWidth = 9;
-            tbc.SortMode = DataGridViewColumnSortMode.Automatic;
-            gridViewTags.Columns.Add(tbc);
-            gridViewTags.BorderStyle = BorderStyle.Fixed3D;
-            gridViewTags.ColumnHeadersVisible = false;
-            gridViewTags.RowHeadersVisible = false;
+        //private void CreateDataGridViewTags()
+        //{
+        //    DataGridView gridViewTags = new DataGridView();
+        //    DataGridViewTextBoxColumn tbc = new DataGridViewTextBoxColumn();
+        //    tbc.Name = "ImageTags";
+        //    tbc.HeaderText = "Tags";
+        //    tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        //    tbc.Resizable = DataGridViewTriState.False;
+        //    tbc.MinimumWidth = 9;
+        //    tbc.SortMode = DataGridViewColumnSortMode.Automatic;
+        //    gridViewTags.Columns.Add(tbc);
+        //    gridViewTags.BorderStyle = BorderStyle.Fixed3D;
+        //    gridViewTags.ColumnHeadersVisible = false;
+        //    gridViewTags.RowHeadersVisible = false;
 
-            DataGridViewCellStyle defCellStyle = new DataGridViewCellStyle();
-            defCellStyle.Font = new Font("Tahoma", 14);
-            defCellStyle.WrapMode = DataGridViewTriState.False;
-            defCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            gridViewTags.DefaultCellStyle = defCellStyle;
-            DataGridViewRow dgvr = new DataGridViewRow();
-            dgvr.Height = 29;
-            dgvr.DefaultCellStyle = new DataGridViewCellStyle();
-            gridViewTags.RowTemplate = dgvr;
-            gridViewTags.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            //gridViewTags.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            gridViewTags.Dock = DockStyle.Fill;
-            gridViewTags.Location = new Point(0, 30);
-            gridViewTags.Margin = new Padding(4, 3, 4, 3);
-            gridViewTags.RowHeadersWidth = 72;
-            gridViewTags.Size = new Size(369, 647);
-            gridViewTags.AllowDrop = true;
-            gridViewTags.AllowUserToAddRows = false;
-            gridViewTags.AllowUserToResizeColumns = false;
-            gridViewTags.AllowUserToResizeRows = false;
-            gridViewTags.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            gridViewTags.MultiSelect = false;
-            gridViewTags.TabIndex = 2;
-            gridViewTags.CellEndEdit += gridViewTags_CellEndEdit;
-            gridViewTags.EditingControlShowing += dataGridView1_EditingControlShowing;
-            gridViewTags.KeyDown += dataGridView1_KeyDown;
-            gridViewTags.CellMouseEnter += dataGridViewTags_CellMouseEnter;
-            gridViewTags.CellMouseLeave += dataGridViewTags_CellMouseLeave;
-            gridViewTags.MouseMove += dataGridView1_MouseMove;
-            gridViewTags.MouseDown += dataGridView1_MouseDown;
-            gridViewTags.DragDrop += dataGridView1_DragDrop;
-            gridViewTags.DragOver += dataGridView1_DragOver;
-            gridViewTags.Enter += gridView_Enter;
-            gridViewTags.Leave += gridView_Leave;
-
-
-
-        }
+        //    DataGridViewCellStyle defCellStyle = new DataGridViewCellStyle();
+        //    defCellStyle.Font = new Font("Tahoma", 14);
+        //    defCellStyle.WrapMode = DataGridViewTriState.False;
+        //    defCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+        //    gridViewTags.DefaultCellStyle = defCellStyle;
+        //    DataGridViewRow dgvr = new DataGridViewRow();
+        //    dgvr.Height = 29;
+        //    dgvr.DefaultCellStyle = new DataGridViewCellStyle();
+        //    gridViewTags.RowTemplate = dgvr;
+        //    gridViewTags.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+        //    //gridViewTags.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+        //    gridViewTags.Dock = DockStyle.Fill;
+        //    gridViewTags.Location = new Point(0, 30);
+        //    gridViewTags.Margin = new Padding(4, 3, 4, 3);
+        //    gridViewTags.RowHeadersWidth = 72;
+        //    gridViewTags.Size = new Size(369, 647);
+        //    gridViewTags.AllowDrop = true;
+        //    gridViewTags.AllowUserToAddRows = false;
+        //    gridViewTags.AllowUserToResizeColumns = false;
+        //    gridViewTags.AllowUserToResizeRows = false;
+        //    gridViewTags.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+        //    gridViewTags.MultiSelect = false;
+        //    gridViewTags.TabIndex = 2;
+        //    gridViewTags.CellEndEdit += gridViewTags_CellEndEdit;
+        //    gridViewTags.EditingControlShowing += dataGridView1_EditingControlShowing;
+        //    gridViewTags.KeyDown += dataGridView1_KeyDown;
+        //    gridViewTags.CellMouseEnter += dataGridViewTags_CellMouseEnter;
+        //    gridViewTags.CellMouseLeave += dataGridViewTags_CellMouseLeave;
+        //    gridViewTags.MouseMove += dataGridView1_MouseMove;
+        //    gridViewTags.MouseDown += dataGridView1_MouseDown;
+        //    gridViewTags.DragDrop += dataGridView1_DragDrop;
+        //    gridViewTags.DragOver += dataGridView1_DragOver;
+        //    gridViewTags.Enter += gridView_Enter;
+        //    gridViewTags.Leave += gridView_Leave;
+        //}
     }
 }
