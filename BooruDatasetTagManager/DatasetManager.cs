@@ -280,7 +280,7 @@ namespace BooruDatasetTagManager
 
         public void LoadFromFolder(string folder, bool fixTags)
         {
-            List<string> imagesExt = new List<string>() { ".jpg", ".png", ".bmp", ".jpeg" };
+            List<string> imagesExt = new List<string>() { ".jpg", ".png", ".bmp", ".jpeg", ".webp" };
             string[] imgs = Directory.GetFiles(folder, "*.*", SearchOption.AllDirectories);
 
             imgs = imgs.Where(a => imagesExt.Contains(Path.GetExtension(a).ToLower())).OrderBy(a => a, new FileNamesComparer()).ToArray();
@@ -440,9 +440,11 @@ namespace BooruDatasetTagManager
                 }
             }
 
+
             Image MakeThumb(string imagePath, int imgSize)
             {
-                using (var img = Image.FromFile(imagePath))
+
+                using (var img = Extensions.GetImageFromFile(imagePath))
                 {
                     var aspect = img.Width / (float)img.Height;
 

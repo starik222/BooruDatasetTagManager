@@ -29,7 +29,7 @@ namespace BooruDatasetTagManager
 
         public void Show(string img)
         {
-            pictureBox1.Image = Image.FromFile(img);
+            pictureBox1.Image = Extensions.GetImageFromFile(img);
             
             if (!loaded)
             {
