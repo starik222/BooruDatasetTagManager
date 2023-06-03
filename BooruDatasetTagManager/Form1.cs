@@ -30,6 +30,7 @@ namespace BooruDatasetTagManager
             gridViewTags.RowsRemoved += DataGridView1_RowsRemoved;
             previewPicBox = new PictureBox();
             previewPicBox.Name = "previewPicBox";
+            allTagsFilter = new Form_filter();
         }
 
         private void DataGridView1_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
@@ -46,7 +47,7 @@ namespace BooruDatasetTagManager
         {
             SetChangedStatus(true);
         }
-
+        private Form_filter allTagsFilter;
         List<string> tagsBuffer;
 
         private bool isAllTags = true;
@@ -159,7 +160,7 @@ namespace BooruDatasetTagManager
                 ChageImageColumn(false);
                 List<string> tags = Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value].Tags;
                 gridViewTags.Tag = (string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value;
-                gridViewTags.Columns["ImageTags"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                //gridViewTags.Columns["ImageTags"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 if (gridViewTags.Columns.Contains("Translation"))
                 {
                     gridViewTags.Columns["Translation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -1653,6 +1654,27 @@ namespace BooruDatasetTagManager
                     dataGridView3_SelectionChanged(sender, EventArgs.Empty);
                 }
             }
+        }
+
+        private void toolStripButton24_Click(object sender, EventArgs e)
+        {
+            if (Program.DataManager == null)
+            {
+                MessageBox.Show("Dataset not load.");
+                return;
+            }
+            if (allTagsFilter == null || allTagsFilter.IsDisposed)
+            {
+                allTagsFilter = new Form_filter();
+            }
+            if (allTagsFilter.ShowDialog() != DialogResult.OK)
+                return;
+            if (isAllTags)
+            {
+                BingSourceToDGV(gridViewAllTags, Program.DataManager.GetFilteredAllTags(allTagsFilter.textBox1.Text));
+            }
+            //string filterText = 
+
         }
 
         //private void CreateDataGridViewTags()

@@ -79,6 +79,12 @@ namespace BooruDatasetTagManager
                 .ToList();
         }
 
+        public List<TagValue> GetFilteredAllTags(string filterText)
+        {
+            return AllTags.Where(a=>a.Tag.Contains(filterText)).ToList();
+        }
+
+
         public bool Remove(string name)
         {
             return DataSet.TryRemove(name, out _);
