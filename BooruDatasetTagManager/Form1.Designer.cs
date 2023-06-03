@@ -35,6 +35,7 @@ namespace BooruDatasetTagManager
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             gridViewTags = new System.Windows.Forms.DataGridView();
+            ImageTags = new CustomTextBoxColumn();
             toolStrip2 = new System.Windows.Forms.ToolStrip();
             toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             toolStripButton3 = new System.Windows.Forms.ToolStripButton();
@@ -90,6 +91,7 @@ namespace BooruDatasetTagManager
             gridViewDS = new System.Windows.Forms.DataGridView();
             button1 = new System.Windows.Forms.Button();
             textBox1 = new System.Windows.Forms.TextBox();
+            customTextBoxColumn1 = new CustomTextBoxColumn();
             contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(components);
             toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -121,6 +123,7 @@ namespace BooruDatasetTagManager
             gridViewTags.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             gridViewTags.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             gridViewTags.ColumnHeadersVisible = false;
+            gridViewTags.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { ImageTags });
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -150,6 +153,15 @@ namespace BooruDatasetTagManager
             gridViewTags.Leave += gridView_Leave;
             gridViewTags.MouseDown += dataGridView1_MouseDown;
             gridViewTags.MouseMove += dataGridView1_MouseMove;
+            // 
+            // ImageTags
+            // 
+            ImageTags.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            ImageTags.HeaderText = "Tags";
+            ImageTags.MinimumWidth = 9;
+            ImageTags.Name = "ImageTags";
+            ImageTags.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            ImageTags.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // toolStrip2
             // 
@@ -596,7 +608,7 @@ namespace BooruDatasetTagManager
             toolStripButton24.ImageTransparentColor = System.Drawing.Color.Magenta;
             toolStripButton24.Name = "toolStripButton24";
             toolStripButton24.Size = new System.Drawing.Size(33, 36);
-            toolStripButton24.Text = "Filter in all images";
+            toolStripButton24.Text = "Filter in all tags";
             toolStripButton24.Click += toolStripButton24_Click;
             // 
             // toolStripButton25
@@ -607,6 +619,7 @@ namespace BooruDatasetTagManager
             toolStripButton25.Name = "toolStripButton25";
             toolStripButton25.Size = new System.Drawing.Size(33, 36);
             toolStripButton25.Text = "Remove filter";
+            toolStripButton25.Click += toolStripButton25_Click;
             // 
             // statusStrip1
             // 
@@ -722,6 +735,15 @@ namespace BooruDatasetTagManager
             textBox1.TabIndex = 6;
             textBox1.Visible = false;
             textBox1.KeyDown += textBox1_KeyDown;
+            // 
+            // customTextBoxColumn1
+            // 
+            customTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            customTextBoxColumn1.HeaderText = "Tags";
+            customTextBoxColumn1.MinimumWidth = 9;
+            customTextBoxColumn1.Name = "customTextBoxColumn1";
+            customTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            customTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // contextMenuStrip1
             // 

@@ -1677,6 +1677,11 @@ namespace BooruDatasetTagManager
 
         }
 
+        private void toolStripButton25_Click(object sender, EventArgs e)
+        {
+            BindTagList();
+        }
+
         //private void CreateDataGridViewTags()
         //{
         //    DataGridView gridViewTags = new DataGridView();

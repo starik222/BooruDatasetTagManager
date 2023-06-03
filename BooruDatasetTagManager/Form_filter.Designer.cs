@@ -72,8 +72,10 @@
             // 
             // Form_filter
             // 
+            AcceptButton = button1;
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            CancelButton = button2;
             ClientSize = new System.Drawing.Size(409, 285);
             Controls.Add(button2);
             Controls.Add(button1);
