@@ -109,7 +109,12 @@ namespace BooruDatasetTagManager
             }
 
             if (!isWebP)
-                return Image.FromFile(imagePath);
+            {
+                using (var img = Image.FromFile(imagePath))
+                {
+                    return new Bitmap(img);
+                }
+            }
             else
             {
                 using (WebPWrapper.WebP wp = new WebPWrapper.WebP())
