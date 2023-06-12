@@ -219,18 +219,21 @@ namespace BooruDatasetTagManager
                 foreach (var item in table)
                 {
                     item.Value.Sort((x, y) => x.Name.CompareTo(y.Name));
+                    DataGridViewRow[] rows = new DataGridViewRow[item.Value.Count];
                     for (int i = 0; i < item.Value.Count; i++)
                     {
-                        int rowIndex = gridViewTags.Rows.Add();
-                        DataGridViewRow row = gridViewTags.Rows[rowIndex];
+                        DataGridViewRow row = new DataGridViewRow();
+                        row.CreateCells(gridViewTags);
                         row.Tag = item.Key;//tag
-                        row.Cells["ImageTags"].Value = i == 0 ? item.Key : "";//tag
-                        row.Cells["ImageTags"].Tag = item.Value[i];//tagItem
-                        row.Cells["Image"].Value = item.Value[i].ImageFilePath;//ImgName
-                        row.Cells["Image"].Tag = item.Key;//tag
-                        row.Cells["Name"].Value = item.Value[i].Name;//ImgName
-                        row.Cells["Name"].Tag = item.Key;//tag
+                        row.Cells["ImageTags".IdxFromName(gridViewTags)].Value = i == 0 ? item.Key : "";//tag
+                        row.Cells["ImageTags".IdxFromName(gridViewTags)].Tag = item.Value[i];//tagItem
+                        row.Cells["Image".IdxFromName(gridViewTags)].Value = item.Value[i].ImageFilePath;//ImgName
+                        row.Cells["Image".IdxFromName(gridViewTags)].Tag = item.Key;//tag
+                        row.Cells["Name".IdxFromName(gridViewTags)].Value = item.Value[i].Name;//ImgName
+                        row.Cells["Name".IdxFromName(gridViewTags)].Tag = item.Key;//tag
+                        rows[i] = row;
                     }
+                    gridViewTags.Rows.AddRange(rows);
                 }
             }
             gridViewDS.Focus();
@@ -1264,19 +1267,23 @@ namespace BooruDatasetTagManager
                     selectedImages.Remove(item.Value);
                 }
                 int insertIndex = alreadyContainsImages.Max(a => a.Key) + 1;
+                List<DataGridViewRow> rowsCopy = gridViewTags.Rows.OfType<DataGridViewRow>().ToList();
                 for (int i = 0; i < selectedImages.Count; i++)
                 {
-                    gridViewTags.Rows.Insert(insertIndex, 1);
-                    DataGridViewRow row = gridViewTags.Rows[insertIndex];
+                    DataGridViewRow row = new DataGridViewRow();
+                    row.CreateCells(gridViewTags);
                     row.Tag = tag;
-                    row.Cells["ImageTags"].Value = "";
-                    row.Cells["ImageTags"].Tag = selectedImages[i];
-                    row.Cells["Image"].Value = selectedImages[i].ImageFilePath;
-                    row.Cells["Image"].Tag = tag;
-                    row.Cells["Name"].Value = selectedImages[i].Name;
-                    row.Cells["Name"].Tag = tag;
+                    row.Cells["ImageTags".IdxFromName(gridViewTags)].Value = "";
+                    row.Cells["ImageTags".IdxFromName(gridViewTags)].Tag = selectedImages[i];
+                    row.Cells["Image".IdxFromName(gridViewTags)].Value = selectedImages[i].ImageFilePath;
+                    row.Cells["Image".IdxFromName(gridViewTags)].Tag = tag;
+                    row.Cells["Name".IdxFromName(gridViewTags)].Value = selectedImages[i].Name;
+                    row.Cells["Name".IdxFromName(gridViewTags)].Tag = tag;
+                    rowsCopy.Insert(insertIndex, row);
                     insertIndex++;
                 }
+                gridViewTags.Rows.Clear();
+                gridViewTags.Rows.AddRange(rowsCopy.ToArray());
             }
             else
             {
