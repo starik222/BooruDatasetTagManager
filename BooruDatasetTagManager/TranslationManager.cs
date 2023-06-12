@@ -110,6 +110,8 @@ namespace BooruDatasetTagManager
 
         public async Task<string> TranslateAsync(string text)
         {
+            if (string.IsNullOrWhiteSpace(text))
+                return string.Empty;
             string result = await GetTranslationAsync(text);
             if (result != null)
                 return result;
