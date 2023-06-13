@@ -94,7 +94,11 @@ namespace BooruDatasetTagManager
                 return;
             isLoading = true;
             Program.DataManager = new DatasetManager();
-            Program.DataManager.LoadFromFolder(openFolderDialog.Folder, Program.Settings.FixTagsOnLoad);
+            if (!Program.DataManager.LoadFromFolder(openFolderDialog.Folder, Program.Settings.FixTagsOnLoad))
+            {
+                SetStatus("Selected directory does not contain images!");
+                return;
+            }
 
             gridViewDS.DataSource = Program.DataManager.GetDataSource();
             Program.DataManager.UpdateData();

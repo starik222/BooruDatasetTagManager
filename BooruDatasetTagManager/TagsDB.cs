@@ -12,13 +12,15 @@ namespace BooruDatasetTagManager
     [Serializable]
     public class TagsDB
     {
+        public int Version;
         public List<TagItem> Tags;
         public Dictionary<string, long> LoadedFiles;
-
         private Dictionary<long, int> hashes;
+        private const int curVersion = 100;
 
         public TagsDB()
         {
+            Version = curVersion;
             Tags = new List<TagItem>();
             LoadedFiles = new Dictionary<string, long>();
             hashes = new Dictionary<long, int>();
@@ -46,6 +48,11 @@ namespace BooruDatasetTagManager
         {
             Tags.Clear();
             hashes.Clear();
+        }
+
+        public void ResetVersion()
+        {
+            Version = curVersion;
         }
 
         public void ClearLoadedFiles()
@@ -143,9 +150,7 @@ namespace BooruDatasetTagManager
         {
             if (string.IsNullOrWhiteSpace(tag))
                 return;
-            tag = tag.Replace('_', ' ');
-            tag = tag.Replace("\\(", "(");
-            tag = tag.Replace("\\)", ")");
+            tag = PrepareTag(tag);
             if (Tags.Exists(a => a.Parent == tag))
                 return;
             tag = tag.Trim().ToLower();
@@ -164,14 +169,26 @@ namespace BooruDatasetTagManager
                 tagItem.SetTag(tag);
                 tagItem.Count = count;
                 tagItem.IsAlias = isAlias;
-                tagItem.Parent = parent;
+                tagItem.Parent = PrepareTag(parent);
                 hashes.Add(tagItem.TagHash, Tags.Count);
                 Tags.Add(tagItem);
             }
         }
 
+        private string PrepareTag(string tag)
+        {
+            if (string.IsNullOrWhiteSpace(tag))
+                return tag;
+            tag = tag.Replace('_', ' ');
+            tag = tag.Replace("\\(", "(");
+            tag = tag.Replace("\\)", ")");
+            return tag;
+        }
+
         public bool IsNeedUpdate(string dirToCheck)
         {
+            if (Version != curVersion)
+                return true;
             FileInfo[] tagFiles = new DirectoryInfo(dirToCheck).GetFiles("*.csv", SearchOption.TopDirectoryOnly).
                 Concat(new DirectoryInfo(dirToCheck).GetFiles("*.txt", SearchOption.TopDirectoryOnly)).ToArray();
             if (tagFiles.Length == 0)
@@ -203,7 +220,14 @@ namespace BooruDatasetTagManager
         {
             if (File.Exists(fPath))
             {
-                return (TagsDB)Extensions.LoadDataSet(File.ReadAllBytes(fPath));
+                try
+                {
+                    return (TagsDB)Extensions.LoadDataSet(File.ReadAllBytes(fPath));
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
             }
             else
                 return new TagsDB();

@@ -54,6 +54,7 @@ namespace BooruDatasetTagManager
                     {
                         TagsList.ClearDb();
                         TagsList.ClearLoadedFiles();
+                        TagsList.ResetVersion();
                         TagsList.LoadCSVFromDir(tagsDir);
                         TagsList.LoadTxtFromDir(tagsDir);
                         TagsList.SortTags();
