@@ -1191,7 +1191,11 @@ namespace BooruDatasetTagManager
                     {
                         if (i != e.RowIndex && (string)gridViewTags[e.ColumnIndex, i].Value == editedValue)
                         {
-                            gridViewTags.Rows.RemoveAt(e.RowIndex);
+                            this.BeginInvoke(new MethodInvoker(() =>
+                            {
+                                gridViewTags.Rows.RemoveAt(e.RowIndex);
+                            }));
+                            
                         }
                     }
                 }
@@ -1200,7 +1204,10 @@ namespace BooruDatasetTagManager
                     if (string.IsNullOrEmpty((string)gridViewTags["Image", e.RowIndex].Value))
                     {
                         MessageBox.Show("Image name must be filled!");
-                        gridViewTags.Rows.RemoveAt(e.RowIndex);
+                        this.BeginInvoke(new MethodInvoker(() =>
+                        {
+                            gridViewTags.Rows.RemoveAt(e.RowIndex);
+                        }));
                     }
                     else
                     {
