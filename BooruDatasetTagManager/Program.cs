@@ -19,12 +19,13 @@ namespace BooruDatasetTagManager
         {
             Application.EnableVisualStyles();
 #if NET5_0_OR_GREATER
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
 #endif
             Application.SetCompatibleTextRenderingDefault(false);
             Settings = new AppSettings(Application.StartupPath);
             #region waitForm
             Form f_wait = new Form();
+            f_wait.AutoScaleMode = AutoScaleMode.Dpi;
             f_wait.Width = 300;
             f_wait.Height = 100;
             f_wait.FormBorderStyle = FormBorderStyle.FixedDialog;

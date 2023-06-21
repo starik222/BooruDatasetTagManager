@@ -18,8 +18,8 @@ namespace BooruDatasetTagManager
             tagTextBox = new AutoCompleteTextBox();
             tagTextBox.SetAutocompleteMode(Program.Settings.AutocompleteMode, Program.Settings.AutocompleteSort);
             tagTextBox.Values = Program.TagsList.Tags;
-            tagTextBox.Location = new Point(13, 82);
-            tagTextBox.Size = new Size(375, 23);
+            tagTextBox.Location = new Point(label1.Location.X, label1.Location.Y + label1.Size.Height + 15);
+            tagTextBox.Size = new Size(this.Width - tagTextBox.Location.X - 20, 23);
             Controls.Add(tagTextBox);
             comboBox1.Items.AddRange(Enum.GetNames(typeof(DatasetManager.AddingType)));
             comboBox1.SelectedItem = "Down";

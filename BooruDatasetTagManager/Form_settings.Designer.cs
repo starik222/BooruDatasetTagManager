@@ -451,8 +451,8 @@ namespace BooruDatasetTagManager
             // Form_settings
             // 
             AcceptButton = button1;
-            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             CancelButton = button2;
             ClientSize = new System.Drawing.Size(456, 381);
             Controls.Add(tabControl1);

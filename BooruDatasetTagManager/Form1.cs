@@ -1195,7 +1195,7 @@ namespace BooruDatasetTagManager
                             {
                                 gridViewTags.Rows.RemoveAt(e.RowIndex);
                             }));
-                            
+
                         }
                     }
                 }

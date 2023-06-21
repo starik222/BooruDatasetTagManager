@@ -50,6 +50,7 @@ namespace BooruDatasetTagManager
             // 
             // button1
             // 
+            button1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             button1.Location = new System.Drawing.Point(300, 12);
             button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             button1.Name = "button1";
@@ -61,6 +62,7 @@ namespace BooruDatasetTagManager
             // 
             // button2
             // 
+            button2.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             button2.Location = new System.Drawing.Point(300, 45);
             button2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -103,8 +105,8 @@ namespace BooruDatasetTagManager
             // 
             // Form_addTag
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             ClientSize = new System.Drawing.Size(401, 338);
             Controls.Add(numericUpDown1);
             Controls.Add(comboBox1);
