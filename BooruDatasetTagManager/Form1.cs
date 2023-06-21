@@ -538,6 +538,11 @@ namespace BooruDatasetTagManager
 
         private async void AddTagToAll(bool filtered)
         {
+            if (Program.DataManager == null)
+            {
+                MessageBox.Show("Dataset not load.");
+                return;
+            }
             Form_addTag addTag = new Form_addTag();
             int index = gridViewAllTags.RowCount;
             if (gridViewAllTags.SelectedCells.Count > 0)
@@ -687,7 +692,6 @@ namespace BooruDatasetTagManager
             Program.DataManager.SaveAll(Program.Settings.FixTagsOnSave);
             Program.DataManager.UpdateDatasetHash();
             SetStatus("Saved!");
-            MessageBox.Show("Saved!");
         }
 
         private void showPreviewToolStripMenuItem_Click(object sender, EventArgs e)
