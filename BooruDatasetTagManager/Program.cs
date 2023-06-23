@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 using System.IO;
 using System.Diagnostics;
+using System.Threading;
 
 namespace BooruDatasetTagManager
 {
@@ -35,6 +36,12 @@ namespace BooruDatasetTagManager
             mes.Text = "Please wait while the tags are loading.\nWhen changing csv or txt files,\nthe initial loading of tags may take a long time.";
             mes.Location = new System.Drawing.Point(10, 10);
             mes.AutoSize = true;
+
+            while (!Debugger.IsAttached)
+            {
+                Thread.Sleep(100);
+            }
+
             f_wait.Controls.Add(mes);
             
             f_wait.Shown += async (o, i) =>
@@ -51,6 +58,8 @@ namespace BooruDatasetTagManager
                         Directory.CreateDirectory(tagsDir);
                     string tagFile = Path.Combine(tagsDir, "List.tdb");
                     TagsList = TagsDB.LoadFromTagFile(tagFile);
+                    if (TagsList == null)
+                        TagsList = new TagsDB();
                     if (TagsList.IsNeedUpdate(tagsDir))
                     {
                         TagsList.ClearDb();
