@@ -37,11 +37,6 @@ namespace BooruDatasetTagManager
             mes.Location = new System.Drawing.Point(10, 10);
             mes.AutoSize = true;
 
-            while (!Debugger.IsAttached)
-            {
-                Thread.Sleep(100);
-            }
-
             f_wait.Controls.Add(mes);
             
             f_wait.Shown += async (o, i) =>
