@@ -486,7 +486,7 @@ namespace BooruDatasetTagManager
             {
                 if (IsModified)
                 {
-                    Tags = Tags.Distinct().ToList();
+                    Tags = Tags.Where(a=>!string.IsNullOrEmpty(a)).Distinct().ToList();
                 }
             }
 
