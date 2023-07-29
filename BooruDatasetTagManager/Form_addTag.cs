@@ -21,6 +21,7 @@ namespace BooruDatasetTagManager
             tagTextBox.Location = new Point(label1.Location.X, label1.Location.Y + label1.Size.Height + 15);
             tagTextBox.Size = new Size(this.Width - tagTextBox.Location.X - 20, 23);
             Controls.Add(tagTextBox);
+            tagTextBox.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
             comboBox1.Items.AddRange(Enum.GetNames(typeof(DatasetManager.AddingType)));
             comboBox1.SelectedItem = "Down";
             tagTextBox.ItemSelectionComplete += TagTextBox_ItemSelectionComplete;

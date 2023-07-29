@@ -49,6 +49,7 @@ namespace BooruDatasetTagManager
             // 
             // comboBox1
             // 
+            comboBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBox1.FormattingEnabled = true;
             comboBox1.Location = new System.Drawing.Point(18, 29);
@@ -69,6 +70,7 @@ namespace BooruDatasetTagManager
             // 
             // comboBox2
             // 
+            comboBox2.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             comboBox2.FormattingEnabled = true;
             comboBox2.Location = new System.Drawing.Point(18, 89);
             comboBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);

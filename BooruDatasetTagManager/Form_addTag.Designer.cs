@@ -107,7 +107,7 @@ namespace BooruDatasetTagManager
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            ClientSize = new System.Drawing.Size(401, 338);
+            ClientSize = new System.Drawing.Size(401, 353);
             Controls.Add(numericUpDown1);
             Controls.Add(comboBox1);
             Controls.Add(label2);
