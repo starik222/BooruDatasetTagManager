@@ -15,13 +15,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Translator;
 using static BooruDatasetTagManager.DatasetManager;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace BooruDatasetTagManager
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             tagsBuffer = new List<string>();
@@ -31,6 +32,7 @@ namespace BooruDatasetTagManager
             previewPicBox = new PictureBox();
             previewPicBox.Name = "previewPicBox";
             allTagsFilter = new Form_filter();
+            switchLanguage();
         }
 
         private void DataGridView1_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
@@ -53,6 +55,7 @@ namespace BooruDatasetTagManager
         private bool isAllTags = true;
         private bool isTranslate = false;
         private bool isFiltered = false;
+        private bool showCount = false;
 
         private Form_preview fPreview;
         private bool isShowPreview = false;
@@ -83,12 +86,16 @@ namespace BooruDatasetTagManager
 
         private void SetChangedStatus(bool changed)
         {
-            toolStripButton1.Enabled = changed;
-            toolStripButton11.Enabled = changed;
+            BtnTagApply.Enabled = changed;
+            BtnTagReset.Enabled = changed;
         }
 
         private void openFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (Program.DataManager != null)
+            {
+                saveAllChangesToolStripMenuItem_Click(sender, e);
+            }
             OpenFolderDialog openFolderDialog = new OpenFolderDialog();
             if (openFolderDialog.ShowDialog() != DialogResult.OK)
                 return;
@@ -96,7 +103,7 @@ namespace BooruDatasetTagManager
             Program.DataManager = new DatasetManager();
             if (!Program.DataManager.LoadFromFolder(openFolderDialog.Folder, Program.Settings.FixTagsOnLoad))
             {
-                SetStatus("Selected directory does not contain images!");
+                SetStatus(I18n.GetText("TipFolderWrong"));
                 return;
             }
 
@@ -111,13 +118,13 @@ namespace BooruDatasetTagManager
         private async Task FillTranslation(DataGridView grid)
         {
             LockEdit(true);
-            SetStatus("Translating, please wait...");
+            SetStatus(I18n.GetText("StatusTranslating"));
             try
             {
                 HttpClient client = new HttpClient();
                 for (int i = 0; i < grid.RowCount; i++)
                 {
-                    SetStatus($"Translation {i}/{grid.RowCount}");
+                    SetStatus($"{I18n.GetText("SettingTabTranslations")} {i}/{grid.RowCount}");
                     grid["Translation", i].ReadOnly = true;
                     grid["Translation", i].Value = await Program.TransManager.TranslateAsync(grid[0, i].Value as string);
                 }
@@ -126,7 +133,7 @@ namespace BooruDatasetTagManager
             {
 
             }
-            SetStatus("Translation completed");
+            SetStatus(I18n.GetText("StatusTranslationComplete"));
             LockEdit(false);
         }
 
@@ -240,9 +247,17 @@ namespace BooruDatasetTagManager
                     gridViewTags.Rows.AddRange(rows);
                 }
             }
+
+            if (Program.Settings.AutoSort)
+            {
+                SortPrompt();
+            }
+
             gridViewDS.Focus();
             if (isTranslate)
                 await FillTranslation(gridViewTags);
+            if (showCount)
+                UpdateTagCount();
             SetChangedStatus(false);
         }
 
@@ -345,7 +360,7 @@ namespace BooruDatasetTagManager
             }
         }
 
-        private void toolStripButton2_Click(object sender, EventArgs e)
+        private void BtnAddTag_Clicked(object sender, EventArgs e)
         {
             AddNewRow();
         }
@@ -377,7 +392,7 @@ namespace BooruDatasetTagManager
             }
         }
 
-        private void toolStripButton3_Click(object sender, EventArgs e)
+        private void BtnTagDelete_Click(object sender, EventArgs e)
         {
             if (gridViewTags.SelectedCells.Count == 0)
                 return;
@@ -396,6 +411,8 @@ namespace BooruDatasetTagManager
                 gridViewTags["Translation", curIndex - 1].Value = gridViewTags[1, curIndex].Value;
                 gridViewTags["Translation", curIndex].Value = upperValueTrans;
             }
+            if (showCount)
+                UpdateTagCount();
             gridViewTags["ImageTags", curIndex - 1].Value = gridViewTags["ImageTags", curIndex].Value;
             gridViewTags["ImageTags", curIndex].Value = upperValue;
             gridViewTags.ClearSelection();
@@ -415,6 +432,8 @@ namespace BooruDatasetTagManager
                 gridViewTags["Translation", curIndex + 1].Value = gridViewTags[1, curIndex].Value;
                 gridViewTags["Translation", curIndex].Value = lowerValueTrans;
             }
+            if (showCount)
+                UpdateTagCount();
 
             gridViewTags["ImageTags", curIndex + 1].Value = gridViewTags[0, curIndex].Value;
             gridViewTags["ImageTags", curIndex].Value = lowerValue;
@@ -431,7 +450,7 @@ namespace BooruDatasetTagManager
         {
             if (Program.DataManager == null)
             {
-                MessageBox.Show("Dataset not load.");
+                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
                 return;
             }
             if ((string)gridViewTags.Tag != "0")
@@ -477,9 +496,9 @@ namespace BooruDatasetTagManager
         {
             isAllTags = !isAllTags;
             if (isAllTags)
-                label3.Text = "All tags";
+                LabelAllTags.Text = I18n.GetText("UILabelAllTags");
             else
-                label3.Text = "Common tags";
+                LabelAllTags.Text = I18n.GetText("UILabelCommonTags");
             BindTagList();
         }
 
@@ -487,7 +506,7 @@ namespace BooruDatasetTagManager
         {
             if (Program.DataManager == null)
             {
-                MessageBox.Show("Dataset not load.");
+                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
                 return;
             }
             if (isAllTags)
@@ -529,9 +548,12 @@ namespace BooruDatasetTagManager
             {
                 await FillTranslation(dgv);
             }
+
+            if (showCount)
+                UpdateTagCount();
         }
 
-        private void toolStripButton7_Click(object sender, EventArgs e)
+        private void BtnAddTagForAll_Click(object sender, EventArgs e)
         {
             AddTagToAll(false);
         }
@@ -540,7 +562,7 @@ namespace BooruDatasetTagManager
         {
             if (Program.DataManager == null)
             {
-                MessageBox.Show("Dataset not load.");
+                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
                 return;
             }
             Form_addTag addTag = new Form_addTag();
@@ -606,6 +628,9 @@ namespace BooruDatasetTagManager
                         gridViewTags.Rows[insertIndex].Cells[1].Value = transString;
                     }
 
+                    if (showCount)
+                        UpdateTagCount();
+
                     var allIndex = IndexOfValueInGrig(gridViewAllTags, "Tag", addTag.tagTextBox.Text);
                     if (allIndex == -1)
                     {
@@ -615,6 +640,9 @@ namespace BooruDatasetTagManager
                         {
                             gridViewAllTags.Rows[index].Cells[1].Value = transString;
                         }
+
+                        if (showCount)
+                            UpdateTagCount();
                     }
                 }
                 else
@@ -685,20 +713,20 @@ namespace BooruDatasetTagManager
         {
             if (Program.DataManager == null)
             {
-                MessageBox.Show("Dataset not load.");
+                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
                 return;
             }
             ApplyTagsChanges();
             Program.DataManager.SaveAll(Program.Settings.FixTagsOnSave);
             Program.DataManager.UpdateDatasetHash();
-            SetStatus("Saved!");
+            SetStatus(I18n.GetText("StatusSaved"));
         }
 
         private void showPreviewToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Program.DataManager == null)
             {
-                MessageBox.Show("Dataset not load.");
+                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
                 return;
             }
             isShowPreview = !isShowPreview;
@@ -729,15 +757,15 @@ namespace BooruDatasetTagManager
                 {
                     tagsBuffer.Add((string)gridViewTags["ImageTags", i].Value);
                 }
-                SetStatus("Copied!");
+                SetStatus(I18n.GetText("StatusCopied"));
             }
             else if (gridViewDS.SelectedRows.Count > 1)
             {
-                MessageBox.Show("Copying is only supported for single selection");
+                MessageBox.Show(I18n.GetText("TipMultiImageCopy"));
             }
             else
             {
-                MessageBox.Show("First select an image");
+                MessageBox.Show(I18n.GetText("TipSelectImage"));
             }
         }
 
@@ -746,7 +774,7 @@ namespace BooruDatasetTagManager
             statusLabel.Text = text;
         }
 
-        private async void toolStripButton10_Click(object sender, EventArgs e)
+        private async void BtnPasteTag_Click(object sender, EventArgs e)
         {
             if (gridViewDS.SelectedRows.Count == 1)
             {
@@ -757,15 +785,17 @@ namespace BooruDatasetTagManager
                 }
                 if (isTranslate)
                     await FillTranslation(gridViewTags);
-                SetStatus("Pasted!");
+                if (showCount)
+                    UpdateTagCount();
+                SetStatus(I18n.GetText("StatusPasted"));
             }
             else if (gridViewDS.SelectedRows.Count > 1)
             {
-                MessageBox.Show("Pasting is only supported for single selection");
+                MessageBox.Show(I18n.GetText("TipMultiImagePaste"));
             }
             else
             {
-                MessageBox.Show("First select an image");
+                MessageBox.Show(I18n.GetText("TipSelectImage"));
             }
         }
 
@@ -775,7 +805,7 @@ namespace BooruDatasetTagManager
             lastGridViewTagsHash = GetgridViewTagsHash();
         }
 
-        private void toolStripButton12_Click(object sender, EventArgs e)
+        private void BtnDeleteTagForAll_Click(object sender, EventArgs e)
         {
             RemoveTagFromAll(false);
         }
@@ -805,7 +835,7 @@ namespace BooruDatasetTagManager
         private async void translateTagsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             isTranslate = !isTranslate;
-            translateTagsToolStripMenuItem.Checked = isTranslate;
+            MenuItemTranslateTags.Checked = isTranslate;
             if (isTranslate)
             {
                 gridViewAllTags.Columns.Insert(1, new DataGridViewTextBoxColumn()
@@ -906,7 +936,7 @@ namespace BooruDatasetTagManager
                     gridViewTags.Rows.Clear();
                 isFiltered = true;
                 LoadSelectedInViewDs();
-                toolStripButton14.Enabled = true;
+                BtnImageExitFilter.Enabled = true;
             }
             isLoading = false;
         }
@@ -919,7 +949,7 @@ namespace BooruDatasetTagManager
                 SaveSelectedInViewDs();
                 gridViewDS.DataSource = Program.DataManager.GetDataSource();
                 isFiltered = false;
-                toolStripButton14.Enabled = false;
+                BtnImageExitFilter.Enabled = false;
                 LoadSelectedInViewDs();
             }
             isLoading = false;
@@ -934,11 +964,11 @@ namespace BooruDatasetTagManager
         {
             if (e.KeyCode == Keys.Delete)
             {
-                toolStripButton3.PerformClick();
+                BtnTagDelete.PerformClick();
             }
             else if (e.KeyCode == Keys.Insert)
             {
-                toolStripButton2.PerformClick();
+                BtnTagAdd.PerformClick();
             }
         }
 
@@ -953,6 +983,11 @@ namespace BooruDatasetTagManager
 
         private async void toolStripButton15_Click(object sender, EventArgs e)
         {
+            if (Program.DataManager == null)
+            {
+                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
+                return;
+            }
             if (Clipboard.ContainsText())
             {
                 gridViewTags.Rows.Clear();
@@ -963,6 +998,9 @@ namespace BooruDatasetTagManager
 
                 if (isTranslate)
                     await FillTranslation(gridViewTags);
+
+                if (showCount)
+                    UpdateTagCount();
             }
         }
 
@@ -1164,19 +1202,19 @@ namespace BooruDatasetTagManager
             {
                 case FilterType.Not:
                     filterAnd = FilterType.Or;
-                    toolStripButton18.Image = Properties.Resources.ORIcon;
+                    BtnTagMultiModeSwitch.Image = Properties.Resources.ORIcon;
                     break;
                 case FilterType.Or:
                     filterAnd = FilterType.Xor;
-                    toolStripButton18.Image = Properties.Resources.XORIcon;
+                    BtnTagMultiModeSwitch.Image = Properties.Resources.XORIcon;
                     break;
                 case FilterType.Xor:
                     filterAnd = FilterType.And;
-                    toolStripButton18.Image = Properties.Resources.ANDIcon;
+                    BtnTagMultiModeSwitch.Image = Properties.Resources.ANDIcon;
                     break;
                 case FilterType.And:
                     filterAnd = FilterType.Not;
-                    toolStripButton18.Image = Properties.Resources.NOTIcon;
+                    BtnTagMultiModeSwitch.Image = Properties.Resources.NOTIcon;
                     break;
                 default:
                     throw new ArgumentException($"Invalid filter type: {filterAnd}");
@@ -1231,7 +1269,7 @@ namespace BooruDatasetTagManager
         {
             if (gridViewDS.SelectedRows.Count != 1)
             {
-                statusLabel.Text = "The number of selected images is not equal to 1";
+                SetStatus("The number of selected images is not equal to 1");
                 return;
             }
 
@@ -1249,7 +1287,7 @@ namespace BooruDatasetTagManager
         {
             if (gridViewDS.SelectedRows.Count < 2)
             {
-                statusLabel.Text = "The number of selected images must be greater than 1";
+                SetStatus("The number of selected images must be greater than 1");
                 return;
             }
             //List<string> selectedImages = new List<string>();
@@ -1321,7 +1359,7 @@ namespace BooruDatasetTagManager
         {
             if (gridViewDS.SelectedRows.Count == 0)
             {
-                statusLabel.Text = "The number of selected images must be greater than 0";
+                SetStatus("The number of selected images must be greater than 0");
                 return;
             }
 
@@ -1363,7 +1401,7 @@ namespace BooruDatasetTagManager
         {
             if (gridViewAllTags.SelectedCells.Count == 0 || gridViewDS.SelectedRows.Count == 0)
             {
-                statusLabel.Text = "Images or tags not selected!";
+                SetStatus("Images or tags not selected!");
                 return;
             }
             foreach (var item in GetSelectedTagsInAllTags())
@@ -1375,13 +1413,16 @@ namespace BooruDatasetTagManager
             }
             if (isTranslate)
                 await FillTranslation(gridViewTags);
+
+            if (showCount)
+                UpdateTagCount();
         }
 
         private void RemoveSelectedAllTagsToImageTags()
         {
             if (gridViewAllTags.SelectedCells.Count == 0 || gridViewDS.SelectedRows.Count == 0)
             {
-                statusLabel.Text = "Images or tags not selected!";
+                SetStatus("Images or tags not selected!");
                 return;
             }
             foreach (var item in GetSelectedTagsInAllTags())
@@ -1450,9 +1491,10 @@ namespace BooruDatasetTagManager
             Form_settings settings = new Form_settings();
             if (settings.ShowDialog() == DialogResult.OK)
             {
-                statusLabel.Text = "Settings have been saved";
+                SetStatus("Settings have been saved");
             }
             settings.Close();
+            switchLanguage();
         }
 
         private void gridViewTags_KeyPress(object sender, KeyPressEventArgs e)
@@ -1476,7 +1518,7 @@ namespace BooruDatasetTagManager
         {
             if (gridViewDS.SelectedRows.Count < 1)
                 return;
-            if (MessageBox.Show("Are you sure you want to delete the selected image file?", "Delete File",
+            if (MessageBox.Show(I18n.GetText("TipDeleteFile"), I18n.GetText("LabelDeleteFile"),
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
                 gridViewTags.Rows.Clear();
@@ -1682,8 +1724,6 @@ namespace BooruDatasetTagManager
                 int index = gridViewAllTags.CurrentCell.RowIndex;
                 gridViewAllTags.CurrentCell = gridViewAllTags.Rows[index + pos].Cells[0];
             }
-
-
         }
 
         private void gridViewDS_KeyUp(object sender, KeyEventArgs e)
@@ -1702,7 +1742,7 @@ namespace BooruDatasetTagManager
         {
             if (Program.DataManager == null)
             {
-                MessageBox.Show("Dataset not load.");
+                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
                 return;
             }
             if (allTagsFilter == null || allTagsFilter.IsDisposed)
@@ -1722,6 +1762,197 @@ namespace BooruDatasetTagManager
         private void toolStripButton25_Click(object sender, EventArgs e)
         {
             BindTagList();
+        }
+
+        private void promptSortBtn_Click(object sender, EventArgs e)
+        {
+            SortPrompt();
+        }
+
+        private void SortPrompt()
+        {
+            var fixedLengthIndex = promptFixedLengthComboBox.SelectedIndex;
+            if (fixedLengthIndex == -1) return;
+            var fixLength = fixedLengthIndex;
+            if (fixLength > 0)
+            {
+                if (Program.DataManager == null)
+                {
+                    return;
+                }
+                var newRows = new List<DataGridViewRow>();
+                for (var i = 0; i < fixedLengthIndex; ++i)
+                {
+                    newRows.Add(gridViewTags.Rows[i]);
+                }
+
+                var toSortRows = new List<DataGridViewRow>();
+                var sortLength = gridViewTags.Rows.Count - fixedLengthIndex;
+                if (sortLength <= 0) return;
+
+                for (var i = fixedLengthIndex; i < gridViewTags.Rows.Count; ++i)
+                {
+                    toSortRows.Add(gridViewTags.Rows[i]);
+                }
+
+                DataGridViewRowComparer rowComparer = new DataGridViewRowComparer();
+                toSortRows.Sort(rowComparer);
+                for (var i = 0; i < sortLength; ++i)
+                {
+                    newRows.Add(toSortRows[i]);
+                }
+
+                // copy
+                gridViewTags.Rows.Clear();
+                foreach (DataGridViewRow newRow in newRows)
+                {
+                    gridViewTags.Rows.Add(newRow);
+                }
+            }
+        }
+
+        private void settingsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            settingsToolStripMenuItem_Click(sender, e);
+        }
+
+        public void switchLanguage()
+        {
+            I18n.Initialize(Program.Settings.Language);
+            fileToolStripMenuItem.Text = I18n.GetText("MenuLabelFile");
+            MenuSetting.Text = I18n.GetText("MenuLabelSettings");
+            viewToolStripMenuItem.Text = I18n.GetText("MenuLabelView");
+            LabelDataSet.Text = I18n.GetText("UILabelDataSet");
+            LabelAllTags.Text = I18n.GetText("UILabelAllTags");
+            LabelImageTags.Text = I18n.GetText("UILabelImageTags");
+            promptFixTipLabel.Text = I18n.GetText("UILabelFixPromptLength");
+            openFolderToolStripMenuItem.Text = I18n.GetText("MenuItemLoadFolder");
+            saveAllChangesToolStripMenuItem.Text = I18n.GetText("MenuItemSaveChanges");
+            loadLossFromFileToolStripMenuItem.Text = I18n.GetText("MenuItemLoadLoss");
+            showPreviewToolStripMenuItem.Text = I18n.GetText("MenuItemShowPreview");
+            MenuItemTranslateTags.Text = I18n.GetText("MenuItemTranslateTags");
+
+            BtnTagAddToAll.Text = I18n.GetText("BtnTagAddToAll");
+            BtnTagAdd.Text = I18n.GetText("BtnTagAdd");
+            BtnTagReset.Text = I18n.GetText("BtnTagReset");
+            BtnTagApply.Text = I18n.GetText("BtnTagApply");
+            BtnTagDelete.Text = I18n.GetText("BtnTagDelete");
+            BtnTagCopy.Text = I18n.GetText("BtnTagCopy");
+            BtnTagPaste.Text = I18n.GetText("BtnTagPaste");
+            BtnTagSetToAll.Text = I18n.GetText("BtnTagSetToAll");
+            BtnTagPasteFromClipBoard.Text = I18n.GetText("BtnTagPasteFromClipBoard");
+            BtnTagShow.Text = I18n.GetText("BtnTagShow");
+            BtnTagUp.Text = I18n.GetText("BtnTagUp");
+            BtnTagDown.Text = I18n.GetText("BtnTagDown");
+            BtnTagFindInAll.Text = I18n.GetText("BtnTagFindInAll");
+
+            BtnTagSwitch.Text = I18n.GetText("BtnTagSwitch");
+            BtnTagAddToAll.Text = I18n.GetText("BtnTagAddToAll");
+            BtnTagDeleteForAll.Text = I18n.GetText("BtnTagDeleteForAll");
+            BtnTagReplace.Text = I18n.GetText("BtnTagReplace");
+            BtnTagAddToSelected.Text = I18n.GetText("BtnTagAddToSelected");
+            BtnTagDeleteForSelected.Text = I18n.GetText("BtnTagDeleteForSelected");
+            BtnTagAddToFiltered.Text = I18n.GetText("BtnTagAddToFiltered");
+            BtnTagDeleteForFiltered.Text = I18n.GetText("BtnTagDeleteForFiltered");
+            BtnTagMultiModeSwitch.Text = I18n.GetText("BtnTagMultiModeSwitch");
+            BtnImageFilter.Text = I18n.GetText("BtnImageFilter");
+            BtnImageExitFilter.Text = I18n.GetText("BtnImageExitFilter");
+            BtnTagFilter.Text = I18n.GetText("BtnTagFilter");
+            BtnTagExitFilter.Text = I18n.GetText("BtnTagExitFilter");
+            MenuShowTagCount.Text = I18n.GetText("MenuShowCount");
+
+            switch (Program.Settings.Language)
+            {
+                case "en-US":
+                    LanguageENBtn.Checked = true;
+                    LanguageCNBtn.Checked = false;
+                    break;
+                case "zh-CN":
+                    LanguageENBtn.Checked = false;
+                    LanguageCNBtn.Checked = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void LanguageENBtn_Click(object sender, EventArgs e)
+        {
+            if (LanguageENBtn.Checked) { return; }
+            Program.Settings.Language = "en-US";
+            Program.Settings.SaveSettings();
+            switchLanguage();
+            LanguageENBtn.Checked = true;
+            LanguageCNBtn.Checked = false;
+        }
+
+        private void LanguageCNBtn_Click(object sender, EventArgs e)
+        {
+            if (LanguageCNBtn.Checked) { return; }
+            Program.Settings.Language = "zh-CN";
+            Program.Settings.SaveSettings();
+            switchLanguage();
+            LanguageCNBtn.Checked = true;
+            LanguageENBtn.Checked = false;
+        }
+
+        private void MenuShowTagCount_Click(object sender, EventArgs e)
+        {
+            if (Program.DataManager == null)
+            {
+                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
+                return;
+            }
+            showCount = !showCount;
+            MenuShowTagCount.Checked = showCount;
+            var Header = "Count";
+            if (showCount)
+            {
+                gridViewAllTags.Columns.Insert(1, new DataGridViewTextBoxColumn()
+                {
+                    Name = Header,
+                    HeaderText = Header,
+                    ReadOnly = true,
+                    Width = 80,
+                });
+
+                // add count
+                LockEdit(true);
+                for (int i = 0; i < gridViewAllTags.RowCount; i++)
+                {
+                    gridViewAllTags[Header, i].ReadOnly = true;
+                    gridViewAllTags[Header, i].Value = 0;
+                }
+                UpdateTagCount();
+                LockEdit(false);
+            }
+            else
+            {
+                gridViewAllTags.Columns.Remove(Header);
+            }
+        }
+
+        public void UpdateTagCount()
+        {
+            var dataset = Program.DataManager.DataSet;
+            var Header = "Count";
+            int tmpCount;
+            for (int i = 0; i < gridViewAllTags.RowCount; i++)
+            {
+                tmpCount = 0;
+                foreach (var item in dataset)
+                {
+                    for (int j = 0; j < item.Value.Tags.Count; ++j)
+                    {
+                        if (item.Value.Tags[j] == gridViewAllTags["Tag", i].Value.ToString())
+                        {
+                            tmpCount++;
+                            break;
+                        }
+                    }
+                }
+                gridViewAllTags[Header, i].Value = tmpCount;
+            }
         }
 
         //private void CreateDataGridViewTags()
@@ -1774,5 +2005,18 @@ namespace BooruDatasetTagManager
         //    gridViewTags.Enter += gridView_Enter;
         //    gridViewTags.Leave += gridView_Leave;
         //}
+    }
+    class DataGridViewRowComparer : IComparer<DataGridViewRow>
+    {
+        public int Compare(DataGridViewRow x, DataGridViewRow y)
+        {
+            if (x == null || y == null)
+                return 0;
+
+            return string.Compare(
+                x.Cells[0].Value?.ToString(),
+                y.Cells[0].Value?.ToString(),
+                StringComparison.Ordinal);
+        }
     }
 }
