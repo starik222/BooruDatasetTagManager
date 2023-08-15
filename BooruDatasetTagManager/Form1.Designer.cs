@@ -778,6 +778,7 @@ namespace BooruDatasetTagManager
             // 
             // promptFixedLengthComboBox
             // 
+            promptFixedLengthComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             promptFixedLengthComboBox.FormattingEnabled = true;
             promptFixedLengthComboBox.Items.AddRange(new object[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" });
             promptFixedLengthComboBox.Location = new System.Drawing.Point(280, 4);

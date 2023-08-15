@@ -82,6 +82,7 @@ namespace BooruDatasetTagManager
             gridViewAllTags.DefaultCellStyle.Font = Program.Settings.GridViewFont.GetFont();
             gridViewDS.DefaultCellStyle.Font = Program.Settings.GridViewFont.GetFont();
             splitContainer2.SplitterDistance = Width / 3;
+            promptFixedLengthComboBox.SelectedIndex = 0;
         }
 
         private void SetChangedStatus(bool changed)
@@ -1774,7 +1775,7 @@ namespace BooruDatasetTagManager
             var fixedLengthIndex = promptFixedLengthComboBox.SelectedIndex;
             if (fixedLengthIndex == -1) return;
             var fixLength = fixedLengthIndex;
-            if (fixLength > 0)
+            if (fixLength >= 0)
             {
                 if (Program.DataManager == null)
                 {
