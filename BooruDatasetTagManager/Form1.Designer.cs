@@ -1,7 +1,7 @@
 ﻿
 namespace BooruDatasetTagManager
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -33,62 +33,68 @@ namespace BooruDatasetTagManager
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             gridViewTags = new System.Windows.Forms.DataGridView();
             ImageTags = new CustomTextBoxColumn();
             toolStrip2 = new System.Windows.Forms.ToolStrip();
-            toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            toolStripButton11 = new System.Windows.Forms.ToolStripButton();
+            BtnTagAdd = new System.Windows.Forms.ToolStripButton();
+            BtnTagDelete = new System.Windows.Forms.ToolStripButton();
+            BtnTagApply = new System.Windows.Forms.ToolStripButton();
+            BtnTagReset = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            toolStripButton9 = new System.Windows.Forms.ToolStripButton();
-            toolStripButton10 = new System.Windows.Forms.ToolStripButton();
-            toolStripButton17 = new System.Windows.Forms.ToolStripButton();
+            BtnTagCopy = new System.Windows.Forms.ToolStripButton();
+            BtnTagPaste = new System.Windows.Forms.ToolStripButton();
+            BtnTagSetToAll = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            toolStripButton15 = new System.Windows.Forms.ToolStripButton();
-            toolStripButton16 = new System.Windows.Forms.ToolStripButton();
+            BtnTagPasteFromClipBoard = new System.Windows.Forms.ToolStripButton();
+            BtnTagShow = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            toolStripButton4 = new System.Windows.Forms.ToolStripButton();
-            toolStripButton5 = new System.Windows.Forms.ToolStripButton();
+            BtnTagUp = new System.Windows.Forms.ToolStripButton();
+            BtnTagDown = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            toolStripButton23 = new System.Windows.Forms.ToolStripButton();
+            BtnTagFindInAll = new System.Windows.Forms.ToolStripButton();
             menuStrip1 = new System.Windows.Forms.MenuStrip();
             fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             saveAllChangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             loadLossFromFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             showPreviewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            translateTagsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            label1 = new System.Windows.Forms.Label();
-            label2 = new System.Windows.Forms.Label();
+            MenuItemTranslateTags = new System.Windows.Forms.ToolStripMenuItem();
+            MenuSetting = new System.Windows.Forms.ToolStripMenuItem();
+            MenuLanguage = new System.Windows.Forms.ToolStripMenuItem();
+            LanguageENBtn = new System.Windows.Forms.ToolStripMenuItem();
+            LanguageCNBtn = new System.Windows.Forms.ToolStripMenuItem();
+            LabelDataSet = new System.Windows.Forms.Label();
+            LabelImageTags = new System.Windows.Forms.Label();
             gridViewAllTags = new System.Windows.Forms.DataGridView();
-            label3 = new System.Windows.Forms.Label();
+            LabelAllTags = new System.Windows.Forms.Label();
             toolStrip1 = new System.Windows.Forms.ToolStrip();
-            toolStripButton6 = new System.Windows.Forms.ToolStripButton();
-            toolStripButton7 = new System.Windows.Forms.ToolStripButton();
-            toolStripButton12 = new System.Windows.Forms.ToolStripButton();
-            toolStripButton8 = new System.Windows.Forms.ToolStripButton();
+            BtnTagSwitch = new System.Windows.Forms.ToolStripButton();
+            BtnTagAddToAll = new System.Windows.Forms.ToolStripButton();
+            BtnTagDeleteForAll = new System.Windows.Forms.ToolStripButton();
+            BtnTagReplace = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            toolStripButton19 = new System.Windows.Forms.ToolStripButton();
-            toolStripButton20 = new System.Windows.Forms.ToolStripButton();
+            BtnTagAddToSelected = new System.Windows.Forms.ToolStripButton();
+            BtnTagDeleteForSelected = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            toolStripButton21 = new System.Windows.Forms.ToolStripButton();
-            toolStripButton22 = new System.Windows.Forms.ToolStripButton();
+            BtnTagAddToFiltered = new System.Windows.Forms.ToolStripButton();
+            BtnTagDeleteForFiltered = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            toolStripButton18 = new System.Windows.Forms.ToolStripButton();
-            toolStripButton13 = new System.Windows.Forms.ToolStripButton();
-            toolStripButton14 = new System.Windows.Forms.ToolStripButton();
+            BtnTagMultiModeSwitch = new System.Windows.Forms.ToolStripButton();
+            BtnImageFilter = new System.Windows.Forms.ToolStripButton();
+            BtnImageExitFilter = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            toolStripButton24 = new System.Windows.Forms.ToolStripButton();
-            toolStripButton25 = new System.Windows.Forms.ToolStripButton();
+            BtnTagFilter = new System.Windows.Forms.ToolStripButton();
+            BtnTagExitFilter = new System.Windows.Forms.ToolStripButton();
             statusStrip1 = new System.Windows.Forms.StatusStrip();
             statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             splitContainer1 = new System.Windows.Forms.SplitContainer();
             splitContainer2 = new System.Windows.Forms.SplitContainer();
             gridViewDS = new System.Windows.Forms.DataGridView();
+            promptSortBtn = new System.Windows.Forms.Button();
+            promptFixTipLabel = new System.Windows.Forms.Label();
+            promptFixedLengthComboBox = new System.Windows.Forms.ComboBox();
             button1 = new System.Windows.Forms.Button();
             textBox1 = new System.Windows.Forms.TextBox();
             customTextBoxColumn1 = new CustomTextBoxColumn();
@@ -167,7 +173,7 @@ namespace BooruDatasetTagManager
             // 
             toolStrip2.Dock = System.Windows.Forms.DockStyle.Right;
             toolStrip2.ImageScalingSize = new System.Drawing.Size(32, 32);
-            toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripButton2, toolStripButton3, toolStripButton1, toolStripButton11, toolStripSeparator1, toolStripButton9, toolStripButton10, toolStripButton17, toolStripSeparator2, toolStripButton15, toolStripButton16, toolStripSeparator4, toolStripButton4, toolStripButton5, toolStripSeparator7, toolStripButton23 });
+            toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { BtnTagAdd, BtnTagDelete, BtnTagApply, BtnTagReset, toolStripSeparator1, BtnTagCopy, BtnTagPaste, BtnTagSetToAll, toolStripSeparator2, BtnTagPasteFromClipBoard, BtnTagShow, toolStripSeparator4, BtnTagUp, BtnTagDown, toolStripSeparator7, BtnTagFindInAll });
             toolStrip2.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
             toolStrip2.Location = new System.Drawing.Point(369, 30);
             toolStrip2.Name = "toolStrip2";
@@ -176,151 +182,151 @@ namespace BooruDatasetTagManager
             toolStrip2.TabIndex = 3;
             toolStrip2.Text = "toolStrip2";
             // 
-            // toolStripButton2
+            // BtnTagAdd
             // 
-            toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton2.Image = Properties.Resources.Add;
-            toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton2.Name = "toolStripButton2";
-            toolStripButton2.Size = new System.Drawing.Size(33, 36);
-            toolStripButton2.Text = "Add";
-            toolStripButton2.Click += toolStripButton2_Click;
+            BtnTagAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagAdd.Image = Properties.Resources.Add;
+            BtnTagAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagAdd.Name = "BtnTagAdd";
+            BtnTagAdd.Size = new System.Drawing.Size(33, 36);
+            BtnTagAdd.Text = "Add";
+            BtnTagAdd.Click += BtnAddTag_Clicked;
             // 
-            // toolStripButton3
+            // BtnTagDelete
             // 
-            toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton3.Image = Properties.Resources.Delete;
-            toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton3.Name = "toolStripButton3";
-            toolStripButton3.Size = new System.Drawing.Size(33, 36);
-            toolStripButton3.Text = "Delete";
-            toolStripButton3.Click += toolStripButton3_Click;
+            BtnTagDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagDelete.Image = Properties.Resources.Delete;
+            BtnTagDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagDelete.Name = "BtnTagDelete";
+            BtnTagDelete.Size = new System.Drawing.Size(33, 36);
+            BtnTagDelete.Text = "Delete";
+            BtnTagDelete.Click += BtnTagDelete_Click;
             // 
-            // toolStripButton1
+            // BtnTagApply
             // 
-            toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton1.Image = Properties.Resources.Apply;
-            toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton1.Name = "toolStripButton1";
-            toolStripButton1.Size = new System.Drawing.Size(33, 36);
-            toolStripButton1.Text = "Apply";
-            toolStripButton1.Click += toolStripButton1_Click;
+            BtnTagApply.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagApply.Image = Properties.Resources.Apply;
+            BtnTagApply.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagApply.Name = "BtnTagApply";
+            BtnTagApply.Size = new System.Drawing.Size(33, 36);
+            BtnTagApply.Text = "Apply";
+            BtnTagApply.Click += toolStripButton1_Click;
             // 
-            // toolStripButton11
+            // BtnTagReset
             // 
-            toolStripButton11.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton11.Image = Properties.Resources.Reset;
-            toolStripButton11.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton11.Name = "toolStripButton11";
-            toolStripButton11.Size = new System.Drawing.Size(33, 36);
-            toolStripButton11.Text = "Reset";
-            toolStripButton11.Click += toolStripButton11_Click;
+            BtnTagReset.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagReset.Image = Properties.Resources.Reset;
+            BtnTagReset.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagReset.Name = "BtnTagReset";
+            BtnTagReset.Size = new System.Drawing.Size(33, 36);
+            BtnTagReset.Text = "Reset";
+            BtnTagReset.Click += toolStripButton11_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
             toolStripSeparator1.Size = new System.Drawing.Size(33, 6);
             // 
-            // toolStripButton9
+            // BtnTagCopy
             // 
-            toolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton9.Image = Properties.Resources.Copy;
-            toolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton9.Name = "toolStripButton9";
-            toolStripButton9.Size = new System.Drawing.Size(33, 36);
-            toolStripButton9.Text = "Copy tags";
-            toolStripButton9.Click += toolStripButton9_Click;
+            BtnTagCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagCopy.Image = Properties.Resources.Copy;
+            BtnTagCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagCopy.Name = "BtnTagCopy";
+            BtnTagCopy.Size = new System.Drawing.Size(33, 36);
+            BtnTagCopy.Text = "Copy tags";
+            BtnTagCopy.Click += toolStripButton9_Click;
             // 
-            // toolStripButton10
+            // BtnTagPaste
             // 
-            toolStripButton10.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton10.Image = Properties.Resources.Paste;
-            toolStripButton10.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton10.Name = "toolStripButton10";
-            toolStripButton10.Size = new System.Drawing.Size(33, 36);
-            toolStripButton10.Text = "Paste tags";
-            toolStripButton10.Click += toolStripButton10_Click;
+            BtnTagPaste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagPaste.Image = Properties.Resources.Paste;
+            BtnTagPaste.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagPaste.Name = "BtnTagPaste";
+            BtnTagPaste.Size = new System.Drawing.Size(33, 36);
+            BtnTagPaste.Text = "Paste tags";
+            BtnTagPaste.Click += BtnPasteTag_Click;
             // 
-            // toolStripButton17
+            // BtnTagSetToAll
             // 
-            toolStripButton17.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton17.Image = Properties.Resources.SetToAll;
-            toolStripButton17.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton17.Name = "toolStripButton17";
-            toolStripButton17.Size = new System.Drawing.Size(33, 36);
-            toolStripButton17.Text = "Set current tag list to all";
-            toolStripButton17.Click += toolStripButton17_Click;
+            BtnTagSetToAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagSetToAll.Image = Properties.Resources.SetToAll;
+            BtnTagSetToAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagSetToAll.Name = "BtnTagSetToAll";
+            BtnTagSetToAll.Size = new System.Drawing.Size(33, 36);
+            BtnTagSetToAll.Text = "Set current tag list to all";
+            BtnTagSetToAll.Click += toolStripButton17_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
             toolStripSeparator2.Size = new System.Drawing.Size(33, 6);
             // 
-            // toolStripButton15
+            // BtnTagPasteFromClipBoard
             // 
-            toolStripButton15.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton15.Image = Properties.Resources.PasteClipboard;
-            toolStripButton15.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton15.Name = "toolStripButton15";
-            toolStripButton15.Size = new System.Drawing.Size(33, 36);
-            toolStripButton15.Text = "Paste from clipboard";
-            toolStripButton15.Click += toolStripButton15_Click;
+            BtnTagPasteFromClipBoard.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagPasteFromClipBoard.Image = Properties.Resources.PasteClipboard;
+            BtnTagPasteFromClipBoard.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagPasteFromClipBoard.Name = "BtnTagPasteFromClipBoard";
+            BtnTagPasteFromClipBoard.Size = new System.Drawing.Size(33, 36);
+            BtnTagPasteFromClipBoard.Text = "Paste from clipboard";
+            BtnTagPasteFromClipBoard.Click += toolStripButton15_Click;
             // 
-            // toolStripButton16
+            // BtnTagShow
             // 
-            toolStripButton16.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton16.Image = Properties.Resources.print;
-            toolStripButton16.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton16.Name = "toolStripButton16";
-            toolStripButton16.Size = new System.Drawing.Size(33, 36);
-            toolStripButton16.Text = "Show formed tag text";
-            toolStripButton16.Click += toolStripButton16_Click;
+            BtnTagShow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagShow.Image = Properties.Resources.print;
+            BtnTagShow.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagShow.Name = "BtnTagShow";
+            BtnTagShow.Size = new System.Drawing.Size(33, 36);
+            BtnTagShow.Text = "Show formed tag text";
+            BtnTagShow.Click += toolStripButton16_Click;
             // 
             // toolStripSeparator4
             // 
             toolStripSeparator4.Name = "toolStripSeparator4";
             toolStripSeparator4.Size = new System.Drawing.Size(33, 6);
             // 
-            // toolStripButton4
+            // BtnTagUp
             // 
-            toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton4.Image = Properties.Resources.Up;
-            toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton4.Name = "toolStripButton4";
-            toolStripButton4.Size = new System.Drawing.Size(33, 36);
-            toolStripButton4.Text = "Up";
-            toolStripButton4.Click += toolStripButton4_Click;
+            BtnTagUp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagUp.Image = Properties.Resources.Up;
+            BtnTagUp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagUp.Name = "BtnTagUp";
+            BtnTagUp.Size = new System.Drawing.Size(33, 36);
+            BtnTagUp.Text = "Up";
+            BtnTagUp.Click += toolStripButton4_Click;
             // 
-            // toolStripButton5
+            // BtnTagDown
             // 
-            toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton5.Image = Properties.Resources.Down;
-            toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton5.Name = "toolStripButton5";
-            toolStripButton5.Size = new System.Drawing.Size(33, 36);
-            toolStripButton5.Text = "Down";
-            toolStripButton5.Click += toolStripButton5_Click;
+            BtnTagDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagDown.Image = Properties.Resources.Down;
+            BtnTagDown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagDown.Name = "BtnTagDown";
+            BtnTagDown.Size = new System.Drawing.Size(33, 36);
+            BtnTagDown.Text = "Down";
+            BtnTagDown.Click += toolStripButton5_Click;
             // 
             // toolStripSeparator7
             // 
             toolStripSeparator7.Name = "toolStripSeparator7";
             toolStripSeparator7.Size = new System.Drawing.Size(33, 6);
             // 
-            // toolStripButton23
+            // BtnTagFindInAll
             // 
-            toolStripButton23.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton23.Image = Properties.Resources.Find;
-            toolStripButton23.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton23.Name = "toolStripButton23";
-            toolStripButton23.Size = new System.Drawing.Size(33, 36);
-            toolStripButton23.Text = "Fing tag in \"All tags\"";
-            toolStripButton23.Click += toolStripButton23_Click;
+            BtnTagFindInAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagFindInAll.Image = Properties.Resources.Find;
+            BtnTagFindInAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagFindInAll.Name = "BtnTagFindInAll";
+            BtnTagFindInAll.Size = new System.Drawing.Size(33, 36);
+            BtnTagFindInAll.Text = "Fing tag in \"All tags\"";
+            BtnTagFindInAll.Click += toolStripButton23_Click;
             // 
             // menuStrip1
             // 
             menuStrip1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             menuStrip1.ImageScalingSize = new System.Drawing.Size(28, 28);
-            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem, viewToolStripMenuItem });
+            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem, viewToolStripMenuItem, MenuSetting, MenuLanguage });
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
@@ -330,7 +336,7 @@ namespace BooruDatasetTagManager
             // 
             // fileToolStripMenuItem
             // 
-            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { openFolderToolStripMenuItem, saveAllChangesToolStripMenuItem, loadLossFromFileToolStripMenuItem, settingsToolStripMenuItem });
+            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { openFolderToolStripMenuItem, saveAllChangesToolStripMenuItem, loadLossFromFileToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new System.Drawing.Size(46, 25);
             fileToolStripMenuItem.Text = "File";
@@ -356,16 +362,9 @@ namespace BooruDatasetTagManager
             loadLossFromFileToolStripMenuItem.Text = "Load loss from file";
             loadLossFromFileToolStripMenuItem.Click += loadLossFromFileToolStripMenuItem_Click;
             // 
-            // settingsToolStripMenuItem
-            // 
-            settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            settingsToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
-            settingsToolStripMenuItem.Text = "Settings...";
-            settingsToolStripMenuItem.Click += settingsToolStripMenuItem_Click;
-            // 
             // viewToolStripMenuItem
             // 
-            viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { showPreviewToolStripMenuItem, translateTagsToolStripMenuItem });
+            viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { showPreviewToolStripMenuItem, MenuItemTranslateTags });
             viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             viewToolStripMenuItem.Size = new System.Drawing.Size(56, 25);
             viewToolStripMenuItem.Text = "View";
@@ -377,38 +376,66 @@ namespace BooruDatasetTagManager
             showPreviewToolStripMenuItem.Text = "Show preview";
             showPreviewToolStripMenuItem.Click += showPreviewToolStripMenuItem_Click;
             // 
-            // translateTagsToolStripMenuItem
+            // MenuItemTranslateTags
             // 
-            translateTagsToolStripMenuItem.Name = "translateTagsToolStripMenuItem";
-            translateTagsToolStripMenuItem.Size = new System.Drawing.Size(178, 26);
-            translateTagsToolStripMenuItem.Text = "Translate tags";
-            translateTagsToolStripMenuItem.Click += translateTagsToolStripMenuItem_Click;
+            MenuItemTranslateTags.Name = "MenuItemTranslateTags";
+            MenuItemTranslateTags.Size = new System.Drawing.Size(178, 26);
+            MenuItemTranslateTags.Text = "Translate tags";
+            MenuItemTranslateTags.Click += translateTagsToolStripMenuItem_Click;
             // 
-            // label1
+            // MenuSetting
             // 
-            label1.AutoSize = true;
-            label1.Dock = System.Windows.Forms.DockStyle.Top;
-            label1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            label1.Location = new System.Drawing.Point(0, 0);
-            label1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            label1.Name = "label1";
-            label1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 5);
-            label1.Size = new System.Drawing.Size(70, 30);
-            label1.TabIndex = 5;
-            label1.Text = "Dataset";
+            MenuSetting.Name = "MenuSetting";
+            MenuSetting.Size = new System.Drawing.Size(78, 25);
+            MenuSetting.Text = "Settings";
+            MenuSetting.Click += settingsToolStripMenuItem1_Click;
             // 
-            // label2
+            // MenuLanguage
             // 
-            label2.AutoSize = true;
-            label2.Dock = System.Windows.Forms.DockStyle.Top;
-            label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            label2.Location = new System.Drawing.Point(0, 0);
-            label2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            label2.Name = "label2";
-            label2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 5);
-            label2.Size = new System.Drawing.Size(94, 30);
-            label2.TabIndex = 5;
-            label2.Text = "Image tags";
+            MenuLanguage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { LanguageENBtn, LanguageCNBtn });
+            MenuLanguage.Name = "MenuLanguage";
+            MenuLanguage.Size = new System.Drawing.Size(130, 25);
+            MenuLanguage.Text = "Language/语言";
+            // 
+            // LanguageENBtn
+            // 
+            LanguageENBtn.Name = "LanguageENBtn";
+            LanguageENBtn.Size = new System.Drawing.Size(148, 26);
+            LanguageENBtn.Text = "English";
+            LanguageENBtn.Click += LanguageENBtn_Click;
+            // 
+            // LanguageCNBtn
+            // 
+            LanguageCNBtn.Name = "LanguageCNBtn";
+            LanguageCNBtn.Size = new System.Drawing.Size(148, 26);
+            LanguageCNBtn.Text = "简体中文";
+            LanguageCNBtn.Click += LanguageCNBtn_Click;
+            // 
+            // LabelDataSet
+            // 
+            LabelDataSet.AutoSize = true;
+            LabelDataSet.Dock = System.Windows.Forms.DockStyle.Top;
+            LabelDataSet.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            LabelDataSet.Location = new System.Drawing.Point(0, 0);
+            LabelDataSet.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            LabelDataSet.Name = "LabelDataSet";
+            LabelDataSet.Padding = new System.Windows.Forms.Padding(4, 4, 4, 5);
+            LabelDataSet.Size = new System.Drawing.Size(70, 30);
+            LabelDataSet.TabIndex = 5;
+            LabelDataSet.Text = "Dataset";
+            // 
+            // LabelImageTags
+            // 
+            LabelImageTags.AutoSize = true;
+            LabelImageTags.Dock = System.Windows.Forms.DockStyle.Top;
+            LabelImageTags.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            LabelImageTags.Location = new System.Drawing.Point(0, 0);
+            LabelImageTags.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            LabelImageTags.Name = "LabelImageTags";
+            LabelImageTags.Padding = new System.Windows.Forms.Padding(4, 4, 4, 5);
+            LabelImageTags.Size = new System.Drawing.Size(94, 30);
+            LabelImageTags.TabIndex = 5;
+            LabelImageTags.Text = "Image tags";
             // 
             // gridViewAllTags
             // 
@@ -444,24 +471,24 @@ namespace BooruDatasetTagManager
             gridViewAllTags.KeyPress += gridViewAllTags_KeyPress;
             gridViewAllTags.Leave += gridView_Leave;
             // 
-            // label3
+            // LabelAllTags
             // 
-            label3.AutoSize = true;
-            label3.Dock = System.Windows.Forms.DockStyle.Top;
-            label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            label3.Location = new System.Drawing.Point(0, 0);
-            label3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            label3.Name = "label3";
-            label3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 5);
-            label3.Size = new System.Drawing.Size(69, 30);
-            label3.TabIndex = 5;
-            label3.Text = "All tags";
+            LabelAllTags.AutoSize = true;
+            LabelAllTags.Dock = System.Windows.Forms.DockStyle.Top;
+            LabelAllTags.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            LabelAllTags.Location = new System.Drawing.Point(0, 0);
+            LabelAllTags.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            LabelAllTags.Name = "LabelAllTags";
+            LabelAllTags.Padding = new System.Windows.Forms.Padding(4, 4, 4, 5);
+            LabelAllTags.Size = new System.Drawing.Size(69, 30);
+            LabelAllTags.TabIndex = 5;
+            LabelAllTags.Text = "All tags";
             // 
             // toolStrip1
             // 
             toolStrip1.Dock = System.Windows.Forms.DockStyle.Right;
             toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
-            toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripButton6, toolStripButton7, toolStripButton12, toolStripButton8, toolStripSeparator3, toolStripButton19, toolStripButton20, toolStripSeparator5, toolStripButton21, toolStripButton22, toolStripSeparator6, toolStripButton18, toolStripButton13, toolStripButton14, toolStripSeparator8, toolStripButton24, toolStripButton25 });
+            toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { BtnTagSwitch, BtnTagAddToAll, BtnTagDeleteForAll, BtnTagReplace, toolStripSeparator3, BtnTagAddToSelected, BtnTagDeleteForSelected, toolStripSeparator5, BtnTagAddToFiltered, BtnTagDeleteForFiltered, toolStripSeparator6, BtnTagMultiModeSwitch, BtnImageFilter, BtnImageExitFilter, toolStripSeparator8, BtnTagFilter, BtnTagExitFilter });
             toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
             toolStrip1.Location = new System.Drawing.Point(368, 30);
             toolStrip1.Name = "toolStrip1";
@@ -470,156 +497,156 @@ namespace BooruDatasetTagManager
             toolStrip1.TabIndex = 3;
             toolStrip1.Text = "toolStrip2";
             // 
-            // toolStripButton6
+            // BtnTagSwitch
             // 
-            toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton6.Image = Properties.Resources.Change;
-            toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton6.Name = "toolStripButton6";
-            toolStripButton6.Size = new System.Drawing.Size(33, 36);
-            toolStripButton6.Text = "Change all tags/common tags";
-            toolStripButton6.Click += toolStripButton6_Click;
+            BtnTagSwitch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagSwitch.Image = Properties.Resources.Change;
+            BtnTagSwitch.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagSwitch.Name = "BtnTagSwitch";
+            BtnTagSwitch.Size = new System.Drawing.Size(33, 36);
+            BtnTagSwitch.Text = "Change all tags/common tags";
+            BtnTagSwitch.Click += toolStripButton6_Click;
             // 
-            // toolStripButton7
+            // BtnTagAddToAll
             // 
-            toolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton7.Image = Properties.Resources.Add;
-            toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton7.Name = "toolStripButton7";
-            toolStripButton7.Size = new System.Drawing.Size(33, 36);
-            toolStripButton7.Text = "Add to all";
-            toolStripButton7.Click += toolStripButton7_Click;
+            BtnTagAddToAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagAddToAll.Image = Properties.Resources.Add;
+            BtnTagAddToAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagAddToAll.Name = "BtnTagAddToAll";
+            BtnTagAddToAll.Size = new System.Drawing.Size(33, 36);
+            BtnTagAddToAll.Text = "Add to all";
+            BtnTagAddToAll.Click += BtnAddTagForAll_Click;
             // 
-            // toolStripButton12
+            // BtnTagDeleteForAll
             // 
-            toolStripButton12.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton12.Image = Properties.Resources.Delete;
-            toolStripButton12.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton12.Name = "toolStripButton12";
-            toolStripButton12.Size = new System.Drawing.Size(33, 36);
-            toolStripButton12.Text = "Remove from all";
-            toolStripButton12.Click += toolStripButton12_Click;
+            BtnTagDeleteForAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagDeleteForAll.Image = Properties.Resources.Delete;
+            BtnTagDeleteForAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagDeleteForAll.Name = "BtnTagDeleteForAll";
+            BtnTagDeleteForAll.Size = new System.Drawing.Size(33, 36);
+            BtnTagDeleteForAll.Text = "Remove from all";
+            BtnTagDeleteForAll.Click += BtnDeleteTagForAll_Click;
             // 
-            // toolStripButton8
+            // BtnTagReplace
             // 
-            toolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton8.Image = Properties.Resources.ReplaceTags;
-            toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton8.Name = "toolStripButton8";
-            toolStripButton8.Size = new System.Drawing.Size(33, 36);
-            toolStripButton8.Text = "Replace tag";
-            toolStripButton8.Click += toolStripButton8_Click;
+            BtnTagReplace.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagReplace.Image = Properties.Resources.ReplaceTags;
+            BtnTagReplace.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagReplace.Name = "BtnTagReplace";
+            BtnTagReplace.Size = new System.Drawing.Size(33, 36);
+            BtnTagReplace.Text = "Replace tag";
+            BtnTagReplace.Click += toolStripButton8_Click;
             // 
             // toolStripSeparator3
             // 
             toolStripSeparator3.Name = "toolStripSeparator3";
             toolStripSeparator3.Size = new System.Drawing.Size(33, 6);
             // 
-            // toolStripButton19
+            // BtnTagAddToSelected
             // 
-            toolStripButton19.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton19.Image = Properties.Resources.AddSelToTags;
-            toolStripButton19.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton19.Name = "toolStripButton19";
-            toolStripButton19.Size = new System.Drawing.Size(33, 36);
-            toolStripButton19.Text = "Add selected 'All tags' to image tags";
-            toolStripButton19.Click += toolStripButton19_Click;
+            BtnTagAddToSelected.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagAddToSelected.Image = Properties.Resources.AddSelToTags;
+            BtnTagAddToSelected.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagAddToSelected.Name = "BtnTagAddToSelected";
+            BtnTagAddToSelected.Size = new System.Drawing.Size(33, 36);
+            BtnTagAddToSelected.Text = "Add selected 'All tags' to image tags";
+            BtnTagAddToSelected.Click += toolStripButton19_Click;
             // 
-            // toolStripButton20
+            // BtnTagDeleteForSelected
             // 
-            toolStripButton20.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton20.Image = Properties.Resources.DelSelFromTags;
-            toolStripButton20.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton20.Name = "toolStripButton20";
-            toolStripButton20.Size = new System.Drawing.Size(33, 36);
-            toolStripButton20.Text = "Remove selected 'All tags' from image tags";
-            toolStripButton20.Click += toolStripButton20_Click;
+            BtnTagDeleteForSelected.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagDeleteForSelected.Image = Properties.Resources.DelSelFromTags;
+            BtnTagDeleteForSelected.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagDeleteForSelected.Name = "BtnTagDeleteForSelected";
+            BtnTagDeleteForSelected.Size = new System.Drawing.Size(33, 36);
+            BtnTagDeleteForSelected.Text = "Remove selected 'All tags' from image tags";
+            BtnTagDeleteForSelected.Click += toolStripButton20_Click;
             // 
             // toolStripSeparator5
             // 
             toolStripSeparator5.Name = "toolStripSeparator5";
             toolStripSeparator5.Size = new System.Drawing.Size(33, 6);
             // 
-            // toolStripButton21
+            // BtnTagAddToFiltered
             // 
-            toolStripButton21.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton21.Image = Properties.Resources.AddToFiltered;
-            toolStripButton21.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton21.Name = "toolStripButton21";
-            toolStripButton21.Size = new System.Drawing.Size(33, 36);
-            toolStripButton21.Text = "Add to filtered";
-            toolStripButton21.Click += toolStripButton21_Click;
+            BtnTagAddToFiltered.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagAddToFiltered.Image = Properties.Resources.AddToFiltered;
+            BtnTagAddToFiltered.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagAddToFiltered.Name = "BtnTagAddToFiltered";
+            BtnTagAddToFiltered.Size = new System.Drawing.Size(33, 36);
+            BtnTagAddToFiltered.Text = "Add to filtered";
+            BtnTagAddToFiltered.Click += toolStripButton21_Click;
             // 
-            // toolStripButton22
+            // BtnTagDeleteForFiltered
             // 
-            toolStripButton22.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton22.Image = Properties.Resources.DelFromFiltered;
-            toolStripButton22.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton22.Name = "toolStripButton22";
-            toolStripButton22.Size = new System.Drawing.Size(33, 36);
-            toolStripButton22.Text = "Remove from filtered";
-            toolStripButton22.Click += toolStripButton22_Click;
+            BtnTagDeleteForFiltered.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagDeleteForFiltered.Image = Properties.Resources.DelFromFiltered;
+            BtnTagDeleteForFiltered.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagDeleteForFiltered.Name = "BtnTagDeleteForFiltered";
+            BtnTagDeleteForFiltered.Size = new System.Drawing.Size(33, 36);
+            BtnTagDeleteForFiltered.Text = "Remove from filtered";
+            BtnTagDeleteForFiltered.Click += toolStripButton22_Click;
             // 
             // toolStripSeparator6
             // 
             toolStripSeparator6.Name = "toolStripSeparator6";
             toolStripSeparator6.Size = new System.Drawing.Size(33, 6);
             // 
-            // toolStripButton18
+            // BtnTagMultiModeSwitch
             // 
-            toolStripButton18.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton18.Image = Properties.Resources.ORIcon;
-            toolStripButton18.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton18.Name = "toolStripButton18";
-            toolStripButton18.Size = new System.Drawing.Size(33, 36);
-            toolStripButton18.Text = "Multi-tag filtering mode";
-            toolStripButton18.Click += toolStripButton18_Click;
+            BtnTagMultiModeSwitch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagMultiModeSwitch.Image = Properties.Resources.ORIcon;
+            BtnTagMultiModeSwitch.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagMultiModeSwitch.Name = "BtnTagMultiModeSwitch";
+            BtnTagMultiModeSwitch.Size = new System.Drawing.Size(33, 36);
+            BtnTagMultiModeSwitch.Text = "Multi-tag filtering mode";
+            BtnTagMultiModeSwitch.Click += toolStripButton18_Click;
             // 
-            // toolStripButton13
+            // BtnImageFilter
             // 
-            toolStripButton13.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton13.Image = Properties.Resources.Find;
-            toolStripButton13.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton13.Name = "toolStripButton13";
-            toolStripButton13.Size = new System.Drawing.Size(33, 36);
-            toolStripButton13.Text = "Find in dataset";
-            toolStripButton13.Click += toolStripButton13_Click;
+            BtnImageFilter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnImageFilter.Image = Properties.Resources.Find;
+            BtnImageFilter.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnImageFilter.Name = "BtnImageFilter";
+            BtnImageFilter.Size = new System.Drawing.Size(33, 36);
+            BtnImageFilter.Text = "Find in dataset";
+            BtnImageFilter.Click += toolStripButton13_Click;
             // 
-            // toolStripButton14
+            // BtnImageExitFilter
             // 
-            toolStripButton14.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton14.Enabled = false;
-            toolStripButton14.Image = Properties.Resources.ResetFilter;
-            toolStripButton14.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton14.Name = "toolStripButton14";
-            toolStripButton14.Size = new System.Drawing.Size(33, 36);
-            toolStripButton14.Text = "Reset filter";
-            toolStripButton14.Click += toolStripButton14_Click;
+            BtnImageExitFilter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnImageExitFilter.Enabled = false;
+            BtnImageExitFilter.Image = Properties.Resources.ResetFilter;
+            BtnImageExitFilter.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnImageExitFilter.Name = "BtnImageExitFilter";
+            BtnImageExitFilter.Size = new System.Drawing.Size(33, 36);
+            BtnImageExitFilter.Text = "Reset filter";
+            BtnImageExitFilter.Click += toolStripButton14_Click;
             // 
             // toolStripSeparator8
             // 
             toolStripSeparator8.Name = "toolStripSeparator8";
             toolStripSeparator8.Size = new System.Drawing.Size(33, 6);
             // 
-            // toolStripButton24
+            // BtnTagFilter
             // 
-            toolStripButton24.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton24.Image = Properties.Resources.filterAdd;
-            toolStripButton24.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton24.Name = "toolStripButton24";
-            toolStripButton24.Size = new System.Drawing.Size(33, 36);
-            toolStripButton24.Text = "Filter in all tags";
-            toolStripButton24.Click += toolStripButton24_Click;
+            BtnTagFilter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagFilter.Image = Properties.Resources.filterAdd;
+            BtnTagFilter.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagFilter.Name = "BtnTagFilter";
+            BtnTagFilter.Size = new System.Drawing.Size(33, 36);
+            BtnTagFilter.Text = "Filter in all tags";
+            BtnTagFilter.Click += toolStripButton24_Click;
             // 
-            // toolStripButton25
+            // BtnTagExitFilter
             // 
-            toolStripButton25.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton25.Image = Properties.Resources.filterRemove;
-            toolStripButton25.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton25.Name = "toolStripButton25";
-            toolStripButton25.Size = new System.Drawing.Size(33, 36);
-            toolStripButton25.Text = "Remove filter";
-            toolStripButton25.Click += toolStripButton25_Click;
+            BtnTagExitFilter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnTagExitFilter.Image = Properties.Resources.filterRemove;
+            BtnTagExitFilter.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnTagExitFilter.Name = "BtnTagExitFilter";
+            BtnTagExitFilter.Size = new System.Drawing.Size(33, 36);
+            BtnTagExitFilter.Text = "Remove filter";
+            BtnTagExitFilter.Click += toolStripButton25_Click;
             // 
             // statusStrip1
             // 
@@ -635,7 +662,7 @@ namespace BooruDatasetTagManager
             // statusLabel
             // 
             statusLabel.Name = "statusLabel";
-            statusLabel.Size = new System.Drawing.Size(12, 17);
+            statusLabel.Size = new System.Drawing.Size(13, 17);
             statusLabel.Text = "-";
             // 
             // splitContainer1
@@ -655,7 +682,7 @@ namespace BooruDatasetTagManager
             splitContainer1.Panel2.Controls.Add(textBox1);
             splitContainer1.Panel2.Controls.Add(gridViewAllTags);
             splitContainer1.Panel2.Controls.Add(toolStrip1);
-            splitContainer1.Panel2.Controls.Add(label3);
+            splitContainer1.Panel2.Controls.Add(LabelAllTags);
             splitContainer1.Size = new System.Drawing.Size(1224, 677);
             splitContainer1.SplitterDistance = 813;
             splitContainer1.SplitterWidth = 5;
@@ -671,13 +698,16 @@ namespace BooruDatasetTagManager
             // splitContainer2.Panel1
             // 
             splitContainer2.Panel1.Controls.Add(gridViewDS);
-            splitContainer2.Panel1.Controls.Add(label1);
+            splitContainer2.Panel1.Controls.Add(LabelDataSet);
             // 
             // splitContainer2.Panel2
             // 
+            splitContainer2.Panel2.Controls.Add(promptSortBtn);
+            splitContainer2.Panel2.Controls.Add(promptFixTipLabel);
+            splitContainer2.Panel2.Controls.Add(promptFixedLengthComboBox);
             splitContainer2.Panel2.Controls.Add(gridViewTags);
             splitContainer2.Panel2.Controls.Add(toolStrip2);
-            splitContainer2.Panel2.Controls.Add(label2);
+            splitContainer2.Panel2.Controls.Add(LabelImageTags);
             splitContainer2.Size = new System.Drawing.Size(813, 677);
             splitContainer2.SplitterDistance = 401;
             splitContainer2.SplitterWidth = 5;
@@ -716,6 +746,38 @@ namespace BooruDatasetTagManager
             gridViewDS.Leave += gridView_Leave;
             gridViewDS.MouseDoubleClick += gridViewDS_MouseDoubleClick;
             // 
+            // promptSortBtn
+            // 
+            promptSortBtn.Location = new System.Drawing.Point(341, 4);
+            promptSortBtn.Margin = new System.Windows.Forms.Padding(2);
+            promptSortBtn.Name = "promptSortBtn";
+            promptSortBtn.Size = new System.Drawing.Size(47, 23);
+            promptSortBtn.TabIndex = 8;
+            promptSortBtn.Text = "sort";
+            promptSortBtn.UseVisualStyleBackColor = true;
+            promptSortBtn.Click += promptSortBtn_Click;
+            // 
+            // promptFixTipLabel
+            // 
+            promptFixTipLabel.AutoSize = true;
+            promptFixTipLabel.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            promptFixTipLabel.Location = new System.Drawing.Point(145, 8);
+            promptFixTipLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            promptFixTipLabel.Name = "promptFixTipLabel";
+            promptFixTipLabel.Size = new System.Drawing.Size(131, 17);
+            promptFixTipLabel.TabIndex = 7;
+            promptFixTipLabel.Text = "Fixed Prompt Length:";
+            // 
+            // promptFixedLengthComboBox
+            // 
+            promptFixedLengthComboBox.FormattingEnabled = true;
+            promptFixedLengthComboBox.Items.AddRange(new object[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" });
+            promptFixedLengthComboBox.Location = new System.Drawing.Point(280, 4);
+            promptFixedLengthComboBox.Margin = new System.Windows.Forms.Padding(2);
+            promptFixedLengthComboBox.Name = "promptFixedLengthComboBox";
+            promptFixedLengthComboBox.Size = new System.Drawing.Size(57, 25);
+            promptFixedLengthComboBox.TabIndex = 6;
+            // 
             // button1
             // 
             button1.Location = new System.Drawing.Point(344, 4);
@@ -750,23 +812,23 @@ namespace BooruDatasetTagManager
             contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(28, 28);
             contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem2 });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new System.Drawing.Size(192, 48);
+            contextMenuStrip1.Size = new System.Drawing.Size(209, 48);
             // 
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new System.Drawing.Size(191, 22);
+            toolStripMenuItem1.Size = new System.Drawing.Size(208, 22);
             toolStripMenuItem1.Text = "Open folder";
             toolStripMenuItem1.Click += toolStripMenuItem1_Click;
             // 
             // toolStripMenuItem2
             // 
             toolStripMenuItem2.Name = "toolStripMenuItem2";
-            toolStripMenuItem2.Size = new System.Drawing.Size(191, 22);
+            toolStripMenuItem2.Size = new System.Drawing.Size(208, 22);
             toolStripMenuItem2.Text = "Delete image and tags";
             toolStripMenuItem2.Click += toolStripMenuItem2_Click;
             // 
-            // Form1
+            // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -776,7 +838,7 @@ namespace BooruDatasetTagManager
             Controls.Add(menuStrip1);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            Name = "Form1";
+            Name = "MainForm";
             Text = "BooruDatasetTagManager";
             FormClosing += Form1_FormClosing;
             Load += Form1_Load;
@@ -810,55 +872,54 @@ namespace BooruDatasetTagManager
         #endregion
         private System.Windows.Forms.DataGridView gridViewTags;
         private System.Windows.Forms.ToolStrip toolStrip2;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton BtnTagAdd;
+        private System.Windows.Forms.ToolStripButton BtnTagDelete;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton toolStripButton4;
-        private System.Windows.Forms.ToolStripButton toolStripButton5;
+        private System.Windows.Forms.ToolStripButton BtnTagUp;
+        private System.Windows.Forms.ToolStripButton BtnTagDown;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAllChangesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ToolStripButton BtnTagApply;
+        private System.Windows.Forms.Label LabelDataSet;
+        private System.Windows.Forms.Label LabelImageTags;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showPreviewToolStripMenuItem;
         private System.Windows.Forms.DataGridView gridViewAllTags;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label LabelAllTags;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripButton6;
-        private System.Windows.Forms.ToolStripButton toolStripButton7;
-        private System.Windows.Forms.ToolStripButton toolStripButton8;
-        private System.Windows.Forms.ToolStripButton toolStripButton9;
-        private System.Windows.Forms.ToolStripButton toolStripButton10;
+        private System.Windows.Forms.ToolStripButton BtnTagSwitch;
+        private System.Windows.Forms.ToolStripButton BtnTagAddToAll;
+        private System.Windows.Forms.ToolStripButton BtnTagReplace;
+        private System.Windows.Forms.ToolStripButton BtnTagCopy;
+        private System.Windows.Forms.ToolStripButton BtnTagPaste;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
-        private System.Windows.Forms.ToolStripButton toolStripButton11;
-        private System.Windows.Forms.ToolStripButton toolStripButton12;
-        private System.Windows.Forms.ToolStripMenuItem translateTagsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton BtnTagReset;
+        private System.Windows.Forms.ToolStripButton BtnTagDeleteForAll;
+        private System.Windows.Forms.ToolStripMenuItem MenuItemTranslateTags;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripButton toolStripButton13;
-        private System.Windows.Forms.ToolStripButton toolStripButton14;
+        private System.Windows.Forms.ToolStripButton BtnImageFilter;
+        private System.Windows.Forms.ToolStripButton BtnImageExitFilter;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.ToolStripMenuItem loadLossFromFileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripButton toolStripButton15;
+        private System.Windows.Forms.ToolStripButton BtnTagPasteFromClipBoard;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripButton toolStripButton16;
-        private System.Windows.Forms.ToolStripButton toolStripButton17;
+        private System.Windows.Forms.ToolStripButton BtnTagShow;
+        private System.Windows.Forms.ToolStripButton BtnTagSetToAll;
         private System.Windows.Forms.DataGridView gridViewDS;
-        private System.Windows.Forms.ToolStripButton toolStripButton18;
-        private System.Windows.Forms.ToolStripButton toolStripButton19;
-        private System.Windows.Forms.ToolStripButton toolStripButton20;
+        private System.Windows.Forms.ToolStripButton BtnTagMultiModeSwitch;
+        private System.Windows.Forms.ToolStripButton BtnTagAddToSelected;
+        private System.Windows.Forms.ToolStripButton BtnTagDeleteForSelected;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripButton toolStripButton21;
-        private System.Windows.Forms.ToolStripButton toolStripButton22;
+        private System.Windows.Forms.ToolStripButton BtnTagAddToFiltered;
+        private System.Windows.Forms.ToolStripButton BtnTagDeleteForFiltered;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
-        private System.Windows.Forms.ToolStripButton toolStripButton23;
-        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton BtnTagFindInAll;
         private CustomTextBoxColumn customTextBoxColumn1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
@@ -867,8 +928,16 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-        private System.Windows.Forms.ToolStripButton toolStripButton24;
-        private System.Windows.Forms.ToolStripButton toolStripButton25;
+        private System.Windows.Forms.ToolStripButton BtnTagFilter;
+        private System.Windows.Forms.ToolStripButton BtnTagExitFilter;
+        private System.Windows.Forms.ToolStripButton promptSortButton;
+        private System.Windows.Forms.ComboBox promptFixedLengthComboBox;
+        private System.Windows.Forms.Label promptFixTipLabel;
+        private System.Windows.Forms.Button promptSortBtn;
+        private System.Windows.Forms.ToolStripMenuItem MenuSetting;
+        private System.Windows.Forms.ToolStripMenuItem MenuLanguage;
+        private System.Windows.Forms.ToolStripMenuItem LanguageENBtn;
+        private System.Windows.Forms.ToolStripMenuItem LanguageCNBtn;
     }
 }
 

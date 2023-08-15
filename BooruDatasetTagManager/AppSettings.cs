@@ -30,6 +30,10 @@ namespace BooruDatasetTagManager
         public FontSettings AutocompleteFont { get; set; } = new FontSettings() { Name = "Segoe UI", Size = 9, GdiCharSet = 1 };
         private string settingsFile;
 
+        public bool AutoSort { get; set; } = false;
+
+        public string Language { get; set; } = "en-US";
+
         public AppSettings(string appDir)
         {
             InitAvaibleLangs();
@@ -66,6 +70,8 @@ namespace BooruDatasetTagManager
                 GridViewRowHeight = tempSettings.GridViewRowHeight;
                 GridViewFont = tempSettings.GridViewFont;
                 AutocompleteFont = tempSettings.AutocompleteFont;
+                AutoSort = tempSettings.AutoSort || false;
+                Language = tempSettings.Language;
             }
         }
 

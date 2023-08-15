@@ -8,7 +8,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Threading;
 
-namespace BooruDatasetTagManager
+namespace BooruDatasetTagManager    
 {
     static class Program
     {
@@ -26,14 +26,15 @@ namespace BooruDatasetTagManager
             Settings = new AppSettings(Application.StartupPath);
             #region waitForm
             Form f_wait = new Form();
+            I18n.Initialize(Program.Settings.Language);
             f_wait.AutoScaleMode = AutoScaleMode.Dpi;
-            f_wait.Width = 300;
-            f_wait.Height = 100;
+            f_wait.Width = 480;
+            f_wait.Height = 144;
             f_wait.FormBorderStyle = FormBorderStyle.FixedDialog;
             f_wait.ControlBox = false;
             f_wait.StartPosition = FormStartPosition.CenterScreen;
             Label mes = new Label();
-            mes.Text = "Please wait while the tags are loading.\nWhen changing csv or txt files,\nthe initial loading of tags may take a long time.";
+            mes.Text = I18n.GetText("TipTagLoad");
             mes.Location = new System.Drawing.Point(10, 10);
             mes.AutoSize = true;
 
@@ -72,7 +73,7 @@ namespace BooruDatasetTagManager
             f_wait.ShowDialog();
             #endregion
 
-            Application.Run(new Form1());
+            Application.Run(new MainForm());
         }
         public static TranslationManager TransManager;
 
