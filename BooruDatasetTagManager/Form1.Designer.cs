@@ -61,6 +61,7 @@ namespace BooruDatasetTagManager
             viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             showPreviewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             MenuItemTranslateTags = new System.Windows.Forms.ToolStripMenuItem();
+            MenuShowTagCount = new System.Windows.Forms.ToolStripMenuItem();
             MenuSetting = new System.Windows.Forms.ToolStripMenuItem();
             MenuLanguage = new System.Windows.Forms.ToolStripMenuItem();
             LanguageENBtn = new System.Windows.Forms.ToolStripMenuItem();
@@ -364,7 +365,7 @@ namespace BooruDatasetTagManager
             // 
             // viewToolStripMenuItem
             // 
-            viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { showPreviewToolStripMenuItem, MenuItemTranslateTags });
+            viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { showPreviewToolStripMenuItem, MenuItemTranslateTags, MenuShowTagCount });
             viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             viewToolStripMenuItem.Size = new System.Drawing.Size(56, 25);
             viewToolStripMenuItem.Text = "View";
@@ -372,16 +373,23 @@ namespace BooruDatasetTagManager
             // showPreviewToolStripMenuItem
             // 
             showPreviewToolStripMenuItem.Name = "showPreviewToolStripMenuItem";
-            showPreviewToolStripMenuItem.Size = new System.Drawing.Size(178, 26);
+            showPreviewToolStripMenuItem.Size = new System.Drawing.Size(195, 26);
             showPreviewToolStripMenuItem.Text = "Show preview";
             showPreviewToolStripMenuItem.Click += showPreviewToolStripMenuItem_Click;
             // 
             // MenuItemTranslateTags
             // 
             MenuItemTranslateTags.Name = "MenuItemTranslateTags";
-            MenuItemTranslateTags.Size = new System.Drawing.Size(178, 26);
+            MenuItemTranslateTags.Size = new System.Drawing.Size(195, 26);
             MenuItemTranslateTags.Text = "Translate tags";
             MenuItemTranslateTags.Click += translateTagsToolStripMenuItem_Click;
+            // 
+            // MenuShowTagCount
+            // 
+            MenuShowTagCount.Name = "MenuShowTagCount";
+            MenuShowTagCount.Size = new System.Drawing.Size(195, 26);
+            MenuShowTagCount.Text = "Show tag counts";
+            MenuShowTagCount.Click += MenuShowTagCount_Click;
             // 
             // MenuSetting
             // 
@@ -938,6 +946,7 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripMenuItem MenuLanguage;
         private System.Windows.Forms.ToolStripMenuItem LanguageENBtn;
         private System.Windows.Forms.ToolStripMenuItem LanguageCNBtn;
+        private System.Windows.Forms.ToolStripMenuItem MenuShowTagCount;
     }
 }
 

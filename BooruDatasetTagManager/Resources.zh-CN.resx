@@ -192,6 +192,9 @@
   <data name="BtnTagUp" xml:space="preserve">
     <value>上移</value>
   </data>
+  <data name="GridCount" xml:space="preserve">
+    <value>出现次数</value>
+  </data>
   <data name="LabelDeleteFile" xml:space="preserve">
     <value>删除图片</value>
   </data>
@@ -218,6 +221,9 @@
   </data>
   <data name="MenuLabelView" xml:space="preserve">
     <value>界面</value>
+  </data>
+  <data name="MenuShowCount" xml:space="preserve">
+    <value>在所有标签栏展示标签出现次数</value>
   </data>
   <data name="SettingAutocompChars" xml:space="preserve">
     <value>个字母之后</value>
@@ -303,6 +309,9 @@
   <data name="StatusSettingsSaved" xml:space="preserve">
     <value>设置已保存！</value>
   </data>
+  <data name="StatusTranslating" xml:space="preserve">
+    <value>翻译中，请稍等一段时间...</value>
+  </data>
   <data name="StatusTranslationComplete" xml:space="preserve">
     <value>翻译完成</value>
   </data>
@@ -311,6 +320,9 @@
   </data>
   <data name="TipDeleteFile" xml:space="preserve">
     <value>确定要删除这张图片吗</value>
+  </data>
+  <data name="TipFolderWrong" xml:space="preserve">
+    <value>选择的目录不包含图片</value>
   </data>
   <data name="TipMultiImageCopy" xml:space="preserve">
     <value>只允许对单张图片进行标签复制</value>

@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Translator;
 using static BooruDatasetTagManager.DatasetManager;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace BooruDatasetTagManager
@@ -54,6 +55,7 @@ namespace BooruDatasetTagManager
         private bool isAllTags = true;
         private bool isTranslate = false;
         private bool isFiltered = false;
+        private bool showCount = false;
 
         private Form_preview fPreview;
         private bool isShowPreview = false;
@@ -101,7 +103,7 @@ namespace BooruDatasetTagManager
             Program.DataManager = new DatasetManager();
             if (!Program.DataManager.LoadFromFolder(openFolderDialog.Folder, Program.Settings.FixTagsOnLoad))
             {
-                SetStatus("Selected directory does not contain images!");
+                SetStatus(I18n.GetText("TipFolderWrong"));
                 return;
             }
 
@@ -116,13 +118,13 @@ namespace BooruDatasetTagManager
         private async Task FillTranslation(DataGridView grid)
         {
             LockEdit(true);
-            SetStatus("Translating, please wait...");
+            SetStatus(I18n.GetText("StatusTranslating"));
             try
             {
                 HttpClient client = new HttpClient();
                 for (int i = 0; i < grid.RowCount; i++)
                 {
-                    SetStatus($"Translation {i}/{grid.RowCount}");
+                    SetStatus($"{I18n.GetText("SettingTabTranslations")} {i}/{grid.RowCount}");
                     grid["Translation", i].ReadOnly = true;
                     grid["Translation", i].Value = await Program.TransManager.TranslateAsync(grid[0, i].Value as string);
                 }
@@ -254,6 +256,8 @@ namespace BooruDatasetTagManager
             gridViewDS.Focus();
             if (isTranslate)
                 await FillTranslation(gridViewTags);
+            if (showCount)
+                UpdateTagCount();
             SetChangedStatus(false);
         }
 
@@ -407,6 +411,8 @@ namespace BooruDatasetTagManager
                 gridViewTags["Translation", curIndex - 1].Value = gridViewTags[1, curIndex].Value;
                 gridViewTags["Translation", curIndex].Value = upperValueTrans;
             }
+            if (showCount)
+                UpdateTagCount();
             gridViewTags["ImageTags", curIndex - 1].Value = gridViewTags["ImageTags", curIndex].Value;
             gridViewTags["ImageTags", curIndex].Value = upperValue;
             gridViewTags.ClearSelection();
@@ -426,6 +432,8 @@ namespace BooruDatasetTagManager
                 gridViewTags["Translation", curIndex + 1].Value = gridViewTags[1, curIndex].Value;
                 gridViewTags["Translation", curIndex].Value = lowerValueTrans;
             }
+            if (showCount)
+                UpdateTagCount();
 
             gridViewTags["ImageTags", curIndex + 1].Value = gridViewTags[0, curIndex].Value;
             gridViewTags["ImageTags", curIndex].Value = lowerValue;
@@ -540,6 +548,9 @@ namespace BooruDatasetTagManager
             {
                 await FillTranslation(dgv);
             }
+
+            if (showCount)
+                UpdateTagCount();
         }
 
         private void BtnAddTagForAll_Click(object sender, EventArgs e)
@@ -617,6 +628,9 @@ namespace BooruDatasetTagManager
                         gridViewTags.Rows[insertIndex].Cells[1].Value = transString;
                     }
 
+                    if (showCount)
+                        UpdateTagCount();
+
                     var allIndex = IndexOfValueInGrig(gridViewAllTags, "Tag", addTag.tagTextBox.Text);
                     if (allIndex == -1)
                     {
@@ -626,6 +640,9 @@ namespace BooruDatasetTagManager
                         {
                             gridViewAllTags.Rows[index].Cells[1].Value = transString;
                         }
+
+                        if (showCount)
+                            UpdateTagCount();
                     }
                 }
                 else
@@ -768,6 +785,8 @@ namespace BooruDatasetTagManager
                 }
                 if (isTranslate)
                     await FillTranslation(gridViewTags);
+                if (showCount)
+                    UpdateTagCount();
                 SetStatus(I18n.GetText("StatusPasted"));
             }
             else if (gridViewDS.SelectedRows.Count > 1)
@@ -979,6 +998,9 @@ namespace BooruDatasetTagManager
 
                 if (isTranslate)
                     await FillTranslation(gridViewTags);
+
+                if (showCount)
+                    UpdateTagCount();
             }
         }
 
@@ -1391,6 +1413,9 @@ namespace BooruDatasetTagManager
             }
             if (isTranslate)
                 await FillTranslation(gridViewTags);
+
+            if (showCount)
+                UpdateTagCount();
         }
 
         private void RemoveSelectedAllTagsToImageTags()
@@ -1834,6 +1859,7 @@ namespace BooruDatasetTagManager
             BtnImageExitFilter.Text = I18n.GetText("BtnImageExitFilter");
             BtnTagFilter.Text = I18n.GetText("BtnTagFilter");
             BtnTagExitFilter.Text = I18n.GetText("BtnTagExitFilter");
+            MenuShowTagCount.Text = I18n.GetText("MenuShowCount");
 
             switch (Program.Settings.Language)
             {
@@ -1870,6 +1896,64 @@ namespace BooruDatasetTagManager
             LanguageENBtn.Checked = false;
         }
 
+        private void MenuShowTagCount_Click(object sender, EventArgs e)
+        {
+            if (Program.DataManager == null)
+            {
+                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
+                return;
+            }
+            showCount = !showCount;
+            MenuShowTagCount.Checked = showCount;
+            var Header = "Count";
+            if (showCount)
+            {
+                gridViewAllTags.Columns.Insert(1, new DataGridViewTextBoxColumn()
+                {
+                    Name = Header,
+                    HeaderText = Header,
+                    ReadOnly = true,
+                    Width = 80,
+                });
+
+                // add count
+                LockEdit(true);
+                for (int i = 0; i < gridViewAllTags.RowCount; i++)
+                {
+                    gridViewAllTags[Header, i].ReadOnly = true;
+                    gridViewAllTags[Header, i].Value = 0;
+                }
+                UpdateTagCount();
+                LockEdit(false);
+            }
+            else
+            {
+                gridViewAllTags.Columns.Remove(Header);
+            }
+        }
+
+        public void UpdateTagCount()
+        {
+            var dataset = Program.DataManager.DataSet;
+            var Header = "Count";
+            int tmpCount;
+            for (int i = 0; i < gridViewAllTags.RowCount; i++)
+            {
+                tmpCount = 0;
+                foreach (var item in dataset)
+                {
+                    for (int j = 0; j < item.Value.Tags.Count; ++j)
+                    {
+                        if (item.Value.Tags[j] == gridViewAllTags["Tag", i].Value.ToString())
+                        {
+                            tmpCount++;
+                            break;
+                        }
+                    }
+                }
+                gridViewAllTags[Header, i].Value = tmpCount;
+            }
+        }
 
         //private void CreateDataGridViewTags()
         //{

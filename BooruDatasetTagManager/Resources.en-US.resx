@@ -192,6 +192,9 @@
   <data name="BtnTagUp" xml:space="preserve">
     <value>Up</value>
   </data>
+  <data name="GridCount" xml:space="preserve">
+    <value>Count</value>
+  </data>
   <data name="LabelDeleteFile" xml:space="preserve">
     <value>Delete File</value>
   </data>
@@ -218,6 +221,9 @@
   </data>
   <data name="MenuLabelView" xml:space="preserve">
     <value>View</value>
+  </data>
+  <data name="MenuShowCount" xml:space="preserve">
+    <value>Show count for tag in all tags</value>
   </data>
   <data name="SettingAutocompChars" xml:space="preserve">
     <value>Chars</value>
@@ -303,6 +309,9 @@
   <data name="StatusSettingsSaved" xml:space="preserve">
     <value>Settings have been saved.</value>
   </data>
+  <data name="StatusTranslating" xml:space="preserve">
+    <value>Translating, please wait...</value>
+  </data>
   <data name="StatusTranslationComplete" xml:space="preserve">
     <value>Translation completed.</value>
   </data>
@@ -311,6 +320,9 @@
   </data>
   <data name="TipDeleteFile" xml:space="preserve">
     <value>Are you sure you want to delete the selected image file?</value>
+  </data>
+  <data name="TipFolderWrong" xml:space="preserve">
+    <value>Selected directory does not contain images!</value>
   </data>
   <data name="TipMultiImageCopy" xml:space="preserve">
     <value>Copying is only supported for single selection.</value>
