@@ -104,8 +104,6 @@ namespace BooruDatasetTagManager
 
         public void AddTagToAll(string tag, AddingType addType, int pos=-1, bool useFilter = false)
         {
-            tag = tag.ToLower();
-
             IEnumerable<DataItem> lst = GetEnumerator(useFilter);
 
             foreach (var item in lst)

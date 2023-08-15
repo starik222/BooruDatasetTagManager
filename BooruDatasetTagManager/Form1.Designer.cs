@@ -670,7 +670,7 @@ namespace BooruDatasetTagManager
             // statusLabel
             // 
             statusLabel.Name = "statusLabel";
-            statusLabel.Size = new System.Drawing.Size(13, 17);
+            statusLabel.Size = new System.Drawing.Size(12, 17);
             statusLabel.Text = "-";
             // 
             // splitContainer1
@@ -768,13 +768,13 @@ namespace BooruDatasetTagManager
             // promptFixTipLabel
             // 
             promptFixTipLabel.AutoSize = true;
-            promptFixTipLabel.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            promptFixTipLabel.Location = new System.Drawing.Point(145, 8);
+            promptFixTipLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            promptFixTipLabel.Location = new System.Drawing.Point(104, 4);
             promptFixTipLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             promptFixTipLabel.Name = "promptFixTipLabel";
-            promptFixTipLabel.Size = new System.Drawing.Size(131, 17);
+            promptFixTipLabel.Size = new System.Drawing.Size(171, 21);
             promptFixTipLabel.TabIndex = 7;
-            promptFixTipLabel.Text = "Fixed Prompt Length:";
+            promptFixTipLabel.Text = "Don't sort first N rows :";
             // 
             // promptFixedLengthComboBox
             // 
@@ -783,7 +783,7 @@ namespace BooruDatasetTagManager
             promptFixedLengthComboBox.Location = new System.Drawing.Point(280, 4);
             promptFixedLengthComboBox.Margin = new System.Windows.Forms.Padding(2);
             promptFixedLengthComboBox.Name = "promptFixedLengthComboBox";
-            promptFixedLengthComboBox.Size = new System.Drawing.Size(57, 25);
+            promptFixedLengthComboBox.Size = new System.Drawing.Size(57, 23);
             promptFixedLengthComboBox.TabIndex = 6;
             // 
             // button1
@@ -820,19 +820,19 @@ namespace BooruDatasetTagManager
             contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(28, 28);
             contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem2 });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new System.Drawing.Size(209, 48);
+            contextMenuStrip1.Size = new System.Drawing.Size(192, 48);
             // 
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new System.Drawing.Size(208, 22);
+            toolStripMenuItem1.Size = new System.Drawing.Size(191, 22);
             toolStripMenuItem1.Text = "Open folder";
             toolStripMenuItem1.Click += toolStripMenuItem1_Click;
             // 
             // toolStripMenuItem2
             // 
             toolStripMenuItem2.Name = "toolStripMenuItem2";
-            toolStripMenuItem2.Size = new System.Drawing.Size(208, 22);
+            toolStripMenuItem2.Size = new System.Drawing.Size(191, 22);
             toolStripMenuItem2.Text = "Delete image and tags";
             toolStripMenuItem2.Click += toolStripMenuItem2_Click;
             // 

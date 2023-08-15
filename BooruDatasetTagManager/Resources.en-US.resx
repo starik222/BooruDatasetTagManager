@@ -348,10 +348,10 @@ the initial loading of tags may take a long time.</value>
     <value>Common Tags</value>
   </data>
   <data name="UILabelDataSet" xml:space="preserve">
-    <value>MenuLabelFile</value>
+    <value>Dataset</value>
   </data>
   <data name="UILabelFixPromptLength" xml:space="preserve">
-    <value>Fixed Prompt Length:</value>
+    <value>Don't sort first N rows :</value>
   </data>
   <data name="UILabelImageTags" xml:space="preserve">
     <value>Image Tags</value>

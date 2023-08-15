@@ -82,7 +82,7 @@ namespace BooruDatasetTagManager
             label1.Location = new System.Drawing.Point(7, 15);
             label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(130, 17);
+            label1.Size = new System.Drawing.Size(116, 15);
             label1.TabIndex = 0;
             label1.Text = "Translation language";
             // 
@@ -93,7 +93,7 @@ namespace BooruDatasetTagManager
             comboBox1.Location = new System.Drawing.Point(138, 12);
             comboBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new System.Drawing.Size(263, 25);
+            comboBox1.Size = new System.Drawing.Size(263, 23);
             comboBox1.TabIndex = 1;
             // 
             // LabelPreviewImageSize
@@ -102,7 +102,7 @@ namespace BooruDatasetTagManager
             LabelPreviewImageSize.Location = new System.Drawing.Point(22, 12);
             LabelPreviewImageSize.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             LabelPreviewImageSize.Name = "LabelPreviewImageSize";
-            LabelPreviewImageSize.Size = new System.Drawing.Size(118, 17);
+            LabelPreviewImageSize.Size = new System.Drawing.Size(106, 15);
             LabelPreviewImageSize.TabIndex = 2;
             LabelPreviewImageSize.Text = "Preview image size";
             // 
@@ -174,11 +174,11 @@ namespace BooruDatasetTagManager
             tabPage1.Controls.Add(LabelPreviewImageSize);
             tabPage1.Controls.Add(numericUpDown2);
             tabPage1.Controls.Add(numericUpDown1);
-            tabPage1.Location = new System.Drawing.Point(4, 26);
+            tabPage1.Location = new System.Drawing.Point(4, 24);
             tabPage1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            tabPage1.Size = new System.Drawing.Size(457, 316);
+            tabPage1.Size = new System.Drawing.Size(457, 318);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "General";
             tabPage1.UseVisualStyleBackColor = true;
@@ -188,7 +188,7 @@ namespace BooruDatasetTagManager
             AutoSortCheckBox.AutoSize = true;
             AutoSortCheckBox.Location = new System.Drawing.Point(7, 288);
             AutoSortCheckBox.Name = "AutoSortCheckBox";
-            AutoSortCheckBox.Size = new System.Drawing.Size(233, 21);
+            AutoSortCheckBox.Size = new System.Drawing.Size(215, 19);
             AutoSortCheckBox.TabIndex = 10;
             AutoSortCheckBox.Text = "Auto sort when changing selections";
             AutoSortCheckBox.UseVisualStyleBackColor = true;
@@ -198,7 +198,7 @@ namespace BooruDatasetTagManager
             CheckAskChange.AutoSize = true;
             CheckAskChange.Location = new System.Drawing.Point(7, 258);
             CheckAskChange.Name = "CheckAskChange";
-            CheckAskChange.Size = new System.Drawing.Size(314, 21);
+            CheckAskChange.Size = new System.Drawing.Size(288, 19);
             CheckAskChange.TabIndex = 9;
             CheckAskChange.Text = "Prompt to save changes when changing selection";
             CheckAskChange.UseVisualStyleBackColor = true;
@@ -215,7 +215,7 @@ namespace BooruDatasetTagManager
             LabelSeparatorSave.AutoSize = true;
             LabelSeparatorSave.Location = new System.Drawing.Point(22, 140);
             LabelSeparatorSave.Name = "LabelSeparatorSave";
-            LabelSeparatorSave.Size = new System.Drawing.Size(115, 17);
+            LabelSeparatorSave.Size = new System.Drawing.Size(100, 15);
             LabelSeparatorSave.TabIndex = 7;
             LabelSeparatorSave.Text = "Separator on save";
             // 
@@ -231,7 +231,7 @@ namespace BooruDatasetTagManager
             LabelSeparatorLoad.AutoSize = true;
             LabelSeparatorLoad.Location = new System.Drawing.Point(22, 108);
             LabelSeparatorLoad.Name = "LabelSeparatorLoad";
-            LabelSeparatorLoad.Size = new System.Drawing.Size(115, 17);
+            LabelSeparatorLoad.Size = new System.Drawing.Size(100, 15);
             LabelSeparatorLoad.TabIndex = 7;
             LabelSeparatorLoad.Text = "Separator on load";
             // 
@@ -240,7 +240,7 @@ namespace BooruDatasetTagManager
             CheckFixSave.AutoSize = true;
             CheckFixSave.Location = new System.Drawing.Point(7, 228);
             CheckFixSave.Name = "CheckFixSave";
-            CheckFixSave.Size = new System.Drawing.Size(232, 21);
+            CheckFixSave.Size = new System.Drawing.Size(216, 19);
             CheckFixSave.TabIndex = 6;
             CheckFixSave.Text = "Fix tags on saving ('('->'\\(', ')'->'\\)' )";
             CheckFixSave.UseVisualStyleBackColor = true;
@@ -250,7 +250,7 @@ namespace BooruDatasetTagManager
             CheckFixLoad.AutoSize = true;
             CheckFixLoad.Location = new System.Drawing.Point(7, 198);
             CheckFixLoad.Name = "CheckFixLoad";
-            CheckFixLoad.Size = new System.Drawing.Size(240, 21);
+            CheckFixLoad.Size = new System.Drawing.Size(217, 19);
             CheckFixLoad.TabIndex = 6;
             CheckFixLoad.Text = "Fix tags on loading (replace '_' -> ' ')";
             CheckFixLoad.UseVisualStyleBackColor = true;
@@ -262,7 +262,7 @@ namespace BooruDatasetTagManager
             comboAutocompSort.Location = new System.Drawing.Point(152, 73);
             comboAutocompSort.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboAutocompSort.Name = "comboAutocompSort";
-            comboAutocompSort.Size = new System.Drawing.Size(272, 25);
+            comboAutocompSort.Size = new System.Drawing.Size(272, 23);
             comboAutocompSort.TabIndex = 5;
             // 
             // LabelAutocompSort
@@ -271,7 +271,7 @@ namespace BooruDatasetTagManager
             LabelAutocompSort.Location = new System.Drawing.Point(22, 76);
             LabelAutocompSort.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             LabelAutocompSort.Name = "LabelAutocompSort";
-            LabelAutocompSort.Size = new System.Drawing.Size(116, 17);
+            LabelAutocompSort.Size = new System.Drawing.Size(106, 15);
             LabelAutocompSort.TabIndex = 4;
             LabelAutocompSort.Text = "Autocomplete sort";
             // 
@@ -282,7 +282,7 @@ namespace BooruDatasetTagManager
             comboAutocompMode.Location = new System.Drawing.Point(152, 42);
             comboAutocompMode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboAutocompMode.Name = "comboAutocompMode";
-            comboAutocompMode.Size = new System.Drawing.Size(272, 25);
+            comboAutocompMode.Size = new System.Drawing.Size(272, 23);
             comboAutocompMode.TabIndex = 5;
             // 
             // LabelAutocompMode
@@ -291,7 +291,7 @@ namespace BooruDatasetTagManager
             LabelAutocompMode.Location = new System.Drawing.Point(22, 45);
             LabelAutocompMode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             LabelAutocompMode.Name = "LabelAutocompMode";
-            LabelAutocompMode.Size = new System.Drawing.Size(127, 17);
+            LabelAutocompMode.Size = new System.Drawing.Size(117, 15);
             LabelAutocompMode.TabIndex = 4;
             LabelAutocompMode.Text = "Autocomplete mode";
             // 
@@ -301,7 +301,7 @@ namespace BooruDatasetTagManager
             LabelChars.Location = new System.Drawing.Point(240, 167);
             LabelChars.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             LabelChars.Name = "LabelChars";
-            LabelChars.Size = new System.Drawing.Size(39, 17);
+            LabelChars.Size = new System.Drawing.Size(35, 15);
             LabelChars.TabIndex = 2;
             LabelChars.Text = "chars";
             // 
@@ -311,7 +311,7 @@ namespace BooruDatasetTagManager
             LabelAutocompAfter.Location = new System.Drawing.Point(22, 168);
             LabelAutocompAfter.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             LabelAutocompAfter.Name = "LabelAutocompAfter";
-            LabelAutocompAfter.Size = new System.Drawing.Size(154, 17);
+            LabelAutocompAfter.Size = new System.Drawing.Size(140, 15);
             LabelAutocompAfter.TabIndex = 2;
             LabelAutocompAfter.Text = "Show autocomplete after";
             // 
@@ -338,9 +338,9 @@ namespace BooruDatasetTagManager
             tabPage3.Controls.Add(LabelTagHeight);
             tabPage3.Controls.Add(LabelAutocompFont);
             tabPage3.Controls.Add(LabelTagFont);
-            tabPage3.Location = new System.Drawing.Point(4, 26);
+            tabPage3.Location = new System.Drawing.Point(4, 24);
             tabPage3.Name = "tabPage3";
-            tabPage3.Size = new System.Drawing.Size(457, 316);
+            tabPage3.Size = new System.Drawing.Size(457, 318);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "UI";
             tabPage3.UseVisualStyleBackColor = true;
@@ -350,17 +350,18 @@ namespace BooruDatasetTagManager
             LabelLanguage.AutoSize = true;
             LabelLanguage.Location = new System.Drawing.Point(11, 110);
             LabelLanguage.Name = "LabelLanguage";
-            LabelLanguage.Size = new System.Drawing.Size(65, 17);
+            LabelLanguage.Size = new System.Drawing.Size(59, 15);
             LabelLanguage.TabIndex = 6;
             LabelLanguage.Text = "Language";
             // 
             // LanguageComboBox
             // 
+            LanguageComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             LanguageComboBox.FormattingEnabled = true;
             LanguageComboBox.Items.AddRange(new object[] { "zh-CN", "en-US" });
             LanguageComboBox.Location = new System.Drawing.Point(187, 110);
             LanguageComboBox.Name = "LanguageComboBox";
-            LanguageComboBox.Size = new System.Drawing.Size(121, 25);
+            LanguageComboBox.Size = new System.Drawing.Size(121, 23);
             LanguageComboBox.TabIndex = 5;
             // 
             // BtnAutocompFontChange
@@ -385,7 +386,7 @@ namespace BooruDatasetTagManager
             label14.AutoSize = true;
             label14.Location = new System.Drawing.Point(187, 78);
             label14.Name = "label14";
-            label14.Size = new System.Drawing.Size(13, 17);
+            label14.Size = new System.Drawing.Size(12, 15);
             label14.TabIndex = 2;
             label14.Text = "-";
             // 
@@ -394,7 +395,7 @@ namespace BooruDatasetTagManager
             label11.AutoSize = true;
             label11.Location = new System.Drawing.Point(187, 14);
             label11.Name = "label11";
-            label11.Size = new System.Drawing.Size(13, 17);
+            label11.Size = new System.Drawing.Size(12, 15);
             label11.TabIndex = 2;
             label11.Text = "-";
             // 
@@ -413,7 +414,7 @@ namespace BooruDatasetTagManager
             LabelTagHeight.AutoSize = true;
             LabelTagHeight.Location = new System.Drawing.Point(11, 46);
             LabelTagHeight.Name = "LabelTagHeight";
-            LabelTagHeight.Size = new System.Drawing.Size(155, 17);
+            LabelTagHeight.Size = new System.Drawing.Size(138, 15);
             LabelTagHeight.TabIndex = 0;
             LabelTagHeight.Text = "Tags gridview row height";
             // 
@@ -422,7 +423,7 @@ namespace BooruDatasetTagManager
             LabelAutocompFont.AutoSize = true;
             LabelAutocompFont.Location = new System.Drawing.Point(11, 78);
             LabelAutocompFont.Name = "LabelAutocompFont";
-            LabelAutocompFont.Size = new System.Drawing.Size(116, 17);
+            LabelAutocompFont.Size = new System.Drawing.Size(108, 15);
             LabelAutocompFont.TabIndex = 0;
             LabelAutocompFont.Text = "Autocomplete font";
             // 
@@ -431,7 +432,7 @@ namespace BooruDatasetTagManager
             LabelTagFont.AutoSize = true;
             LabelTagFont.Location = new System.Drawing.Point(11, 14);
             LabelTagFont.Name = "LabelTagFont";
-            LabelTagFont.Size = new System.Drawing.Size(116, 17);
+            LabelTagFont.Size = new System.Drawing.Size(103, 15);
             LabelTagFont.TabIndex = 0;
             LabelTagFont.Text = "Tags gridview font";
             // 
@@ -442,11 +443,11 @@ namespace BooruDatasetTagManager
             tabPage2.Controls.Add(label1);
             tabPage2.Controls.Add(comboBox2);
             tabPage2.Controls.Add(comboBox1);
-            tabPage2.Location = new System.Drawing.Point(4, 26);
+            tabPage2.Location = new System.Drawing.Point(4, 24);
             tabPage2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            tabPage2.Size = new System.Drawing.Size(457, 316);
+            tabPage2.Size = new System.Drawing.Size(457, 318);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Translations";
             tabPage2.UseVisualStyleBackColor = true;
@@ -457,7 +458,7 @@ namespace BooruDatasetTagManager
             checkBox1.Location = new System.Drawing.Point(10, 74);
             checkBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             checkBox1.Name = "checkBox1";
-            checkBox1.Size = new System.Drawing.Size(311, 21);
+            checkBox1.Size = new System.Drawing.Size(286, 19);
             checkBox1.TabIndex = 2;
             checkBox1.Text = "Load only manual translations into autocomplete";
             checkBox1.UseVisualStyleBackColor = true;
@@ -468,7 +469,7 @@ namespace BooruDatasetTagManager
             label3.Location = new System.Drawing.Point(7, 46);
             label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(116, 17);
+            label3.Size = new System.Drawing.Size(103, 15);
             label3.TabIndex = 0;
             label3.Text = "Translation service";
             // 
@@ -479,7 +480,7 @@ namespace BooruDatasetTagManager
             comboBox2.Location = new System.Drawing.Point(138, 43);
             comboBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBox2.Name = "comboBox2";
-            comboBox2.Size = new System.Drawing.Size(263, 25);
+            comboBox2.Size = new System.Drawing.Size(263, 23);
             comboBox2.TabIndex = 1;
             // 
             // Form_settings
