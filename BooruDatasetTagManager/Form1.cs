@@ -354,6 +354,7 @@ namespace BooruDatasetTagManager
                     DataGridViewRow rowToMove = e.Data.GetData(
                         typeof(DataGridViewRow)) as DataGridViewRow;
                     gridViewTags.Rows.RemoveAt(rowIndexFromMouseDown);
+                    //TODO: Fix OutOfRangeException
                     gridViewTags.Rows.Insert(rowIndexOfItemUnderMouseToDrop, rowToMove);
                     gridViewTags.ClearSelection();
                     gridViewTags[0, rowIndexOfItemUnderMouseToDrop].Selected = true;

@@ -18,6 +18,7 @@ namespace BooruDatasetTagManager
         [STAThread]
         static void Main()
         {
+            Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
             Application.EnableVisualStyles();
 #if NET5_0_OR_GREATER
             Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
@@ -75,6 +76,19 @@ namespace BooruDatasetTagManager
 
             Application.Run(new MainForm());
         }
+
+        public static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
+        {
+            Debug.WriteLine("Unhandled Exception: " + e.Exception.Message + "\r\n" + e.Exception.StackTrace);
+
+            var res = MessageBox.Show("Error detected. Please report it on github.\r\n Press OK to copy stacktrace to clipboard.", "Error", MessageBoxButtons.OKCancel);
+            if(res == DialogResult.OK)
+            {
+                Clipboard.SetText(e.Exception.Message + "\r\n" + e.Exception.StackTrace);
+            }
+
+        }
+
         public static TranslationManager TransManager;
 
         public static DatasetManager DataManager;

@@ -6,6 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace BooruDatasetTagManager
 {
@@ -34,6 +35,7 @@ namespace BooruDatasetTagManager
             this.PreviewKeyDown += AutoCompleteTextBox_PreviewKeyDown;
             _listBox.MouseDoubleClick += AutoCompleteTextBox_MouseClick;
             this.LostFocus += AutoCompleteTextBox_LostFocus;
+            _listBox.Click += AutoCompleteTextBox_Click;
         }
 
         private void AutoCompleteTextBox_LostFocus(object sender, EventArgs e)
@@ -57,6 +59,11 @@ namespace BooruDatasetTagManager
                 ItemSelectionComplete?.Invoke(this, e);
                 //this.Select(this.Text.Length, 0);
             }
+        }
+
+        private void AutoCompleteTextBox_Click(object sender, EventArgs e)
+        {
+            Focus();
         }
 
         public bool IsListBoxFocused()
