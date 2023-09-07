@@ -264,7 +264,7 @@ namespace BooruDatasetTagManager
                             .Distinct().ToArray();
                     }
                 }
-                if (matches.Length > 0)
+                if (matches != null && matches.Length > 0)
                 {
                     ShowListBox();
                     _listBox.BeginUpdate();
