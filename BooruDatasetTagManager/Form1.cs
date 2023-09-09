@@ -354,9 +354,15 @@ namespace BooruDatasetTagManager
                     DataGridViewRow rowToMove = e.Data.GetData(
                         typeof(DataGridViewRow)) as DataGridViewRow;
                     gridViewTags.Rows.RemoveAt(rowIndexFromMouseDown);
-                    gridViewTags.Rows.Insert(rowIndexOfItemUnderMouseToDrop, rowToMove);
+                    int toDrop = rowIndexOfItemUnderMouseToDrop;
+                    if (toDrop < 0 || toDrop > gridViewTags.Rows.Count)
+                    {
+                        toDrop = gridViewTags.Rows.Count;
+                    }
+
+                    gridViewTags.Rows.Insert(toDrop, rowToMove);
                     gridViewTags.ClearSelection();
-                    gridViewTags[0, rowIndexOfItemUnderMouseToDrop].Selected = true;
+                    gridViewTags[0, toDrop].Selected = true;
                 }
             }
         }

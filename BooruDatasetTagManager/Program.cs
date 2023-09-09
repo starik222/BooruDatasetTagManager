@@ -75,6 +75,7 @@ namespace BooruDatasetTagManager
 
             Application.Run(new MainForm());
         }
+
         public static TranslationManager TransManager;
 
         public static DatasetManager DataManager;
