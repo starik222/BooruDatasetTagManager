@@ -174,11 +174,11 @@
   <data name="BtnTagPasteFromClipBoard" xml:space="preserve">
     <value>从剪贴板读取标签并覆盖签</value>
   </data>
+  <data name="BtnTagRedo" xml:space="preserve">
+    <value>Redo</value>
+  </data>
   <data name="BtnTagReplace" xml:space="preserve">
     <value>替换标签</value>
-  </data>
-  <data name="BtnTagReset" xml:space="preserve">
-    <value>重置标签改动</value>
   </data>
   <data name="BtnTagSetToAll" xml:space="preserve">
     <value>设置当前标签到所有图片</value>
@@ -188,6 +188,9 @@
   </data>
   <data name="BtnTagSwitch" xml:space="preserve">
     <value>切换公共标签和所有标签模式</value>
+  </data>
+  <data name="BtnTagUndo" xml:space="preserve">
+    <value>重置标签改动</value>
   </data>
   <data name="BtnTagUp" xml:space="preserve">
     <value>上移</value>

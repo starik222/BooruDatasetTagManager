@@ -203,6 +203,16 @@ namespace BooruDatasetTagManager.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap NOTIcon {
+            get {
+                object obj = ResourceManager.GetObject("NOTIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap ORIcon {
             get {
                 object obj = ResourceManager.GetObject("ORIcon", resourceCulture);
@@ -236,6 +246,16 @@ namespace BooruDatasetTagManager.Properties {
         public static System.Drawing.Bitmap print {
             get {
                 object obj = ResourceManager.GetObject("print", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Redo {
+            get {
+                object obj = ResourceManager.GetObject("Redo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -299,26 +319,12 @@ namespace BooruDatasetTagManager.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap NOTIcon
-        {
-            get
-            {
-                object obj = ResourceManager.GetObject("NOTIcon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap XORIcon
-        {
-            get
-            {
+        public static System.Drawing.Bitmap XORIcon {
+            get {
                 object obj = ResourceManager.GetObject("XORIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
