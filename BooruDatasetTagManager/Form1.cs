@@ -380,18 +380,9 @@ namespace BooruDatasetTagManager
             {
                 if (rowIndexFromMouseDown != rowIndexOfItemUnderMouseToDrop)
                 {
-                    DataGridViewRow rowToMove = e.Data.GetData(
-                        typeof(DataGridViewRow)) as DataGridViewRow;
-                    gridViewTags.Rows.RemoveAt(rowIndexFromMouseDown);
-                    int toDrop = rowIndexOfItemUnderMouseToDrop;
-                    if (toDrop < 0 || toDrop > gridViewTags.Rows.Count)
-                    {
-                        toDrop = gridViewTags.Rows.Count;
-                    }
-
-                    gridViewTags.Rows.Insert(toDrop, rowToMove);
+                    int destIndex = ((EditableTagList)gridViewTags.DataSource).Move(rowIndexFromMouseDown, rowIndexOfItemUnderMouseToDrop);
                     gridViewTags.ClearSelection();
-                    gridViewTags[0, toDrop].Selected = true;
+                    gridViewTags[0, destIndex].Selected = true;
                 }
             }
         }

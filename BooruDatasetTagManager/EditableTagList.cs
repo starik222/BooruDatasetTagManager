@@ -77,7 +77,15 @@ namespace BooruDatasetTagManager
                 List[curHistory.Index] = curHistory.TagOld;
                 OnListChanged(new ListChangedEventArgs(ListChangedType.ItemChanged, curHistory.Index));
             }
-
+            else if (curHistory.Type == EditableTagHistory.HistoryType.Move)
+            {
+                EditableTag tagToMove = curHistory.TagOld;
+                tagToMove.Parent = this;
+                isStoreHistory = false;
+                RemoveAt(curHistory.Index);
+                Insert(curHistory.OldIndex, tagToMove, false);
+                isStoreHistory = true;
+            }
         }
         /// <summary>
         /// Redo
@@ -101,6 +109,15 @@ namespace BooruDatasetTagManager
             {
                 List[curHistory.Index] = curHistory.TagNew;
                 OnListChanged(new ListChangedEventArgs(ListChangedType.ItemChanged, curHistory.Index));
+            }
+            else if (curHistory.Type == EditableTagHistory.HistoryType.Move)
+            {
+                EditableTag tagToMove = curHistory.TagOld;
+                tagToMove.Parent = this;
+                isStoreHistory = false;
+                RemoveAt(curHistory.OldIndex);
+                Insert(curHistory.Index, tagToMove, false);
+                isStoreHistory = true;
             }
             HistoryPosition++;
 
@@ -178,6 +195,7 @@ namespace BooruDatasetTagManager
             }
             return list;
         }
+
 
         public void AddTag(string tag, bool storeHistory)
         {
@@ -259,6 +277,30 @@ namespace BooruDatasetTagManager
                     RemoveAt(i);
             }
             isStoreHistory = true;
+        }
+
+        public int Move(int index, int toIndex)
+        {
+            if (index < 0 || index > Count - 1)
+                throw new IndexOutOfRangeException();
+
+            EditableTag tagToMove = (EditableTag)((EditableTag)List[index]).Clone();
+            tagToMove.Parent = this;
+            isStoreHistory = false;
+            RemoveAt(index);
+            if (toIndex < 0 || toIndex > Count)
+            {
+                toIndex = Count;
+            }
+            Insert(toIndex, tagToMove, false);
+            isStoreHistory = true;
+            var h = new EditableTagHistory();
+            h.Index = toIndex;
+            h.OldIndex = index;
+            h.TagOld = (EditableTag)(tagToMove).Clone();
+            h.Type = EditableTagHistory.HistoryType.Move;
+            AddHistory(h);
+            return toIndex;
         }
 
         protected virtual void OnListChanged(ListChangedEventArgs ev)

@@ -9,6 +9,7 @@ namespace BooruDatasetTagManager
     public class EditableTagHistory
     {
         public int Index { get; set; } = -1;
+        public int OldIndex { get; set; } = -1;
         public EditableTag TagOld { get; set; } = null;
         public EditableTag TagNew { get; set; } = null;
         public HistoryType Type { get; set; } = HistoryType.None;
@@ -18,7 +19,8 @@ namespace BooruDatasetTagManager
             None,
             Add,
             Remove,
-            Modify
+            Modify,
+            Move
         }
     }
 }
