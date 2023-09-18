@@ -51,7 +51,7 @@ namespace BooruDatasetTagManager
                 dataGridViewCellStyle);
             ctl = DataGridView.EditingControl as CustomTextBoxEditingControl;
             // Use the default row value when Value property is null.
-            if (this.Value == null)
+            if (this.Value == null || this.Value == DBNull.Value)
             {
                 ctl.Text = (string)this.DefaultNewRowValue;
             }

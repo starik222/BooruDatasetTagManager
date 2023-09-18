@@ -157,6 +157,7 @@ namespace BooruDatasetTagManager
             gridViewTags.CellEndEdit += gridViewTags_CellEndEdit;
             gridViewTags.CellMouseEnter += dataGridViewTags_CellMouseEnter;
             gridViewTags.CellMouseLeave += dataGridViewTags_CellMouseLeave;
+            gridViewTags.CellValueChanged += gridViewTags_CellValueChanged;
             gridViewTags.EditingControlShowing += dataGridView1_EditingControlShowing;
             gridViewTags.DragDrop += dataGridView1_DragDrop;
             gridViewTags.DragOver += dataGridView1_DragOver;

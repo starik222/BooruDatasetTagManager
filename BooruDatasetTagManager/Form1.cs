@@ -127,7 +127,8 @@ namespace BooruDatasetTagManager
                 {
                     SetStatus($"{I18n.GetText("SettingTabTranslations")} {i}/{grid.RowCount}");
                     grid["Translation", i].ReadOnly = true;
-                    grid["Translation", i].Value = await Program.TransManager.TranslateAsync(grid[0, i].Value as string);
+                    if (string.IsNullOrWhiteSpace((string)grid["Translation", i].Value) && !string.IsNullOrWhiteSpace((string)grid[0, i].Value))
+                        grid["Translation", i].Value = await Program.TransManager.TranslateAsync((string)grid[0, i].Value);
                 }
             }
             catch (Exception ex)
@@ -163,12 +164,13 @@ namespace BooruDatasetTagManager
 
         private async void LoadSelectedImageToGrid()
         {
+            gridViewTags.AutoGenerateColumns = false;
             if (gridViewDS.SelectedRows.Count == 0)
                 return;
             if (gridViewDS.SelectedRows.Count == 1)
             {
-                gridViewTags.AutoGenerateColumns = false;
                 gridViewTags.Tag = (string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value;
+                ChageImageColumn(false);
                 gridViewTags.DataSource = Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value].Tags;
                 if (isShowPreview)
                 {
@@ -182,10 +184,34 @@ namespace BooruDatasetTagManager
                 {
                     HidePreview();
                 }
+                gridViewTags.DataSource = null;
                 gridViewTags.AllowDrop = false;
                 gridViewTags.Rows.Clear();
                 ChageImageColumn(true);
+
+                gridViewTags.Tag = "0";
+                List<DataItem> selectedTagsList = new List<DataItem>();
+                for (int i = 0; i < gridViewDS.SelectedRows.Count; i++)
+                {
+                    selectedTagsList.Add(Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[i].Cells["ImageFilePath"].Value]);
+                }
+
+                MultiSelectDataTable multiSelectData = new MultiSelectDataTable();
+                multiSelectData.CreateTableFromSelectedImages(selectedTagsList);
+                gridViewTags.DataSource = multiSelectData;
             }
+
+            if (Program.Settings.AutoSort)
+            {
+                SortPrompt();
+            }
+
+            gridViewDS.Focus();
+            if (isTranslate)
+                await FillTranslation(gridViewTags);
+            if (showCount)
+                UpdateTagCount();
+            SetChangedStatus(false);
         }
 
         //private async void LoadSelectedImageToGridOld()
@@ -1121,8 +1147,10 @@ namespace BooruDatasetTagManager
                 {
                     if (e.RowIndex != previewRowIndex)
                     {
+
                         //var dataItem = Program.DataManager.DataSet[(string)gridViewTags["Image", e.RowIndex].Value];
-                        var dataItem = (DataItem)gridViewTags["ImageTags", e.RowIndex].Tag;
+                        //var dataItem = (DataItem)gridViewTags["ImageTags", e.RowIndex].Tag;
+                        var dataItem = (DataItem)((MultiSelectDataRow)((MultiSelectDataTable)gridViewTags.DataSource).Rows[e.RowIndex]).ExtendedProperties["DataItem"];
                         previewPicBox.Size = new Size(Program.Settings.PreviewSize, Program.Settings.PreviewSize);
                         previewPicBox.Image = dataItem.Img;
                         previewPicBox.SizeMode = PictureBoxSizeMode.AutoSize;
@@ -1213,8 +1241,8 @@ namespace BooruDatasetTagManager
                     }
                     else
                     {
-                        gridViewTags["Image", e.RowIndex].Tag = gridViewTags["ImageTags", e.RowIndex].Value;
-                        gridViewTags["Name", e.RowIndex].Tag = gridViewTags["ImageTags", e.RowIndex].Value;
+                        //gridViewTags["Image", e.RowIndex].Tag = gridViewTags["ImageTags", e.RowIndex].Value;
+                        //gridViewTags["Name", e.RowIndex].Tag = gridViewTags["ImageTags", e.RowIndex].Value;
                     }
                 }
             }
@@ -1918,6 +1946,15 @@ namespace BooruDatasetTagManager
         private void BtnTagRedo_Click(object sender, EventArgs e)
         {
             ((EditableTagList)gridViewTags.DataSource).NextState();
+        }
+
+        private void gridViewTags_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex != -1 && e.RowIndex != -1)
+            {
+                if (gridViewTags[e.ColumnIndex, e.RowIndex].Value == DBNull.Value)
+                    gridViewTags[e.ColumnIndex, e.RowIndex].Value = string.Empty;
+            }
         }
 
         //private void CreateDataGridViewTags()
