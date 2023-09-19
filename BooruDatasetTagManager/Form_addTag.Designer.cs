@@ -35,13 +35,14 @@ namespace BooruDatasetTagManager
             label2 = new System.Windows.Forms.Label();
             comboBox1 = new System.Windows.Forms.ComboBox();
             numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            checkBoxSkipExist = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(13, 64);
+            label1.Location = new System.Drawing.Point(13, 79);
             label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(25, 15);
@@ -103,11 +104,24 @@ namespace BooruDatasetTagManager
             numericUpDown1.TabIndex = 6;
             numericUpDown1.Visible = false;
             // 
+            // checkBoxSkipExist
+            // 
+            checkBoxSkipExist.AutoSize = true;
+            checkBoxSkipExist.Checked = true;
+            checkBoxSkipExist.CheckState = System.Windows.Forms.CheckState.Checked;
+            checkBoxSkipExist.Location = new System.Drawing.Point(13, 57);
+            checkBoxSkipExist.Name = "checkBoxSkipExist";
+            checkBoxSkipExist.Size = new System.Drawing.Size(100, 19);
+            checkBoxSkipExist.TabIndex = 7;
+            checkBoxSkipExist.Text = "Skip exist tags";
+            checkBoxSkipExist.UseVisualStyleBackColor = true;
+            // 
             // Form_addTag
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             ClientSize = new System.Drawing.Size(401, 353);
+            Controls.Add(checkBoxSkipExist);
             Controls.Add(numericUpDown1);
             Controls.Add(comboBox1);
             Controls.Add(label2);
@@ -134,5 +148,6 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.Label label2;
         public System.Windows.Forms.ComboBox comboBox1;
         public System.Windows.Forms.NumericUpDown numericUpDown1;
+        public System.Windows.Forms.CheckBox checkBoxSkipExist;
     }
 }

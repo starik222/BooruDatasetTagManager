@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using static BooruDatasetTagManager.DatasetManager;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BooruDatasetTagManager
@@ -202,6 +203,88 @@ namespace BooruDatasetTagManager
             Add(new EditableTag(GetNextId(), tag), storeHistory);
         }
 
+        public int AddTag(string tag, bool skipExist, AddingType addType, int pos = -1)
+        {
+            int tagIndex = IndexOf(tag);
+            if (skipExist && tagIndex != -1)
+                return tagIndex;
+            int localCount = Count;
+            if (tagIndex != -1)
+            {
+                switch (addType)
+                {
+                    case AddingType.Top:
+                        {
+                            Move(tagIndex, 0);
+                            return 0;
+                        }
+                    case AddingType.Center:
+                        {
+                            Move(tagIndex, localCount / 2);
+                            return localCount / 2;
+                        }
+                    case AddingType.Down:
+                        {
+                            Move(tagIndex, localCount - 1);
+                            return localCount - 1;
+                        }
+                    case AddingType.Custom:
+                        {
+                            if (pos >= localCount)
+                            {
+                                pos = localCount - 1;
+                            }
+                            else if (pos < 0)
+                            {
+                                pos = 0;
+                            }
+                            Move(tagIndex, pos);
+                            return pos;
+                        }
+                }
+            }
+            else
+            {
+                switch (addType)
+                {
+                    case AddingType.Top:
+                        {
+                            InsertTag(0, tag, true);
+                            return 0;
+                        }
+                    case AddingType.Center:
+                        {
+                            InsertTag(localCount / 2, tag, true);
+                            return localCount / 2;
+                        }
+                    case AddingType.Down:
+                        {
+                            AddTag(tag, true);
+                            return localCount;
+                        }
+                    case AddingType.Custom:
+                        {
+                            if (pos >= localCount)
+                            {
+                                AddTag(tag, true);
+                                return localCount;
+                            }
+                            else if (pos < 0)
+                            {
+                                InsertTag(0, tag, true);
+                                return 0;
+                            }
+                            else
+                            {
+                                InsertTag(pos, tag, true);
+                                return pos;
+                            }
+                        }
+                }
+            }
+            return -1;
+        }
+
         public int Add(EditableTag item, bool storeHistory)
         {
             isStoreHistory = storeHistory;
@@ -221,8 +304,10 @@ namespace BooruDatasetTagManager
         {
             foreach (string tag in tags)
             {
+                if (string.IsNullOrWhiteSpace(tag))
+                    continue;
                 int index = GetNextId();
-                Add(new EditableTag(index, tag, index), storeHistory);
+                Add(new EditableTag(index, tag.ToLower().Trim(), index), storeHistory);
             }
         }
 
@@ -301,6 +386,17 @@ namespace BooruDatasetTagManager
             h.Type = EditableTagHistory.HistoryType.Move;
             AddHistory(h);
             return toIndex;
+        }
+
+
+        public async Task TranslateAllAsync()
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                EditableTag eTag = (EditableTag)List[i];
+                if (string.IsNullOrEmpty(eTag.Translation))
+                    eTag.Translation = await Program.TransManager.TranslateAsync(eTag.Translation);
+            }
         }
 
         protected virtual void OnListChanged(ListChangedEventArgs ev)

@@ -103,48 +103,13 @@ namespace BooruDatasetTagManager
             return lst;
         }
 
-        public void AddTagToAll(string tag, AddingType addType, int pos=-1, bool useFilter = false)
+        public void AddTagToAll(string tag, bool skipExist, AddingType addType, int pos=-1, bool useFilter = false)
         {
             IEnumerable<DataItem> lst = GetEnumerator(useFilter);
 
             foreach (var item in lst)
             {
-                if (item.Tags.Contains(tag))
-                {
-                    item.Tags.RemoveTag(tag, true);
-                }
-                switch (addType)
-                {
-                    case AddingType.Top:
-                        {
-                            item.Tags.InsertTag(0, tag, true);
-                            break;
-                        }
-                    case AddingType.Center:
-                        {
-                            item.Tags.InsertTag(item.Tags.Count / 2, tag, true);
-                            break;
-                        }
-                    case AddingType.Down:
-                        {
-                            item.Tags.AddTag(tag, true);
-                            break;
-                        }
-                    case AddingType.Custom:
-                        {
-                            if (pos >= item.Tags.Count)
-                            {
-                                item.Tags.AddTag(tag, true);
-                            }
-                            else if (pos < 0)
-                            {
-                                item.Tags.InsertTag(0, tag, true);
-                            }
-                            else
-                                item.Tags.InsertTag(pos, tag, true);
-                            break;
-                        }
-                }
+                item.Tags.AddTag(tag, skipExist, addType, pos);
             }
         }
 

@@ -41,6 +41,7 @@ namespace BooruDatasetTagManager
         public void CreateTableFromSelectedImages(List<DataItem> selectedDI)
         {
             selectedDataItems = selectedDI;
+            selectedDataItems.Sort((a, b) => FileNamesComparer.StrCmpLogicalW(a.Name, b.Name));
             Dictionary<string, List<KeyValuePair<int, DataItem>>> table = new Dictionary<string, List<KeyValuePair<int, DataItem>>>();
             int maxCount = selectedDataItems.Max(a => a.Tags.Count);
 
@@ -131,8 +132,82 @@ namespace BooruDatasetTagManager
             }
         }
 
-        public void AddTag(string tag)
+        public void AddTag(string tag, bool skipExist, AddingType addType, int pos = -1)
         {
+            if (selectedDataItems.Count == 0)
+                return;
+            bool existMode = false;
+            List<KeyValuePair<int, DataItem>> addedItems = new List<KeyValuePair<int, DataItem>>();
+            foreach (var item in selectedDataItems)
+            {
+                if (!existMode)
+                {
+                    if (item.Tags.Contains(tag))
+                    {
+                        existMode = true;
+                    }
+                }
+                int addedIndex = item.Tags.AddTag(tag, skipExist, addType, pos);
+                if (addedIndex != -1)
+                {
+                    addedItems.Add(new KeyValuePair<int, DataItem>(addedIndex, item));
+                }
+            }
+
+            if (!existMode)
+            {
+                for (int i = 0; i < addedItems.Count; i++)
+                {
+                    {
+                        MultiSelectDataRow row = (MultiSelectDataRow)NewRow();
+                        row.SetAttribute("TextTag", tag);
+                        row.SetAttribute("TagIndex", addedItems[i].Key);
+                        row.SetAttribute("DataItem", addedItems[i].Value);
+                        row["Tag"] = i == 0 ? tag : "";//tag
+                        row["Image"] = addedItems[i].Value.ImageFilePath;//ImgName
+                        row["ImageName"] = addedItems[i].Value.Name;//ImgName
+                        Rows.Add(row);
+                    }
+                }
+            }
+            else
+            {
+                List<int> existIndexes = new List<int>();
+                for (int i = 0; i < Rows.Count; i++)
+                {
+                    if (((MultiSelectDataRow)Rows[i]).GetTagText() == tag)
+                    {
+                        existIndexes.Add(i);
+                    }
+                }
+                if (existIndexes.Count == 0)
+                    throw new Exception("Exist mode but tag not found in table!");
+                int startInsertIndex = existIndexes.Max() + 1;
+                foreach (var item in addedItems)
+                {
+                    bool found = false;
+                    foreach (var eIndex in existIndexes)
+                    {
+                        if (((MultiSelectDataRow)Rows[eIndex]).GetDataItem() == item.Value)
+                        {
+                            ((MultiSelectDataRow)Rows[eIndex]).ExtendedProperties["TagIndex"] = item.Key;
+                            found = true; 
+                            break;
+                        }
+                    }
+                    if (!found)
+                    {
+                        MultiSelectDataRow row = (MultiSelectDataRow)NewRow();
+                        row.SetAttribute("TextTag", tag);
+                        row.SetAttribute("TagIndex", item.Key);
+                        row.SetAttribute("DataItem", item.Value);
+                        row["Tag"] = "";//tag
+                        row["Image"] = item.Value.ImageFilePath;//ImgName
+                        row["ImageName"] = item.Value.Name;//ImgName
+                        Rows.InsertAt(row, startInsertIndex++);
+                    }
+                }
+            }
 
         }
     }

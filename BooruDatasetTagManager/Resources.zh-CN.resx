@@ -195,6 +195,9 @@
   <data name="BtnTagUp" xml:space="preserve">
     <value>上移</value>
   </data>
+  <data name="CheckBoxSkipExist" xml:space="preserve">
+    <value>Skip exist tags</value>
+  </data>
   <data name="GridCount" xml:space="preserve">
     <value>出现次数</value>
   </data>
