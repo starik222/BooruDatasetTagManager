@@ -118,6 +118,10 @@ namespace BooruDatasetTagManager
 
         private async Task FillTranslation(DataGridView grid)
         {
+            if (grid.Columns.Contains("Translation") && grid.Columns["Translation"].Visible == false)
+            {
+                grid.Columns["Translation"].Visible = true;
+            }
             LockEdit(true);
             SetStatus(I18n.GetText("StatusTranslating"));
             try
@@ -819,6 +823,12 @@ namespace BooruDatasetTagManager
         {
             isTranslate = !isTranslate;
             MenuItemTranslateTags.Checked = isTranslate;
+
+            if (Program.DataManager == null)
+            {
+                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
+                return;
+            }
             if (isTranslate)
             {
                 gridViewAllTags.Columns.Insert(1, new DataGridViewTextBoxColumn()
@@ -968,17 +978,27 @@ namespace BooruDatasetTagManager
         {
             if (Program.DataManager == null)
             {
-                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
-                return;
+                if (Clipboard.ContainsText())
+                {
+                    string text = Clipboard.GetText();
+                    string[] lines = text.Split(new string[] { Program.Settings.SeparatorOnLoad }, StringSplitOptions.RemoveEmptyEntries);
+                    EditableTagList tagList = new EditableTagList(lines);
+                    gridViewTags.DataSource = tagList;
+                }
+                //MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
+                //return;
             }
             if (Clipboard.ContainsText())
             {
-                gridViewTags.Rows.Clear();
                 string text = Clipboard.GetText();
                 string[] lines = text.Split(new string[] { Program.Settings.SeparatorOnLoad }, StringSplitOptions.RemoveEmptyEntries);
-                for (int i = 0; i < lines.Length; i++)
-                    gridViewTags.Rows.Add(lines[i].ToLower().Trim());
-
+                var tagsDSType = GetTagsDataSourceType();
+                if (tagsDSType == DataSourceType.Single)
+                {
+                    EditableTagList etl = (EditableTagList)gridViewTags.DataSource;
+                    etl.Clear();
+                    etl.AddRange(lines, true);
+                }
                 if (isTranslate)
                     await FillTranslation(gridViewTags);
 
@@ -987,14 +1007,28 @@ namespace BooruDatasetTagManager
             }
         }
 
+        private DataSourceType GetTagsDataSourceType()
+        {
+            if (gridViewTags.DataSource == null)
+                return DataSourceType.None;
+            else if (gridViewTags.DataSource.GetType() == typeof(EditableTagList))
+                return DataSourceType.Single;
+            else if (gridViewTags.DataSource.GetType() == typeof(MultiSelectDataTable))
+                return DataSourceType.Single;
+            else
+                throw new Exception("Unknown datasource type!");
+        }
+
         private void toolStripButton16_Click(object sender, EventArgs e)
         {
-            List<string> lines = new List<string>();
-            for (int i = 0; i < gridViewTags.RowCount; i++)
-                lines.Add((string)gridViewTags["ImageTags", i].Value);
-            Form_Edit fPrint = new Form_Edit();
-            fPrint.textBox1.Text = string.Join(Program.Settings.SeparatorOnSave, lines.Distinct().Where(a => !String.IsNullOrWhiteSpace(a)));
-            fPrint.Show();
+            var dts = GetTagsDataSourceType();
+            if (dts == DataSourceType.Single)
+            {
+                Form_Edit fPrint = new Form_Edit();
+                EditableTagList tagsDS = (EditableTagList)gridViewTags.DataSource;
+                fPrint.textBox1.Text = tagsDS.ToString(Program.Settings.FixTagsOnSave);
+                fPrint.Show();
+            }
         }
 
         private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)

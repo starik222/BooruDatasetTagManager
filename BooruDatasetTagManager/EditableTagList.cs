@@ -52,6 +52,26 @@ namespace BooruDatasetTagManager
             _tags = new List<string>();
         }
 
+        //NEED MODIRY TO SUPPORT WEIDED TAGS!!!
+        public string ToString(bool fixTags)
+        {
+            DeduplicateTags();
+            if (!fixTags)
+                return string.Join(Program.Settings.SeparatorOnSave, TextTags);
+            else
+            {
+                List<string> tags = new List<string>(TextTags);
+                for (int i = 0; i < tags.Count; i++)
+                {
+                    if (!tags[i].Contains("\\(") && tags[i].Contains('('))
+                        tags[i] = tags[i].Replace("(", "\\(");
+                    if (!tags[i].Contains("\\)") && tags[i].Contains(')'))
+                        tags[i] = tags[i].Replace(")", "\\)");
+                }
+                return string.Join(Program.Settings.SeparatorOnSave, tags);
+            }
+        }
+
 
         /// <summary>
         /// Undo
@@ -87,6 +107,16 @@ namespace BooruDatasetTagManager
                 Insert(curHistory.OldIndex, tagToMove, false);
                 isStoreHistory = true;
             }
+            else if (curHistory.Type == EditableTagHistory.HistoryType.Clear)
+            {
+                isStoreHistory = false;
+                List.Clear();
+                foreach (var item in curHistory.ClearedTags)
+                {
+                    Add(item, false);
+                }
+                isStoreHistory = true;
+            }
         }
         /// <summary>
         /// Redo
@@ -120,6 +150,12 @@ namespace BooruDatasetTagManager
                 Insert(curHistory.Index, tagToMove, false);
                 isStoreHistory = true;
             }
+            else if (curHistory.Type == EditableTagHistory.HistoryType.Clear)
+            {
+                isStoreHistory = false;
+                List.Clear();
+                isStoreHistory = true;
+            }
             HistoryPosition++;
 
         }
@@ -145,6 +181,7 @@ namespace BooruDatasetTagManager
         /// </summary>
         public void DeduplicateTags()
         {
+            isStoreHistory = false;
             for (int i = List.Count - 1; i >= 0; i--)
             {
                 string tagToSearch = ((EditableTag)List[i]).Tag;
@@ -163,6 +200,7 @@ namespace BooruDatasetTagManager
                 }
 
             }
+            isStoreHistory = true;
         }
 
 
@@ -288,6 +326,7 @@ namespace BooruDatasetTagManager
         public int Add(EditableTag item, bool storeHistory)
         {
             isStoreHistory = storeHistory;
+            item.Parent = this;
             int res = List.Add(item);
             isStoreHistory = true;
             return res;
@@ -296,6 +335,7 @@ namespace BooruDatasetTagManager
         public void Insert(int index, EditableTag item, bool storeHistory)
         {
             isStoreHistory = storeHistory;
+            item.Parent = this;
             List.Insert(index, item);
             isStoreHistory = true;
         }
@@ -411,11 +451,19 @@ namespace BooruDatasetTagManager
 
         protected override void OnClear()
         {
+            var h = new EditableTagHistory();
+            h.Index = 0;
             foreach (EditableTag c in List)
             {
                 c.Parent = null;
+                h.ClearedTags.Add((EditableTag)c.Clone());
+
             }
+            h.Type = EditableTagHistory.HistoryType.Clear;
+            if (isStoreHistory)
+                AddHistory(h);
         }
+
 
         protected override void OnClearComplete()
         {
