@@ -123,5 +123,18 @@ namespace BooruDatasetTagManager
                 }
             }
         }
+
+
+        public static T Pop<T>(this List<T> list)
+        {
+            if(list == null || list.Count == 0)
+                return default;
+            T res = list[list.Count - 1];
+            //T res = list[0];
+            list.RemoveAt(list.Count - 1);
+            //list.RemoveAt(0);
+            return res;
+        }
+
     }
 }

@@ -453,24 +453,14 @@ namespace BooruDatasetTagManager
                     return img.GetThumbnailImage(newWidth, newHeight, () => false, IntPtr.Zero);
                 }
             }
-
             public void GetTagsFromFile(bool fixTags)
             {
                 if (File.Exists(TextFilePath))
                 {
                     TagsModifyTime = File.GetLastWriteTime(TextFilePath);
                     string text = File.ReadAllText(TextFilePath);
-                    var temp_tags = text.Split(new string[] { Program.Settings.SeparatorOnLoad }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                    for (int i = 0; i < Tags.Count; i++)
-                    {
-                        temp_tags[i] = temp_tags[i].Trim();
-                        if (fixTags)
-                        {
-                            temp_tags[i] = temp_tags[i].Replace('_', ' ');
-                            temp_tags[i] = temp_tags[i].Replace("\\(", "(");
-                            temp_tags[i] = temp_tags[i].Replace("\\)", ")");
-                        }
-                    }
+
+                    var temp_tags = PromptParser.ParsePrompt(text, Program.Settings.SeparatorOnLoad);
                     Tags = new EditableTagList(temp_tags);
                 }
                 else

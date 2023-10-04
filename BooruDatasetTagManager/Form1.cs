@@ -11,6 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Translator;
@@ -116,6 +117,7 @@ namespace BooruDatasetTagManager
             gridViewDS.AutoResizeColumns();
         }
 
+        //NEED FIX GridViewTags tag column position (it is not 0)
         private async Task FillTranslation(DataGridView grid)
         {
             if (grid.Columns.Contains("Translation") && grid.Columns["Translation"].Visible == false)
@@ -981,7 +983,7 @@ namespace BooruDatasetTagManager
                 if (Clipboard.ContainsText())
                 {
                     string text = Clipboard.GetText();
-                    string[] lines = text.Split(new string[] { Program.Settings.SeparatorOnLoad }, StringSplitOptions.RemoveEmptyEntries);
+                    var lines = PromptParser.ParsePrompt(text, Program.Settings.SeparatorOnLoad);
                     EditableTagList tagList = new EditableTagList(lines);
                     gridViewTags.DataSource = tagList;
                 }
@@ -991,7 +993,7 @@ namespace BooruDatasetTagManager
             if (Clipboard.ContainsText())
             {
                 string text = Clipboard.GetText();
-                string[] lines = text.Split(new string[] { Program.Settings.SeparatorOnLoad }, StringSplitOptions.RemoveEmptyEntries);
+                var lines = PromptParser.ParsePrompt(text, Program.Settings.SeparatorOnLoad);
                 var tagsDSType = GetTagsDataSourceType();
                 if (tagsDSType == DataSourceType.Single)
                 {

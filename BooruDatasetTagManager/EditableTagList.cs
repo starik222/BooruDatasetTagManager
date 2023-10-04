@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static BooruDatasetTagManager.DatasetManager;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -47,10 +48,50 @@ namespace BooruDatasetTagManager
             isStoreHistory = true;
         }
 
+        public EditableTagList(IEnumerable<PromptParser.PromptItem> tags) : base()
+        {
+            isStoreHistory = false;
+            _tags = new List<string>();
+            foreach (var tag in tags)
+            {
+                int index = GetNextId();
+                var eTag = new EditableTag(index, tag.Text, index);
+                eTag.Weight = tag.Weight;
+                Add(eTag, false);
+            }
+            isStoreHistory = true;
+        }
+
         public EditableTagList() : base()
         {
             _tags = new List<string>();
         }
+
+
+        //public void InitFillTags(IEnumerable<string> tags)
+        //{
+
+        //    foreach (string tag in tags)
+        //    {
+        //        if (string.IsNullOrWhiteSpace(tag))
+        //            continue;
+        //        int index = GetNextId();
+
+        //        Add(new EditableTag(index, tag.ToLower().Trim(), index), false);
+        //    }
+        //}
+
+        //public void InitFillTags(IEnumerable<PromptParser.PromptItem> tags)
+        //{
+
+        //    foreach (var tag in tags)
+        //    {
+        //        int index = GetNextId();
+        //        var eTag = new EditableTag(index, tag.Text, index);
+        //        eTag.Weight = tag.Weight;
+        //        Add(eTag, false);
+        //    }
+        //}
 
         //NEED MODIRY TO SUPPORT WEIDED TAGS!!!
         public string ToString(bool fixTags)
@@ -348,6 +389,17 @@ namespace BooruDatasetTagManager
                     continue;
                 int index = GetNextId();
                 Add(new EditableTag(index, tag.ToLower().Trim(), index), storeHistory);
+            }
+        }
+
+        public void AddRange(IEnumerable<PromptParser.PromptItem> tags, bool storeHistory)
+        {
+            foreach (var tag in tags)
+            {
+                int index = GetNextId();
+                var eTag = new EditableTag(index, tag.Text, index);
+                eTag.Weight = tag.Weight;
+                Add(eTag, storeHistory);
             }
         }
 
