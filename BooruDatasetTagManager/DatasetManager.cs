@@ -34,7 +34,7 @@ namespace BooruDatasetTagManager
             CommonTags = new List<TagValue>();
         }
 
-        public bool SaveAll(bool fixTags)
+        public bool SaveAll()
         {
             bool saved = false;
             foreach (var item in DataSet)
@@ -42,20 +42,7 @@ namespace BooruDatasetTagManager
                 if (item.Value.IsModified)
                 {
                     item.Value.DeduplicateTags();
-                    if (!fixTags)
-                        File.WriteAllText(item.Value.TextFilePath, string.Join(Program.Settings.SeparatorOnSave, item.Value.Tags));
-                    else
-                    {
-                        List<string> tags = new List<string>(item.Value.Tags.TextTags);
-                        for (int i = 0; i < tags.Count; i++)
-                        {
-                            if (!tags[i].Contains("\\(") && tags[i].Contains('('))
-                                tags[i] = tags[i].Replace("(", "\\(");
-                            if (!tags[i].Contains("\\)") && tags[i].Contains(')'))
-                                tags[i] = tags[i].Replace(")", "\\)");
-                        }
-                        File.WriteAllText(item.Value.TextFilePath, string.Join(Program.Settings.SeparatorOnSave, tags));
-                    }
+                    File.WriteAllText(item.Value.TextFilePath, item.Value.Tags.ToString());
                     saved = true;
                 }
             }
@@ -266,7 +253,7 @@ namespace BooruDatasetTagManager
             return delList;
         }
 
-        public bool LoadFromFolder(string folder, bool fixTags)
+        public bool LoadFromFolder(string folder)
         {
             List<string> imagesExt = new List<string>() { ".jpg", ".png", ".bmp", ".jpeg", ".webp" };
             string[] imgs = Directory.GetFiles(folder, "*.*", SearchOption.AllDirectories);
@@ -279,7 +266,7 @@ namespace BooruDatasetTagManager
             int imgSize = Program.Settings.PreviewSize;
             imgs.AsParallel().ForAll(x =>
             {
-                var dt = new DataItem(x, imgSize, fixTags);
+                var dt = new DataItem(x, imgSize);
                 DataSet.TryAdd(dt.ImageFilePath, dt);
             });
             UpdateDatasetHash();
@@ -414,14 +401,14 @@ namespace BooruDatasetTagManager
                 LastLoss = -1;
             }
 
-            public DataItem(string imagePath, int imageSize, bool fixTags)
+            public DataItem(string imagePath, int imageSize)
             {
                 Tags = new EditableTagList();
                 ImageFilePath = imagePath;
                 Name = Path.GetFileNameWithoutExtension(imagePath);
                 ImageModifyTime = File.GetLastWriteTime(imagePath);
                 TextFilePath = Path.Combine(Path.GetDirectoryName(imagePath), Name + ".txt");
-                GetTagsFromFile(fixTags);
+                GetTagsFromFile();
                 Img = MakeThumb(imagePath, imageSize);
             }
 
@@ -453,7 +440,7 @@ namespace BooruDatasetTagManager
                     return img.GetThumbnailImage(newWidth, newHeight, () => false, IntPtr.Zero);
                 }
             }
-            public void GetTagsFromFile(bool fixTags)
+            public void GetTagsFromFile()
             {
                 if (File.Exists(TextFilePath))
                 {

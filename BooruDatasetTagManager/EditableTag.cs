@@ -212,6 +212,82 @@ namespace BooruDatasetTagManager
             return tag;
         }
 
+        public override string ToString()
+        {
+            string resTag = Tag;
+            if (!resTag.Contains("\\(") && resTag.Contains('('))
+                resTag = resTag.Replace("(", "\\(");
+            if (!resTag.Contains("\\)") && resTag.Contains(')'))
+                resTag = resTag.Replace(")", "\\)");
+            if (Weight == 1f)
+                return resTag;
+            else if (Weight == 0f)
+                return "";
+            else if (Weight > 1f)
+            {
+                int brCount = CalcBracketsCount(Weight, true);
+                if (brCount != 0)
+                {
+                    return RepeatString("(", (int)brCount) + resTag + RepeatString(")", (int)brCount);
+                }
+                else
+                {
+                    return $"({resTag}:{Weight})";
+                }
+            }
+            else
+            {
+                int brCount = CalcBracketsCount(Weight, false);
+                if (brCount != 0)
+                {
+                    return RepeatString("[", (int)brCount) + resTag + RepeatString("]", (int)brCount);
+                }
+                else
+                {
+                    return $"({resTag}:{Weight})";
+                }
+            }
+        }
+
+        private int CalcBracketsCount(float weight, bool positive)
+        {
+            if (weight == 1 || weight == 0)
+                return 0;
+            int count = 0;
+            float mult = positive ? PromptParser.round_bracket_multiplier : PromptParser.square_bracket_multiplier;
+            
+            if (positive)
+            {
+                while (weight > 1)
+                {
+                    weight /= mult;
+                    count++;
+                }
+            }
+            else
+            {
+                while (weight < 1)
+                {
+                    weight /= mult;
+                    count++;
+                }
+            }
+            if (weight == 1)
+                return count;
+            else
+                return 0;
+        }
+
+        private string RepeatString(string text, int count)
+        {
+            string result = string.Empty;
+            for (int i = 0; i < count; i++)
+            {
+                result += text;
+            }
+            return result;
+        }
+
 
     }
 }

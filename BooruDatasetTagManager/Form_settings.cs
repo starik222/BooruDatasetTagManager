@@ -32,8 +32,6 @@ namespace BooruDatasetTagManager
             comboAutocompMode.SelectedItem = Program.Settings.AutocompleteMode.ToString();
             comboAutocompSort.Items.AddRange(Enum.GetNames(typeof(AutocompleteSort)));
             comboAutocompSort.SelectedItem = Program.Settings.AutocompleteSort.ToString();
-            CheckFixLoad.Checked = Program.Settings.FixTagsOnLoad;
-            CheckFixSave.Checked = Program.Settings.FixTagsOnSave;
             textBox1.Text = Program.Settings.SeparatorOnLoad;
             textBox2.Text = Program.Settings.SeparatorOnSave;
             numericUpDown1.Value = Program.Settings.PreviewSize;
@@ -71,8 +69,6 @@ namespace BooruDatasetTagManager
                     Program.Settings.AutocompleteSort = (AutocompleteSort)Enum.Parse(typeof(AutocompleteSort_ZH_CN), comboAutocompSort.SelectedItem.ToString(), true);
                     break;
             }
-            Program.Settings.FixTagsOnLoad = CheckFixLoad.Checked;
-            Program.Settings.FixTagsOnSave = CheckFixSave.Checked;
             Program.Settings.SeparatorOnLoad = textBox1.Text;
             Program.Settings.SeparatorOnSave = textBox2.Text;
             Program.Settings.AskSaveChanges = CheckAskChange.Checked;
@@ -133,8 +129,6 @@ namespace BooruDatasetTagManager
             LabelTagFont.Text = I18n.GetText("SettingUITagFont");
             LabelTagHeight.Text = I18n.GetText("SettingUIRowHeight");
             CheckAskChange.Text = I18n.GetText("SettingPromptToSave");
-            CheckFixSave.Text = I18n.GetText("SettingFixTagLoad");
-            CheckFixLoad.Text = I18n.GetText("SettingFixTagSave");
             AutoSortCheckBox.Text = I18n.GetText("SettingAutoSortCheck");
             BtnSave.Text = I18n.GetText("SettingBtnSave");
             BtnCancel.Text = I18n.GetText("SettingBtnCancel");

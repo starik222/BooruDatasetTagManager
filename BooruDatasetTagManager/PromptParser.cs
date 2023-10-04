@@ -13,14 +13,15 @@ namespace BooruDatasetTagManager
         private static Regex re_attention = new Regex(@"\\\(|\\\)|\\\[|\\]|\\\\|\\|\(|\[|:\s*([+-]?[.\d]+)\s*\)|\)|]|[^\\()\[\]:]+|:", RegexOptions.Compiled | RegexOptions.Multiline);
         private static Regex re_break = new Regex(@"\s*\bBREAK\b\s*", RegexOptions.Compiled | RegexOptions.Multiline);
 
+        public static float round_bracket_multiplier = 1.1f;
+        public static float square_bracket_multiplier = 1f / 1.1f;
+
         public static List<PromptItem> ParsePrompt(string promptString, string splitSeparator = ",")
         {
             List<PromptItem> res = new List<PromptItem>();
             List<int> round_brackets = new List<int>();
             List<int> square_brackets = new List<int>();
             List<PromptItem> result = new List<PromptItem>();
-            float round_bracket_multiplier = 1.1f;
-            float square_bracket_multiplier = 1f / 1.1f;
 
             void multiply_range(int startPosition, float multiplier)
             {

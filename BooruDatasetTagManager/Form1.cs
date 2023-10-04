@@ -103,7 +103,7 @@ namespace BooruDatasetTagManager
                 return;
             isLoading = true;
             Program.DataManager = new DatasetManager();
-            if (!Program.DataManager.LoadFromFolder(openFolderDialog.Folder, Program.Settings.FixTagsOnLoad))
+            if (!Program.DataManager.LoadFromFolder(openFolderDialog.Folder))
             {
                 SetStatus(I18n.GetText("TipFolderWrong"));
                 return;
@@ -704,7 +704,7 @@ namespace BooruDatasetTagManager
                 MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
                 return;
             }
-            Program.DataManager.SaveAll(Program.Settings.FixTagsOnSave);
+            Program.DataManager.SaveAll();
             Program.DataManager.UpdateDatasetHash();
             SetStatus(I18n.GetText("StatusSaved"));
         }
@@ -1028,7 +1028,7 @@ namespace BooruDatasetTagManager
             {
                 Form_Edit fPrint = new Form_Edit();
                 EditableTagList tagsDS = (EditableTagList)gridViewTags.DataSource;
-                fPrint.textBox1.Text = tagsDS.ToString(Program.Settings.FixTagsOnSave);
+                fPrint.textBox1.Text = tagsDS.ToString();
                 fPrint.Show();
             }
         }
@@ -1089,7 +1089,7 @@ namespace BooruDatasetTagManager
                 DialogResult result = MessageBox.Show("The dataset has been changed,\ndo you want to save the changes?", "Saving changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    Program.DataManager.SaveAll(Program.Settings.FixTagsOnSave);
+                    Program.DataManager.SaveAll();
                 }
                 else if (result == DialogResult.Cancel)
                     e.Cancel = true;

@@ -43,8 +43,6 @@ namespace BooruDatasetTagManager
             LabelSeparatorSave = new System.Windows.Forms.Label();
             textBox1 = new System.Windows.Forms.TextBox();
             LabelSeparatorLoad = new System.Windows.Forms.Label();
-            CheckFixSave = new System.Windows.Forms.CheckBox();
-            CheckFixLoad = new System.Windows.Forms.CheckBox();
             comboAutocompSort = new System.Windows.Forms.ComboBox();
             LabelAutocompSort = new System.Windows.Forms.Label();
             comboAutocompMode = new System.Windows.Forms.ComboBox();
@@ -163,8 +161,6 @@ namespace BooruDatasetTagManager
             tabPage1.Controls.Add(LabelSeparatorSave);
             tabPage1.Controls.Add(textBox1);
             tabPage1.Controls.Add(LabelSeparatorLoad);
-            tabPage1.Controls.Add(CheckFixSave);
-            tabPage1.Controls.Add(CheckFixLoad);
             tabPage1.Controls.Add(comboAutocompSort);
             tabPage1.Controls.Add(LabelAutocompSort);
             tabPage1.Controls.Add(comboAutocompMode);
@@ -234,26 +230,6 @@ namespace BooruDatasetTagManager
             LabelSeparatorLoad.Size = new System.Drawing.Size(100, 15);
             LabelSeparatorLoad.TabIndex = 7;
             LabelSeparatorLoad.Text = "Separator on load";
-            // 
-            // CheckFixSave
-            // 
-            CheckFixSave.AutoSize = true;
-            CheckFixSave.Location = new System.Drawing.Point(7, 228);
-            CheckFixSave.Name = "CheckFixSave";
-            CheckFixSave.Size = new System.Drawing.Size(216, 19);
-            CheckFixSave.TabIndex = 6;
-            CheckFixSave.Text = "Fix tags on saving ('('->'\\(', ')'->'\\)' )";
-            CheckFixSave.UseVisualStyleBackColor = true;
-            // 
-            // CheckFixLoad
-            // 
-            CheckFixLoad.AutoSize = true;
-            CheckFixLoad.Location = new System.Drawing.Point(7, 198);
-            CheckFixLoad.Name = "CheckFixLoad";
-            CheckFixLoad.Size = new System.Drawing.Size(217, 19);
-            CheckFixLoad.TabIndex = 6;
-            CheckFixLoad.Text = "Fix tags on loading (replace '_' -> ' ')";
-            CheckFixLoad.UseVisualStyleBackColor = true;
             // 
             // comboAutocompSort
             // 
@@ -529,7 +505,6 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.Label LabelAutocompMode;
         private System.Windows.Forms.ComboBox comboAutocompSort;
         private System.Windows.Forms.Label LabelAutocompSort;
-        private System.Windows.Forms.CheckBox CheckFixLoad;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label LabelSeparatorSave;
         private System.Windows.Forms.TextBox textBox1;
@@ -538,7 +513,6 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.Label LabelAutocompAfter;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
         private System.Windows.Forms.CheckBox CheckAskChange;
-        private System.Windows.Forms.CheckBox CheckFixSave;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Label LabelTagFont;
         private System.Windows.Forms.Button BtnGridviewFontChange;

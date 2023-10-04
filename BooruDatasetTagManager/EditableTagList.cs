@@ -67,50 +67,16 @@ namespace BooruDatasetTagManager
             _tags = new List<string>();
         }
 
-
-        //public void InitFillTags(IEnumerable<string> tags)
-        //{
-
-        //    foreach (string tag in tags)
-        //    {
-        //        if (string.IsNullOrWhiteSpace(tag))
-        //            continue;
-        //        int index = GetNextId();
-
-        //        Add(new EditableTag(index, tag.ToLower().Trim(), index), false);
-        //    }
-        //}
-
-        //public void InitFillTags(IEnumerable<PromptParser.PromptItem> tags)
-        //{
-
-        //    foreach (var tag in tags)
-        //    {
-        //        int index = GetNextId();
-        //        var eTag = new EditableTag(index, tag.Text, index);
-        //        eTag.Weight = tag.Weight;
-        //        Add(eTag, false);
-        //    }
-        //}
-
         //NEED MODIRY TO SUPPORT WEIDED TAGS!!!
-        public string ToString(bool fixTags)
+        public override string ToString()
         {
             DeduplicateTags();
-            if (!fixTags)
-                return string.Join(Program.Settings.SeparatorOnSave, TextTags);
-            else
+            List<string> tempTagList = new List<string>();
+            for (int i = 0; i < List.Count; i++)
             {
-                List<string> tags = new List<string>(TextTags);
-                for (int i = 0; i < tags.Count; i++)
-                {
-                    if (!tags[i].Contains("\\(") && tags[i].Contains('('))
-                        tags[i] = tags[i].Replace("(", "\\(");
-                    if (!tags[i].Contains("\\)") && tags[i].Contains(')'))
-                        tags[i] = tags[i].Replace(")", "\\)");
-                }
-                return string.Join(Program.Settings.SeparatorOnSave, tags);
+                tempTagList.Add(List[i].ToString());
             }
+            return string.Join(Program.Settings.SeparatorOnSave, tempTagList);
         }
 
 
