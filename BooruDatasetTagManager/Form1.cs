@@ -480,19 +480,11 @@ namespace BooruDatasetTagManager
             if (gridViewTags.SelectedCells.Count == 0 || gridViewTags.SelectedCells[0].RowIndex == 0)
                 return;
             int curIndex = gridViewTags.SelectedCells[0].RowIndex;
-            string upperValue = (string)gridViewTags["ImageTags", curIndex - 1].Value;
-            if (isTranslate)
-            {
-                string upperValueTrans = (string)gridViewTags["Translation", curIndex - 1].Value;
-                gridViewTags["Translation", curIndex - 1].Value = gridViewTags[1, curIndex].Value;
-                gridViewTags["Translation", curIndex].Value = upperValueTrans;
-            }
+            int destIndex = ((EditableTagList)gridViewTags.DataSource).Move(curIndex, curIndex - 1);
+            gridViewTags.ClearSelection();
+            gridViewTags["ImageTags", destIndex].Selected = true;
             if (showCount)
                 UpdateTagCount();
-            gridViewTags["ImageTags", curIndex - 1].Value = gridViewTags["ImageTags", curIndex].Value;
-            gridViewTags["ImageTags", curIndex].Value = upperValue;
-            gridViewTags.ClearSelection();
-            gridViewTags["ImageTags", curIndex - 1].Selected = true;
         }
 
         private void toolStripButton5_Click(object sender, EventArgs e)
@@ -500,21 +492,10 @@ namespace BooruDatasetTagManager
             if (gridViewTags.SelectedCells.Count == 0 || gridViewTags.SelectedCells[0].RowIndex == gridViewTags.RowCount - 1)
                 return;
             int curIndex = gridViewTags.SelectedCells[0].RowIndex;
-            string lowerValue = (string)gridViewTags["ImageTags", curIndex + 1].Value;
-
-            if (isTranslate)
-            {
-                string lowerValueTrans = (string)gridViewTags["Translation", curIndex + 1].Value;
-                gridViewTags["Translation", curIndex + 1].Value = gridViewTags[1, curIndex].Value;
-                gridViewTags["Translation", curIndex].Value = lowerValueTrans;
-            }
+            int destIndex = ((EditableTagList)gridViewTags.DataSource).Move(curIndex, curIndex + 1);
+            gridViewTags["ImageTags", destIndex].Selected = true;
             if (showCount)
                 UpdateTagCount();
-
-            gridViewTags["ImageTags", curIndex + 1].Value = gridViewTags[0, curIndex].Value;
-            gridViewTags["ImageTags", curIndex].Value = lowerValue;
-            gridViewTags.ClearSelection();
-            gridViewTags["ImageTags", curIndex + 1].Selected = true;
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -765,11 +746,9 @@ namespace BooruDatasetTagManager
         {
             if (gridViewDS.SelectedRows.Count == 1)
             {
-                gridViewTags.Rows.Clear();
-                for (int i = 0; i < tagsBuffer.Count; i++)
-                {
-                    gridViewTags.Rows.Add(tagsBuffer[i]);
-                }
+                var eTagList = (EditableTagList)gridViewTags.DataSource;
+                eTagList.Clear();
+                eTagList.AddRange(tagsBuffer, true);
                 if (isTranslate)
                     await FillTranslation(gridViewTags);
                 if (showCount)
