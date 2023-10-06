@@ -417,7 +417,9 @@ namespace BooruDatasetTagManager
             if (indexes.Count > 0)
             {
                 for (int i = indexes.Count - 1; i >= 0; i--)
-                    RemoveAt(i);
+                {
+                    RemoveAt(indexes[i]);
+                }
             }
             isStoreHistory = true;
         }
