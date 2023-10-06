@@ -1041,18 +1041,19 @@ namespace BooruDatasetTagManager
                 MessageBox.Show("Select one image!");
                 return;
             }
-            List<string> tags = new List<string>();
-            for (int i = 0; i < gridViewTags.RowCount; i++)
+            if (GetTagsDataSourceType() != DataSourceType.Single)
             {
-                tags.Add((string)gridViewTags["ImageTags", i].Value);
+                SetStatus(I18n.GetText("TipMultiImagePaste"));
+                return;
             }
+            EditableTagList clonedTagList = (EditableTagList)((EditableTagList)gridViewTags.DataSource).Clone();
             switch (MessageBox.Show("Set tag list to empty images only?\nYes - only empty, No - to all images, Cancel - do nothing.", "Tag setting option", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
             {
                 case DialogResult.Yes:
-                    Program.DataManager.SetTagListToAll(tags, true);
+                    Program.DataManager.SetTagListToAll(clonedTagList, true);
                     break;
                 case DialogResult.No:
-                    Program.DataManager.SetTagListToAll(tags, false);
+                    Program.DataManager.SetTagListToAll(clonedTagList, false);
                     break;
                 case DialogResult.Cancel:
                     return;

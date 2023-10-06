@@ -14,7 +14,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BooruDatasetTagManager
 {
-    public class EditableTagList : CollectionBase, IBindingList
+    public class EditableTagList : CollectionBase, IBindingList, ICloneable
     {
 
         private ListChangedEventArgs resetEvent = new ListChangedEventArgs(ListChangedType.Reset, -1);
@@ -701,6 +701,16 @@ namespace BooruDatasetTagManager
         void IBindingList.RemoveSort()
         {
             throw new NotSupportedException();
+        }
+
+        public object Clone()
+        {
+            EditableTagList eTagList = new EditableTagList();
+            foreach (EditableTag item in List)
+            {
+                eTagList.Add((EditableTag)item.Clone(), false);
+            }
+            return eTagList;
         }
     }
 }
