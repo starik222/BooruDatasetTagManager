@@ -1382,16 +1382,7 @@ namespace BooruDatasetTagManager
             }
         }
 
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Form_settings settings = new Form_settings();
-            if (settings.ShowDialog() == DialogResult.OK)
-            {
-                SetStatus("Settings have been saved");
-            }
-            settings.Close();
-            switchLanguage();
-        }
+
 
         private void gridViewTags_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -1708,7 +1699,6 @@ namespace BooruDatasetTagManager
 
         private void settingsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            settingsToolStripMenuItem_Click(sender, e);
         }
 
         public void switchLanguage()
@@ -1862,6 +1852,17 @@ namespace BooruDatasetTagManager
                 if (gridViewTags[e.ColumnIndex, e.RowIndex].Value == DBNull.Value)
                     gridViewTags[e.ColumnIndex, e.RowIndex].Value = string.Empty;
             }
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form_settings settings = new Form_settings();
+            if (settings.ShowDialog() == DialogResult.OK)
+            {
+                SetStatus("Settings have been saved");
+            }
+            settings.Close();
+            switchLanguage();
         }
 
         //private void CreateDataGridViewTags()

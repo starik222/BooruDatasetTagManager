@@ -67,9 +67,11 @@ namespace BooruDatasetTagManager
             MenuItemTranslateTags = new System.Windows.Forms.ToolStripMenuItem();
             MenuShowTagCount = new System.Windows.Forms.ToolStripMenuItem();
             MenuSetting = new System.Windows.Forms.ToolStripMenuItem();
+            settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             MenuLanguage = new System.Windows.Forms.ToolStripMenuItem();
             LanguageENBtn = new System.Windows.Forms.ToolStripMenuItem();
             LanguageCNBtn = new System.Windows.Forms.ToolStripMenuItem();
+            toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             LabelDataSet = new System.Windows.Forms.Label();
             LabelImageTags = new System.Windows.Forms.Label();
             gridViewAllTags = new System.Windows.Forms.DataGridView();
@@ -379,7 +381,7 @@ namespace BooruDatasetTagManager
             // 
             menuStrip1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             menuStrip1.ImageScalingSize = new System.Drawing.Size(28, 28);
-            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem, viewToolStripMenuItem, MenuSetting, MenuLanguage });
+            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem, viewToolStripMenuItem, MenuSetting, toolsToolStripMenuItem });
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
@@ -438,31 +440,44 @@ namespace BooruDatasetTagManager
             // 
             // MenuSetting
             // 
+            MenuSetting.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { settingsToolStripMenuItem, MenuLanguage });
             MenuSetting.Name = "MenuSetting";
-            MenuSetting.Size = new System.Drawing.Size(78, 25);
-            MenuSetting.Text = "Settings";
-            MenuSetting.Click += settingsToolStripMenuItem1_Click;
+            MenuSetting.Size = new System.Drawing.Size(77, 25);
+            MenuSetting.Text = "Options";
+            // 
+            // settingsToolStripMenuItem
+            // 
+            settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            settingsToolStripMenuItem.Size = new System.Drawing.Size(188, 26);
+            settingsToolStripMenuItem.Text = "Settings...";
+            settingsToolStripMenuItem.Click += settingsToolStripMenuItem_Click;
             // 
             // MenuLanguage
             // 
             MenuLanguage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { LanguageENBtn, LanguageCNBtn });
             MenuLanguage.Name = "MenuLanguage";
-            MenuLanguage.Size = new System.Drawing.Size(130, 25);
+            MenuLanguage.Size = new System.Drawing.Size(188, 26);
             MenuLanguage.Text = "Language/语言";
             // 
             // LanguageENBtn
             // 
             LanguageENBtn.Name = "LanguageENBtn";
-            LanguageENBtn.Size = new System.Drawing.Size(148, 26);
+            LanguageENBtn.Size = new System.Drawing.Size(180, 26);
             LanguageENBtn.Text = "English";
             LanguageENBtn.Click += LanguageENBtn_Click;
             // 
             // LanguageCNBtn
             // 
             LanguageCNBtn.Name = "LanguageCNBtn";
-            LanguageCNBtn.Size = new System.Drawing.Size(148, 26);
+            LanguageCNBtn.Size = new System.Drawing.Size(180, 26);
             LanguageCNBtn.Text = "简体中文";
             LanguageCNBtn.Click += LanguageCNBtn_Click;
+            // 
+            // toolsToolStripMenuItem
+            // 
+            toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            toolsToolStripMenuItem.Size = new System.Drawing.Size(57, 25);
+            toolsToolStripMenuItem.Text = "Tools";
             // 
             // LabelDataSet
             // 
@@ -987,9 +1002,6 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.Label promptFixTipLabel;
         private System.Windows.Forms.Button promptSortBtn;
         private System.Windows.Forms.ToolStripMenuItem MenuSetting;
-        private System.Windows.Forms.ToolStripMenuItem MenuLanguage;
-        private System.Windows.Forms.ToolStripMenuItem LanguageENBtn;
-        private System.Windows.Forms.ToolStripMenuItem LanguageCNBtn;
         private System.Windows.Forms.ToolStripMenuItem MenuShowTagCount;
         private CustomTextBoxColumn ImageTags;
         private System.Windows.Forms.DataGridViewTextBoxColumn Translation;
@@ -997,6 +1009,11 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.DataGridViewTextBoxColumn Image;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.ToolStripButton BtnTagRedo;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem MenuLanguage;
+        private System.Windows.Forms.ToolStripMenuItem LanguageENBtn;
+        private System.Windows.Forms.ToolStripMenuItem LanguageCNBtn;
     }
 }
 
