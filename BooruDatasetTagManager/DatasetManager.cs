@@ -363,7 +363,7 @@ namespace BooruDatasetTagManager
                 ImageModifyTime = File.GetLastWriteTime(imagePath);
                 TextFilePath = Path.Combine(Path.GetDirectoryName(imagePath), Name + ".txt");
                 GetTagsFromFile();
-                Img = MakeThumb(imagePath, imageSize);
+                Img = Extensions.MakeThumb(imagePath, imageSize);
             }
 
             public void DeduplicateTags()
@@ -375,25 +375,7 @@ namespace BooruDatasetTagManager
             }
 
 
-            Image MakeThumb(string imagePath, int imgSize)
-            {
 
-                using (var img = Extensions.GetImageFromFile(imagePath))
-                {
-                    var aspect = img.Width / (float)img.Height;
-
-                    int newHeight = img.Height * imgSize / img.Width;
-                    int newWidth = imgSize;
-
-                    if (newHeight > imgSize)
-                    {
-                        newWidth = img.Width * imgSize / img.Height;
-                        newHeight = imgSize;
-                    }
-
-                    return img.GetThumbnailImage(newWidth, newHeight, () => false, IntPtr.Zero);
-                }
-            }
             public void GetTagsFromFile()
             {
                 if (File.Exists(TextFilePath))

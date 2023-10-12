@@ -124,6 +124,38 @@ namespace BooruDatasetTagManager
             }
         }
 
+        public static Bitmap Transparent2Color(Bitmap bmp1, Color target)
+        {
+            Bitmap bmp2 = new Bitmap(bmp1.Width, bmp1.Height);
+            Rectangle rect = new Rectangle(Point.Empty, bmp1.Size);
+            using (Graphics G = Graphics.FromImage(bmp2))
+            {
+                G.Clear(target);
+                G.DrawImageUnscaledAndClipped(bmp1, rect);
+            }
+            return bmp2;
+        }
+
+        public static Image MakeThumb(string imagePath, int imgSize)
+        {
+
+            using (var img = Extensions.GetImageFromFile(imagePath))
+            {
+                var aspect = img.Width / (float)img.Height;
+
+                int newHeight = img.Height * imgSize / img.Width;
+                int newWidth = imgSize;
+
+                if (newHeight > imgSize)
+                {
+                    newWidth = img.Width * imgSize / img.Height;
+                    newHeight = imgSize;
+                }
+
+                return img.GetThumbnailImage(newWidth, newHeight, () => false, IntPtr.Zero);
+            }
+        }
+
 
         public static T Pop<T>(this List<T> list)
         {

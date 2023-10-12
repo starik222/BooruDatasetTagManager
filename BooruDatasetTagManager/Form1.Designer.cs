@@ -72,6 +72,7 @@ namespace BooruDatasetTagManager
             LanguageENBtn = new System.Windows.Forms.ToolStripMenuItem();
             LanguageCNBtn = new System.Windows.Forms.ToolStripMenuItem();
             toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            replaceTransparentBackgroundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             LabelDataSet = new System.Windows.Forms.Label();
             LabelImageTags = new System.Windows.Forms.Label();
             gridViewAllTags = new System.Windows.Forms.DataGridView();
@@ -462,22 +463,30 @@ namespace BooruDatasetTagManager
             // LanguageENBtn
             // 
             LanguageENBtn.Name = "LanguageENBtn";
-            LanguageENBtn.Size = new System.Drawing.Size(180, 26);
+            LanguageENBtn.Size = new System.Drawing.Size(148, 26);
             LanguageENBtn.Text = "English";
             LanguageENBtn.Click += LanguageENBtn_Click;
             // 
             // LanguageCNBtn
             // 
             LanguageCNBtn.Name = "LanguageCNBtn";
-            LanguageCNBtn.Size = new System.Drawing.Size(180, 26);
+            LanguageCNBtn.Size = new System.Drawing.Size(148, 26);
             LanguageCNBtn.Text = "简体中文";
             LanguageCNBtn.Click += LanguageCNBtn_Click;
             // 
             // toolsToolStripMenuItem
             // 
+            toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { replaceTransparentBackgroundToolStripMenuItem });
             toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             toolsToolStripMenuItem.Size = new System.Drawing.Size(57, 25);
             toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // replaceTransparentBackgroundToolStripMenuItem
+            // 
+            replaceTransparentBackgroundToolStripMenuItem.Name = "replaceTransparentBackgroundToolStripMenuItem";
+            replaceTransparentBackgroundToolStripMenuItem.Size = new System.Drawing.Size(437, 26);
+            replaceTransparentBackgroundToolStripMenuItem.Text = "Replace transparent background of selected images";
+            replaceTransparentBackgroundToolStripMenuItem.Click += replaceTransparentBackgroundToolStripMenuItem_Click;
             // 
             // LabelDataSet
             // 
@@ -1014,6 +1023,7 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripMenuItem MenuLanguage;
         private System.Windows.Forms.ToolStripMenuItem LanguageENBtn;
         private System.Windows.Forms.ToolStripMenuItem LanguageCNBtn;
+        private System.Windows.Forms.ToolStripMenuItem replaceTransparentBackgroundToolStripMenuItem;
     }
 }
 

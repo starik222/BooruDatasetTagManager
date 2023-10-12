@@ -1865,6 +1865,44 @@ namespace BooruDatasetTagManager
             switchLanguage();
         }
 
+        private async void replaceTransparentBackgroundToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (gridViewDS.SelectedRows.Count == 0)
+                return;
+            Form_backgroundReplace backgroundReplace = new Form_backgroundReplace();
+            if (backgroundReplace.ShowDialog() != DialogResult.OK)
+                return;
+            LockEdit(true);
+            SetStatus("In progress, please wait...");
+            bool randomColor = backgroundReplace.checkBox1.Checked;
+            Color replColor = backgroundReplace.pictureBox1.BackColor;
+            List<DataItem> selectedTagsList = new List<DataItem>();
+            Random r = new Random();
+            for (int i = 0; i < gridViewDS.SelectedRows.Count; i++)
+            {
+                selectedTagsList.Add(Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[i].Cells["ImageFilePath"].Value]);
+            }
+            await Task.Run(() =>
+            {
+                foreach (var item in selectedTagsList)
+                {
+                    Bitmap bmp = (Bitmap)Bitmap.FromFile(item.ImageFilePath);
+                    System.Drawing.Imaging.ImageFormat format = bmp.RawFormat;
+                    if (randomColor)
+                    {
+                        replColor = Color.FromArgb(r.Next(255), r.Next(255), r.Next(255));
+                    }
+                    Bitmap bmpRes = Extensions.Transparent2Color(bmp, replColor);
+                    bmp.Dispose();
+                    bmpRes.Save(item.ImageFilePath, format);
+                    bmpRes.Dispose();
+                    item.Img = Extensions.MakeThumb(item.ImageFilePath, Program.Settings.PreviewSize);
+                }
+            });
+            LockEdit(false);
+            SetStatus("Background replacement complete!");
+        }
+
         //private void CreateDataGridViewTags()
         //{
         //    DataGridView gridViewTags = new DataGridView();
