@@ -62,7 +62,6 @@ namespace BooruDatasetTagManager
             fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             saveAllChangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            loadLossFromFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             showPreviewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             MenuItemTranslateTags = new System.Windows.Forms.ToolStripMenuItem();
@@ -390,7 +389,7 @@ namespace BooruDatasetTagManager
             // 
             // fileToolStripMenuItem
             // 
-            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { openFolderToolStripMenuItem, saveAllChangesToolStripMenuItem, loadLossFromFileToolStripMenuItem });
+            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { openFolderToolStripMenuItem, saveAllChangesToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new System.Drawing.Size(46, 25);
             fileToolStripMenuItem.Text = "File";
@@ -398,23 +397,16 @@ namespace BooruDatasetTagManager
             // openFolderToolStripMenuItem
             // 
             openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
-            openFolderToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
+            openFolderToolStripMenuItem.Size = new System.Drawing.Size(194, 26);
             openFolderToolStripMenuItem.Text = "Load folder...";
             openFolderToolStripMenuItem.Click += openFolderToolStripMenuItem_Click;
             // 
             // saveAllChangesToolStripMenuItem
             // 
             saveAllChangesToolStripMenuItem.Name = "saveAllChangesToolStripMenuItem";
-            saveAllChangesToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
+            saveAllChangesToolStripMenuItem.Size = new System.Drawing.Size(194, 26);
             saveAllChangesToolStripMenuItem.Text = "Save all changes";
             saveAllChangesToolStripMenuItem.Click += saveAllChangesToolStripMenuItem_Click;
-            // 
-            // loadLossFromFileToolStripMenuItem
-            // 
-            loadLossFromFileToolStripMenuItem.Name = "loadLossFromFileToolStripMenuItem";
-            loadLossFromFileToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
-            loadLossFromFileToolStripMenuItem.Text = "Load loss from file";
-            loadLossFromFileToolStripMenuItem.Click += loadLossFromFileToolStripMenuItem_Click;
             // 
             // viewToolStripMenuItem
             // 
@@ -967,7 +959,6 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripButton BtnImageFilter;
         private System.Windows.Forms.ToolStripButton BtnImageExitFilter;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.ToolStripMenuItem loadLossFromFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton BtnTagPasteFromClipBoard;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton BtnTagShow;

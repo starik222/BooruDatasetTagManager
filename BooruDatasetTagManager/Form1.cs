@@ -117,7 +117,7 @@ namespace BooruDatasetTagManager
             gridViewDS.AutoResizeColumns();
         }
 
-        //NEED FIX GridViewTags tag column position (it is not 0)
+        //NEED FIX TRANSLATION NOT SAVED IN DATASOURCE TRANSLATION FIELD
         private async Task FillTranslation(DataGridView grid)
         {
             if (grid.Columns.Contains("Translation") && grid.Columns["Translation"].Visible == false)
@@ -933,11 +933,6 @@ namespace BooruDatasetTagManager
 
         private void loadLossFromFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            if (openFileDialog.ShowDialog() != DialogResult.OK)
-                return;
-            Program.DataManager.LoadLossFromFile(openFileDialog.FileName);
-            gridViewDS.DataSource = Program.DataManager.GetDataSource();
         }
 
         private async void toolStripButton15_Click(object sender, EventArgs e)
@@ -1728,7 +1723,6 @@ namespace BooruDatasetTagManager
             promptFixTipLabel.Text = I18n.GetText("UILabelFixPromptLength");
             openFolderToolStripMenuItem.Text = I18n.GetText("MenuItemLoadFolder");
             saveAllChangesToolStripMenuItem.Text = I18n.GetText("MenuItemSaveChanges");
-            loadLossFromFileToolStripMenuItem.Text = I18n.GetText("MenuItemLoadLoss");
             showPreviewToolStripMenuItem.Text = I18n.GetText("MenuItemShowPreview");
             MenuItemTranslateTags.Text = I18n.GetText("MenuItemTranslateTags");
 

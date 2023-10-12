@@ -44,27 +44,3 @@ Currently, the manual translation filter can only be used in tag autocompletion 
 # Tag list for autocomplete
 
 The application supports loading tags from csv files of the format used in "[Booru tag autocompletion for A1111](https://github.com/DominikDoom/a1111-sd-webui-tagcomplete)". You can also create your own txt files with a list of tags (line by line). But since loading data from these files takes a long time, the program converts them to its own format and loads data from it. Therefore, if you change the list of tags, be prepared to wait quite a long time. All files with tags are located in the "Tags" folder.
-
-# Other
-
-Also, you can load loss statistics after training.
-After pressing the "Interrupt" button, in the console you will see the loss statistics for each image.
-
-![](https://user-images.githubusercontent.com/1236582/198585578-1a958600-cc95-466e-b926-3cfed44b28e4.jpg)
-
-Copy all text to file. File should look like this:
-```bash
-Loss statistics for file C:\NAI\stable-diffusion-webui\train\NishinoOut2\00006-0-00003-0-98028336_p0.png
-loss:0.045±(0.002)
-recent 32 loss:0.055±(0.007)
-Loss statistics for file C:\NAI\stable-diffusion-webui\train\NishinoOut2\00014-0-00007-0-98909113_p0.png
-loss:0.045±(0.002)
-recent 32 loss:0.048±(0.007)
-...
-```
-
-In the program, select "File->Load loss from file", and you will see:
-
-![](https://user-images.githubusercontent.com/1236582/198586476-6094d32f-b31d-48a2-8ad7-f043417cd78c.jpg)
-
-You can automatically translate tags into the language you need. Specify the code of the language you need in the setting.json file. In the program select "View->Translate tags".

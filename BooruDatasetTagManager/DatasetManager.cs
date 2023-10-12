@@ -166,18 +166,6 @@ namespace BooruDatasetTagManager
                         items.Sort((a, b) => FileNamesComparer.StrCmpLogicalW(a.Name, b.Name));
                         break;
                     }
-                case OrderType.Loss:
-                    {
-                        // Sort data items by their Loss property.
-                        items.Sort((a, b) => a.Loss.CompareTo(b.Loss));
-                        break;
-                    }
-                case OrderType.LastLoss:
-                    {
-                        // Sort data items by their LastLoss property.
-                        items.Sort((a, b) => a.LastLoss.CompareTo(b.LastLoss));
-                        break;
-                    }
                 case OrderType.ImageModifyTime:
                     {
                         // Sort data items by their ImageModifyTime property.
@@ -312,50 +300,6 @@ namespace BooruDatasetTagManager
         {
             originalHash = GetHashCode();
         }
-
-        public void LoadLossFromFile(string fPath)
-        {
-            string lossStatPrefix = "Loss statistics for file ";
-            string lossPrefix = "loss";
-            string lossPattern = "loss:([0-9]*[.]?[0-9]+)±";
-            string lastlossPrefix = "recent";
-            string lastLossPattern = "recent \\d+ loss:([0-9]*[.]?[0-9]+)±";
-            try
-            {
-                string[] lines = File.ReadAllLines(fPath);
-                for (int i = 0; i + 2 < lines.Length; i++)
-                {
-                    if (!lines[i].StartsWith(lossStatPrefix))
-                        continue;
-                    string fName = lines[i].Replace(lossStatPrefix, "");
-                    if (!lines[i + 1].StartsWith(lossPrefix))
-                        continue;
-                    var m1 = Regex.Match(lines[i + 1], lossPattern, RegexOptions.IgnoreCase);
-                    if (!m1.Success)
-                        continue;
-                    float loss = (float)Convert.ToDouble(m1.Groups[1].Value.Replace('.', ','));
-
-                    if (!lines[i + 2].StartsWith(lastlossPrefix))
-                        continue;
-                    var m2 = Regex.Match(lines[i + 2], lastLossPattern, RegexOptions.IgnoreCase);
-                    if (!m2.Success)
-                        continue;
-                    float lastLoss = (float)Convert.ToDouble(m2.Groups[1].Value.Replace('.', ','));
-                    if (!DataSet.ContainsKey(fName))
-                        continue;
-                    DataSet[fName].Loss = loss;
-                    DataSet[fName].LastLoss = lastLoss;
-                    i += 2;
-
-                }
-            }
-            catch
-            {
-
-            }
-            IsLossLoaded = true;
-        }
-
         public override int GetHashCode()
         {
             int result = 0;
@@ -377,9 +321,7 @@ namespace BooruDatasetTagManager
 
         public enum OrderType
         {
-            Name, 
-            Loss,
-            LastLoss,
+            Name,
             ImageModifyTime,
             TagsModifyTime
         }
@@ -395,10 +337,6 @@ namespace BooruDatasetTagManager
             public string TextFilePath { get; set; }
             //[Browsable(false)]
             public string ImageFilePath { get; set; }
-
-            public float Loss { get; set; }
-            public float LastLoss { get; set; }
-
             public DateTime ImageModifyTime { get; set; }
             public DateTime TagsModifyTime { get; set; }
             [Browsable(false)]
@@ -415,8 +353,6 @@ namespace BooruDatasetTagManager
             public DataItem()
             {
                 Tags = new EditableTagList();
-                Loss = -1;
-                LastLoss = -1;
             }
 
             public DataItem(string imagePath, int imageSize)
