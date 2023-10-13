@@ -27,29 +27,12 @@ namespace BooruDatasetTagManager
         {
             InitializeComponent();
             tagsBuffer = new List<string>();
-            gridViewTags.CellValueChanged += DataGridView1_CellValueChanged;
-            gridViewTags.RowsAdded += DataGridView1_RowsAdded;
-            gridViewTags.RowsRemoved += DataGridView1_RowsRemoved;
             previewPicBox = new PictureBox();
             previewPicBox.Name = "previewPicBox";
             allTagsFilter = new Form_filter();
             switchLanguage();
         }
 
-        private void DataGridView1_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
-        {
-            SetChangedStatus(true);
-        }
-
-        private void DataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-            SetChangedStatus(true);
-        }
-
-        private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            SetChangedStatus(true);
-        }
         private Form_filter allTagsFilter;
         List<string> tagsBuffer;
 
@@ -86,11 +69,6 @@ namespace BooruDatasetTagManager
             promptFixedLengthComboBox.SelectedIndex = 0;
         }
 
-        private void SetChangedStatus(bool changed)
-        {
-            BtnTagApply.Enabled = changed;
-            BtnTagUndo.Enabled = changed;
-        }
 
         private void openFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -216,7 +194,6 @@ namespace BooruDatasetTagManager
                 await FillTranslation(gridViewTags);
             if (showCount)
                 UpdateTagCount();
-            SetChangedStatus(false);
         }
 
         //private async void LoadSelectedImageToGridOld()
@@ -496,11 +473,6 @@ namespace BooruDatasetTagManager
             gridViewTags["ImageTags", destIndex].Selected = true;
             if (showCount)
                 UpdateTagCount();
-        }
-
-        private void toolStripButton1_Click(object sender, EventArgs e)
-        {
-            //Apply changes... need remove?
         }
 
         private void toolStripButton6_Click(object sender, EventArgs e)
@@ -1720,7 +1692,6 @@ namespace BooruDatasetTagManager
             BtnTagAdd.Text = I18n.GetText("BtnTagAdd");
             BtnTagUndo.Text = I18n.GetText("BtnTagUndo");
             BtnTagRedo.Text = I18n.GetText("BtnTagRedo");
-            BtnTagApply.Text = I18n.GetText("BtnTagApply");
             BtnTagDelete.Text = I18n.GetText("BtnTagDelete");
             BtnTagCopy.Text = I18n.GetText("BtnTagCopy");
             BtnTagPaste.Text = I18n.GetText("BtnTagPaste");

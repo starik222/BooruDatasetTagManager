@@ -43,7 +43,6 @@ namespace BooruDatasetTagManager
             toolStrip2 = new System.Windows.Forms.ToolStrip();
             BtnTagAdd = new System.Windows.Forms.ToolStripButton();
             BtnTagDelete = new System.Windows.Forms.ToolStripButton();
-            BtnTagApply = new System.Windows.Forms.ToolStripButton();
             BtnTagUndo = new System.Windows.Forms.ToolStripButton();
             BtnTagRedo = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -219,7 +218,7 @@ namespace BooruDatasetTagManager
             // 
             toolStrip2.Dock = System.Windows.Forms.DockStyle.Right;
             toolStrip2.ImageScalingSize = new System.Drawing.Size(32, 32);
-            toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { BtnTagAdd, BtnTagDelete, BtnTagApply, BtnTagUndo, BtnTagRedo, toolStripSeparator1, BtnTagCopy, BtnTagPaste, BtnTagSetToAll, toolStripSeparator2, BtnTagPasteFromClipBoard, BtnTagShow, toolStripSeparator4, BtnTagUp, BtnTagDown, toolStripSeparator7, BtnTagFindInAll });
+            toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { BtnTagAdd, BtnTagDelete, BtnTagUndo, BtnTagRedo, toolStripSeparator1, BtnTagCopy, BtnTagPaste, BtnTagSetToAll, toolStripSeparator2, BtnTagPasteFromClipBoard, BtnTagShow, toolStripSeparator4, BtnTagUp, BtnTagDown, toolStripSeparator7, BtnTagFindInAll });
             toolStrip2.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
             toolStrip2.Location = new System.Drawing.Point(369, 30);
             toolStrip2.Name = "toolStrip2";
@@ -247,16 +246,6 @@ namespace BooruDatasetTagManager
             BtnTagDelete.Size = new System.Drawing.Size(33, 36);
             BtnTagDelete.Text = "Delete";
             BtnTagDelete.Click += BtnTagDelete_Click;
-            // 
-            // BtnTagApply
-            // 
-            BtnTagApply.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            BtnTagApply.Image = Properties.Resources.Apply;
-            BtnTagApply.ImageTransparentColor = System.Drawing.Color.Magenta;
-            BtnTagApply.Name = "BtnTagApply";
-            BtnTagApply.Size = new System.Drawing.Size(33, 36);
-            BtnTagApply.Text = "Apply";
-            BtnTagApply.Click += toolStripButton1_Click;
             // 
             // BtnTagUndo
             // 
@@ -959,7 +948,6 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAllChangesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripButton BtnTagApply;
         private System.Windows.Forms.Label LabelDataSet;
         private System.Windows.Forms.Label LabelImageTags;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
