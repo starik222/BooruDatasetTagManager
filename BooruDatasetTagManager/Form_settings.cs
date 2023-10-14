@@ -32,6 +32,8 @@ namespace BooruDatasetTagManager
             comboAutocompMode.SelectedItem = Program.Settings.AutocompleteMode.ToString();
             comboAutocompSort.Items.AddRange(Enum.GetNames(typeof(AutocompleteSort)));
             comboAutocompSort.SelectedItem = Program.Settings.AutocompleteSort.ToString();
+            externalInterrogatorOrTagListingComboBox.Items.AddRange(Enum.GetNames(typeof(TagListingPaneMode)));
+            externalInterrogatorOrTagListingComboBox.SelectedItem = Program.Settings.UseInterrogatorInsteadOfTagListing.ToString();
             CheckFixLoad.Checked = Program.Settings.FixTagsOnLoad;
             CheckFixSave.Checked = Program.Settings.FixTagsOnSave;
             textBox1.Text = Program.Settings.SeparatorOnLoad;
@@ -71,6 +73,9 @@ namespace BooruDatasetTagManager
                     Program.Settings.AutocompleteSort = (AutocompleteSort)Enum.Parse(typeof(AutocompleteSort_ZH_CN), comboAutocompSort.SelectedItem.ToString(), true);
                     break;
             }
+
+            Program.Settings.UseInterrogatorInsteadOfTagListing = (TagListingPaneMode)Enum.Parse(typeof(TagListingPaneMode), externalInterrogatorOrTagListingComboBox.SelectedItem.ToString(), true);
+
             Program.Settings.FixTagsOnLoad = CheckFixLoad.Checked;
             Program.Settings.FixTagsOnSave = CheckFixSave.Checked;
             Program.Settings.SeparatorOnLoad = textBox1.Text;
@@ -125,6 +130,7 @@ namespace BooruDatasetTagManager
             LabelAutocompMode.Text = I18n.GetText("SettingAutocompMode");
             LabelAutocompFont.Text = I18n.GetText("SettingAutocompFont");
             LabelAutocompSort.Text = I18n.GetText("SettingAutocompSort");
+            LabelInterrogatorMode.Text = I18n.GetText("SettingInterrogatorMode");
             LabelAutocompAfter.Text = I18n.GetText("SettingAutocompPrefix");
             LabelChars.Text = I18n.GetText("SettingAutocompChars");
             LabelLanguage.Text = I18n.GetText("SettingUILanguage");
@@ -143,16 +149,21 @@ namespace BooruDatasetTagManager
 
             comboAutocompMode.Items.Clear();
             comboAutocompSort.Items.Clear();
+            externalInterrogatorOrTagListingComboBox.Items.Clear();
             var defaultAutocompMode = Enum.GetNames(typeof(AutocompleteMode));
             var defaultAutocompSort = Enum.GetNames(typeof(AutocompleteSort));
+            var defaultInterrogatorMode = Enum.GetNames(typeof(TagListingPaneMode));
             switch (Program.Settings.Language)
             {
                 default:
                 case "en-US":
                     comboAutocompMode.Items.AddRange(defaultAutocompMode);
                     comboAutocompSort.Items.AddRange(defaultAutocompSort);
+                    externalInterrogatorOrTagListingComboBox.Items.AddRange(defaultInterrogatorMode);
                     comboAutocompMode.SelectedItem = Enum.GetName(typeof(AutocompleteMode), Enum.ToObject(typeof(AutocompleteMode), Program.Settings.AutocompleteMode));
                     comboAutocompSort.SelectedItem = Enum.GetName(typeof(AutocompleteSort), Enum.ToObject(typeof(AutocompleteSort), Program.Settings.AutocompleteSort));
+                    externalInterrogatorOrTagListingComboBox.SelectedItem = Enum.GetName(typeof(TagListingPaneMode), Enum.ToObject(typeof(TagListingPaneMode), Program.Settings.UseInterrogatorInsteadOfTagListing));
+                     
                     break;
                 case "zh-CN":
                     defaultAutocompMode = Enum.GetNames(typeof(AutocompleteMode_ZH_CN));
@@ -161,8 +172,10 @@ namespace BooruDatasetTagManager
                     comboAutocompSort.Items.AddRange(defaultAutocompSort);
                     comboAutocompMode.SelectedItem = Enum.GetName(typeof(AutocompleteMode_ZH_CN), Enum.ToObject(typeof(AutocompleteMode_ZH_CN), Program.Settings.AutocompleteMode));
                     comboAutocompSort.SelectedItem = Enum.GetName(typeof(AutocompleteSort_ZH_CN), Enum.ToObject(typeof(AutocompleteSort_ZH_CN), Program.Settings.AutocompleteSort));
+                    externalInterrogatorOrTagListingComboBox.SelectedItem = Enum.GetName(typeof(TagListingPaneMode), Enum.ToObject(typeof(TagListingPaneMode), Program.Settings.UseInterrogatorInsteadOfTagListing));
                     break;
             }
         }
+
     }
 }

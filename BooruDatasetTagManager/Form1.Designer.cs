@@ -69,7 +69,6 @@ namespace BooruDatasetTagManager
             LabelDataSet = new System.Windows.Forms.Label();
             LabelImageTags = new System.Windows.Forms.Label();
             gridViewAllTags = new System.Windows.Forms.DataGridView();
-            LabelAllTags = new System.Windows.Forms.Label();
             toolStrip1 = new System.Windows.Forms.ToolStrip();
             BtnTagSwitch = new System.Windows.Forms.ToolStripButton();
             BtnTagAddToAll = new System.Windows.Forms.ToolStripButton();
@@ -96,8 +95,11 @@ namespace BooruDatasetTagManager
             promptSortBtn = new System.Windows.Forms.Button();
             promptFixTipLabel = new System.Windows.Forms.Label();
             promptFixedLengthComboBox = new System.Windows.Forms.ComboBox();
-            button1 = new System.Windows.Forms.Button();
-            textBox1 = new System.Windows.Forms.TextBox();
+            selectInterrogatorComboBox = new System.Windows.Forms.ComboBox();
+            interrogate_image_button = new System.Windows.Forms.Button();
+            clear_tag_search_button = new System.Windows.Forms.Button();
+            tag_search_textbox = new System.Windows.Forms.TextBox();
+            LabelAllTags = new System.Windows.Forms.Label();
             customTextBoxColumn1 = new CustomTextBoxColumn();
             contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(components);
             toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -147,7 +149,7 @@ namespace BooruDatasetTagManager
             gridViewTags.RowHeadersVisible = false;
             gridViewTags.RowHeadersWidth = 72;
             gridViewTags.RowTemplate.Height = 29;
-            gridViewTags.Size = new System.Drawing.Size(369, 647);
+            gridViewTags.Size = new System.Drawing.Size(398, 790);
             gridViewTags.TabIndex = 2;
             gridViewTags.CellEndEdit += gridViewTags_CellEndEdit;
             gridViewTags.CellMouseEnter += dataGridViewTags_CellMouseEnter;
@@ -176,10 +178,10 @@ namespace BooruDatasetTagManager
             toolStrip2.ImageScalingSize = new System.Drawing.Size(32, 32);
             toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { BtnTagAdd, BtnTagDelete, BtnTagApply, BtnTagReset, toolStripSeparator1, BtnTagCopy, BtnTagPaste, BtnTagSetToAll, toolStripSeparator2, BtnTagPasteFromClipBoard, BtnTagShow, toolStripSeparator4, BtnTagUp, BtnTagDown, toolStripSeparator7, BtnTagFindInAll });
             toolStrip2.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
-            toolStrip2.Location = new System.Drawing.Point(369, 30);
+            toolStrip2.Location = new System.Drawing.Point(398, 30);
             toolStrip2.Name = "toolStrip2";
             toolStrip2.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            toolStrip2.Size = new System.Drawing.Size(38, 647);
+            toolStrip2.Size = new System.Drawing.Size(38, 790);
             toolStrip2.TabIndex = 3;
             toolStrip2.Text = "toolStrip2";
             // 
@@ -331,7 +333,7 @@ namespace BooruDatasetTagManager
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            menuStrip1.Size = new System.Drawing.Size(1224, 29);
+            menuStrip1.Size = new System.Drawing.Size(1311, 29);
             menuStrip1.TabIndex = 4;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -402,20 +404,20 @@ namespace BooruDatasetTagManager
             // 
             MenuLanguage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { LanguageENBtn, LanguageCNBtn });
             MenuLanguage.Name = "MenuLanguage";
-            MenuLanguage.Size = new System.Drawing.Size(130, 25);
+            MenuLanguage.Size = new System.Drawing.Size(129, 25);
             MenuLanguage.Text = "Language/语言";
             // 
             // LanguageENBtn
             // 
             LanguageENBtn.Name = "LanguageENBtn";
-            LanguageENBtn.Size = new System.Drawing.Size(148, 26);
+            LanguageENBtn.Size = new System.Drawing.Size(145, 26);
             LanguageENBtn.Text = "English";
             LanguageENBtn.Click += LanguageENBtn_Click;
             // 
             // LanguageCNBtn
             // 
             LanguageCNBtn.Name = "LanguageCNBtn";
-            LanguageCNBtn.Size = new System.Drawing.Size(148, 26);
+            LanguageCNBtn.Size = new System.Drawing.Size(145, 26);
             LanguageCNBtn.Text = "简体中文";
             LanguageCNBtn.Click += LanguageCNBtn_Click;
             // 
@@ -471,7 +473,7 @@ namespace BooruDatasetTagManager
             gridViewAllTags.RowHeadersWidth = 72;
             gridViewAllTags.RowTemplate.Height = 29;
             gridViewAllTags.RowTemplate.ReadOnly = true;
-            gridViewAllTags.Size = new System.Drawing.Size(368, 647);
+            gridViewAllTags.Size = new System.Drawing.Size(398, 790);
             gridViewAllTags.TabIndex = 2;
             gridViewAllTags.CellDoubleClick += dataGridView2_CellDoubleClick;
             gridViewAllTags.SelectionChanged += gridViewAllTags_SelectionChanged;
@@ -479,29 +481,16 @@ namespace BooruDatasetTagManager
             gridViewAllTags.KeyPress += gridViewAllTags_KeyPress;
             gridViewAllTags.Leave += gridView_Leave;
             // 
-            // LabelAllTags
-            // 
-            LabelAllTags.AutoSize = true;
-            LabelAllTags.Dock = System.Windows.Forms.DockStyle.Top;
-            LabelAllTags.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            LabelAllTags.Location = new System.Drawing.Point(0, 0);
-            LabelAllTags.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            LabelAllTags.Name = "LabelAllTags";
-            LabelAllTags.Padding = new System.Windows.Forms.Padding(4, 4, 4, 5);
-            LabelAllTags.Size = new System.Drawing.Size(69, 30);
-            LabelAllTags.TabIndex = 5;
-            LabelAllTags.Text = "All tags";
-            // 
             // toolStrip1
             // 
             toolStrip1.Dock = System.Windows.Forms.DockStyle.Right;
             toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { BtnTagSwitch, BtnTagAddToAll, BtnTagDeleteForAll, BtnTagReplace, toolStripSeparator3, BtnTagAddToSelected, BtnTagDeleteForSelected, toolStripSeparator5, BtnTagAddToFiltered, BtnTagDeleteForFiltered, toolStripSeparator6, BtnTagMultiModeSwitch, BtnImageFilter, BtnImageExitFilter, toolStripSeparator8, BtnTagFilter, BtnTagExitFilter });
             toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
-            toolStrip1.Location = new System.Drawing.Point(368, 30);
+            toolStrip1.Location = new System.Drawing.Point(398, 30);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            toolStrip1.Size = new System.Drawing.Size(38, 647);
+            toolStrip1.Size = new System.Drawing.Size(38, 790);
             toolStrip1.TabIndex = 3;
             toolStrip1.Text = "toolStrip2";
             // 
@@ -660,10 +649,10 @@ namespace BooruDatasetTagManager
             // 
             statusStrip1.ImageScalingSize = new System.Drawing.Size(28, 28);
             statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { statusLabel });
-            statusStrip1.Location = new System.Drawing.Point(0, 706);
+            statusStrip1.Location = new System.Drawing.Point(0, 849);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
-            statusStrip1.Size = new System.Drawing.Size(1224, 22);
+            statusStrip1.Size = new System.Drawing.Size(1311, 22);
             statusStrip1.TabIndex = 6;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -686,13 +675,15 @@ namespace BooruDatasetTagManager
             // 
             // splitContainer1.Panel2
             // 
-            splitContainer1.Panel2.Controls.Add(button1);
-            splitContainer1.Panel2.Controls.Add(textBox1);
+            splitContainer1.Panel2.Controls.Add(selectInterrogatorComboBox);
+            splitContainer1.Panel2.Controls.Add(interrogate_image_button);
+            splitContainer1.Panel2.Controls.Add(clear_tag_search_button);
+            splitContainer1.Panel2.Controls.Add(tag_search_textbox);
             splitContainer1.Panel2.Controls.Add(gridViewAllTags);
             splitContainer1.Panel2.Controls.Add(toolStrip1);
             splitContainer1.Panel2.Controls.Add(LabelAllTags);
-            splitContainer1.Size = new System.Drawing.Size(1224, 677);
-            splitContainer1.SplitterDistance = 813;
+            splitContainer1.Size = new System.Drawing.Size(1311, 820);
+            splitContainer1.SplitterDistance = 870;
             splitContainer1.SplitterWidth = 5;
             splitContainer1.TabIndex = 7;
             // 
@@ -716,8 +707,8 @@ namespace BooruDatasetTagManager
             splitContainer2.Panel2.Controls.Add(gridViewTags);
             splitContainer2.Panel2.Controls.Add(toolStrip2);
             splitContainer2.Panel2.Controls.Add(LabelImageTags);
-            splitContainer2.Size = new System.Drawing.Size(813, 677);
-            splitContainer2.SplitterDistance = 401;
+            splitContainer2.Size = new System.Drawing.Size(870, 820);
+            splitContainer2.SplitterDistance = 429;
             splitContainer2.SplitterWidth = 5;
             splitContainer2.TabIndex = 6;
             // 
@@ -742,7 +733,7 @@ namespace BooruDatasetTagManager
             gridViewDS.RowTemplate.ReadOnly = true;
             gridViewDS.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             gridViewDS.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            gridViewDS.Size = new System.Drawing.Size(401, 647);
+            gridViewDS.Size = new System.Drawing.Size(429, 790);
             gridViewDS.TabIndex = 6;
             gridViewDS.DataSourceChanged += dataGridView3_DataSourceChanged;
             gridViewDS.CellMouseDown += gridViewDS_CellMouseDown;
@@ -787,25 +778,58 @@ namespace BooruDatasetTagManager
             promptFixedLengthComboBox.Size = new System.Drawing.Size(57, 23);
             promptFixedLengthComboBox.TabIndex = 6;
             // 
-            // button1
+            // selectInterrogatorComboBox
             // 
-            button1.Location = new System.Drawing.Point(344, 4);
-            button1.Name = "button1";
-            button1.Size = new System.Drawing.Size(24, 23);
-            button1.TabIndex = 7;
-            button1.Text = "X";
-            button1.UseVisualStyleBackColor = true;
-            button1.Visible = false;
-            button1.Click += button1_Click;
+            selectInterrogatorComboBox.FormattingEnabled = true;
+            selectInterrogatorComboBox.Location = new System.Drawing.Point(101, 4);
+            selectInterrogatorComboBox.Name = "selectInterrogatorComboBox";
+            selectInterrogatorComboBox.Size = new System.Drawing.Size(247, 23);
+            selectInterrogatorComboBox.TabIndex = 10;
+            selectInterrogatorComboBox.Visible = false;
             // 
-            // textBox1
+            // interrogate_image_button
             // 
-            textBox1.Location = new System.Drawing.Point(76, 4);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new System.Drawing.Size(268, 23);
-            textBox1.TabIndex = 6;
-            textBox1.Visible = false;
-            textBox1.KeyDown += textBox1_KeyDown;
+            interrogate_image_button.Location = new System.Drawing.Point(353, 3);
+            interrogate_image_button.Margin = new System.Windows.Forms.Padding(2);
+            interrogate_image_button.Name = "interrogate_image_button";
+            interrogate_image_button.Size = new System.Drawing.Size(81, 23);
+            interrogate_image_button.TabIndex = 9;
+            interrogate_image_button.Text = "Connect";
+            interrogate_image_button.UseVisualStyleBackColor = true;
+            interrogate_image_button.Visible = false;
+            // 
+            // clear_tag_search_button
+            // 
+            clear_tag_search_button.Location = new System.Drawing.Point(344, 4);
+            clear_tag_search_button.Name = "clear_tag_search_button";
+            clear_tag_search_button.Size = new System.Drawing.Size(24, 23);
+            clear_tag_search_button.TabIndex = 7;
+            clear_tag_search_button.Text = "X";
+            clear_tag_search_button.UseVisualStyleBackColor = true;
+            clear_tag_search_button.Visible = false;
+            clear_tag_search_button.Click += button1_Click;
+            // 
+            // tag_search_textbox
+            // 
+            tag_search_textbox.Location = new System.Drawing.Point(70, 4);
+            tag_search_textbox.Name = "tag_search_textbox";
+            tag_search_textbox.Size = new System.Drawing.Size(268, 23);
+            tag_search_textbox.TabIndex = 6;
+            tag_search_textbox.Visible = false;
+            tag_search_textbox.KeyDown += textBox1_KeyDown;
+            // 
+            // LabelAllTags
+            // 
+            LabelAllTags.AutoSize = true;
+            LabelAllTags.Dock = System.Windows.Forms.DockStyle.Top;
+            LabelAllTags.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            LabelAllTags.Location = new System.Drawing.Point(0, 0);
+            LabelAllTags.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            LabelAllTags.Name = "LabelAllTags";
+            LabelAllTags.Padding = new System.Windows.Forms.Padding(4, 4, 4, 5);
+            LabelAllTags.Size = new System.Drawing.Size(69, 30);
+            LabelAllTags.TabIndex = 5;
+            LabelAllTags.Text = "All tags";
             // 
             // customTextBoxColumn1
             // 
@@ -841,7 +865,7 @@ namespace BooruDatasetTagManager
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            ClientSize = new System.Drawing.Size(1224, 728);
+            ClientSize = new System.Drawing.Size(1311, 871);
             Controls.Add(splitContainer1);
             Controls.Add(statusStrip1);
             Controls.Add(menuStrip1);
@@ -896,7 +920,6 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showPreviewToolStripMenuItem;
         private System.Windows.Forms.DataGridView gridViewAllTags;
-        private System.Windows.Forms.Label LabelAllTags;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton BtnTagSwitch;
         private System.Windows.Forms.ToolStripButton BtnTagAddToAll;
@@ -934,8 +957,6 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private CustomTextBoxColumn ImageTags;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripButton BtnTagFilter;
         private System.Windows.Forms.ToolStripButton BtnTagExitFilter;
@@ -948,6 +969,11 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripMenuItem LanguageENBtn;
         private System.Windows.Forms.ToolStripMenuItem LanguageCNBtn;
         private System.Windows.Forms.ToolStripMenuItem MenuShowTagCount;
+        private System.Windows.Forms.Label LabelAllTags;
+        private System.Windows.Forms.Button clear_tag_search_button;
+        private System.Windows.Forms.TextBox tag_search_textbox;
+        private System.Windows.Forms.Button interrogate_image_button;
+        private System.Windows.Forms.ComboBox selectInterrogatorComboBox;
     }
 }
 

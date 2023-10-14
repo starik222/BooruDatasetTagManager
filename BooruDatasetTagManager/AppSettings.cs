@@ -20,6 +20,7 @@ namespace BooruDatasetTagManager
         public AutocompleteMode AutocompleteMode { get; set; } = AutocompleteMode.StartWith;
         public AutocompleteSort AutocompleteSort { get; set; } = AutocompleteSort.Alphabetical;
         public bool FixTagsOnLoad { get; set; } = true;
+        public TagListingPaneMode UseInterrogatorInsteadOfTagListing { get; set; } = TagListingPaneMode.AllTagsInDirectory;
         public bool FixTagsOnSave { get; set; } = true;
         public string SeparatorOnLoad { get; set; } = ",";
         public string SeparatorOnSave { get; set; } = ", ";
@@ -61,6 +62,7 @@ namespace BooruDatasetTagManager
                 OnlyManualTransInAutocomplete = tempSettings.OnlyManualTransInAutocomplete;
                 AutocompleteMode = tempSettings.AutocompleteMode;
                 AutocompleteSort = tempSettings.AutocompleteSort;
+                UseInterrogatorInsteadOfTagListing = tempSettings.UseInterrogatorInsteadOfTagListing;
                 FixTagsOnLoad = tempSettings.FixTagsOnLoad;
                 FixTagsOnSave = tempSettings.FixTagsOnSave;
                 SeparatorOnLoad = tempSettings.SeparatorOnLoad;

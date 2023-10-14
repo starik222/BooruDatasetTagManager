@@ -37,6 +37,8 @@ namespace BooruDatasetTagManager
             BtnCancel = new System.Windows.Forms.Button();
             SettingFrame = new System.Windows.Forms.TabControl();
             tabPage1 = new System.Windows.Forms.TabPage();
+            externalInterrogatorOrTagListingComboBox = new System.Windows.Forms.ComboBox();
+            LabelInterrogatorMode = new System.Windows.Forms.Label();
             AutoSortCheckBox = new System.Windows.Forms.CheckBox();
             CheckAskChange = new System.Windows.Forms.CheckBox();
             textBox2 = new System.Windows.Forms.TextBox();
@@ -120,7 +122,7 @@ namespace BooruDatasetTagManager
             // BtnSave
             // 
             BtnSave.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            BtnSave.Location = new System.Drawing.Point(14, 360);
+            BtnSave.Location = new System.Drawing.Point(14, 463);
             BtnSave.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             BtnSave.Name = "BtnSave";
             BtnSave.Size = new System.Drawing.Size(88, 27);
@@ -133,7 +135,7 @@ namespace BooruDatasetTagManager
             // 
             BtnCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             BtnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            BtnCancel.Location = new System.Drawing.Point(108, 360);
+            BtnCancel.Location = new System.Drawing.Point(108, 463);
             BtnCancel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new System.Drawing.Size(88, 27);
@@ -152,11 +154,13 @@ namespace BooruDatasetTagManager
             SettingFrame.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             SettingFrame.Name = "SettingFrame";
             SettingFrame.SelectedIndex = 0;
-            SettingFrame.Size = new System.Drawing.Size(465, 346);
+            SettingFrame.Size = new System.Drawing.Size(479, 449);
             SettingFrame.TabIndex = 5;
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(externalInterrogatorOrTagListingComboBox);
+            tabPage1.Controls.Add(LabelInterrogatorMode);
             tabPage1.Controls.Add(AutoSortCheckBox);
             tabPage1.Controls.Add(CheckAskChange);
             tabPage1.Controls.Add(textBox2);
@@ -178,15 +182,35 @@ namespace BooruDatasetTagManager
             tabPage1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            tabPage1.Size = new System.Drawing.Size(457, 318);
+            tabPage1.Size = new System.Drawing.Size(471, 421);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "General";
             tabPage1.UseVisualStyleBackColor = true;
             // 
+            // externalInterrogatorOrTagListingComboBox
+            // 
+            externalInterrogatorOrTagListingComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            externalInterrogatorOrTagListingComboBox.FormattingEnabled = true;
+            externalInterrogatorOrTagListingComboBox.Location = new System.Drawing.Point(152, 73);
+            externalInterrogatorOrTagListingComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            externalInterrogatorOrTagListingComboBox.Name = "externalInterrogatorOrTagListingComboBox";
+            externalInterrogatorOrTagListingComboBox.Size = new System.Drawing.Size(272, 23);
+            externalInterrogatorOrTagListingComboBox.TabIndex = 12;
+            // 
+            // LabelInterrogatorMode
+            // 
+            LabelInterrogatorMode.AutoSize = true;
+            LabelInterrogatorMode.Location = new System.Drawing.Point(22, 76);
+            LabelInterrogatorMode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            LabelInterrogatorMode.Name = "LabelInterrogatorMode";
+            LabelInterrogatorMode.Size = new System.Drawing.Size(97, 15);
+            LabelInterrogatorMode.TabIndex = 11;
+            LabelInterrogatorMode.Text = "Tag Listing Mode";
+            // 
             // AutoSortCheckBox
             // 
             AutoSortCheckBox.AutoSize = true;
-            AutoSortCheckBox.Location = new System.Drawing.Point(7, 288);
+            AutoSortCheckBox.Location = new System.Drawing.Point(7, 318);
             AutoSortCheckBox.Name = "AutoSortCheckBox";
             AutoSortCheckBox.Size = new System.Drawing.Size(215, 19);
             AutoSortCheckBox.TabIndex = 10;
@@ -196,7 +220,7 @@ namespace BooruDatasetTagManager
             // CheckAskChange
             // 
             CheckAskChange.AutoSize = true;
-            CheckAskChange.Location = new System.Drawing.Point(7, 258);
+            CheckAskChange.Location = new System.Drawing.Point(7, 288);
             CheckAskChange.Name = "CheckAskChange";
             CheckAskChange.Size = new System.Drawing.Size(288, 19);
             CheckAskChange.TabIndex = 9;
@@ -205,7 +229,7 @@ namespace BooruDatasetTagManager
             // 
             // textBox2
             // 
-            textBox2.Location = new System.Drawing.Point(152, 137);
+            textBox2.Location = new System.Drawing.Point(152, 167);
             textBox2.Name = "textBox2";
             textBox2.Size = new System.Drawing.Size(100, 23);
             textBox2.TabIndex = 8;
@@ -213,7 +237,7 @@ namespace BooruDatasetTagManager
             // LabelSeparatorSave
             // 
             LabelSeparatorSave.AutoSize = true;
-            LabelSeparatorSave.Location = new System.Drawing.Point(22, 140);
+            LabelSeparatorSave.Location = new System.Drawing.Point(22, 170);
             LabelSeparatorSave.Name = "LabelSeparatorSave";
             LabelSeparatorSave.Size = new System.Drawing.Size(100, 15);
             LabelSeparatorSave.TabIndex = 7;
@@ -221,7 +245,7 @@ namespace BooruDatasetTagManager
             // 
             // textBox1
             // 
-            textBox1.Location = new System.Drawing.Point(152, 105);
+            textBox1.Location = new System.Drawing.Point(152, 135);
             textBox1.Name = "textBox1";
             textBox1.Size = new System.Drawing.Size(100, 23);
             textBox1.TabIndex = 8;
@@ -229,7 +253,7 @@ namespace BooruDatasetTagManager
             // LabelSeparatorLoad
             // 
             LabelSeparatorLoad.AutoSize = true;
-            LabelSeparatorLoad.Location = new System.Drawing.Point(22, 108);
+            LabelSeparatorLoad.Location = new System.Drawing.Point(22, 138);
             LabelSeparatorLoad.Name = "LabelSeparatorLoad";
             LabelSeparatorLoad.Size = new System.Drawing.Size(100, 15);
             LabelSeparatorLoad.TabIndex = 7;
@@ -238,7 +262,7 @@ namespace BooruDatasetTagManager
             // CheckFixSave
             // 
             CheckFixSave.AutoSize = true;
-            CheckFixSave.Location = new System.Drawing.Point(7, 228);
+            CheckFixSave.Location = new System.Drawing.Point(7, 258);
             CheckFixSave.Name = "CheckFixSave";
             CheckFixSave.Size = new System.Drawing.Size(216, 19);
             CheckFixSave.TabIndex = 6;
@@ -248,7 +272,7 @@ namespace BooruDatasetTagManager
             // CheckFixLoad
             // 
             CheckFixLoad.AutoSize = true;
-            CheckFixLoad.Location = new System.Drawing.Point(7, 198);
+            CheckFixLoad.Location = new System.Drawing.Point(7, 228);
             CheckFixLoad.Name = "CheckFixLoad";
             CheckFixLoad.Size = new System.Drawing.Size(217, 19);
             CheckFixLoad.TabIndex = 6;
@@ -259,7 +283,7 @@ namespace BooruDatasetTagManager
             // 
             comboAutocompSort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboAutocompSort.FormattingEnabled = true;
-            comboAutocompSort.Location = new System.Drawing.Point(152, 73);
+            comboAutocompSort.Location = new System.Drawing.Point(152, 103);
             comboAutocompSort.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboAutocompSort.Name = "comboAutocompSort";
             comboAutocompSort.Size = new System.Drawing.Size(272, 23);
@@ -268,7 +292,7 @@ namespace BooruDatasetTagManager
             // LabelAutocompSort
             // 
             LabelAutocompSort.AutoSize = true;
-            LabelAutocompSort.Location = new System.Drawing.Point(22, 76);
+            LabelAutocompSort.Location = new System.Drawing.Point(22, 106);
             LabelAutocompSort.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             LabelAutocompSort.Name = "LabelAutocompSort";
             LabelAutocompSort.Size = new System.Drawing.Size(106, 15);
@@ -298,7 +322,7 @@ namespace BooruDatasetTagManager
             // LabelChars
             // 
             LabelChars.AutoSize = true;
-            LabelChars.Location = new System.Drawing.Point(240, 167);
+            LabelChars.Location = new System.Drawing.Point(240, 197);
             LabelChars.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             LabelChars.Name = "LabelChars";
             LabelChars.Size = new System.Drawing.Size(35, 15);
@@ -308,7 +332,7 @@ namespace BooruDatasetTagManager
             // LabelAutocompAfter
             // 
             LabelAutocompAfter.AutoSize = true;
-            LabelAutocompAfter.Location = new System.Drawing.Point(22, 168);
+            LabelAutocompAfter.Location = new System.Drawing.Point(22, 198);
             LabelAutocompAfter.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             LabelAutocompAfter.Name = "LabelAutocompAfter";
             LabelAutocompAfter.Size = new System.Drawing.Size(140, 15);
@@ -317,7 +341,7 @@ namespace BooruDatasetTagManager
             // 
             // numericUpDown2
             // 
-            numericUpDown2.Location = new System.Drawing.Point(184, 165);
+            numericUpDown2.Location = new System.Drawing.Point(184, 195);
             numericUpDown2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             numericUpDown2.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             numericUpDown2.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
@@ -340,7 +364,7 @@ namespace BooruDatasetTagManager
             tabPage3.Controls.Add(LabelTagFont);
             tabPage3.Location = new System.Drawing.Point(4, 24);
             tabPage3.Name = "tabPage3";
-            tabPage3.Size = new System.Drawing.Size(457, 318);
+            tabPage3.Size = new System.Drawing.Size(471, 421);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "UI";
             tabPage3.UseVisualStyleBackColor = true;
@@ -447,7 +471,7 @@ namespace BooruDatasetTagManager
             tabPage2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            tabPage2.Size = new System.Drawing.Size(457, 318);
+            tabPage2.Size = new System.Drawing.Size(471, 421);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Translations";
             tabPage2.UseVisualStyleBackColor = true;
@@ -489,7 +513,7 @@ namespace BooruDatasetTagManager
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             CancelButton = BtnCancel;
-            ClientSize = new System.Drawing.Size(468, 396);
+            ClientSize = new System.Drawing.Size(482, 499);
             Controls.Add(SettingFrame);
             Controls.Add(BtnCancel);
             Controls.Add(BtnSave);
@@ -551,5 +575,7 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.CheckBox AutoSortCheckBox;
         private System.Windows.Forms.Label LabelLanguage;
         private System.Windows.Forms.ComboBox LanguageComboBox;
+        private System.Windows.Forms.ComboBox externalInterrogatorOrTagListingComboBox;
+        private System.Windows.Forms.Label LabelInterrogatorMode;
     }
 }

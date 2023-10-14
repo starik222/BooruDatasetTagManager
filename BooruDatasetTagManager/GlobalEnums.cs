@@ -36,6 +36,12 @@ namespace BooruDatasetTagManager
         ByCount
     }
 
+    public enum TagListingPaneMode
+    {
+        AllTagsInDirectory,
+        ExternalInterrogator
+    }
+
     public enum AutocompleteSort_ZH_CN
     {
         字母,

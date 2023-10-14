@@ -258,6 +258,9 @@
   <data name="SettingFixTagSave" xml:space="preserve">
     <value>Fix tags on saving ('('-&gt;'\(', ')'-&gt;'\)' )</value>
   </data>
+  <data name="SettingInterrogatorMode" xml:space="preserve">
+    <value>Tag Listing Mode</value>
+  </data>
   <data name="SettingPreviewImageSize" xml:space="preserve">
     <value>Preview Image Size</value>
   </data>
@@ -340,6 +343,9 @@
     <value>Please wait while the tags are loading.
 When changing csv or txt files,
 the initial loading of tags may take a long time.</value>
+  </data>
+  <data name="UIInterrogatorNetwork" xml:space="preserve">
+    <value>Tag Network</value>
   </data>
   <data name="UILabelAllTags" xml:space="preserve">
     <value>All Tags</value>

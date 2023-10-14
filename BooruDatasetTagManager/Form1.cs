@@ -32,6 +32,9 @@ namespace BooruDatasetTagManager
             previewPicBox = new PictureBox();
             previewPicBox.Name = "previewPicBox";
             allTagsFilter = new Form_filter();
+
+
+
             switchLanguage();
         }
 
@@ -74,6 +77,7 @@ namespace BooruDatasetTagManager
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
             Text += " " + Application.ProductVersion;
             gridViewDS.RowTemplate.Height = Program.Settings.PreviewSize + 10;
             gridViewAllTags.RowTemplate.Height = Program.Settings.GridViewRowHeight;
@@ -83,6 +87,24 @@ namespace BooruDatasetTagManager
             gridViewDS.DefaultCellStyle.Font = Program.Settings.GridViewFont.GetFont();
             splitContainer2.SplitterDistance = Width / 3;
             promptFixedLengthComboBox.SelectedIndex = 0;
+
+            // In external interrogator mode, the overall tag window is basically read-only.
+            if (Program.Settings.UseInterrogatorInsteadOfTagListing == TagListingPaneMode.ExternalInterrogator)
+            {
+                tag_search_textbox.Visible = false;
+                clear_tag_search_button.Visible = false;
+                LabelAllTags.Text = I18n.GetText("UIInterrogatorNetwork");
+
+                interrogate_image_button.Visible = true;
+                selectInterrogatorComboBox.Visible = true;
+
+            }
+            else
+            {
+                interrogate_image_button.Visible = false;
+                selectInterrogatorComboBox.Visible = false;
+                LabelAllTags.Text = I18n.GetText("UILabelAllTags");
+            }
         }
 
         private void SetChangedStatus(bool changed)
@@ -1661,15 +1683,34 @@ namespace BooruDatasetTagManager
 
         private void ShowAllTagsFilter(bool show)
         {
+            // In external interrogator mode, the overall tag window is basically read-only.
+            if (Program.Settings.UseInterrogatorInsteadOfTagListing == TagListingPaneMode.ExternalInterrogator)
+            {
+                tag_search_textbox.Visible = false;
+                clear_tag_search_button.Visible = false;
+                LabelAllTags.Text = I18n.GetText("UIInterrogatorNetwork");
+
+                interrogate_image_button.Visible = true;
+                selectInterrogatorComboBox.Visible = true;
+
+                return;
+            }
+            else
+            {
+                interrogate_image_button.Visible = false;
+                selectInterrogatorComboBox.Visible = false;
+                LabelAllTags.Text = I18n.GetText("UILabelAllTags");
+            }
+
             if (!show)
-                textBox1.TextChanged -= TextBox1_TextChanged;
-            textBox1.Clear();
-            textBox1.Visible = show;
-            button1.Visible = show;
+                tag_search_textbox.TextChanged -= tag_search_textbox_TextChanged;
+            tag_search_textbox.Clear();
+            tag_search_textbox.Visible = show;
+            clear_tag_search_button.Visible = show;
             if (show)
             {
-                textBox1.Focus();
-                textBox1.TextChanged += TextBox1_TextChanged;
+                tag_search_textbox.Focus();
+                tag_search_textbox.TextChanged += tag_search_textbox_TextChanged;
             }
             else
             {
@@ -1677,12 +1718,12 @@ namespace BooruDatasetTagManager
             }
         }
 
-        private void TextBox1_TextChanged(object sender, EventArgs e)
+        private void tag_search_textbox_TextChanged(object sender, EventArgs e)
         {
-            if (textBox1.Text.Length > 0)
+            if (tag_search_textbox.Text.Length > 0)
             {
                 isLoading = true;
-                int index = Program.DataManager.AllTags.FindIndex(a => a.Tag.StartsWith(textBox1.Text));
+                int index = Program.DataManager.AllTags.FindIndex(a => a.Tag.StartsWith(tag_search_textbox.Text));
                 if (index != -1)
                 {
                     //gridViewAllTags.ClearSelection();
@@ -1695,8 +1736,8 @@ namespace BooruDatasetTagManager
                 }
                 else
                 {
-                    textBox1.Text = textBox1.Text.Substring(0, textBox1.Text.Length - 1);
-                    textBox1.SelectionStart = textBox1.TextLength;
+                    tag_search_textbox.Text = tag_search_textbox.Text.Substring(0, tag_search_textbox.Text.Length - 1);
+                    tag_search_textbox.SelectionStart = tag_search_textbox.TextLength;
                 }
                 isLoading = false;
             }
@@ -1705,8 +1746,8 @@ namespace BooruDatasetTagManager
         private void gridViewAllTags_KeyPress(object sender, KeyPressEventArgs e)
         {
             ShowAllTagsFilter(true);
-            textBox1.Text = e.KeyChar.ToString();
-            textBox1.SelectionStart = 1;
+            tag_search_textbox.Text = e.KeyChar.ToString();
+            tag_search_textbox.SelectionStart = 1;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -1961,6 +2002,7 @@ namespace BooruDatasetTagManager
                 gridViewAllTags[Header, i].Value = tmpCount;
             }
         }
+
 
         //private void CreateDataGridViewTags()
         //{
