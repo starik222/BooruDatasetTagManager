@@ -28,6 +28,9 @@ namespace BooruDatasetTagManager
         public int GridViewRowHeight { get; set; } = 29;
         public FontSettings GridViewFont { get; set; } = new FontSettings();
         public FontSettings AutocompleteFont { get; set; } = new FontSettings() { Name = "Segoe UI", Size = 9, GdiCharSet = 1 };
+
+        public HotkeyData Hotkeys { get; set; }
+
         private string settingsFile;
 
         public bool AutoSort { get; set; } = false;
@@ -37,6 +40,7 @@ namespace BooruDatasetTagManager
         public AppSettings(string appDir)
         {
             InitAvaibleLangs();
+            Hotkeys = new HotkeyData();
             LoadData(appDir);
         }
 
@@ -70,6 +74,9 @@ namespace BooruDatasetTagManager
                 AutocompleteFont = tempSettings.AutocompleteFont;
                 AutoSort = tempSettings.AutoSort || false;
                 Language = tempSettings.Language;
+                Hotkeys = tempSettings.Hotkeys;
+                if (Hotkeys == null)
+                    Hotkeys = new HotkeyData();
             }
         }
 
