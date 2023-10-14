@@ -1,0 +1,3 @@
+
+salesforce-lavis
+git+https://github.com/huggingface/transformers
