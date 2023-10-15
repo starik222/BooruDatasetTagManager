@@ -1,4 +1,3 @@
-from google.protobuf import empty_pb2 as _empty_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
@@ -13,12 +12,14 @@ class InterrogatorListing(_message.Message):
     def __init__(self, interrogator_names: _Optional[_Iterable[str]] = ...) -> None: ...
 
 class InterrogationRequest(_message.Message):
-    __slots__ = ["interrogator_network", "interrogator_threshold"]
+    __slots__ = ["interrogator_network", "interrogator_threshold", "interrogate_image"]
     INTERROGATOR_NETWORK_FIELD_NUMBER: _ClassVar[int]
     INTERROGATOR_THRESHOLD_FIELD_NUMBER: _ClassVar[int]
+    INTERROGATE_IMAGE_FIELD_NUMBER: _ClassVar[int]
     interrogator_network: str
     interrogator_threshold: float
-    def __init__(self, interrogator_network: _Optional[str] = ..., interrogator_threshold: _Optional[float] = ...) -> None: ...
+    interrogate_image: bytes
+    def __init__(self, interrogator_network: _Optional[str] = ..., interrogator_threshold: _Optional[float] = ..., interrogate_image: _Optional[bytes] = ...) -> None: ...
 
 class TagEntry(_message.Message):
     __slots__ = ["tag", "probability"]
@@ -37,3 +38,7 @@ class ImageTagResults(_message.Message):
     interrogate_ok: bool
     error_msg: str
     def __init__(self, tags: _Optional[_Iterable[_Union[TagEntry, _Mapping]]] = ..., interrogate_ok: bool = ..., error_msg: _Optional[str] = ...) -> None: ...
+
+class InterrogatorListingRequest(_message.Message):
+    __slots__ = []
+    def __init__(self) -> None: ...
