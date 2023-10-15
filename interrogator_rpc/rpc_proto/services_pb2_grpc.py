@@ -2,7 +2,6 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from . import services_pb2 as services__pb2
 
 
@@ -17,7 +16,7 @@ class ImageInterrogatorStub(object):
         """
         self.ListInterrogators = channel.unary_unary(
                 '/ImageInterrogator/ListInterrogators',
-                request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+                request_serializer=services__pb2.InterrogatorListingRequest.SerializeToString,
                 response_deserializer=services__pb2.InterrogatorListing.FromString,
                 )
         self.InterrogateImage = channel.unary_unary(
@@ -47,7 +46,7 @@ def add_ImageInterrogatorServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'ListInterrogators': grpc.unary_unary_rpc_method_handler(
                     servicer.ListInterrogators,
-                    request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                    request_deserializer=services__pb2.InterrogatorListingRequest.FromString,
                     response_serializer=services__pb2.InterrogatorListing.SerializeToString,
             ),
             'InterrogateImage': grpc.unary_unary_rpc_method_handler(
@@ -77,7 +76,7 @@ class ImageInterrogator(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/ImageInterrogator/ListInterrogators',
-            google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            services__pb2.InterrogatorListingRequest.SerializeToString,
             services__pb2.InterrogatorListing.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

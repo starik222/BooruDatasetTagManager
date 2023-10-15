@@ -1,6 +1,5 @@
 
 syntax = "proto3";
-import "google/protobuf/empty.proto";
 
 message InterrogatorListing {
     repeated string interrogator_names = 1;
@@ -9,6 +8,7 @@ message InterrogatorListing {
 message InterrogationRequest{
     string interrogator_network   = 1;
     float  interrogator_threshold = 2;
+    bytes  interrogate_image      = 3;
 }
 
 
@@ -23,7 +23,14 @@ message ImageTagResults {
     string error_msg      = 3;
 }
 
+
+// RPC actiona CANNOT have empty requests, or empty responses.
+// This.... is stupid.
+message InterrogatorListingRequest {
+
+}
+
 service ImageInterrogator {
-    rpc ListInterrogators (google.protobuf.Empty) returns (InterrogatorListing);
+    rpc ListInterrogators (InterrogatorListingRequest) returns (InterrogatorListing);
     rpc InterrogateImage (InterrogationRequest) returns (ImageTagResults);
 }

@@ -11,24 +11,25 @@ from google.protobuf.internal import builder as _builder
 _sym_db = _symbol_database.Default()
 
 
-from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0eservices.proto\x1a\x1bgoogle/protobuf/empty.proto\"1\n\x13InterrogatorListing\x12\x1a\n\x12interrogator_names\x18\x01 \x03(\t\"T\n\x14InterrogationRequest\x12\x1c\n\x14interrogator_network\x18\x01 \x01(\t\x12\x1e\n\x16interrogator_threshold\x18\x02 \x01(\x02\",\n\x08TagEntry\x12\x0b\n\x03tag\x18\x01 \x01(\t\x12\x13\n\x0bprobability\x18\x02 \x01(\x02\"U\n\x0fImageTagResults\x12\x17\n\x04tags\x18\x01 \x03(\x0b\x32\t.TagEntry\x12\x16\n\x0einterrogate_ok\x18\x02 \x01(\x08\x12\x11\n\terror_msg\x18\x03 \x01(\t2\x93\x01\n\x11ImageInterrogator\x12\x41\n\x11ListInterrogators\x12\x16.google.protobuf.Empty\x1a\x14.InterrogatorListing\x12;\n\x10InterrogateImage\x12\x15.InterrogationRequest\x1a\x10.ImageTagResultsb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0eservices.proto\"1\n\x13InterrogatorListing\x12\x1a\n\x12interrogator_names\x18\x01 \x03(\t\"o\n\x14InterrogationRequest\x12\x1c\n\x14interrogator_network\x18\x01 \x01(\t\x12\x1e\n\x16interrogator_threshold\x18\x02 \x01(\x02\x12\x19\n\x11interrogate_image\x18\x03 \x01(\x0c\",\n\x08TagEntry\x12\x0b\n\x03tag\x18\x01 \x01(\t\x12\x13\n\x0bprobability\x18\x02 \x01(\x02\"U\n\x0fImageTagResults\x12\x17\n\x04tags\x18\x01 \x03(\x0b\x32\t.TagEntry\x12\x16\n\x0einterrogate_ok\x18\x02 \x01(\x08\x12\x11\n\terror_msg\x18\x03 \x01(\t\"\x1c\n\x1aInterrogatorListingRequest2\x98\x01\n\x11ImageInterrogator\x12\x46\n\x11ListInterrogators\x12\x1b.InterrogatorListingRequest\x1a\x14.InterrogatorListing\x12;\n\x10InterrogateImage\x12\x15.InterrogationRequest\x1a\x10.ImageTagResultsb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'services_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
-  _globals['_INTERROGATORLISTING']._serialized_start=47
-  _globals['_INTERROGATORLISTING']._serialized_end=96
-  _globals['_INTERROGATIONREQUEST']._serialized_start=98
-  _globals['_INTERROGATIONREQUEST']._serialized_end=182
-  _globals['_TAGENTRY']._serialized_start=184
-  _globals['_TAGENTRY']._serialized_end=228
-  _globals['_IMAGETAGRESULTS']._serialized_start=230
-  _globals['_IMAGETAGRESULTS']._serialized_end=315
-  _globals['_IMAGEINTERROGATOR']._serialized_start=318
-  _globals['_IMAGEINTERROGATOR']._serialized_end=465
+  _globals['_INTERROGATORLISTING']._serialized_start=18
+  _globals['_INTERROGATORLISTING']._serialized_end=67
+  _globals['_INTERROGATIONREQUEST']._serialized_start=69
+  _globals['_INTERROGATIONREQUEST']._serialized_end=180
+  _globals['_TAGENTRY']._serialized_start=182
+  _globals['_TAGENTRY']._serialized_end=226
+  _globals['_IMAGETAGRESULTS']._serialized_start=228
+  _globals['_IMAGETAGRESULTS']._serialized_end=313
+  _globals['_INTERROGATORLISTINGREQUEST']._serialized_start=315
+  _globals['_INTERROGATORLISTINGREQUEST']._serialized_end=343
+  _globals['_IMAGEINTERROGATOR']._serialized_start=346
+  _globals['_IMAGEINTERROGATOR']._serialized_end=498
 # @@protoc_insertion_point(module_scope)
