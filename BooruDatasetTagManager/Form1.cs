@@ -68,7 +68,9 @@ namespace BooruDatasetTagManager
             gridViewDS.DefaultCellStyle.Font = Program.Settings.GridViewFont.GetFont();
             splitContainer2.SplitterDistance = Width / 3;
             promptFixedLengthComboBox.SelectedIndex = 0;
+#if !DEBUG
             Extensions.CheckForUpdateAsync(Application.ProductVersion);
+#endif
         }
 
 
@@ -1904,8 +1906,10 @@ namespace BooruDatasetTagManager
             if (hotkey != null)
             {
                 Program.Settings.Hotkeys.Commands[hotkey.Id]();
+                return true;
             }
-            return base.ProcessCmdKey(ref msg, keyData);
+            else
+                return base.ProcessCmdKey(ref msg, keyData);
         }
 
         private void DatasetFocus()

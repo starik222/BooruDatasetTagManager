@@ -76,7 +76,10 @@ namespace BooruDatasetTagManager
                 Language = tempSettings.Language;
                 Hotkeys = tempSettings.Hotkeys;
                 if (Hotkeys == null)
+                {
                     Hotkeys = new HotkeyData();
+                    Hotkeys.InitDefault();
+                }
             }
         }
 

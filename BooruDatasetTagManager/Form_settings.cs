@@ -45,6 +45,11 @@ namespace BooruDatasetTagManager
             label14.Text = Program.Settings.AutocompleteFont.ToString();
             autocompleteFontSettings = Program.Settings.AutocompleteFont;
             LanguageComboBox.Text = Program.Settings.Language;
+            //hotkeys
+            foreach (var item in Program.Settings.Hotkeys.Items)
+            {
+                dataGridViewHotkeys.Rows.Add(item.Id, item.Text, item.GetHotkeyString());
+            }
             //--
             SwitchLanguage();
         }
@@ -78,6 +83,14 @@ namespace BooruDatasetTagManager
             Program.Settings.GridViewFont = gridFontSettings;
             Program.Settings.AutocompleteFont = autocompleteFontSettings;
             Program.Settings.Language = (string)LanguageComboBox.SelectedItem;
+            //hotkeys
+            if (tempHotkeys.Count > 0)
+            {
+                foreach (var item in tempHotkeys)
+                {
+                    Program.Settings.Hotkeys[item.Key] = item.Value;
+                }
+            }
             Program.Settings.SaveSettings();
             DialogResult = DialogResult.OK;
         }
@@ -157,6 +170,25 @@ namespace BooruDatasetTagManager
                     comboAutocompSort.SelectedItem = Enum.GetName(typeof(AutocompleteSort_ZH_CN), Enum.ToObject(typeof(AutocompleteSort_ZH_CN), Program.Settings.AutocompleteSort));
                     break;
             }
+        }
+        bool isControlKeyPressed = false;
+        Dictionary<string, HotkeyItem> tempHotkeys = new Dictionary<string, HotkeyItem>();
+        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (dataGridViewHotkeys.SelectedRows.Count == 0)
+                return;
+            if (e.KeyCode != Keys.ShiftKey && e.KeyCode != Keys.ControlKey && e.KeyCode != Keys.Menu)
+            {
+                string id = (string)dataGridViewHotkeys.SelectedRows[0].Cells["CmdId"].Value;
+                var hkItem = (HotkeyItem)Program.Settings.Hotkeys[id].Clone();
+                hkItem.KeyData = e.KeyCode;
+                hkItem.IsCtrl = e.Control;
+                hkItem.IsAlt = e.Alt;
+                hkItem.IsShift = e.Shift;
+                tempHotkeys[id] = hkItem;
+                dataGridViewHotkeys.SelectedRows[0].Cells["Hotkey"].Value = hkItem.GetHotkeyString();
+            }
+            e.SuppressKeyPress = true;
         }
     }
 }

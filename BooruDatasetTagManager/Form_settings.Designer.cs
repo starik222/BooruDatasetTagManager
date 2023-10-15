@@ -65,6 +65,12 @@ namespace BooruDatasetTagManager
             checkBox1 = new System.Windows.Forms.CheckBox();
             label3 = new System.Windows.Forms.Label();
             comboBox2 = new System.Windows.Forms.ComboBox();
+            tabPage4 = new System.Windows.Forms.TabPage();
+            label2 = new System.Windows.Forms.Label();
+            dataGridViewHotkeys = new System.Windows.Forms.DataGridView();
+            CmdId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Command = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Hotkey = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             SettingFrame.SuspendLayout();
             tabPage1.SuspendLayout();
@@ -72,6 +78,8 @@ namespace BooruDatasetTagManager
             tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown3).BeginInit();
             tabPage2.SuspendLayout();
+            tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewHotkeys).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -146,6 +154,7 @@ namespace BooruDatasetTagManager
             SettingFrame.Controls.Add(tabPage1);
             SettingFrame.Controls.Add(tabPage3);
             SettingFrame.Controls.Add(tabPage2);
+            SettingFrame.Controls.Add(tabPage4);
             SettingFrame.Location = new System.Drawing.Point(1, 2);
             SettingFrame.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             SettingFrame.Name = "SettingFrame";
@@ -459,6 +468,69 @@ namespace BooruDatasetTagManager
             comboBox2.Size = new System.Drawing.Size(263, 23);
             comboBox2.TabIndex = 1;
             // 
+            // tabPage4
+            // 
+            tabPage4.Controls.Add(label2);
+            tabPage4.Controls.Add(dataGridViewHotkeys);
+            tabPage4.Location = new System.Drawing.Point(4, 24);
+            tabPage4.Name = "tabPage4";
+            tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            tabPage4.Size = new System.Drawing.Size(457, 318);
+            tabPage4.TabIndex = 3;
+            tabPage4.Text = "Hotkeys";
+            tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(6, 297);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(286, 15);
+            label2.TabIndex = 1;
+            label2.Text = "Select row with shortcut and press shortcut you need";
+            // 
+            // dataGridViewHotkeys
+            // 
+            dataGridViewHotkeys.AllowUserToAddRows = false;
+            dataGridViewHotkeys.AllowUserToDeleteRows = false;
+            dataGridViewHotkeys.AllowUserToResizeColumns = false;
+            dataGridViewHotkeys.AllowUserToResizeRows = false;
+            dataGridViewHotkeys.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            dataGridViewHotkeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewHotkeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { CmdId, Command, Hotkey });
+            dataGridViewHotkeys.Location = new System.Drawing.Point(3, 3);
+            dataGridViewHotkeys.MultiSelect = false;
+            dataGridViewHotkeys.Name = "dataGridViewHotkeys";
+            dataGridViewHotkeys.ReadOnly = true;
+            dataGridViewHotkeys.RowHeadersVisible = false;
+            dataGridViewHotkeys.RowTemplate.Height = 25;
+            dataGridViewHotkeys.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            dataGridViewHotkeys.Size = new System.Drawing.Size(451, 288);
+            dataGridViewHotkeys.TabIndex = 0;
+            dataGridViewHotkeys.KeyDown += dataGridView1_KeyDown;
+            // 
+            // CmdId
+            // 
+            CmdId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            CmdId.HeaderText = "Id";
+            CmdId.Name = "CmdId";
+            CmdId.ReadOnly = true;
+            CmdId.Visible = false;
+            // 
+            // Command
+            // 
+            Command.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            Command.HeaderText = "Command";
+            Command.Name = "Command";
+            Command.ReadOnly = true;
+            // 
+            // Hotkey
+            // 
+            Hotkey.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            Hotkey.HeaderText = "Hotkey";
+            Hotkey.Name = "Hotkey";
+            Hotkey.ReadOnly = true;
+            // 
             // Form_settings
             // 
             AcceptButton = BtnSave;
@@ -484,6 +556,9 @@ namespace BooruDatasetTagManager
             ((System.ComponentModel.ISupportInitialize)numericUpDown3).EndInit();
             tabPage2.ResumeLayout(false);
             tabPage2.PerformLayout();
+            tabPage4.ResumeLayout(false);
+            tabPage4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewHotkeys).EndInit();
             ResumeLayout(false);
         }
 
@@ -525,5 +600,11 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.CheckBox AutoSortCheckBox;
         private System.Windows.Forms.Label LabelLanguage;
         private System.Windows.Forms.ComboBox LanguageComboBox;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.DataGridView dataGridViewHotkeys;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CmdId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Command;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Hotkey;
     }
 }
