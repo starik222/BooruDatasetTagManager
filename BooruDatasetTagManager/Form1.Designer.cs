@@ -794,9 +794,10 @@ namespace BooruDatasetTagManager
             interrogate_image_button.Name = "interrogate_image_button";
             interrogate_image_button.Size = new System.Drawing.Size(81, 23);
             interrogate_image_button.TabIndex = 9;
-            interrogate_image_button.Text = "Connect";
+            interrogate_image_button.Text = "Interrogate";
             interrogate_image_button.UseVisualStyleBackColor = true;
             interrogate_image_button.Visible = false;
+            interrogate_image_button.Click += interrogate_image_button_Click;
             // 
             // clear_tag_search_button
             // 

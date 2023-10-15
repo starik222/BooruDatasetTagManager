@@ -57,9 +57,13 @@
     <Content Include="BDTM.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="libtorch-cuda-11.7-win-x64" Version="2.0.1.1" />
+    <PackageReference Include="Google.Protobuf" Version="3.24.4" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.57.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.58.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="TorchSharp" Version="0.100.5" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Properties\Settings.settings">
@@ -70,6 +74,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+	<ItemGroup>
+		<Protobuf Include="../interrogator_rpc/rpc_proto/services.proto" GrpcServices="Client">
+		  <Link>services.proto</Link>
+		</Protobuf>
+	</ItemGroup>
+
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

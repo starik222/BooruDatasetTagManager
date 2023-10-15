@@ -14,6 +14,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Translator;
+
+using Grpc.Net.Client;
+
 using static BooruDatasetTagManager.DatasetManager;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
@@ -2001,6 +2004,14 @@ namespace BooruDatasetTagManager
                 }
                 gridViewAllTags[Header, i].Value = tmpCount;
             }
+        }
+
+        private void interrogate_image_button_Click(object sender, EventArgs e)
+        {
+
+
+
+
         }
 
 
