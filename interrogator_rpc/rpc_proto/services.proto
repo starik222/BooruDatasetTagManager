@@ -1,0 +1,29 @@
+
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+message InterrogatorListing {
+    repeated string interrogator_names = 1;
+}
+
+message InterrogationRequest{
+    string interrogator_network   = 1;
+    float  interrogator_threshold = 2;
+}
+
+
+message TagEntry {
+    string  tag         = 1;
+    float probability = 2;
+}
+
+message ImageTagResults {
+    repeated TagEntry tags = 1;
+    bool interrogate_ok   = 2;
+    string error_msg      = 3;
+}
+
+service ImageInterrogator {
+    rpc ListInterrogators (google.protobuf.Empty) returns (InterrogatorListing);
+    rpc InterrogateImage (InterrogationRequest) returns (ImageTagResults);
+}

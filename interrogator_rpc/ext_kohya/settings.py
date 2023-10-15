@@ -14,7 +14,7 @@ class Settings(NamedTuple):
     tagger_use_spaces: bool = True
     interrogator_use_cpu: bool = False
     interrogator_keep_in_memory: bool = False
-    interrogator_max_length: int = 30
+    interrogator_max_length: int = 60
     interrogator_model_dir: str = ""
 
 

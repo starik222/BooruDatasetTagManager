@@ -13,7 +13,10 @@ print("Using interrogator device:", device)
 from ext_kohya import (
     tagger,
     captioning,
+    paths,
 )
+
+paths.initialize()
 
 BLIP2_CAPTIONING_NAMES = [
     "blip2-opt-2.7b",
@@ -52,6 +55,7 @@ INTERROGATORS = (
 )
 INTERROGATOR_NAMES = [it.name() for it in INTERROGATORS]
 
+INTERROGATOR_MAP = dict(zip(INTERROGATOR_NAMES, INTERROGATORS))
 
 class ImageInterrogator:
 	def __init__(self):
