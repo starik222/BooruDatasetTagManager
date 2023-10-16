@@ -1893,11 +1893,17 @@ namespace BooruDatasetTagManager
                 Program.Settings.Hotkeys.Commands = new Dictionary<string, Action>();
             var cmds = Program.Settings.Hotkeys.Commands;
 
-            cmds["AddNewTag"] = delegate () { BtnTagAdd.PerformClick(); };
-            cmds["DelNewTag"] = delegate () { BtnTagDelete.PerformClick(); };
             cmds["DatasetFocus"] = delegate () { DatasetFocus(); };
             cmds["TagsFocus"] = delegate () { TagsFocus(); };
             cmds["AllTagsFocus"] = delegate () { AllTagsFocus(); };
+            cmds["BtnTagAdd"] = delegate () { BtnTagAdd.PerformClick(); };
+            cmds["BtnTagDelete"] = delegate () { BtnTagDelete.PerformClick(); };
+
+            cmds["BtnTagUndo"] = delegate () { BtnTagUndo.PerformClick(); };
+            cmds["BtnTagRedo"] = delegate () { BtnTagRedo.PerformClick(); };
+            cmds["BtnTagUp"] = delegate () { BtnTagUp.PerformClick(); };
+            cmds["BtnTagDown"] = delegate () { BtnTagDown.PerformClick(); };
+            cmds["BtnTagFindInAll"] = delegate () { BtnTagFindInAll.PerformClick(); };
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

@@ -46,8 +46,13 @@ namespace BooruDatasetTagManager
             Items.Add(new HotkeyItem("DatasetFocus", "Focus on image list", Keys.D1, true, false, false));
             Items.Add(new HotkeyItem("TagsFocus", "Focus on tag list", Keys.D2, true, false, false));
             Items.Add(new HotkeyItem("AllTagsFocus", "Focus on all tag list", Keys.D3, true, false, false));
-            Items.Add(new HotkeyItem("AddNewTag", "Add new tag", Keys.E, true, false, false));
-            Items.Add(new HotkeyItem("DelNewTag", "Remove selected tag", Keys.D, true, false, false));
+            Items.Add(new HotkeyItem("BtnTagAdd", "Add new tag", Keys.E, true, false, false));
+            Items.Add(new HotkeyItem("BtnTagDelete", "Remove selected tag", Keys.D, true, false, false));
+            Items.Add(new HotkeyItem("BtnTagUndo", "Undo step", Keys.Z, true, false, false));
+            Items.Add(new HotkeyItem("BtnTagRedo", "Redo step", Keys.Z, true, true, false));
+            Items.Add(new HotkeyItem("BtnTagUp", "Up tag in list", Keys.PageUp, true, false, false));
+            Items.Add(new HotkeyItem("BtnTagDown", "Down tag in list", Keys.PageDown, true, false, false));
+            Items.Add(new HotkeyItem("BtnTagFindInAll", "Find selected tag in all list", Keys.F, true, false, false));
         }
         
     }
