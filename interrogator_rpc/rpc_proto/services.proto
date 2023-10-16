@@ -1,6 +1,12 @@
 
 syntax = "proto3";
 
+
+option csharp_namespace = "Image_Interrogator_Ns";
+
+
+package interrogator;
+
 message InterrogatorListing {
     repeated string interrogator_names = 1;
 }
@@ -24,7 +30,7 @@ message ImageTagResults {
 }
 
 
-// RPC actiona CANNOT have empty requests, or empty responses.
+// RPC actions CANNOT have empty requests, or empty responses.
 // This.... is stupid.
 message InterrogatorListingRequest {
 

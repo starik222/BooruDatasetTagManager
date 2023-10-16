@@ -16,6 +16,7 @@ using System.Windows.Forms;
 using Translator;
 
 using Grpc.Net.Client;
+using Image_Interrogator_Ns;
 
 using static BooruDatasetTagManager.DatasetManager;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -78,7 +79,7 @@ namespace BooruDatasetTagManager
 
         Dictionary<string, string> Trans = new Dictionary<string, string>();
 
-        private void Form1_Load(object sender, EventArgs e)
+        private async void Form1_Load(object sender, EventArgs e)
         {
 
             Text += " " + Application.ProductVersion;
@@ -108,6 +109,29 @@ namespace BooruDatasetTagManager
                 selectInterrogatorComboBox.Visible = false;
                 LabelAllTags.Text = I18n.GetText("UILabelAllTags");
             }
+
+            try
+            {
+                using var channel = GrpcChannel.ForAddress("http://127.0.0.1:50051");
+                var client = new Image_Interrogator_Ns.ImageInterrogator.ImageInterrogatorClient(channel);
+
+                var empty_req = new Image_Interrogator_Ns.InterrogatorListingRequest();
+
+                var reply = await client.ListInterrogatorsAsync(empty_req);
+                
+                foreach ( var name in reply.InterrogatorNames )
+                {
+                    selectInterrogatorComboBox.Items.Add(name);
+                }
+                 
+
+            }
+            catch (Exception ex)
+            {
+                interrogate_image_button.Enabled = false;
+                selectInterrogatorComboBox.Enabled = false; 
+            }
+
         }
 
         private void SetChangedStatus(bool changed)
@@ -2006,10 +2030,24 @@ namespace BooruDatasetTagManager
             }
         }
 
-        private void interrogate_image_button_Click(object sender, EventArgs e)
+        private async void interrogate_image_button_Click(object sender, EventArgs e)
         {
 
+            using var channel = GrpcChannel.ForAddress("http://127.0.0.1:50051");
+            var client = new Image_Interrogator_Ns.ImageInterrogator.ImageInterrogatorClient(channel);
 
+            var req = new Image_Interrogator_Ns.InterrogationRequest();
+
+            req.InterrogatorNetwork = selectInterrogatorComboBox.SelectedText;
+            req.InterrogatorThreshold = 0.1F;
+
+
+            var reply = await client.InterrogateImage(req);
+
+            foreach (var name in reply.InterrogatorNames)
+            {
+                selectInterrogatorComboBox.Items.Add(name);
+            }
 
 
         }
