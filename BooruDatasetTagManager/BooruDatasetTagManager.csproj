@@ -23,6 +23,9 @@
     <ApplicationIcon>BDTM.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <AdditionalFiles Remove="app.manifest" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="AutoCompleteTextBox.cs">
       <SubType>Component</SubType>
     </Compile>

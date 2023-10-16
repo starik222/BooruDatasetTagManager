@@ -174,11 +174,11 @@
   <data name="BtnTagPasteFromClipBoard" xml:space="preserve">
     <value>Paste Tags from clipboard(override)</value>
   </data>
+  <data name="BtnTagRedo" xml:space="preserve">
+    <value>Redo</value>
+  </data>
   <data name="BtnTagReplace" xml:space="preserve">
     <value>Replace tag</value>
-  </data>
-  <data name="BtnTagReset" xml:space="preserve">
-    <value>Reset Tags</value>
   </data>
   <data name="BtnTagSetToAll" xml:space="preserve">
     <value>Set current tag to all images</value>
@@ -189,8 +189,14 @@
   <data name="BtnTagSwitch" xml:space="preserve">
     <value>Switch all tags/common tags mode</value>
   </data>
+  <data name="BtnTagUndo" xml:space="preserve">
+    <value>Undo</value>
+  </data>
   <data name="BtnTagUp" xml:space="preserve">
     <value>Up</value>
+  </data>
+  <data name="CheckBoxSkipExist" xml:space="preserve">
+    <value>Skip exist tags</value>
   </data>
   <data name="GridCount" xml:space="preserve">
     <value>Count</value>

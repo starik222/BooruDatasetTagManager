@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -33,7 +34,7 @@ namespace BooruDatasetTagManager
             CommonTags = new List<TagValue>();
         }
 
-        public bool SaveAll(bool fixTags)
+        public bool SaveAll()
         {
             bool saved = false;
             foreach (var item in DataSet)
@@ -41,20 +42,7 @@ namespace BooruDatasetTagManager
                 if (item.Value.IsModified)
                 {
                     item.Value.DeduplicateTags();
-                    if (!fixTags)
-                        File.WriteAllText(item.Value.TextFilePath, string.Join(Program.Settings.SeparatorOnSave, item.Value.Tags));
-                    else
-                    {
-                        List<string> tags = new List<string>(item.Value.Tags);
-                        for (int i = 0; i < tags.Count; i++)
-                        {
-                            if (!tags[i].Contains("\\(") && tags[i].Contains('('))
-                                tags[i] = tags[i].Replace("(", "\\(");
-                            if (!tags[i].Contains("\\)") && tags[i].Contains(')'))
-                                tags[i] = tags[i].Replace(")", "\\)");
-                        }
-                        File.WriteAllText(item.Value.TextFilePath, string.Join(Program.Settings.SeparatorOnSave, tags));
-                    }
+                    File.WriteAllText(item.Value.TextFilePath, item.Value.Tags.ToString());
                     saved = true;
                 }
             }
@@ -64,15 +52,15 @@ namespace BooruDatasetTagManager
         public void UpdateData()
         {
             AllTags = DataSet
-                .SelectMany(x => x.Value.Tags)
+                .SelectMany(x => x.Value.Tags.TextTags)
                 .Distinct()
                 .OrderBy(x => x)
                 .Select(x => new TagValue(x))
                 .ToList();
             CommonTags = DataSet
                 .Skip(1).Aggregate(
-                    new HashSet<string>(DataSet.First().Value.Tags),
-                    (h, e) => { h.IntersectWith(e.Value.Tags); return h; }
+                    new HashSet<string>(DataSet.First().Value.Tags.TextTags),
+                    (h, e) => { h.IntersectWith(e.Value.Tags.TextTags); return h; }
                 )
                 .OrderBy(x => x)
                 .Select(x => new TagValue(x))
@@ -102,48 +90,13 @@ namespace BooruDatasetTagManager
             return lst;
         }
 
-        public void AddTagToAll(string tag, AddingType addType, int pos=-1, bool useFilter = false)
+        public void AddTagToAll(string tag, bool skipExist, AddingType addType, int pos=-1, bool useFilter = false)
         {
             IEnumerable<DataItem> lst = GetEnumerator(useFilter);
 
             foreach (var item in lst)
             {
-                if (item.Tags.Contains(tag))
-                {
-                    item.Tags.Remove(tag);
-                }
-                switch (addType)
-                {
-                    case AddingType.Top:
-                        {
-                            item.Tags.Insert(0, tag);
-                            break;
-                        }
-                    case AddingType.Center:
-                        {
-                            item.Tags.Insert(item.Tags.Count / 2, tag);
-                            break;
-                        }
-                    case AddingType.Down:
-                        {
-                            item.Tags.Add(tag);
-                            break;
-                        }
-                    case AddingType.Custom:
-                        {
-                            if (pos >= item.Tags.Count)
-                            {
-                                item.Tags.Add(tag);
-                            }
-                            else if (pos < 0)
-                            {
-                                item.Tags.Insert(0, tag);
-                            }
-                            else
-                                item.Tags.Insert(pos, tag);
-                            break;
-                        }
-                }
+                item.Tags.AddTag(tag, skipExist, addType, pos);
             }
         }
 
@@ -155,13 +108,31 @@ namespace BooruDatasetTagManager
                 {
                     if (item.Value.Tags.Count == 0)
                     {
-                        item.Value.Tags.AddRange(tags);
+                        item.Value.Tags.AddRange(tags, true);
                     }
                 }
                 else
                 {
                     item.Value.Tags.Clear();
-                    item.Value.Tags.AddRange(tags);
+                    item.Value.Tags.AddRange(tags, true);
+                }
+            }
+        }
+
+        public void SetTagListToAll(EditableTagList tagList, bool onlyEmpty)
+        {
+            foreach (var item in DataSet)
+            {
+                if (onlyEmpty)
+                {
+                    if (item.Value.Tags.Count == 0)
+                    {
+                        item.Value.Tags = (EditableTagList)tagList.Clone();
+                    }
+                }
+                else
+                {
+                    item.Value.Tags = (EditableTagList)tagList.Clone();
                 }
             }
         }
@@ -193,18 +164,6 @@ namespace BooruDatasetTagManager
                     {
                         // Sort data items by their Name property using a custom string comparison method.
                         items.Sort((a, b) => FileNamesComparer.StrCmpLogicalW(a.Name, b.Name));
-                        break;
-                    }
-                case OrderType.Loss:
-                    {
-                        // Sort data items by their Loss property.
-                        items.Sort((a, b) => a.Loss.CompareTo(b.Loss));
-                        break;
-                    }
-                case OrderType.LastLoss:
-                    {
-                        // Sort data items by their LastLoss property.
-                        items.Sort((a, b) => a.LastLoss.CompareTo(b.LastLoss));
                         break;
                     }
                 case OrderType.ImageModifyTime:
@@ -270,8 +229,7 @@ namespace BooruDatasetTagManager
 
             foreach (var item in lst)
             {
-                if (item.Tags.Contains(tag))
-                    item.Tags.Remove(tag);
+                item.Tags.RemoveTag(tag, true);
             }
             UpdateData();
         }
@@ -286,28 +244,8 @@ namespace BooruDatasetTagManager
 
             foreach (var item in lst)
             {
-                int index = item.Tags.IndexOf(srcTag);
-                if (index != -1)
-                {
-                    int dstIndex = item.Tags.IndexOf(dstTag);
-                    if (dstIndex == -1)
-                        item.Tags[index] = dstTag;
-                    else
-                    {
-                        item.Tags.RemoveAt(index);
-                    }
-                }
+                item.Tags.ReplaceTag(srcTag, dstTag);
             }
-        }
-        public List<string> FindTag(string tag)
-        {
-            List<string> foundedTags = new List<string>();
-            foreach (var item in DataSet)
-            {
-                if (item.Value.Tags.Contains(tag.ToLower()))
-                    foundedTags.Add(item.Key);
-            }
-            return foundedTags;
         }
 
         private List<TagValue> GetTagsForDel(List<TagValue> checkedList, List<string> srcList)
@@ -321,7 +259,7 @@ namespace BooruDatasetTagManager
             return delList;
         }
 
-        public bool LoadFromFolder(string folder, bool fixTags)
+        public bool LoadFromFolder(string folder)
         {
             List<string> imagesExt = new List<string>() { ".jpg", ".png", ".bmp", ".jpeg", ".webp" };
             string[] imgs = Directory.GetFiles(folder, "*.*", SearchOption.AllDirectories);
@@ -334,7 +272,7 @@ namespace BooruDatasetTagManager
             int imgSize = Program.Settings.PreviewSize;
             imgs.AsParallel().ForAll(x =>
             {
-                var dt = new DataItem(x, imgSize, fixTags);
+                var dt = new DataItem(x, imgSize);
                 DataSet.TryAdd(dt.ImageFilePath, dt);
             });
             UpdateDatasetHash();
@@ -362,50 +300,6 @@ namespace BooruDatasetTagManager
         {
             originalHash = GetHashCode();
         }
-
-        public void LoadLossFromFile(string fPath)
-        {
-            string lossStatPrefix = "Loss statistics for file ";
-            string lossPrefix = "loss";
-            string lossPattern = "loss:([0-9]*[.]?[0-9]+)±";
-            string lastlossPrefix = "recent";
-            string lastLossPattern = "recent \\d+ loss:([0-9]*[.]?[0-9]+)±";
-            try
-            {
-                string[] lines = File.ReadAllLines(fPath);
-                for (int i = 0; i + 2 < lines.Length; i++)
-                {
-                    if (!lines[i].StartsWith(lossStatPrefix))
-                        continue;
-                    string fName = lines[i].Replace(lossStatPrefix, "");
-                    if (!lines[i + 1].StartsWith(lossPrefix))
-                        continue;
-                    var m1 = Regex.Match(lines[i + 1], lossPattern, RegexOptions.IgnoreCase);
-                    if (!m1.Success)
-                        continue;
-                    float loss = (float)Convert.ToDouble(m1.Groups[1].Value.Replace('.', ','));
-
-                    if (!lines[i + 2].StartsWith(lastlossPrefix))
-                        continue;
-                    var m2 = Regex.Match(lines[i + 2], lastLossPattern, RegexOptions.IgnoreCase);
-                    if (!m2.Success)
-                        continue;
-                    float lastLoss = (float)Convert.ToDouble(m2.Groups[1].Value.Replace('.', ','));
-                    if (!DataSet.ContainsKey(fName))
-                        continue;
-                    DataSet[fName].Loss = loss;
-                    DataSet[fName].LastLoss = lastLoss;
-                    i += 2;
-
-                }
-            }
-            catch
-            {
-
-            }
-            IsLossLoaded = true;
-        }
-
         public override int GetHashCode()
         {
             int result = 0;
@@ -427,9 +321,7 @@ namespace BooruDatasetTagManager
 
         public enum OrderType
         {
-            Name, 
-            Loss,
-            LastLoss,
+            Name,
             ImageModifyTime,
             TagsModifyTime
         }
@@ -440,15 +332,11 @@ namespace BooruDatasetTagManager
             public Image Img { get; set; }
             public string Name { get; set; }
             [Browsable(false)]
-            public List<string> Tags { get; set; }
+            public EditableTagList Tags { get; set; }
             [Browsable(false)]
             public string TextFilePath { get; set; }
             //[Browsable(false)]
             public string ImageFilePath { get; set; }
-
-            public float Loss { get; set; }
-            public float LastLoss { get; set; }
-
             public DateTime ImageModifyTime { get; set; }
             public DateTime TagsModifyTime { get; set; }
             [Browsable(false)]
@@ -464,72 +352,43 @@ namespace BooruDatasetTagManager
 
             public DataItem()
             {
-                Tags = new List<string>();
-                Loss = -1;
-                LastLoss = -1;
+                Tags = new EditableTagList();
             }
 
-            public DataItem(string imagePath, int imageSize, bool fixTags)
+            public DataItem(string imagePath, int imageSize)
             {
-                Tags = new List<string>();
+                Tags = new EditableTagList();
                 ImageFilePath = imagePath;
                 Name = Path.GetFileNameWithoutExtension(imagePath);
                 ImageModifyTime = File.GetLastWriteTime(imagePath);
                 TextFilePath = Path.Combine(Path.GetDirectoryName(imagePath), Name + ".txt");
-                GetTagsFromFile(fixTags);
-                Img = MakeThumb(imagePath, imageSize);
+                GetTagsFromFile();
+                Img = Extensions.MakeThumb(imagePath, imageSize);
             }
 
             public void DeduplicateTags()
             {
                 if (IsModified)
                 {
-                    Tags = Tags.Where(a=>!string.IsNullOrEmpty(a)).Distinct().ToList();
+                    Tags.DeduplicateTags();
                 }
             }
 
 
-            Image MakeThumb(string imagePath, int imgSize)
-            {
 
-                using (var img = Extensions.GetImageFromFile(imagePath))
-                {
-                    var aspect = img.Width / (float)img.Height;
-
-                    int newHeight = img.Height * imgSize / img.Width;
-                    int newWidth = imgSize;
-
-                    if (newHeight > imgSize)
-                    {
-                        newWidth = img.Width * imgSize / img.Height;
-                        newHeight = imgSize;
-                    }
-
-                    return img.GetThumbnailImage(newWidth, newHeight, () => false, IntPtr.Zero);
-                }
-            }
-
-            public void GetTagsFromFile(bool fixTags)
+            public void GetTagsFromFile()
             {
                 if (File.Exists(TextFilePath))
                 {
                     TagsModifyTime = File.GetLastWriteTime(TextFilePath);
                     string text = File.ReadAllText(TextFilePath);
-                    Tags = text.Split(new string[] { Program.Settings.SeparatorOnLoad }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                    for (int i = 0; i < Tags.Count; i++)
-                    {
-                        Tags[i] = Tags[i].Trim();
-                        if (fixTags)
-                        {
-                            Tags[i] = Tags[i].Replace('_', ' ');
-                            Tags[i] = Tags[i].Replace("\\(", "(");
-                            Tags[i] = Tags[i].Replace("\\)", ")");
-                        }
-                    }
+
+                    var temp_tags = PromptParser.ParsePrompt(text, Program.Settings.SeparatorOnLoad);
+                    Tags = new EditableTagList(temp_tags);
                 }
                 else
                 {
-                    Tags = new List<string>();
+                    Tags = new EditableTagList();
                     TagsModifyTime = DateTime.MinValue;
                 }
 

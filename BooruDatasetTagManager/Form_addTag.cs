@@ -24,6 +24,7 @@ namespace BooruDatasetTagManager
             tagTextBox.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
             comboBox1.Items.AddRange(Enum.GetNames(typeof(DatasetManager.AddingType)));
             comboBox1.SelectedItem = "Down";
+            checkBoxSkipExist.Text = I18n.GetText("CheckBoxSkipExist");
             tagTextBox.ItemSelectionComplete += TagTextBox_ItemSelectionComplete;
         }
 

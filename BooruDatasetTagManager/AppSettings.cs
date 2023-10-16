@@ -19,9 +19,10 @@ namespace BooruDatasetTagManager
         public bool OnlyManualTransInAutocomplete { get; set; } = false;
         public AutocompleteMode AutocompleteMode { get; set; } = AutocompleteMode.StartWith;
         public AutocompleteSort AutocompleteSort { get; set; } = AutocompleteSort.Alphabetical;
-        public bool FixTagsOnLoad { get; set; } = true;
+ 
         public TagListingPaneMode UseInterrogatorInsteadOfTagListing { get; set; } = TagListingPaneMode.AllTagsInDirectory;
-        public bool FixTagsOnSave { get; set; } = true;
+        //public bool FixTagsOnLoad { get; set; } = true;
+        //public bool FixTagsOnSave { get; set; } = true;
         public string SeparatorOnLoad { get; set; } = ",";
         public string SeparatorOnSave { get; set; } = ", ";
         public int ShowAutocompleteAfterCharCount { get; set; } = 3;
@@ -29,6 +30,9 @@ namespace BooruDatasetTagManager
         public int GridViewRowHeight { get; set; } = 29;
         public FontSettings GridViewFont { get; set; } = new FontSettings();
         public FontSettings AutocompleteFont { get; set; } = new FontSettings() { Name = "Segoe UI", Size = 9, GdiCharSet = 1 };
+
+        public HotkeyData Hotkeys { get; set; }
+
         private string settingsFile;
 
         public bool AutoSort { get; set; } = false;
@@ -38,6 +42,7 @@ namespace BooruDatasetTagManager
         public AppSettings(string appDir)
         {
             InitAvaibleLangs();
+            Hotkeys = new HotkeyData();
             LoadData(appDir);
         }
 
@@ -63,8 +68,6 @@ namespace BooruDatasetTagManager
                 AutocompleteMode = tempSettings.AutocompleteMode;
                 AutocompleteSort = tempSettings.AutocompleteSort;
                 UseInterrogatorInsteadOfTagListing = tempSettings.UseInterrogatorInsteadOfTagListing;
-                FixTagsOnLoad = tempSettings.FixTagsOnLoad;
-                FixTagsOnSave = tempSettings.FixTagsOnSave;
                 SeparatorOnLoad = tempSettings.SeparatorOnLoad;
                 SeparatorOnSave = tempSettings.SeparatorOnSave;
                 ShowAutocompleteAfterCharCount = tempSettings.ShowAutocompleteAfterCharCount;
@@ -74,6 +77,12 @@ namespace BooruDatasetTagManager
                 AutocompleteFont = tempSettings.AutocompleteFont;
                 AutoSort = tempSettings.AutoSort || false;
                 Language = tempSettings.Language;
+                Hotkeys = tempSettings.Hotkeys;
+                if (Hotkeys == null)
+                {
+                    Hotkeys = new HotkeyData();
+                    Hotkeys.InitDefault();
+                }
             }
         }
 

@@ -55,4 +55,11 @@ namespace BooruDatasetTagManager
         Not,
         Xor
     }
+
+    public enum DataSourceType
+    {
+        None,
+        Single,
+        Multi
+    }
 }
