@@ -16,11 +16,14 @@ namespace BooruDatasetTagManager
         [JsonIgnore]
         public List<LanguageItem> AvaibleLanguages;
         public TranslationService TransService { get; set; } = TranslationService.GoogleTranslate;
+        public bool EnableAttention { get; set; } = false;
         public bool OnlyManualTransInAutocomplete { get; set; } = false;
         public AutocompleteMode AutocompleteMode { get; set; } = AutocompleteMode.StartWith;
         public AutocompleteSort AutocompleteSort { get; set; } = AutocompleteSort.Alphabetical;
  
         public TagListingPaneMode UseInterrogatorInsteadOfTagListing { get; set; } = TagListingPaneMode.AllTagsInDirectory;
+        public int SelectedInterrogatorIndex { get; set; } = 0;
+        public string LastOpenedDirectoryPath { get; set; } = "";
         //public bool FixTagsOnLoad { get; set; } = true;
         //public bool FixTagsOnSave { get; set; } = true;
         public string SeparatorOnLoad { get; set; } = ",";
@@ -62,17 +65,20 @@ namespace BooruDatasetTagManager
             {
                 var tempSettings = JsonConvert.DeserializeObject<AppSettings>(File.ReadAllText(settingsFile));
                 TranslationLanguage = tempSettings.TranslationLanguage;
+                EnableAttention = tempSettings.EnableAttention;
                 PreviewSize = tempSettings.PreviewSize;
                 TransService = tempSettings.TransService;
                 OnlyManualTransInAutocomplete = tempSettings.OnlyManualTransInAutocomplete;
                 AutocompleteMode = tempSettings.AutocompleteMode;
                 AutocompleteSort = tempSettings.AutocompleteSort;
                 UseInterrogatorInsteadOfTagListing = tempSettings.UseInterrogatorInsteadOfTagListing;
+                LastOpenedDirectoryPath = tempSettings.LastOpenedDirectoryPath;
                 SeparatorOnLoad = tempSettings.SeparatorOnLoad;
                 SeparatorOnSave = tempSettings.SeparatorOnSave;
                 ShowAutocompleteAfterCharCount = tempSettings.ShowAutocompleteAfterCharCount;
                 AskSaveChanges = tempSettings.AskSaveChanges;
                 GridViewRowHeight = tempSettings.GridViewRowHeight;
+                SelectedInterrogatorIndex = tempSettings.SelectedInterrogatorIndex;
                 GridViewFont = tempSettings.GridViewFont;
                 AutocompleteFont = tempSettings.AutocompleteFont;
                 AutoSort = tempSettings.AutoSort || false;

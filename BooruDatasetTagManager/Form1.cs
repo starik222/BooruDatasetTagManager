@@ -76,8 +76,9 @@ namespace BooruDatasetTagManager
             gridViewDS.DefaultCellStyle.Font = Program.Settings.GridViewFont.GetFont();
             splitContainer2.SplitterDistance = Width / 3;
             promptFixedLengthComboBox.SelectedIndex = 0;
+
 #if !DEBUG
-            Extensions.CheckForUpdateAsync(Application.ProductVersion);
+                Extensions.CheckForUpdateAsync(Application.ProductVersion);
 #endif
 
             // In external interrogator mode, the overall tag window is basically read-only.
@@ -100,30 +101,45 @@ namespace BooruDatasetTagManager
 
             try
             {
+
+                selectInterrogatorComboBox.SelectedText = "Connecting to Interrogator Service...";
+
                 using var channel = GrpcChannel.ForAddress("http://127.0.0.1:50051");
                 var client = new Image_Interrogator_Ns.ImageInterrogator.ImageInterrogatorClient(channel);
 
                 var empty_req = new Image_Interrogator_Ns.InterrogatorListingRequest();
 
                 var reply = await client.ListInterrogatorsAsync(empty_req);
-                
-                foreach ( var name in reply.InterrogatorNames )
+
+
+                selectInterrogatorComboBox.Items.Clear();
+                foreach (var name in reply.InterrogatorNames)
                 {
                     selectInterrogatorComboBox.Items.Add(name);
                 }
-                 
+
+                var interro_idx = Program.Settings.SelectedInterrogatorIndex;
+                if (interro_idx >= selectInterrogatorComboBox.Items.Count)
+                {
+                    interro_idx = 0;
+                }
+                selectInterrogatorComboBox.SelectedIndex = interro_idx;
+
 
             }
             catch (Exception ex)
             {
                 interrogate_image_button.Enabled = false;
-                selectInterrogatorComboBox.Enabled = false; 
+
+                selectInterrogatorComboBox.SelectedText = "Failed to connect to interrogator service!";
+
+                selectInterrogatorComboBox.Enabled = false;
+
+
+
             }
 
         }
-
-
-
 
         private void openFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -132,15 +148,26 @@ namespace BooruDatasetTagManager
                 saveAllChangesToolStripMenuItem_Click(sender, e);
             }
             OpenFolderDialog openFolderDialog = new OpenFolderDialog();
+
+            if (Program.Settings.LastOpenedDirectoryPath != null)
+            {
+                openFolderDialog.DefaultFolder = Program.Settings.LastOpenedDirectoryPath;
+            }
+
+
             if (openFolderDialog.ShowDialog() != DialogResult.OK)
                 return;
             isLoading = true;
+
+
             Program.DataManager = new DatasetManager();
             if (!Program.DataManager.LoadFromFolder(openFolderDialog.Folder))
             {
                 SetStatus(I18n.GetText("TipFolderWrong"));
                 return;
             }
+
+            Program.Settings.LastOpenedDirectoryPath = openFolderDialog.Folder;
 
             gridViewDS.DataSource = Program.DataManager.GetDataSource();
             Program.DataManager.UpdateData();
@@ -1076,6 +1103,9 @@ namespace BooruDatasetTagManager
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+
+            Program.Settings.SaveSettings();
+
             if (Program.DataManager != null && Program.DataManager.IsDataSetChanged())
             {
                 DialogResult result = MessageBox.Show("The dataset has been changed,\ndo you want to save the changes?", "Saving changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
@@ -2033,6 +2063,11 @@ namespace BooruDatasetTagManager
         }
 
         #endregion
+
+        private void selectInterrogatorComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Program.Settings.SelectedInterrogatorIndex = selectInterrogatorComboBox.SelectedIndex;
+        }
     }
     class DataGridViewRowComparer : IComparer<DataGridViewRow>
     {

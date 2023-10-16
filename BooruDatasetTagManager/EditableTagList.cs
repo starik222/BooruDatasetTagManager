@@ -10,7 +10,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static BooruDatasetTagManager.DatasetManager;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement; 
+using System.Diagnostics;
 
 namespace BooruDatasetTagManager
 {
@@ -189,11 +190,17 @@ namespace BooruDatasetTagManager
         public void DeduplicateTags()
         {
             isStoreHistory = false;
+            var recurse = false;
+            
             for (int i = List.Count - 1; i >= 0; i--)
             {
+                // This was happening. I think there's a race condition, I have no idea how.
+                if (i >= List.Count) continue;
+
                 string tagToSearch = ((EditableTag)List[i]).Tag;
                 if (string.IsNullOrWhiteSpace(tagToSearch))
                     RemoveAt(i);
+
                 List<int> foundedTagIndexes = IndexOfAll(tagToSearch, 0, i);
                 if (foundedTagIndexes.Count == 1)
                 {
@@ -202,11 +209,17 @@ namespace BooruDatasetTagManager
                 else if (foundedTagIndexes.Count > 1)
                 {
                     RemoveAt(i);
-                    for (int j = foundedTagIndexes.Count - 1; j >= 1; j--)
-                        RemoveAt(j);
+                    recurse = true;
+                    break;
+                    
                 }
 
             }
+
+            // We have to recurse for duplicate tag searching because otherwise we remove past the point where we're checking.
+            if (recurse)
+                this.DeduplicateTags();
+
             isStoreHistory = true;
         }
 

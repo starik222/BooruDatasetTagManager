@@ -75,6 +75,7 @@ namespace BooruDatasetTagManager
             LabelDataSet = new System.Windows.Forms.Label();
             LabelImageTags = new System.Windows.Forms.Label();
             gridViewAllTags = new System.Windows.Forms.DataGridView();
+            LabelAllTags = new System.Windows.Forms.Label();
             toolStrip1 = new System.Windows.Forms.ToolStrip();
             BtnTagSwitch = new System.Windows.Forms.ToolStripButton();
             BtnTagAddToAll = new System.Windows.Forms.ToolStripButton();
@@ -106,7 +107,6 @@ namespace BooruDatasetTagManager
             clear_tag_search_button = new System.Windows.Forms.Button();
             tag_search_textbox = new System.Windows.Forms.TextBox();
             LabelAllTags = new System.Windows.Forms.Label();
-            customTextBoxColumn1 = new CustomTextBoxColumn();
             contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(components);
             toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -155,7 +155,7 @@ namespace BooruDatasetTagManager
             gridViewTags.RowHeadersVisible = false;
             gridViewTags.RowHeadersWidth = 72;
             gridViewTags.RowTemplate.Height = 29;
-            gridViewTags.Size = new System.Drawing.Size(398, 790);
+            gridViewTags.Size = new System.Drawing.Size(369, 647);
             gridViewTags.TabIndex = 2;
             gridViewTags.CellEndEdit += gridViewTags_CellEndEdit;
             gridViewTags.CellMouseEnter += dataGridViewTags_CellMouseEnter;
@@ -440,7 +440,7 @@ namespace BooruDatasetTagManager
             // settingsToolStripMenuItem
             // 
             settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            settingsToolStripMenuItem.Size = new System.Drawing.Size(188, 26);
+            settingsToolStripMenuItem.Size = new System.Drawing.Size(187, 26);
             settingsToolStripMenuItem.Text = "Settings...";
             settingsToolStripMenuItem.Click += settingsToolStripMenuItem_Click;
             // 
@@ -448,7 +448,7 @@ namespace BooruDatasetTagManager
             // 
             MenuLanguage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { LanguageENBtn, LanguageCNBtn });
             MenuLanguage.Name = "MenuLanguage";
-            MenuLanguage.Size = new System.Drawing.Size(188, 26);
+            MenuLanguage.Size = new System.Drawing.Size(187, 26);
             MenuLanguage.Text = "Language/语言";
             // 
             // LanguageENBtn
@@ -538,6 +538,19 @@ namespace BooruDatasetTagManager
             gridViewAllTags.Enter += gridView_Enter;
             gridViewAllTags.KeyPress += gridViewAllTags_KeyPress;
             gridViewAllTags.Leave += gridView_Leave;
+            // 
+            // LabelAllTags
+            // 
+            LabelAllTags.AutoSize = true;
+            LabelAllTags.Dock = System.Windows.Forms.DockStyle.Top;
+            LabelAllTags.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            LabelAllTags.Location = new System.Drawing.Point(0, 0);
+            LabelAllTags.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            LabelAllTags.Name = "LabelAllTags";
+            LabelAllTags.Padding = new System.Windows.Forms.Padding(4, 4, 4, 5);
+            LabelAllTags.Size = new System.Drawing.Size(69, 30);
+            LabelAllTags.TabIndex = 5;
+            LabelAllTags.Text = "All tags";
             // 
             // toolStrip1
             // 
@@ -844,6 +857,7 @@ namespace BooruDatasetTagManager
             selectInterrogatorComboBox.Size = new System.Drawing.Size(247, 23);
             selectInterrogatorComboBox.TabIndex = 10;
             selectInterrogatorComboBox.Visible = false;
+            selectInterrogatorComboBox.SelectedIndexChanged += selectInterrogatorComboBox_SelectedIndexChanged;
             // 
             // interrogate_image_button
             // 
@@ -889,15 +903,6 @@ namespace BooruDatasetTagManager
             LabelAllTags.Size = new System.Drawing.Size(69, 30);
             LabelAllTags.TabIndex = 5;
             LabelAllTags.Text = "All tags";
-            // 
-            // customTextBoxColumn1
-            // 
-            customTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            customTextBoxColumn1.HeaderText = "Tags";
-            customTextBoxColumn1.MinimumWidth = 9;
-            customTextBoxColumn1.Name = "customTextBoxColumn1";
-            customTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            customTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // contextMenuStrip1
             // 
@@ -978,6 +983,7 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showPreviewToolStripMenuItem;
         private System.Windows.Forms.DataGridView gridViewAllTags;
+        private System.Windows.Forms.Label LabelAllTags;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton BtnTagSwitch;
         private System.Windows.Forms.ToolStripButton BtnTagAddToAll;
@@ -1034,7 +1040,6 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripMenuItem LanguageENBtn;
         private System.Windows.Forms.ToolStripMenuItem LanguageCNBtn;
         private System.Windows.Forms.ToolStripMenuItem replaceTransparentBackgroundToolStripMenuItem;
-        private System.Windows.Forms.Label LabelAllTags;
         private System.Windows.Forms.Button clear_tag_search_button;
         private System.Windows.Forms.TextBox tag_search_textbox;
         private System.Windows.Forms.Button interrogate_image_button;

@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -270,11 +271,21 @@ namespace BooruDatasetTagManager
             }
             imgs = imgs.Where(a => imagesExt.Contains(Path.GetExtension(a).ToLower())).OrderBy(a => a, new FileNamesComparer()).ToArray();
             int imgSize = Program.Settings.PreviewSize;
+            /*
+
+            foreach (var impath in imgs)
+            {
+                var dt = new DataItem(impath, imgSize);
+                DataSet.TryAdd(dt.ImageFilePath, dt);
+            }
+            */
+
             imgs.AsParallel().ForAll(x =>
             {
                 var dt = new DataItem(x, imgSize);
                 DataSet.TryAdd(dt.ImageFilePath, dt);
             });
+
             UpdateDatasetHash();
             IsLossLoaded = false;
             return true;
@@ -358,6 +369,8 @@ namespace BooruDatasetTagManager
             public DataItem(string imagePath, int imageSize)
             {
                 Tags = new EditableTagList();
+                Tags.Clear();
+
                 ImageFilePath = imagePath;
                 Name = Path.GetFileNameWithoutExtension(imagePath);
                 ImageModifyTime = File.GetLastWriteTime(imagePath);
@@ -383,14 +396,16 @@ namespace BooruDatasetTagManager
                     TagsModifyTime = File.GetLastWriteTime(TextFilePath);
                     string text = File.ReadAllText(TextFilePath);
 
-                    var temp_tags = PromptParser.ParsePrompt(text, Program.Settings.SeparatorOnLoad);
+                    var temp_tags = PromptParser.ParsePrompt(text, Program.Settings.SeparatorOnLoad, Program.Settings.EnableAttention);
                     Tags = new EditableTagList(temp_tags);
+
                 }
                 else
                 {
                     Tags = new EditableTagList();
                     TagsModifyTime = DateTime.MinValue;
                 }
+
 
                 originalHash = GetHashCode();
             }

@@ -16,56 +16,62 @@ namespace BooruDatasetTagManager
         public static float round_bracket_multiplier = 1.1f;
         public static float square_bracket_multiplier = 1f / 1.1f;
 
-        public static List<PromptItem> ParsePrompt(string promptString, string splitSeparator = ",")
+        public static List<PromptItem> ParsePrompt(string promptString, string splitSeparator = ",", bool enable_attention = true)
         {
             List<PromptItem> res = new List<PromptItem>();
             List<int> round_brackets = new List<int>();
             List<int> square_brackets = new List<int>();
             List<PromptItem> result = new List<PromptItem>();
 
-            void multiply_range(int startPosition, float multiplier)
+            if (enable_attention)
             {
-                for (int i = startPosition; i < res.Count; i++)
+                void multiply_range(int startPosition, float multiplier)
                 {
-                    res[i].Weight *= multiplier;
-                }
-            }
-
-            foreach (Match m in re_attention.Matches(promptString))
-            {
-                string text = m.Groups[0].Value;
-                string weight = m.Groups[1].Value;
-
-                if (text.StartsWith("\\"))
-                    res.Add(new PromptItem(text.Substring(1), 1.0f));
-                else if (text == "(")
-                    round_brackets.Add(res.Count);
-                else if (text == "[")
-                    square_brackets.Add(res.Count);
-                else if (!string.IsNullOrEmpty(weight) && round_brackets.Count > 0)
-                    multiply_range(round_brackets.Pop(), (float)Convert.ToDouble(weight));
-                else if (text == ")")
-                    multiply_range(round_brackets.Pop(), round_bracket_multiplier);
-                else if (text == "]")
-                    multiply_range(square_brackets.Pop(), square_bracket_multiplier);
-                else
-                {
-                    string[] parts = re_break.Split(text);
-                    for (int i = 0; i < parts.Length; i++)
+                    for (int i = startPosition; i < res.Count; i++)
                     {
-                        if(i>0)
-                            res.Add(new PromptItem("BREAK", -1f));
-                        res.Add(new PromptItem(parts[i], 1.0f));
+                        res[i].Weight *= multiplier;
                     }
                 }
+                foreach (Match m in re_attention.Matches(promptString))
+                {
+                    string text = m.Groups[0].Value;
+                    string weight = m.Groups[1].Value;
+
+                    if (text.StartsWith("\\"))
+                        res.Add(new PromptItem(text.Substring(1), 1.0f));
+                    else if (text == "(")
+                        round_brackets.Add(res.Count);
+                    else if (text == "[")
+                        square_brackets.Add(res.Count);
+                    else if (!string.IsNullOrEmpty(weight) && round_brackets.Count > 0)
+                        multiply_range(round_brackets.Pop(), (float)Convert.ToDouble(weight));
+                    else if (text == ")")
+                        multiply_range(round_brackets.Pop(), round_bracket_multiplier);
+                    else if (text == "]")
+                        multiply_range(square_brackets.Pop(), square_bracket_multiplier);
+                    else
+                    {
+                        string[] parts = re_break.Split(text);
+                        for (int i = 0; i < parts.Length; i++)
+                        {
+                            if (i > 0)
+                                res.Add(new PromptItem("BREAK", -1f));
+                            res.Add(new PromptItem(parts[i], 1.0f));
+                        }
+                    }
+                }
+                foreach (var item in round_brackets)
+                {
+                    multiply_range(item, round_bracket_multiplier);
+                }
+                foreach (var item in square_brackets)
+                {
+                    multiply_range(item, square_bracket_multiplier);
+                }
             }
-            foreach (var item in round_brackets)
+            else
             {
-                multiply_range(item, round_bracket_multiplier);
-            }
-            foreach (var item in square_brackets)
-            {
-                multiply_range(item, square_bracket_multiplier);
+                res.Add(new PromptItem(promptString, 1.0f));
             }
 
             if (res.Count == 0)
