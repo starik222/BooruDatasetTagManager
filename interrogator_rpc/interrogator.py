@@ -34,12 +34,14 @@ WD_TAGGER_NAMES = [
     "wd-v1-4-vit-tagger-v2",
     "wd-v1-4-convnext-tagger-v2",
     "wd-v1-4-swinv2-tagger-v2",
+    "wd-v1-4-moat-tagger-v2",
 ]
 WD_TAGGER_THRESHOLDS = [
     0.35,
     0.35,
     0.3537,
     0.3685,
+    0.3771,
     0.3771,
 ]  # v1: idk if it's okay  v2: P=R thresholds on each repo https://huggingface.co/SmilingWolf
 
