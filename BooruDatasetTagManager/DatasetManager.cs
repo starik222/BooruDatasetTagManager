@@ -368,10 +368,7 @@ namespace BooruDatasetTagManager
 
             public void DeduplicateTags()
             {
-                if (IsModified)
-                {
-                    Tags.DeduplicateTags();
-                }
+                Tags.DeduplicateTags();
             }
 
 

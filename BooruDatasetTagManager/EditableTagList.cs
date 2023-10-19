@@ -67,7 +67,6 @@ namespace BooruDatasetTagManager
             _tags = new List<string>();
         }
 
-        //NEED MODIRY TO SUPPORT WEIDED TAGS!!!
         public override string ToString()
         {
             DeduplicateTags();
@@ -569,22 +568,6 @@ namespace BooruDatasetTagManager
             int index = List.IndexOf(tag);
 
             _tags[index] = tag.Tag;
-
-            //var h = new EditableTagHistory();
-            //h.Index = index;
-            //h.TagOld = tag.GetEditableTagFromBackup();
-            //h.TagNew = (EditableTag)tag.Clone();
-            //if (h.TagOld.Tag == "")
-            //{
-            //    h.Type = EditableTagHistory.HistoryType.Add;
-            //    _tags.Insert(index, tag.Tag);
-            //}
-            //else
-            //{
-            //    h.Type = EditableTagHistory.HistoryType.Modify;
-            //    _tags[index] = tag.Tag;
-            //}
-
 
             if (storeHistory)
             {
