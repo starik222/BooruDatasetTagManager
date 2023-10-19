@@ -73,9 +73,6 @@ namespace BooruDatasetTagManager
 #endif
         }
 
-
-
-
         private void openFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Program.DataManager != null)
