@@ -54,9 +54,6 @@ namespace BooruDatasetTagManager
         private bool isCtrlOrShiftPressed = false;
         private bool needReloadTags = false;
 
-
-        Dictionary<string, string> Trans = new Dictionary<string, string>();
-
         private void Form1_Load(object sender, EventArgs e)
         {
             Text += " " + Application.ProductVersion;
