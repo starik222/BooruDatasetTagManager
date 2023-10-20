@@ -63,8 +63,8 @@ namespace BooruDatasetTagManager
             gridViewTags.DefaultCellStyle.Font = Program.Settings.GridViewFont.GetFont();
             gridViewAllTags.DefaultCellStyle.Font = Program.Settings.GridViewFont.GetFont();
             gridViewDS.DefaultCellStyle.Font = Program.Settings.GridViewFont.GetFont();
-            splitContainer2.SplitterDistance = Width / 3;
-            promptFixedLengthComboBox.SelectedIndex = 0;
+            //splitContainer2.SplitterDistance = Width / 3;
+            toolStrippromptFixedLengthComboBox.SelectedIndex = 0;
 #if !DEBUG
             Extensions.CheckForUpdateAsync(Application.ProductVersion);
 #endif
@@ -124,8 +124,8 @@ namespace BooruDatasetTagManager
 
         private void LockEdit(bool locked)
         {
-            toolStrip2.Enabled = !locked;
-            toolStrip1.Enabled = !locked;
+            toolStripTags.Enabled = !locked;
+            toolStripAllTags.Enabled = !locked;
             gridViewTags.Enabled = !locked;
             if (gridViewTags.SelectedRows.Count == 1)
                 gridViewTags.AllowDrop = !locked;
@@ -484,9 +484,9 @@ namespace BooruDatasetTagManager
         {
             isAllTags = !isAllTags;
             if (isAllTags)
-                LabelAllTags.Text = I18n.GetText("UILabelAllTags");
+                toolStripLabelAllTags.Text = I18n.GetText("UILabelAllTags");
             else
-                LabelAllTags.Text = I18n.GetText("UILabelCommonTags");
+                toolStripLabelAllTags.Text = I18n.GetText("UILabelCommonTags");
             BindTagList();
         }
 
@@ -1518,14 +1518,14 @@ namespace BooruDatasetTagManager
         private void ShowAllTagsFilter(bool show)
         {
             if (!show)
-                textBox1.TextChanged -= TextBox1_TextChanged;
-            textBox1.Clear();
-            textBox1.Visible = show;
-            button1.Visible = show;
+                toolStripTextBox1.TextChanged -= TextBox1_TextChanged;
+            toolStripTextBox1.Clear();
+            toolStripTextBox1.Visible = show;
+            toolStripButton1.Visible = show;
             if (show)
             {
-                textBox1.Focus();
-                textBox1.TextChanged += TextBox1_TextChanged;
+                toolStripTextBox1.Focus();
+                toolStripTextBox1.TextChanged += TextBox1_TextChanged;
             }
             else
             {
@@ -1535,10 +1535,10 @@ namespace BooruDatasetTagManager
 
         private void TextBox1_TextChanged(object sender, EventArgs e)
         {
-            if (textBox1.Text.Length > 0)
+            if (toolStripTextBox1.Text.Length > 0)
             {
                 isLoading = true;
-                int index = Program.DataManager.AllTags.FindIndex(a => a.Tag.StartsWith(textBox1.Text));
+                int index = Program.DataManager.AllTags.FindIndex(a => a.Tag.StartsWith(toolStripTextBox1.Text));
                 if (index != -1)
                 {
                     //gridViewAllTags.ClearSelection();
@@ -1551,8 +1551,8 @@ namespace BooruDatasetTagManager
                 }
                 else
                 {
-                    textBox1.Text = textBox1.Text.Substring(0, textBox1.Text.Length - 1);
-                    textBox1.SelectionStart = textBox1.TextLength;
+                    toolStripTextBox1.Text = toolStripTextBox1.Text.Substring(0, toolStripTextBox1.Text.Length - 1);
+                    toolStripTextBox1.SelectionStart = toolStripTextBox1.TextLength;
                 }
                 isLoading = false;
             }
@@ -1561,8 +1561,8 @@ namespace BooruDatasetTagManager
         private void gridViewAllTags_KeyPress(object sender, KeyPressEventArgs e)
         {
             ShowAllTagsFilter(true);
-            textBox1.Text = e.KeyChar.ToString();
-            textBox1.SelectionStart = 1;
+            toolStripTextBox1.Text = e.KeyChar.ToString();
+            toolStripTextBox1.SelectionStart = 1;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -1634,7 +1634,7 @@ namespace BooruDatasetTagManager
 
         private void SortPrompt()
         {
-            var fixedLengthIndex = promptFixedLengthComboBox.SelectedIndex;
+            var fixedLengthIndex = toolStrippromptFixedLengthComboBox.SelectedIndex;
             if (fixedLengthIndex == -1) return;
             var fixLength = fixedLengthIndex;
             if (fixLength >= 0)
@@ -1684,10 +1684,10 @@ namespace BooruDatasetTagManager
             fileToolStripMenuItem.Text = I18n.GetText("MenuLabelFile");
             MenuSetting.Text = I18n.GetText("MenuLabelSettings");
             viewToolStripMenuItem.Text = I18n.GetText("MenuLabelView");
-            LabelDataSet.Text = I18n.GetText("UILabelDataSet");
-            LabelAllTags.Text = I18n.GetText("UILabelAllTags");
-            LabelImageTags.Text = I18n.GetText("UILabelImageTags");
-            promptFixTipLabel.Text = I18n.GetText("UILabelFixPromptLength");
+            toolStripLabelDataSet.Text = I18n.GetText("UILabelDataSet");
+            toolStripLabelAllTags.Text = I18n.GetText("UILabelAllTags");
+            toolStripLabelImageTags.Text = I18n.GetText("UILabelImageTags");
+            toolStripPromptFixTipLabel.Text = I18n.GetText("UILabelFixPromptLength");
             openFolderToolStripMenuItem.Text = I18n.GetText("MenuItemLoadFolder");
             saveAllChangesToolStripMenuItem.Text = I18n.GetText("MenuItemSaveChanges");
             showPreviewToolStripMenuItem.Text = I18n.GetText("MenuItemShowPreview");
