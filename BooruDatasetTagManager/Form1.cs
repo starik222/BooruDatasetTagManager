@@ -131,6 +131,8 @@ namespace BooruDatasetTagManager
                 gridViewTags.AllowDrop = !locked;
             gridViewAllTags.Enabled = !locked;
             gridViewDS.Enabled = !locked;
+            gridViewAutoTags.Enabled = !locked;
+            toolStripAutoTags.Enabled = !locked;
         }
 
         private void ShowPreview(string img)
@@ -1933,6 +1935,56 @@ namespace BooruDatasetTagManager
         {
             Form_AutoTaggerSettings autoTaggerSettings = new Form_AutoTaggerSettings();
             autoTaggerSettings.ShowDialog();
+        }
+
+        private async void BtnAutoGetTagsDefSet_Click(object sender, EventArgs e)
+        {
+            tabAutoTags.Select();
+            LockEdit(true);
+            var selectedImageData = Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value];
+            var tagList = await GetTagsWithAutoTagger(selectedImageData.ImageFilePath, true);
+            gridViewAutoTags.DataSource = tagList;
+
+            LockEdit(false);
+        }
+
+        private async Task<List<AutoTagItem>> GetTagsWithAutoTagger(string imagePath, bool defSettings)
+        {
+            if (gridViewDS.SelectedRows.Count == 0)
+                return new List<AutoTagItem>();
+            if (!defSettings || string.IsNullOrEmpty(Program.Settings.AutoTagger.Name))
+            {
+                Form_AutoTaggerSettings autoTaggerSettings = new Form_AutoTaggerSettings();
+                if (autoTaggerSettings.ShowDialog() != DialogResult.OK || string.IsNullOrEmpty(Program.Settings.AutoTagger.Name))
+                {
+                    autoTaggerSettings.Close();
+                    SetStatus("Generation operation canceled");
+                    return new List<AutoTagItem>();
+                }
+            }
+            if (!Program.AutoTagger.IsConnected)
+            {
+                if (!await Program.AutoTagger.ConnectAsync())
+                {
+                    SetStatus("Unable to connect to the Interrogator service! Please start the service from the interrogator_rpc folder.");
+                    return new List<AutoTagItem>();
+                }
+            }
+            var listOfTags = await Program.AutoTagger.InterrogateImage(imagePath, Program.Settings.AutoTagger.Name, Program.Settings.AutoTagger.Threshold);
+            if (listOfTags == null)
+            {
+                SetStatus($"Error getting tags for image {imagePath}");
+                return new List<AutoTagItem>();
+            }
+            if (Program.Settings.AutoTagger.SortMode == AutoTaggerSort.Confidence)
+            {
+                listOfTags.Sort((a, b) => b.Confidence.CompareTo(a.Confidence));
+            }
+            else if (Program.Settings.AutoTagger.SortMode == AutoTaggerSort.Alphabetical)
+            {
+                listOfTags.Sort((a, b) => a.Tag.CompareTo(b.Tag));
+            }
+            return listOfTags;
         }
     }
     class DataGridViewRowComparer : IComparer<DataGridViewRow>
