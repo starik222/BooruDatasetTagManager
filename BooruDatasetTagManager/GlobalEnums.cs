@@ -36,6 +36,13 @@ namespace BooruDatasetTagManager
         ByCount
     }
 
+    public enum AutoTaggerSort
+    {
+        None,
+        Confidence,
+        Alphabetical
+    }
+
     public enum AutocompleteSort_ZH_CN
     {
         字母,

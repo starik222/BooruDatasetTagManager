@@ -60,6 +60,7 @@ namespace BooruDatasetTagManager
     public class HotkeyItem : ICloneable
     {
         public string Id {get; set; }
+        [JsonIgnore]
         public string Text {get; set; }
         public Keys KeyData {get; set; }
 

@@ -31,6 +31,8 @@ namespace BooruDatasetTagManager
 
         public HotkeyData Hotkeys { get; set; }
 
+        public InterragatorSettings AutoTagger { get; set; }
+
         private string settingsFile;
 
         public bool AutoSort { get; set; } = false;
@@ -74,6 +76,28 @@ namespace BooruDatasetTagManager
                 AutocompleteFont = tempSettings.AutocompleteFont;
                 AutoSort = tempSettings.AutoSort || false;
                 Language = tempSettings.Language;
+                AutoTagger = tempSettings.AutoTagger;
+                if (AutoTagger == null)
+                {
+                    AutoTagger = new InterragatorSettings();
+                }
+                Hotkeys = new HotkeyData();
+                Hotkeys.InitDefault();
+                if (tempSettings.Hotkeys != null)
+                {
+                    foreach (var item in tempSettings.Hotkeys.Items)
+                    {
+                        var hkItem = Hotkeys[item.Id];
+                        if (hkItem != null)
+                        {
+                            hkItem.KeyData = item.KeyData;
+                            hkItem.IsCtrl = item.IsCtrl;
+                            hkItem.IsAlt = item.IsAlt;
+                            hkItem.IsShift = item.IsShift;
+                        }
+                    }
+                }
+
                 Hotkeys = tempSettings.Hotkeys;
                 if (Hotkeys == null)
                 {
@@ -244,6 +268,13 @@ namespace BooruDatasetTagManager
         {
             return Name;
         }
+    }
+
+    public class InterragatorSettings
+    {
+        public string Name {get; set;}
+        public AutoTaggerSort SortMode { get; set; } = AutoTaggerSort.None;
+        public float Threshold { get; set; } = 0.35f;
     }
 
     public class FontSettings

@@ -67,6 +67,7 @@ namespace BooruDatasetTagManager
             MenuShowTagCount = new System.Windows.Forms.ToolStripMenuItem();
             MenuSetting = new System.Windows.Forms.ToolStripMenuItem();
             settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            autoTaggerSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             MenuLanguage = new System.Windows.Forms.ToolStripMenuItem();
             LanguageENBtn = new System.Windows.Forms.ToolStripMenuItem();
             LanguageCNBtn = new System.Windows.Forms.ToolStripMenuItem();
@@ -105,12 +106,20 @@ namespace BooruDatasetTagManager
             toolStripPromptSortBtn = new System.Windows.Forms.ToolStripButton();
             toolStrippromptFixedLengthComboBox = new System.Windows.Forms.ToolStripComboBox();
             toolStripPromptFixTipLabel = new System.Windows.Forms.ToolStripLabel();
-            tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            tabControl1 = new Manina.Windows.Forms.TabControl();
+            tabAllTags = new Manina.Windows.Forms.Tab();
             toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             toolStrip1 = new System.Windows.Forms.ToolStrip();
             toolStripLabelAllTags = new System.Windows.Forms.ToolStripLabel();
             toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            tabAutoTags = new Manina.Windows.Forms.Tab();
+            toolStripContainer4 = new System.Windows.Forms.ToolStripContainer();
+            gridViewAutoTags = new System.Windows.Forms.DataGridView();
+            toolStripAutoTags = new System.Windows.Forms.ToolStrip();
+            toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            toolStrip2 = new System.Windows.Forms.ToolStrip();
+            toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             customTextBoxColumn1 = new CustomTextBoxColumn();
             contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(components);
             toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -139,12 +148,21 @@ namespace BooruDatasetTagManager
             toolStripContainer2.TopToolStripPanel.SuspendLayout();
             toolStripContainer2.SuspendLayout();
             toolStripTagsHeader.SuspendLayout();
-            tableLayoutPanel2.SuspendLayout();
+            tabControl1.SuspendLayout();
+            tabAllTags.SuspendLayout();
             toolStripContainer1.ContentPanel.SuspendLayout();
             toolStripContainer1.RightToolStripPanel.SuspendLayout();
             toolStripContainer1.TopToolStripPanel.SuspendLayout();
             toolStripContainer1.SuspendLayout();
             toolStrip1.SuspendLayout();
+            tabAutoTags.SuspendLayout();
+            toolStripContainer4.ContentPanel.SuspendLayout();
+            toolStripContainer4.RightToolStripPanel.SuspendLayout();
+            toolStripContainer4.TopToolStripPanel.SuspendLayout();
+            toolStripContainer4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)gridViewAutoTags).BeginInit();
+            toolStripAutoTags.SuspendLayout();
+            toolStrip2.SuspendLayout();
             contextMenuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -175,7 +193,7 @@ namespace BooruDatasetTagManager
             gridViewTags.RowHeadersVisible = false;
             gridViewTags.RowHeadersWidth = 72;
             gridViewTags.RowTemplate.Height = 29;
-            gridViewTags.Size = new System.Drawing.Size(437, 652);
+            gridViewTags.Size = new System.Drawing.Size(372, 652);
             gridViewTags.TabIndex = 2;
             gridViewTags.CellEndEdit += gridViewTags_CellEndEdit;
             gridViewTags.CellMouseEnter += dataGridViewTags_CellMouseEnter;
@@ -451,7 +469,7 @@ namespace BooruDatasetTagManager
             // 
             // MenuSetting
             // 
-            MenuSetting.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { settingsToolStripMenuItem, MenuLanguage });
+            MenuSetting.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { settingsToolStripMenuItem, autoTaggerSettingsToolStripMenuItem, MenuLanguage });
             MenuSetting.Name = "MenuSetting";
             MenuSetting.Size = new System.Drawing.Size(77, 25);
             MenuSetting.Text = "Options";
@@ -459,15 +477,22 @@ namespace BooruDatasetTagManager
             // settingsToolStripMenuItem
             // 
             settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            settingsToolStripMenuItem.Size = new System.Drawing.Size(188, 26);
+            settingsToolStripMenuItem.Size = new System.Drawing.Size(229, 26);
             settingsToolStripMenuItem.Text = "Settings...";
             settingsToolStripMenuItem.Click += settingsToolStripMenuItem_Click;
+            // 
+            // autoTaggerSettingsToolStripMenuItem
+            // 
+            autoTaggerSettingsToolStripMenuItem.Name = "autoTaggerSettingsToolStripMenuItem";
+            autoTaggerSettingsToolStripMenuItem.Size = new System.Drawing.Size(229, 26);
+            autoTaggerSettingsToolStripMenuItem.Text = "Auto tagger settings...";
+            autoTaggerSettingsToolStripMenuItem.Click += autoTaggerSettingsToolStripMenuItem_Click;
             // 
             // MenuLanguage
             // 
             MenuLanguage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { LanguageENBtn, LanguageCNBtn });
             MenuLanguage.Name = "MenuLanguage";
-            MenuLanguage.Size = new System.Drawing.Size(188, 26);
+            MenuLanguage.Size = new System.Drawing.Size(229, 26);
             MenuLanguage.Text = "Language/语言";
             // 
             // LanguageENBtn
@@ -524,7 +549,7 @@ namespace BooruDatasetTagManager
             gridViewAllTags.RowHeadersWidth = 72;
             gridViewAllTags.RowTemplate.Height = 29;
             gridViewAllTags.RowTemplate.ReadOnly = true;
-            gridViewAllTags.Size = new System.Drawing.Size(338, 510);
+            gridViewAllTags.Size = new System.Drawing.Size(357, 630);
             gridViewAllTags.TabIndex = 2;
             gridViewAllTags.CellDoubleClick += dataGridView2_CellDoubleClick;
             gridViewAllTags.SelectionChanged += gridViewAllTags_SelectionChanged;
@@ -540,7 +565,7 @@ namespace BooruDatasetTagManager
             toolStripAllTags.Location = new System.Drawing.Point(0, 3);
             toolStripAllTags.Name = "toolStripAllTags";
             toolStripAllTags.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            toolStripAllTags.Size = new System.Drawing.Size(38, 507);
+            toolStripAllTags.Size = new System.Drawing.Size(38, 542);
             toolStripAllTags.TabIndex = 3;
             toolStripAllTags.Text = "toolStrip2";
             // 
@@ -681,7 +706,7 @@ namespace BooruDatasetTagManager
             BtnTagFilter.Image = Properties.Resources.filterAdd;
             BtnTagFilter.ImageTransparentColor = System.Drawing.Color.Magenta;
             BtnTagFilter.Name = "BtnTagFilter";
-            BtnTagFilter.Size = new System.Drawing.Size(36, 36);
+            BtnTagFilter.Size = new System.Drawing.Size(35, 36);
             BtnTagFilter.Text = "Filter in all tags";
             BtnTagFilter.Click += toolStripButton24_Click;
             // 
@@ -691,7 +716,7 @@ namespace BooruDatasetTagManager
             BtnTagExitFilter.Image = Properties.Resources.filterRemove;
             BtnTagExitFilter.ImageTransparentColor = System.Drawing.Color.Magenta;
             BtnTagExitFilter.Name = "BtnTagExitFilter";
-            BtnTagExitFilter.Size = new System.Drawing.Size(36, 36);
+            BtnTagExitFilter.Size = new System.Drawing.Size(35, 36);
             BtnTagExitFilter.Text = "Remove filter";
             BtnTagExitFilter.Click += toolStripButton25_Click;
             // 
@@ -727,7 +752,7 @@ namespace BooruDatasetTagManager
             // 
             splitContainer1.Panel2.Controls.Add(splitContainer2);
             splitContainer1.Size = new System.Drawing.Size(1224, 677);
-            splitContainer1.SplitterDistance = 358;
+            splitContainer1.SplitterDistance = 410;
             splitContainer1.SplitterWidth = 5;
             splitContainer1.TabIndex = 7;
             // 
@@ -737,11 +762,11 @@ namespace BooruDatasetTagManager
             // toolStripContainer3.ContentPanel
             // 
             toolStripContainer3.ContentPanel.Controls.Add(gridViewDS);
-            toolStripContainer3.ContentPanel.Size = new System.Drawing.Size(358, 653);
+            toolStripContainer3.ContentPanel.Size = new System.Drawing.Size(410, 653);
             toolStripContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
             toolStripContainer3.Location = new System.Drawing.Point(0, 0);
             toolStripContainer3.Name = "toolStripContainer3";
-            toolStripContainer3.Size = new System.Drawing.Size(358, 677);
+            toolStripContainer3.Size = new System.Drawing.Size(410, 677);
             toolStripContainer3.TabIndex = 7;
             toolStripContainer3.Text = "toolStripContainer3";
             // 
@@ -770,7 +795,7 @@ namespace BooruDatasetTagManager
             gridViewDS.RowTemplate.ReadOnly = true;
             gridViewDS.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             gridViewDS.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            gridViewDS.Size = new System.Drawing.Size(358, 653);
+            gridViewDS.Size = new System.Drawing.Size(410, 653);
             gridViewDS.TabIndex = 6;
             gridViewDS.DataSourceChanged += dataGridView3_DataSourceChanged;
             gridViewDS.CellMouseDown += gridViewDS_CellMouseDown;
@@ -789,15 +814,15 @@ namespace BooruDatasetTagManager
             toolStrip4.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             toolStrip4.Location = new System.Drawing.Point(3, 0);
             toolStrip4.Name = "toolStrip4";
-            toolStrip4.Size = new System.Drawing.Size(116, 24);
+            toolStrip4.Size = new System.Drawing.Size(63, 24);
             toolStrip4.TabIndex = 0;
             // 
             // toolStripLabelDataSet
             // 
             toolStripLabelDataSet.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             toolStripLabelDataSet.Name = "toolStripLabelDataSet";
-            toolStripLabelDataSet.Size = new System.Drawing.Size(115, 21);
-            toolStripLabelDataSet.Text = "toolStripLabel1";
+            toolStripLabelDataSet.Size = new System.Drawing.Size(62, 21);
+            toolStripLabelDataSet.Text = "Dataset";
             // 
             // splitContainer2
             // 
@@ -811,9 +836,9 @@ namespace BooruDatasetTagManager
             // 
             // splitContainer2.Panel2
             // 
-            splitContainer2.Panel2.Controls.Add(tableLayoutPanel2);
-            splitContainer2.Size = new System.Drawing.Size(861, 677);
-            splitContainer2.SplitterDistance = 475;
+            splitContainer2.Panel2.Controls.Add(tabControl1);
+            splitContainer2.Size = new System.Drawing.Size(809, 677);
+            splitContainer2.SplitterDistance = 410;
             splitContainer2.TabIndex = 8;
             // 
             // toolStripContainer2
@@ -822,7 +847,7 @@ namespace BooruDatasetTagManager
             // toolStripContainer2.ContentPanel
             // 
             toolStripContainer2.ContentPanel.Controls.Add(gridViewTags);
-            toolStripContainer2.ContentPanel.Size = new System.Drawing.Size(437, 652);
+            toolStripContainer2.ContentPanel.Size = new System.Drawing.Size(372, 652);
             toolStripContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             toolStripContainer2.Location = new System.Drawing.Point(0, 0);
             toolStripContainer2.Name = "toolStripContainer2";
@@ -830,7 +855,7 @@ namespace BooruDatasetTagManager
             // toolStripContainer2.RightToolStripPanel
             // 
             toolStripContainer2.RightToolStripPanel.Controls.Add(toolStripTags);
-            toolStripContainer2.Size = new System.Drawing.Size(475, 677);
+            toolStripContainer2.Size = new System.Drawing.Size(410, 677);
             toolStripContainer2.TabIndex = 0;
             toolStripContainer2.Text = "toolStripContainer2";
             // 
@@ -841,11 +866,11 @@ namespace BooruDatasetTagManager
             // toolStripTagsHeader
             // 
             toolStripTagsHeader.Dock = System.Windows.Forms.DockStyle.None;
+            toolStripTagsHeader.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             toolStripTagsHeader.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripLabelImageTags, toolStripPromptSortBtn, toolStrippromptFixedLengthComboBox, toolStripPromptFixTipLabel });
-            toolStripTagsHeader.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             toolStripTagsHeader.Location = new System.Drawing.Point(3, 0);
             toolStripTagsHeader.Name = "toolStripTagsHeader";
-            toolStripTagsHeader.Size = new System.Drawing.Size(326, 25);
+            toolStripTagsHeader.Size = new System.Drawing.Size(342, 25);
             toolStripTagsHeader.TabIndex = 0;
             // 
             // toolStripLabelImageTags
@@ -858,12 +883,11 @@ namespace BooruDatasetTagManager
             // toolStripPromptSortBtn
             // 
             toolStripPromptSortBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            toolStripPromptSortBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripPromptSortBtn.Image = (System.Drawing.Image)resources.GetObject("toolStripPromptSortBtn.Image");
+            toolStripPromptSortBtn.Image = Properties.Resources.Down;
             toolStripPromptSortBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             toolStripPromptSortBtn.Name = "toolStripPromptSortBtn";
-            toolStripPromptSortBtn.Size = new System.Drawing.Size(23, 22);
-            toolStripPromptSortBtn.Text = "toolStripButton1";
+            toolStripPromptSortBtn.Size = new System.Drawing.Size(48, 22);
+            toolStripPromptSortBtn.Text = "Sort";
             toolStripPromptSortBtn.Click += promptSortBtn_Click;
             // 
             // toolStrippromptFixedLengthComboBox
@@ -881,20 +905,29 @@ namespace BooruDatasetTagManager
             toolStripPromptFixTipLabel.Size = new System.Drawing.Size(128, 22);
             toolStripPromptFixTipLabel.Text = "Don't sort first N rows :";
             // 
-            // tableLayoutPanel2
+            // tabControl1
             // 
-            tableLayoutPanel2.ColumnCount = 1;
-            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            tableLayoutPanel2.Controls.Add(toolStripContainer1, 0, 0);
-            tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            tableLayoutPanel2.Name = "tableLayoutPanel2";
-            tableLayoutPanel2.RowCount = 3;
-            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            tableLayoutPanel2.Size = new System.Drawing.Size(382, 677);
-            tableLayoutPanel2.TabIndex = 0;
+            tabControl1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            tabControl1.Controls.Add(tabAllTags);
+            tabControl1.Controls.Add(tabAutoTags);
+            tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            tabControl1.Location = new System.Drawing.Point(0, 0);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new System.Drawing.Size(395, 677);
+            tabControl1.TabIndex = 0;
+            tabControl1.TabLocation = Manina.Windows.Forms.TabLocation.Near | Manina.Windows.Forms.TabLocation.Bottom;
+            tabControl1.Tabs.Add(tabAllTags);
+            tabControl1.Tabs.Add(tabAutoTags);
+            tabControl1.TabSizing = Manina.Windows.Forms.TabSizing.Stretch;
+            // 
+            // tabAllTags
+            // 
+            tabAllTags.Controls.Add(toolStripContainer1);
+            tabAllTags.Location = new System.Drawing.Point(0, 0);
+            tabAllTags.Name = "tabAllTags";
+            tabAllTags.Size = new System.Drawing.Size(395, 655);
+            tabAllTags.Text = "All / Common tags";
             // 
             // toolStripContainer1
             // 
@@ -902,15 +935,15 @@ namespace BooruDatasetTagManager
             // toolStripContainer1.ContentPanel
             // 
             toolStripContainer1.ContentPanel.Controls.Add(gridViewAllTags);
-            toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(338, 510);
+            toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(357, 630);
             toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            toolStripContainer1.Location = new System.Drawing.Point(3, 3);
+            toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             toolStripContainer1.Name = "toolStripContainer1";
             // 
             // toolStripContainer1.RightToolStripPanel
             // 
             toolStripContainer1.RightToolStripPanel.Controls.Add(toolStripAllTags);
-            toolStripContainer1.Size = new System.Drawing.Size(376, 535);
+            toolStripContainer1.Size = new System.Drawing.Size(395, 655);
             toolStripContainer1.TabIndex = 0;
             toolStripContainer1.Text = "toolStripContainer1";
             // 
@@ -921,10 +954,11 @@ namespace BooruDatasetTagManager
             // toolStrip1
             // 
             toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripLabelAllTags, toolStripTextBox1, toolStripButton1 });
             toolStrip1.Location = new System.Drawing.Point(3, 0);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new System.Drawing.Size(73, 25);
+            toolStrip1.Size = new System.Drawing.Size(64, 25);
             toolStrip1.TabIndex = 0;
             // 
             // toolStripLabelAllTags
@@ -944,13 +978,93 @@ namespace BooruDatasetTagManager
             // toolStripButton1
             // 
             toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton1.Image = (System.Drawing.Image)resources.GetObject("toolStripButton1.Image");
+            toolStripButton1.Image = Properties.Resources.Delete;
             toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             toolStripButton1.Name = "toolStripButton1";
             toolStripButton1.Size = new System.Drawing.Size(23, 22);
             toolStripButton1.Text = "toolStripButton1";
             toolStripButton1.Visible = false;
             toolStripButton1.Click += button1_Click;
+            // 
+            // tabAutoTags
+            // 
+            tabAutoTags.Controls.Add(toolStripContainer4);
+            tabAutoTags.Location = new System.Drawing.Point(0, 0);
+            tabAutoTags.Name = "tabAutoTags";
+            tabAutoTags.Size = new System.Drawing.Size(0, 0);
+            tabAutoTags.Text = "Auto generated tags";
+            // 
+            // toolStripContainer4
+            // 
+            // 
+            // toolStripContainer4.ContentPanel
+            // 
+            toolStripContainer4.ContentPanel.Controls.Add(gridViewAutoTags);
+            toolStripContainer4.ContentPanel.Size = new System.Drawing.Size(0, 0);
+            toolStripContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
+            toolStripContainer4.Location = new System.Drawing.Point(0, 0);
+            toolStripContainer4.Name = "toolStripContainer4";
+            // 
+            // toolStripContainer4.RightToolStripPanel
+            // 
+            toolStripContainer4.RightToolStripPanel.Controls.Add(toolStripAutoTags);
+            toolStripContainer4.Size = new System.Drawing.Size(0, 0);
+            toolStripContainer4.TabIndex = 0;
+            toolStripContainer4.Text = "toolStripContainer4";
+            // 
+            // toolStripContainer4.TopToolStripPanel
+            // 
+            toolStripContainer4.TopToolStripPanel.Controls.Add(toolStrip2);
+            // 
+            // gridViewAutoTags
+            // 
+            gridViewAutoTags.AllowUserToAddRows = false;
+            gridViewAutoTags.AllowUserToDeleteRows = false;
+            gridViewAutoTags.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            gridViewAutoTags.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            gridViewAutoTags.Dock = System.Windows.Forms.DockStyle.Fill;
+            gridViewAutoTags.Location = new System.Drawing.Point(0, 0);
+            gridViewAutoTags.Name = "gridViewAutoTags";
+            gridViewAutoTags.ReadOnly = true;
+            gridViewAutoTags.RowTemplate.Height = 25;
+            gridViewAutoTags.Size = new System.Drawing.Size(0, 0);
+            gridViewAutoTags.TabIndex = 0;
+            // 
+            // toolStripAutoTags
+            // 
+            toolStripAutoTags.Dock = System.Windows.Forms.DockStyle.None;
+            toolStripAutoTags.ImageScalingSize = new System.Drawing.Size(32, 32);
+            toolStripAutoTags.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripButton2 });
+            toolStripAutoTags.Location = new System.Drawing.Point(0, 3);
+            toolStripAutoTags.Name = "toolStripAutoTags";
+            toolStripAutoTags.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            toolStripAutoTags.Size = new System.Drawing.Size(38, 50);
+            toolStripAutoTags.TabIndex = 0;
+            // 
+            // toolStripButton2
+            // 
+            toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolStripButton2.Image = (System.Drawing.Image)resources.GetObject("toolStripButton2.Image");
+            toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            toolStripButton2.Name = "toolStripButton2";
+            toolStripButton2.Size = new System.Drawing.Size(35, 36);
+            toolStripButton2.Text = "test";
+            // 
+            // toolStrip2
+            // 
+            toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
+            toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripLabel1 });
+            toolStrip2.Location = new System.Drawing.Point(3, 0);
+            toolStrip2.Name = "toolStrip2";
+            toolStrip2.Size = new System.Drawing.Size(50, 25);
+            toolStrip2.TabIndex = 0;
+            // 
+            // toolStripLabel1
+            // 
+            toolStripLabel1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            toolStripLabel1.Name = "toolStripLabel1";
+            toolStripLabel1.Size = new System.Drawing.Size(150, 22);
+            toolStripLabel1.Text = "Auto generated tags";
             // 
             // customTextBoxColumn1
             // 
@@ -1031,7 +1145,8 @@ namespace BooruDatasetTagManager
             toolStripContainer2.PerformLayout();
             toolStripTagsHeader.ResumeLayout(false);
             toolStripTagsHeader.PerformLayout();
-            tableLayoutPanel2.ResumeLayout(false);
+            tabControl1.ResumeLayout(false);
+            tabAllTags.ResumeLayout(false);
             toolStripContainer1.ContentPanel.ResumeLayout(false);
             toolStripContainer1.RightToolStripPanel.ResumeLayout(false);
             toolStripContainer1.RightToolStripPanel.PerformLayout();
@@ -1041,6 +1156,19 @@ namespace BooruDatasetTagManager
             toolStripContainer1.PerformLayout();
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
+            tabAutoTags.ResumeLayout(false);
+            toolStripContainer4.ContentPanel.ResumeLayout(false);
+            toolStripContainer4.RightToolStripPanel.ResumeLayout(false);
+            toolStripContainer4.RightToolStripPanel.PerformLayout();
+            toolStripContainer4.TopToolStripPanel.ResumeLayout(false);
+            toolStripContainer4.TopToolStripPanel.PerformLayout();
+            toolStripContainer4.ResumeLayout(false);
+            toolStripContainer4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)gridViewAutoTags).EndInit();
+            toolStripAutoTags.ResumeLayout(false);
+            toolStripAutoTags.PerformLayout();
+            toolStrip2.ResumeLayout(false);
+            toolStrip2.PerformLayout();
             contextMenuStrip1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -1115,7 +1243,6 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripMenuItem replaceTransparentBackgroundToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.ToolStripContainer toolStripContainer2;
         private System.Windows.Forms.ToolStrip toolStripTagsHeader;
         private System.Windows.Forms.ToolStripLabel toolStripLabelImageTags;
@@ -1129,6 +1256,16 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripLabel toolStripLabelAllTags;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private Manina.Windows.Forms.TabControl tabControl1;
+        private Manina.Windows.Forms.Tab tabAllTags;
+        private Manina.Windows.Forms.Tab tabAutoTags;
+        private System.Windows.Forms.ToolStripContainer toolStripContainer4;
+        private System.Windows.Forms.ToolStrip toolStripAutoTags;
+        private System.Windows.Forms.ToolStrip toolStrip2;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.DataGridView gridViewAutoTags;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripMenuItem autoTaggerSettingsToolStripMenuItem;
     }
 }
 

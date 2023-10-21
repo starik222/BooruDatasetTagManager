@@ -14,6 +14,8 @@ namespace BooruDatasetTagManager
         private ImageInterrogator.ImageInterrogatorClient _client;
         private GrpcChannel _channel;
         public List<string> InterrogatorList;
+
+        public bool IsConnected { get; private set; }
         public Interrogator()
         {
             _channel = GrpcChannel.ForAddress("http://127.0.0.1:50051");
@@ -28,7 +30,12 @@ namespace BooruDatasetTagManager
                 var request = new InterrogatorListingRequest();
                 var response = await _client.ListInterrogatorsAsync(request);
                 InterrogatorList = response.InterrogatorNames.Cast<string>().ToList();
-                return true;
+                if (InterrogatorList.Count > 0)
+                {
+                    IsConnected = true;
+                    return true;
+                }
+                return false;
             }
             catch (Exception)
             {
@@ -38,7 +45,7 @@ namespace BooruDatasetTagManager
 
         public async Task<List<AutoTagItem>> InterrogateImage(string imagePath, string InterrogatorName, float? threshold)
         {
-            if (!File.Exists(imagePath))
+            if (!File.Exists(imagePath) || !IsConnected)
                 return null;
             try
             {

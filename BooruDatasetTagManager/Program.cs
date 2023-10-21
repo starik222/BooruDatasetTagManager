@@ -72,7 +72,7 @@ namespace BooruDatasetTagManager
             };
             f_wait.ShowDialog();
             #endregion
-
+            AutoTagger = new Interrogator();
             Application.Run(new MainForm());
         }
 
@@ -83,5 +83,7 @@ namespace BooruDatasetTagManager
         public static AppSettings Settings;
 
         public static TagsDB TagsList;
+
+        public static Interrogator AutoTagger;
     }
 }

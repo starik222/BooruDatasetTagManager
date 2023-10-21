@@ -1928,6 +1928,12 @@ namespace BooruDatasetTagManager
         }
 
         #endregion
+
+        private void autoTaggerSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form_AutoTaggerSettings autoTaggerSettings = new Form_AutoTaggerSettings();
+            autoTaggerSettings.ShowDialog();
+        }
     }
     class DataGridViewRowComparer : IComparer<DataGridViewRow>
     {
