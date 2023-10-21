@@ -1986,6 +1986,36 @@ namespace BooruDatasetTagManager
             }
             return listOfTags;
         }
+
+        private async void generateTagsWithCurrentSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            await GenerateTagsInTags(true);
+        }
+
+        private async Task GenerateTagsInTags(bool defSettings)
+        {
+            LockEdit(true);
+            List<DataItem> selectedTagsList = new List<DataItem>();
+            for (int i = 0; i < gridViewDS.SelectedRows.Count; i++)
+            {
+                selectedTagsList.Add(Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[i].Cells["ImageFilePath"].Value]);
+            }
+            foreach (var item in selectedTagsList)
+            {
+                var tagList = await GetTagsWithAutoTagger(item.ImageFilePath, defSettings);
+                if (tagList != null)
+                {
+                    item.Tags.Clear();
+                    item.Tags.AddRange(tagList.Select(a => a.Tag), true);
+                }
+            }
+            LockEdit(false);
+        }
+
+        private async void generateTagsWithSettingsWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            await GenerateTagsInTags(false);
+        }
     }
     class DataGridViewRowComparer : IComparer<DataGridViewRow>
     {
