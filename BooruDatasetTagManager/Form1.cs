@@ -47,7 +47,6 @@ namespace BooruDatasetTagManager
         private PictureBox previewPicBox;
         private int previewRowIndex = -1;
         private FilterType filterAnd = FilterType.Or;
-        private int lastGridViewTagsHash = -1;
         private bool isLoading = false;
         private List<string> selectedFiles = new List<string>();
 
@@ -1074,7 +1073,6 @@ namespace BooruDatasetTagManager
             }
             needReloadTags = false;
             LoadSelectedImageToGrid();
-            lastGridViewTagsHash = GetgridViewTagsHash();
         }
 
 
@@ -2008,6 +2006,10 @@ namespace BooruDatasetTagManager
                     item.Tags.Clear();
                     item.Tags.AddRange(tagList.Select(a => a.Tag), true);
                 }
+            }
+            if (selectedTagsList.Count > 1)
+            {
+                LoadSelectedImageToGrid();
             }
             LockEdit(false);
         }
