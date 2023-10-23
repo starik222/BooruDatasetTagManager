@@ -15,6 +15,8 @@
 
 import logging
 import threading
+import tqdm
+import traceback
 import time
 import io
 from PIL import Image
@@ -31,11 +33,9 @@ INTERROGATOR_LOCK = threading.Lock()
 
 ACTIVE_INTERROGATOR = None
 
-def interrogate_image(network_name, image_obj):
+def interrogate_image(network_name, image_obj): 
 	global ACTIVE_INTERROGATOR
-	with INTERROGATOR_LOCK:
-		if ACTIVE_INTERROGATOR and ACTIVE_INTERROGATOR != network_name:
-			interrogator.INTERROGATOR_MAP[ACTIVE_INTERROGATOR].stop()
+	with INTERROGATOR_LOCK: 
 
 		intg = interrogator.INTERROGATOR_MAP[network_name]
 		intg.start()
@@ -43,6 +43,26 @@ def interrogate_image(network_name, image_obj):
 		tags = intg.predict(image_obj)
 
 		return tags
+
+
+def extract_tag_ret(tags_in, threshold):
+
+	ret = {}
+
+	if isinstance(tags_in, dict):
+		for tag, probability in tags_in.items():
+			if probability > threshold:
+				ret[tag] = probability
+
+	elif isinstance(tags_in, (list, tuple)):
+		for tag in tags_in:
+			ret[tag] = 1
+
+	else:
+		raise RuntimeError("Tags must either be a list or a dict")
+
+	return ret
+
 
 class InterrogatorServicer(rpc_proto.services_pb2_grpc.ImageInterrogatorServicer):
 	"""Provides methods that implement functionality of route guide server."""
@@ -58,30 +78,52 @@ class InterrogatorServicer(rpc_proto.services_pb2_grpc.ImageInterrogatorServicer
 
 	def InterrogateImage(self, request, context):
 
-		if request.interrogator_network not in interrogator.INTERROGATOR_MAP:
+		print("Interrogate Request!")
+		print("Network: ", request.params)
+		print("File size: ", len(request.interrogate_image))
+		for network_conf in request.params:
+			if network_conf.interrogator_network not in interrogator.INTERROGATOR_MAP:
 
+				ret = rpc_proto.services_pb2.ImageTagResults(
+						interrogate_ok = False,
+						error_msg      = "Image Interrogator named '%s' is not a valid interrogator name. Known interrogators: '%s'" % (
+							network_conf.interrogator_network, list(interrogator.INTERROGATOR_MAP.keys())
+							)
+					)
+				print(ret.error_msg)
+				return ret
+
+		if not request.interrogate_image:
 			ret = rpc_proto.services_pb2.ImageTagResults(
 					interrogate_ok = False,
-					error_msg      = "Image Interrogator named '%s' is not a valid interrogator name. Known interrogators: '%s'" % (
-						request.interrogator_network, list(interrogator.INTERROGATOR_MAP.keys())
-						)
+					error_msg      = "Interrogate Failed - Received no image!"
 				)
+			print(ret.error_msg)
 			return ret
 
-		tag_listing = []
+
+		tag_listing = {}
 		try:
 
 			image_bytes = request.interrogate_image
 
 			image_obj = Image.open(io.BytesIO(image_bytes))
 
-			tag_listing = interrogate_image(request.interrogator_network, image_obj)
+			for network_conf in request.params:
+				tag_ret = interrogate_image(network_conf.interrogator_network, image_obj)
+				network_tags = extract_tag_ret(tag_ret, network_conf.interrogator_threshold)
+
+				for tag, probability in network_tags.items():
+					if probability > network_conf.interrogator_threshold:
+						tag_listing[tag] = probability
 
 		except Exception as e:
 			ret = rpc_proto.services_pb2.ImageTagResults(
 					interrogate_ok = False,
 					error_msg      = str(e),
 				)
+			print("Exception processing item!")
+			traceback.print_exc()
 			return ret
 
 
@@ -89,27 +131,22 @@ class InterrogatorServicer(rpc_proto.services_pb2_grpc.ImageInterrogatorServicer
 
 		ret.interrogate_ok = True
 
-		if isinstance(tag_listing, dict):
-			for tag, probability in tag_listing.items():
-				if probability > request.interrogator_threshold:
-					tag_obj = rpc_proto.services_pb2.TagEntry(
-							tag         = tag,
-							probability = probability,
-						)
-					ret.tags.append(tag_obj)
+		# I want to return the tags in sorted order. This is kind of silly, but w/e
+		tag_listing = [(tag, probability) for tag, probability in tag_listing.items()]
+		tag_listing.sort()
 
-		elif isinstance(tag_listing, (list, tuple)):
-			for tag in tag_listing:
-				tag_obj = rpc_proto.services_pb2.TagEntry(
-						tag         = tag,
-						probability = 1,
-					)
-				ret.tags.append(tag_obj)
-		else:
+		for tag, probability in tag_listing:
+			tag_obj = rpc_proto.services_pb2.TagEntry(
+					tag         = tag,
+					probability = probability,
+				)
+			ret.tags.append(tag_obj)
 
-			ret.interrogate_ok = False
-			ret.error_msg = "Invalid type for tag return: %s" % (type(tag_listing), )
 
+		ret.error_msg = "Image successfully processed. Deduced %s tags." % (len(ret.tags), )
+
+
+		print(ret.error_msg)
 
 		return ret
 
@@ -119,8 +156,8 @@ def serve():
 	maxMsgLength = 1024 * 1024 * 1024
 
 	server = grpc.server(futures.ThreadPoolExecutor(max_workers=10),
-					 options=[('grpc.max_message_length', maxMsgLength),
-							  ('grpc.max_send_message_length', maxMsgLength),
+					 options=[('grpc.max_message_length',         maxMsgLength),
+							  ('grpc.max_send_message_length',    maxMsgLength),
 							  ('grpc.max_receive_message_length', maxMsgLength)]
 		)
 	rpc_proto.services_pb2_grpc.add_ImageInterrogatorServicer_to_server(

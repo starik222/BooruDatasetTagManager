@@ -29,21 +29,27 @@ BLIP2_CAPTIONING_NAMES = [
 ]
 
 WD_TAGGER_NAMES = [
-    "wd-v1-4-vit-tagger",
     "wd-v1-4-convnext-tagger",
-    "wd-v1-4-vit-tagger-v2",
     "wd-v1-4-convnext-tagger-v2",
-    "wd-v1-4-swinv2-tagger-v2",
+    "wd-v1-4-convnextv2-tagger-v2",
     "wd-v1-4-moat-tagger-v2",
+    "wd-v1-4-swinv2-tagger-v2",
+    "wd-v1-4-vit-tagger",
+    "wd-v1-4-vit-tagger-v2",
 ]
+
 WD_TAGGER_THRESHOLDS = [
     0.35,
     0.35,
-    0.3537,
-    0.3685,
-    0.3771,
-    0.3771,
+    0.35,
+    0.35,
+    0.35,
+    0.35,
+    0.35,
 ]  # v1: idk if it's okay  v2: P=R thresholds on each repo https://huggingface.co/SmilingWolf
+
+
+
 
 INTERROGATORS = (
     [captioning.BLIP()]
@@ -55,7 +61,8 @@ INTERROGATORS = (
         for i, name in enumerate(WD_TAGGER_NAMES)
     ]
 )
-INTERROGATOR_NAMES = [it.name() for it in INTERROGATORS]
+
+INTERROGATOR_NAMES = [it.name() if it else "deep-danbooru + waifu-diffusion" for it in INTERROGATORS]
 
 INTERROGATOR_MAP = dict(zip(INTERROGATOR_NAMES, INTERROGATORS))
 

@@ -1,30 +1,41 @@
 
 syntax = "proto3";
 
+
+option csharp_namespace = "Image_Interrogator_Ns";
+
+
+package interrogator;
+
 message InterrogatorListing {
     repeated string interrogator_names = 1;
 }
 
-message InterrogationRequest{
+message NetworkInterrogationParameters {
+
     string interrogator_network   = 1;
     float  interrogator_threshold = 2;
-    bytes  interrogate_image      = 3;
+}
+
+message InterrogationRequest {
+    repeated NetworkInterrogationParameters params = 1;
+    bytes interrogate_image                        = 2;
 }
 
 
 message TagEntry {
-    string  tag         = 1;
+    string tag        = 1;
     float probability = 2;
 }
 
 message ImageTagResults {
     repeated TagEntry tags = 1;
-    bool interrogate_ok   = 2;
-    string error_msg      = 3;
+    bool interrogate_ok    = 2;
+    string error_msg       = 3;
 }
 
 
-// RPC actiona CANNOT have empty requests, or empty responses.
+// RPC actions CANNOT have empty requests, or empty responses.
 // This.... is stupid.
 message InterrogatorListingRequest {
 
