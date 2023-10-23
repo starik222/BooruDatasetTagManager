@@ -16,6 +16,9 @@ namespace BooruDatasetTagManager
         public Form_settings()
         {
             InitializeComponent();
+            Program.ColorManager.ChangeColorScheme(this, Program.ColorManager.SelectedScheme);
+            Program.ColorManager.ChangeColorSchemeInConteiner(Controls, Program.ColorManager.SelectedScheme);
+            Program.ColorManager.SchemeChanded += ColorManager_SchemeChanded;
         }
         private FontSettings gridFontSettings = null;
         private FontSettings autocompleteFontSettings = null;
@@ -32,6 +35,8 @@ namespace BooruDatasetTagManager
             comboAutocompMode.SelectedItem = Program.Settings.AutocompleteMode.ToString();
             comboAutocompSort.Items.AddRange(Enum.GetNames(typeof(AutocompleteSort)));
             comboAutocompSort.SelectedItem = Program.Settings.AutocompleteSort.ToString();
+            comboBoxColorScheme.Items.AddRange(Program.ColorManager.Items.Select(a => a.ToString()).ToArray());
+            comboBoxColorScheme.SelectedItem = Program.Settings.ColorScheme;
             textBox1.Text = Program.Settings.SeparatorOnLoad;
             textBox2.Text = Program.Settings.SeparatorOnSave;
             numericUpDown1.Value = Program.Settings.PreviewSize;
@@ -44,7 +49,7 @@ namespace BooruDatasetTagManager
             gridFontSettings = Program.Settings.GridViewFont;
             label14.Text = Program.Settings.AutocompleteFont.ToString();
             autocompleteFontSettings = Program.Settings.AutocompleteFont;
-            LanguageComboBox.Text = Program.Settings.Language;
+            comboBoxLanguage.Text = Program.Settings.Language;
             //hotkeys
             foreach (var item in Program.Settings.Hotkeys.Items)
             {
@@ -52,6 +57,15 @@ namespace BooruDatasetTagManager
             }
             //--
             SwitchLanguage();
+        }
+
+        private void ColorManager_SchemeChanded(object sender, EventArgs e)
+        {
+            if (Program.ColorManager.SelectedScheme != null)
+            {
+                Program.ColorManager.ChangeColorScheme(this, Program.ColorManager.SelectedScheme);
+                Program.ColorManager.ChangeColorSchemeInConteiner(Controls, Program.ColorManager.SelectedScheme);
+            }
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
@@ -82,7 +96,9 @@ namespace BooruDatasetTagManager
             Program.Settings.GridViewRowHeight = (int)numericUpDown3.Value;
             Program.Settings.GridViewFont = gridFontSettings;
             Program.Settings.AutocompleteFont = autocompleteFontSettings;
-            Program.Settings.Language = (string)LanguageComboBox.SelectedItem;
+            Program.Settings.Language = (string)comboBoxLanguage.SelectedItem;
+            Program.Settings.ColorScheme = (string)comboBoxColorScheme.SelectedItem;
+            Program.ColorManager.SelectScheme(Program.Settings.ColorScheme);
             //hotkeys
             if (tempHotkeys.Count > 0)
             {
@@ -127,9 +143,9 @@ namespace BooruDatasetTagManager
         private void SwitchLanguage()
         {
             this.Text = I18n.GetText("MenuLabelSettings");
-            SettingFrame.Controls[0].Text = I18n.GetText("SettingTabGeneral");
-            SettingFrame.Controls[1].Text = I18n.GetText("SettingTabUI");
-            SettingFrame.Controls[2].Text = I18n.GetText("SettingTabTranslations");
+            SettingFrame.Tabs[0].Text = I18n.GetText("SettingTabGeneral");
+            SettingFrame.Tabs[1].Text = I18n.GetText("SettingTabUI");
+            SettingFrame.Tabs[2].Text = I18n.GetText("SettingTabTranslations");
             LabelPreviewImageSize.Text = I18n.GetText("SettingPreviewImageSize");
             LabelAutocompMode.Text = I18n.GetText("SettingAutocompMode");
             LabelAutocompFont.Text = I18n.GetText("SettingAutocompFont");

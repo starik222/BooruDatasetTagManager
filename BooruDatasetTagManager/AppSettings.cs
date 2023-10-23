@@ -39,6 +39,8 @@ namespace BooruDatasetTagManager
 
         public string Language { get; set; } = "en-US";
 
+        public string ColorScheme { get; set; } = "Classic";
+
         public AppSettings(string appDir)
         {
             InitAvaibleLangs();
@@ -76,6 +78,8 @@ namespace BooruDatasetTagManager
                 AutocompleteFont = tempSettings.AutocompleteFont;
                 AutoSort = tempSettings.AutoSort || false;
                 Language = tempSettings.Language;
+                if (!string.IsNullOrEmpty(tempSettings.ColorScheme))
+                    ColorScheme = tempSettings.ColorScheme;
                 AutoTagger = tempSettings.AutoTagger;
                 if (AutoTagger == null)
                 {

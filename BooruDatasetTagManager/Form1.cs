@@ -32,6 +32,12 @@ namespace BooruDatasetTagManager
             allTagsFilter = new Form_filter();
             switchLanguage();
             InitHotkeyCommands();
+
+            //test color scheme
+            //Program.ColorManager.SelectScheme("Dark");
+            Program.ColorManager.ChangeColorScheme(this, Program.ColorManager.SelectedScheme);
+            Program.ColorManager.ChangeColorSchemeInConteiner(Controls, Program.ColorManager.SelectedScheme);
+            Program.ColorManager.SchemeChanded += ColorManager_SchemeChanded;
         }
 
         private Form_filter allTagsFilter;
@@ -67,6 +73,15 @@ namespace BooruDatasetTagManager
 #if !DEBUG
             Extensions.CheckForUpdateAsync(Application.ProductVersion);
 #endif
+        }
+
+        private void ColorManager_SchemeChanded(object sender, EventArgs e)
+        {
+            if (Program.ColorManager.SelectedScheme != null)
+            {
+                Program.ColorManager.ChangeColorScheme(this, Program.ColorManager.SelectedScheme);
+                Program.ColorManager.ChangeColorSchemeInConteiner(Controls, Program.ColorManager.SelectedScheme);
+            }
         }
 
         private void openFolderToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1101,7 +1116,7 @@ namespace BooruDatasetTagManager
                         previewPicBox.Size = new Size(Program.Settings.PreviewSize, Program.Settings.PreviewSize);
                         previewPicBox.Image = dataItem.Img;
                         previewPicBox.SizeMode = PictureBoxSizeMode.AutoSize;
-                        previewPicBox.Location = new Point(splitContainer1.Panel2.Location.X, PointToClient(Cursor.Position).Y);
+                        previewPicBox.Location = new Point(splitContainer2.Panel2.Location.X, PointToClient(Cursor.Position).Y);
 
                         if (!this.Controls.ContainsKey("previewPicBox"))
                         {

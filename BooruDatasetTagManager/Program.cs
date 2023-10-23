@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Diagnostics;
 using System.Threading;
+using UmaMusumeDBBrowser;
 
 namespace BooruDatasetTagManager    
 {
@@ -24,6 +25,9 @@ namespace BooruDatasetTagManager
 #endif
             Application.SetCompatibleTextRenderingDefault(false);
             Settings = new AppSettings(Application.StartupPath);
+            ColorManager = new ColorSchemeManager();
+            ColorManager.Load(Path.Combine(Application.StartupPath, "ColorScheme.json"));
+            ColorManager.SelectScheme(Program.Settings.ColorScheme);
             #region waitForm
             Form f_wait = new Form();
             I18n.Initialize(Program.Settings.Language);
@@ -39,6 +43,9 @@ namespace BooruDatasetTagManager
             mes.AutoSize = true;
 
             f_wait.Controls.Add(mes);
+
+            ColorManager.ChangeColorScheme(f_wait, ColorManager.SelectedScheme);
+            ColorManager.ChangeColorSchemeInConteiner(f_wait.Controls, ColorManager.SelectedScheme);
             
             f_wait.Shown += async (o, i) =>
             {
@@ -73,6 +80,7 @@ namespace BooruDatasetTagManager
             f_wait.ShowDialog();
             #endregion
             AutoTagger = new Interrogator();
+
             Application.Run(new MainForm());
         }
 
@@ -85,5 +93,7 @@ namespace BooruDatasetTagManager
         public static TagsDB TagsList;
 
         public static Interrogator AutoTagger;
+
+        public static ColorSchemeManager ColorManager;
     }
 }

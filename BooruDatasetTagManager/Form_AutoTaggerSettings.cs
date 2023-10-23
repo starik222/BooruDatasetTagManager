@@ -16,6 +16,8 @@ namespace BooruDatasetTagManager
         {
             InitializeComponent();
             comboBoxSortMode.Items.AddRange(Enum.GetNames(typeof(AutoTaggerSort)));
+            Program.ColorManager.ChangeColorScheme(this, Program.ColorManager.SelectedScheme);
+            Program.ColorManager.ChangeColorSchemeInConteiner(Controls, Program.ColorManager.SelectedScheme);
         }
 
         private async void Form_AutoTaggerSettings_Load(object sender, EventArgs e)
