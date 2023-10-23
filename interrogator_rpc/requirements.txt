@@ -1,0 +1,16 @@
+
+grpcio
+grpcio-tools
+onnx
+onnxruntime-gpu
+pandas
+
+# This needs to be from Torch's pypi repo.
+# ONNX does not support cuda 12 yet.
+--extra-index-url https://download.pytorch.org/whl/cu118
+torch
+torchvision
+torchaudio
+
+# This needs to be a more recent version.
+git+https://github.com/huggingface/transformers
