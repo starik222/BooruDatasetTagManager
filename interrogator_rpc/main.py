@@ -32,10 +32,14 @@ import rpc_proto.services_pb2_grpc
 INTERROGATOR_LOCK = threading.Lock()
 
 ACTIVE_INTERROGATOR = None
+OUT_OF_MEMORY = False
 
 def interrogate_image(network_name, image_obj): 
 	global ACTIVE_INTERROGATOR
+	global OUT_OF_MEMORY
 	with INTERROGATOR_LOCK: 
+		if OUT_OF_MEMORY and ACTIVE_INTERROGATOR and ACTIVE_INTERROGATOR != network_name:
+			interrogator.INTERROGATOR_MAP[ACTIVE_INTERROGATOR].stop()
 
 		intg = interrogator.INTERROGATOR_MAP[network_name]
 		intg.start()
@@ -118,11 +122,37 @@ class InterrogatorServicer(rpc_proto.services_pb2_grpc.ImageInterrogatorServicer
 						tag_listing[tag] = probability
 
 		except Exception as e:
+			global ACTIVE_INTERROGATOR
+			global OUT_OF_MEMORY
+			if "out of memory" in str(e).lower() and len(request.params) > 1 and not OUT_OF_MEMORY:
+				# If we ran out of VRAM, and are trying to load multiple interrogators at once, retry
+				# without keeping all interrogators in memory.
+				# Yes, this uses globals.
+				print("Ran out of VRAM while trying to perform image interrogation. Retrying without")
+				print("keeping all interrogator networks in VRAM simultaneously.")
+				OUT_OF_MEMORY = True
+
+				# unload all the interrogators.
+				# CUDA is annoying and can still be propagating errors from an earlier OOM
+				# when we get to this point (funky async magic).
+				# Anyways, retry a few times.
+				for int_tmp in interrogator.INTERROGATOR_MAP.values():
+					for _ in range(3):
+						try:
+							int_tmp.stop()
+						except:
+							pass
+
+				ACTIVE_INTERROGATOR = None
+
+				return self.InterrogateImage(request, context)
+
 			ret = rpc_proto.services_pb2.ImageTagResults(
 					interrogate_ok = False,
 					error_msg      = str(e),
 				)
 			print("Exception processing item!")
+			print("Exception string: '%s'" % (str(e), ))
 			traceback.print_exc()
 			return ret
 

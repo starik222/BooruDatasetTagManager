@@ -62,7 +62,7 @@ INTERROGATORS = (
     ]
 )
 
-INTERROGATOR_NAMES = [it.name() if it else "deep-danbooru + waifu-diffusion" for it in INTERROGATORS]
+INTERROGATOR_NAMES = [it.name() for it in INTERROGATORS]
 
 INTERROGATOR_MAP = dict(zip(INTERROGATOR_NAMES, INTERROGATORS))
 
