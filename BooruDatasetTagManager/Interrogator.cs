@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Google.Protobuf;
 using System.IO;
+using Image_Interrogator_Ns;
+using Google.Protobuf.Collections;
 
 namespace BooruDatasetTagManager
 {
@@ -43,33 +45,43 @@ namespace BooruDatasetTagManager
             }
         }
 
-        public async Task<List<AutoTagItem>> InterrogateImage(string imagePath, string InterrogatorName, float? threshold)
+        public async Task<InterrogateResult> InterrogateImage(string imagePath, List<NetworkInterrogationParameters> interrogationParameters)
         {
+            InterrogateResult result = new InterrogateResult();
             if (!File.Exists(imagePath) || !IsConnected)
-                return null;
+            {
+                result.Success = false;
+                result.Message = IsConnected ? "Image not found" : "The connection to the service has not been established!";
+                return result;
+            }
             try
             {
                 InterrogationRequest request = new InterrogationRequest();
-                request.InterrogatorNetwork = InterrogatorName;
-                if (threshold != null)
-                    request.InterrogatorThreshold = threshold.Value;
+                request.Params.AddRange(interrogationParameters);
                 request.InterrogateImage = ByteString.CopyFrom(File.ReadAllBytes(imagePath));
                 var response = await _client.InterrogateImageAsync(request);
                 if (response.InterrogateOk)
                 {
-                    List<AutoTagItem> result = new List<AutoTagItem>();
+                    result.Success = true;
                     foreach (var item in response.Tags)
                     {
-                        result.Add(new AutoTagItem(item.Tag, item.Probability));
+                        result.Items.Add(new AutoTagItem(item.Tag, item.Probability));
                     }
+                    result.Message = response.ErrorMsg;
                     return result;
                 }
                 else
-                    return null;
+                {
+                    result.Success = false;
+                    result.Message = response.ErrorMsg;
+                    return result;
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                result.Success = false;
+                result.Message = ex.Message;
+                return result;
             }
         }
 
@@ -78,6 +90,18 @@ namespace BooruDatasetTagManager
             _channel.Dispose();
         }
     }
+
+    //public class NetworkInterrogationParameters
+    //{
+    //    public string InterrogatorName { get; set; }
+    //    public float Threshold { get; set; }
+
+    //    public NetworkInterrogationParameters(string interrogatorName, float threshold)
+    //    {
+    //        InterrogatorName = interrogatorName;
+    //        Threshold = threshold;
+    //    }
+    //}
 
 
     public class AutoTagItem
@@ -93,4 +117,17 @@ namespace BooruDatasetTagManager
             Confidence = confidence;
         }
     }
+
+    public class InterrogateResult
+    {
+        public bool Success { get; set; }
+        public List<AutoTagItem> Items { get; set; }
+        public string Message { get; set; }
+
+        public InterrogateResult()
+        {
+            Items = new List<AutoTagItem>();
+        }
+    }
+
 }

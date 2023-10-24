@@ -32,10 +32,10 @@ WD_TAGGER_NAMES = [
     "wd-v1-4-convnext-tagger",
     "wd-v1-4-convnext-tagger-v2",
     "wd-v1-4-convnextv2-tagger-v2",
-    "wd-v1-4-moat-tagger-v2",
     "wd-v1-4-swinv2-tagger-v2",
     "wd-v1-4-vit-tagger",
     "wd-v1-4-vit-tagger-v2",
+    "wd-v1-4-moat-tagger-v2",
 ]
 
 WD_TAGGER_THRESHOLDS = [

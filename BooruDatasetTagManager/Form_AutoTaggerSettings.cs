@@ -40,12 +40,25 @@ namespace BooruDatasetTagManager
             }
             if (Program.AutoTagger.IsConnected)
             {
-                comboBoxInterrogator.Items.AddRange(Program.AutoTagger.InterrogatorList.ToArray());
+                checkedListBoxcomboBoxInterrogators.Items.AddRange(Program.AutoTagger.InterrogatorList.ToArray());
                 button1.Enabled = true;
-                trackBarThreshold.Value = (int)(Program.Settings.AutoTagger.Threshold * 100);
+                //For now, a single threshold is used for everyone, so the first value is taken.
+                bool firstValue = true;
+                foreach (var item in Program.Settings.AutoTagger.InterragatorParams)
+                {
+                    if (firstValue)
+                    {
+                        firstValue = false;
+                        trackBarThreshold.Value = (int)(item.Value * 100);
+                    }
+                    int index = checkedListBoxcomboBoxInterrogators.Items.IndexOf(item.Key);
+                    if (index != -1)
+                    {
+                        checkedListBoxcomboBoxInterrogators.SetItemChecked(index, true);
+                    }
+                }
                 labelPercent.Text = trackBarThreshold.Value.ToString() + "%";
                 comboBoxSortMode.SelectedItem = Program.Settings.AutoTagger.SortMode.ToString();
-                comboBoxInterrogator.SelectedItem = Program.Settings.AutoTagger.Name;
             }
         }
 
@@ -56,9 +69,13 @@ namespace BooruDatasetTagManager
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Program.Settings.AutoTagger.Threshold = (float)trackBarThreshold.Value / 100f;
+            float threshold = (float)trackBarThreshold.Value / 100f;
+            Program.Settings.AutoTagger.InterragatorParams.Clear();
+            for (int i = 0; i < checkedListBoxcomboBoxInterrogators.CheckedItems.Count; i++)
+            {
+                Program.Settings.AutoTagger.InterragatorParams.Add(new KeyValuePair<string, float>((string)checkedListBoxcomboBoxInterrogators.CheckedItems[i], threshold));
+            }
             Program.Settings.AutoTagger.SortMode = (AutoTaggerSort)Enum.Parse(typeof(AutoTaggerSort), (string)comboBoxSortMode.SelectedItem);
-            Program.Settings.AutoTagger.Name = (string)comboBoxInterrogator.SelectedItem;
             Program.Settings.SaveSettings();
             DialogResult = DialogResult.OK;
         }

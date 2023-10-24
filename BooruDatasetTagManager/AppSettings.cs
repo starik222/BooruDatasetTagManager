@@ -276,9 +276,13 @@ namespace BooruDatasetTagManager
 
     public class InterragatorSettings
     {
-        public string Name {get; set;}
+        public List<KeyValuePair<string, float>> InterragatorParams { get; set; }
         public AutoTaggerSort SortMode { get; set; } = AutoTaggerSort.None;
-        public float Threshold { get; set; } = 0.35f;
+
+        public InterragatorSettings()
+        {
+            InterragatorParams = new List<KeyValuePair<string, float>>();
+        }
     }
 
     public class FontSettings

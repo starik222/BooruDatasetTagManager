@@ -1965,10 +1965,10 @@ namespace BooruDatasetTagManager
         {
             if (gridViewDS.SelectedRows.Count == 0)
                 return new List<AutoTagItem>();
-            if (!defSettings || string.IsNullOrEmpty(Program.Settings.AutoTagger.Name))
+            if (!defSettings || Program.Settings.AutoTagger.InterragatorParams.Count == 0)
             {
                 Form_AutoTaggerSettings autoTaggerSettings = new Form_AutoTaggerSettings();
-                if (autoTaggerSettings.ShowDialog() != DialogResult.OK || string.IsNullOrEmpty(Program.Settings.AutoTagger.Name))
+                if (autoTaggerSettings.ShowDialog() != DialogResult.OK || Program.Settings.AutoTagger.InterragatorParams.Count == 0)
                 {
                     autoTaggerSettings.Close();
                     SetStatus("Generation operation canceled");
@@ -1983,21 +1983,26 @@ namespace BooruDatasetTagManager
                     return new List<AutoTagItem>();
                 }
             }
-            var listOfTags = await Program.AutoTagger.InterrogateImage(imagePath, Program.Settings.AutoTagger.Name, Program.Settings.AutoTagger.Threshold);
-            if (listOfTags == null)
+            List<Image_Interrogator_Ns.NetworkInterrogationParameters> parameters = new List<Image_Interrogator_Ns.NetworkInterrogationParameters>();
+            foreach (var item in Program.Settings.AutoTagger.InterragatorParams)
             {
-                SetStatus($"Error getting tags for image {imagePath}");
+                parameters.Add(new Image_Interrogator_Ns.NetworkInterrogationParameters() { InterrogatorNetwork = item.Key, InterrogatorThreshold = item.Value });
+            }
+            var listOfTags = await Program.AutoTagger.InterrogateImage(imagePath, parameters);
+            SetStatus(listOfTags.Message);
+            if (!listOfTags.Success)
+            {
                 return new List<AutoTagItem>();
             }
             if (Program.Settings.AutoTagger.SortMode == AutoTaggerSort.Confidence)
             {
-                listOfTags.Sort((a, b) => b.Confidence.CompareTo(a.Confidence));
+                listOfTags.Items.Sort((a, b) => b.Confidence.CompareTo(a.Confidence));
             }
             else if (Program.Settings.AutoTagger.SortMode == AutoTaggerSort.Alphabetical)
             {
-                listOfTags.Sort((a, b) => a.Tag.CompareTo(b.Tag));
+                listOfTags.Items.Sort((a, b) => a.Tag.CompareTo(b.Tag));
             }
-            return listOfTags;
+            return listOfTags.Items;
         }
 
         private async void generateTagsWithCurrentSettingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2032,6 +2037,17 @@ namespace BooruDatasetTagManager
         private async void generateTagsWithSettingsWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             await GenerateTagsInTags(false);
+        }
+
+        private async void btnAutoGetTagsOpenSet_Click(object sender, EventArgs e)
+        {
+            tabAutoTags.Select();
+            LockEdit(true);
+            var selectedImageData = Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value];
+            var tagList = await GetTagsWithAutoTagger(selectedImageData.ImageFilePath, false);
+            gridViewAutoTags.DataSource = tagList;
+
+            LockEdit(false);
         }
     }
     class DataGridViewRowComparer : IComparer<DataGridViewRow>
