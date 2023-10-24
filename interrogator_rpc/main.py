@@ -163,7 +163,7 @@ class InterrogatorServicer(rpc_proto.services_pb2_grpc.ImageInterrogatorServicer
 
 		# I want to return the tags in sorted order. This is kind of silly, but w/e
 		tag_listing = [(tag, probability) for tag, probability in tag_listing.items()]
-		tag_listing.sort()
+		#tag_listing.sort()
 
 		for tag, probability in tag_listing:
 			tag_obj = rpc_proto.services_pb2.TagEntry(
