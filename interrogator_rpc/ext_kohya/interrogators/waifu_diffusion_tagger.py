@@ -18,12 +18,15 @@ class WaifuDiffusionTagger:
         self.labels = []
 
     def load(self):
-        import huggingface_hub
+        from huggingface_hub import hf_hub_download, try_to_load_from_cache, _CACHED_NO_EXIST
 
         if not self.model:
-            path_model = huggingface_hub.hf_hub_download(
-                self.MODEL_REPO, self.MODEL_FILENAME, cache_dir=paths.setting_model_path
-            )
+            path_model = try_to_load_from_cache(
+                self.MODEL_REPO, self.MODEL_FILENAME, cache_dir=paths.setting_model_path)
+            if path_model is _CACHED_NO_EXIST or not isinstance(path_model, str):
+                path_model = hf_hub_download(
+                    self.MODEL_REPO, self.MODEL_FILENAME, cache_dir=paths.setting_model_path
+                )
             if settings.current.interrogator_use_cpu:
                 providers = ["CPUExecutionProvider"]
             else:
@@ -72,13 +75,17 @@ class WaifuDiffusionTagger:
             import onnxruntime as ort
 
             self.model = ort.InferenceSession(path_model, providers=providers)
+            path_label = try_to_load_from_cache(
+                self.MODEL_REPO, self.LABEL_FILENAME, cache_dir=paths.setting_model_path
+            )
+            if path_label is _CACHED_NO_EXIST or not isinstance(path_label, str):
+                path_label = hf_hub_download(
+                    self.MODEL_REPO, self.LABEL_FILENAME, cache_dir=paths.setting_model_path
+                )
+            #import pandas as pd
+            from pandas import read_csv
 
-        path_label = huggingface_hub.hf_hub_download(
-            self.MODEL_REPO, self.LABEL_FILENAME
-        )
-        import pandas as pd
-
-        self.labels = pd.read_csv(path_label)["name"].tolist()
+            self.labels = read_csv(path_label)["name"].tolist()
 
     def unload(self):
         if not settings.current.interrogator_keep_in_memory:
