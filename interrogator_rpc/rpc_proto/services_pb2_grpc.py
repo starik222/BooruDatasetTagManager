@@ -15,12 +15,12 @@ class ImageInterrogatorStub(object):
             channel: A grpc.Channel.
         """
         self.ListInterrogators = channel.unary_unary(
-                '/ImageInterrogator/ListInterrogators',
+                '/interrogator.ImageInterrogator/ListInterrogators',
                 request_serializer=services__pb2.InterrogatorListingRequest.SerializeToString,
                 response_deserializer=services__pb2.InterrogatorListing.FromString,
                 )
         self.InterrogateImage = channel.unary_unary(
-                '/ImageInterrogator/InterrogateImage',
+                '/interrogator.ImageInterrogator/InterrogateImage',
                 request_serializer=services__pb2.InterrogationRequest.SerializeToString,
                 response_deserializer=services__pb2.ImageTagResults.FromString,
                 )
@@ -56,7 +56,7 @@ def add_ImageInterrogatorServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'ImageInterrogator', rpc_method_handlers)
+            'interrogator.ImageInterrogator', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -75,7 +75,7 @@ class ImageInterrogator(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ImageInterrogator/ListInterrogators',
+        return grpc.experimental.unary_unary(request, target, '/interrogator.ImageInterrogator/ListInterrogators',
             services__pb2.InterrogatorListingRequest.SerializeToString,
             services__pb2.InterrogatorListing.FromString,
             options, channel_credentials,
@@ -92,7 +92,7 @@ class ImageInterrogator(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ImageInterrogator/InterrogateImage',
+        return grpc.experimental.unary_unary(request, target, '/interrogator.ImageInterrogator/InterrogateImage',
             services__pb2.InterrogationRequest.SerializeToString,
             services__pb2.ImageTagResults.FromString,
             options, channel_credentials,

@@ -11,15 +11,21 @@ class InterrogatorListing(_message.Message):
     interrogator_names: _containers.RepeatedScalarFieldContainer[str]
     def __init__(self, interrogator_names: _Optional[_Iterable[str]] = ...) -> None: ...
 
-class InterrogationRequest(_message.Message):
-    __slots__ = ["interrogator_network", "interrogator_threshold", "interrogate_image"]
+class NetworkInterrogationParameters(_message.Message):
+    __slots__ = ["interrogator_network", "interrogator_threshold"]
     INTERROGATOR_NETWORK_FIELD_NUMBER: _ClassVar[int]
     INTERROGATOR_THRESHOLD_FIELD_NUMBER: _ClassVar[int]
-    INTERROGATE_IMAGE_FIELD_NUMBER: _ClassVar[int]
     interrogator_network: str
     interrogator_threshold: float
+    def __init__(self, interrogator_network: _Optional[str] = ..., interrogator_threshold: _Optional[float] = ...) -> None: ...
+
+class InterrogationRequest(_message.Message):
+    __slots__ = ["params", "interrogate_image"]
+    PARAMS_FIELD_NUMBER: _ClassVar[int]
+    INTERROGATE_IMAGE_FIELD_NUMBER: _ClassVar[int]
+    params: _containers.RepeatedCompositeFieldContainer[NetworkInterrogationParameters]
     interrogate_image: bytes
-    def __init__(self, interrogator_network: _Optional[str] = ..., interrogator_threshold: _Optional[float] = ..., interrogate_image: _Optional[bytes] = ...) -> None: ...
+    def __init__(self, params: _Optional[_Iterable[_Union[NetworkInterrogationParameters, _Mapping]]] = ..., interrogate_image: _Optional[bytes] = ...) -> None: ...
 
 class TagEntry(_message.Message):
     __slots__ = ["tag", "probability"]
