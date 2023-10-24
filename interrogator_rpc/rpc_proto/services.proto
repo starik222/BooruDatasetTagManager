@@ -12,14 +12,15 @@ message InterrogatorListing {
 }
 
 message NetworkInterrogationParameters {
-
     string interrogator_network   = 1;
     float  interrogator_threshold = 2;
 }
 
 message InterrogationRequest {
-    repeated NetworkInterrogationParameters params = 1;
-    bytes interrogate_image                        = 2;
+    repeated NetworkInterrogationParameters params                 = 1;
+    bytes                                   interrogate_image      = 2;
+    bool                                    skip_internet_requests = 3;
+    bool                                    serialize_vram_usage   = 4;
 }
 
 

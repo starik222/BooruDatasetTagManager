@@ -20,12 +20,16 @@ class NetworkInterrogationParameters(_message.Message):
     def __init__(self, interrogator_network: _Optional[str] = ..., interrogator_threshold: _Optional[float] = ...) -> None: ...
 
 class InterrogationRequest(_message.Message):
-    __slots__ = ["params", "interrogate_image"]
+    __slots__ = ["params", "interrogate_image", "skip_internet_requests", "serialize_vram_usage"]
     PARAMS_FIELD_NUMBER: _ClassVar[int]
     INTERROGATE_IMAGE_FIELD_NUMBER: _ClassVar[int]
+    SKIP_INTERNET_REQUESTS_FIELD_NUMBER: _ClassVar[int]
+    SERIALIZE_VRAM_USAGE_FIELD_NUMBER: _ClassVar[int]
     params: _containers.RepeatedCompositeFieldContainer[NetworkInterrogationParameters]
     interrogate_image: bytes
-    def __init__(self, params: _Optional[_Iterable[_Union[NetworkInterrogationParameters, _Mapping]]] = ..., interrogate_image: _Optional[bytes] = ...) -> None: ...
+    skip_internet_requests: bool
+    serialize_vram_usage: bool
+    def __init__(self, params: _Optional[_Iterable[_Union[NetworkInterrogationParameters, _Mapping]]] = ..., interrogate_image: _Optional[bytes] = ..., skip_internet_requests: bool = ..., serialize_vram_usage: bool = ...) -> None: ...
 
 class TagEntry(_message.Message):
     __slots__ = ["tag", "probability"]
