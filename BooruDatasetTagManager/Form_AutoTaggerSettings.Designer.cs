@@ -116,9 +116,11 @@
             // 
             // checkedListBoxcomboBoxInterrogators
             // 
+            checkedListBoxcomboBoxInterrogators.CheckOnClick = true;
             checkedListBoxcomboBoxInterrogators.FormattingEnabled = true;
             checkedListBoxcomboBoxInterrogators.Location = new System.Drawing.Point(12, 27);
             checkedListBoxcomboBoxInterrogators.Name = "checkedListBoxcomboBoxInterrogators";
+            checkedListBoxcomboBoxInterrogators.ScrollAlwaysVisible = true;
             checkedListBoxcomboBoxInterrogators.Size = new System.Drawing.Size(393, 256);
             checkedListBoxcomboBoxInterrogators.TabIndex = 7;
             // 

@@ -1952,6 +1952,11 @@ namespace BooruDatasetTagManager
 
         private async void BtnAutoGetTagsDefSet_Click(object sender, EventArgs e)
         {
+            if (Program.DataManager == null)
+            {
+                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
+                return;
+            }
             tabAutoTags.Select();
             LockEdit(true);
             var selectedImageData = Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value];
@@ -2012,6 +2017,11 @@ namespace BooruDatasetTagManager
 
         private async Task GenerateTagsInTags(bool defSettings)
         {
+            if (Program.DataManager == null)
+            {
+                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
+                return;
+            }
             LockEdit(true);
             List<DataItem> selectedTagsList = new List<DataItem>();
             for (int i = 0; i < gridViewDS.SelectedRows.Count; i++)
@@ -2041,6 +2051,11 @@ namespace BooruDatasetTagManager
 
         private async void btnAutoGetTagsOpenSet_Click(object sender, EventArgs e)
         {
+            if (Program.DataManager == null)
+            {
+                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
+                return;
+            }
             tabAutoTags.Select();
             LockEdit(true);
             var selectedImageData = Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value];
