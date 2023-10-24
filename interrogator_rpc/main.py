@@ -199,8 +199,9 @@ def serve():
 
 
 if __name__ == "__main__":
-	logging.basicConfig(level = 1)
+	logging.basicConfig(level = logging.INFO)
 
+	interrogator.init()
 	print(rpc_proto.services_pb2.InterrogatorListing)
 
 	serve()

@@ -67,16 +67,18 @@ stderr: {result.stderr.decode(encoding="utf8", errors="ignore") if len(result.st
 
 
 def prepare_environment():
-    if cmd_args.opts.force_install_torch is None:
+    opts = cmd_args.get_args()
+
+    if opts.force_install_torch is None:
         pass
-    elif cmd_args.opts.force_install_torch == "cpu":
+    elif opts.force_install_torch == "cpu":
         torch_command = "pip install -U torch torchvision"
     else:
-        torch_command = f"pip install -U torch torchvision --index-url https://download.pytorch.org/whl/{cmd_args.opts.force_install_torch}"
+        torch_command = f"pip install -U torch torchvision --index-url https://download.pytorch.org/whl/{opts.force_install_torch}"
     if (
         not is_installed("torch")
         or not is_installed("torchvision")
-        or cmd_args.opts.force_install_torch is not None
+        or opts.force_install_torch is not None
     ):
         run(f'"{python}" -m {torch_command}')
     check_python_version()

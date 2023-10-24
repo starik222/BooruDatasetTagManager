@@ -14,6 +14,7 @@ from ext_kohya import (
     tagger,
     captioning,
     paths,
+    devices,
 )
 
 paths.initialize()
@@ -66,9 +67,9 @@ INTERROGATOR_NAMES = [it.name() for it in INTERROGATORS]
 
 INTERROGATOR_MAP = dict(zip(INTERROGATOR_NAMES, INTERROGATORS))
 
-class ImageInterrogator:
-	def __init__(self):
-		pass
+
+def init():
+    devices.init_interrogator()
 
 
 
