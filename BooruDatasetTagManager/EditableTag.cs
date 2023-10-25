@@ -19,6 +19,7 @@ namespace BooruDatasetTagManager
             internal bool manualEdited;
             internal string translation;
             internal int order;
+            internal bool sortiable;
 
             public override bool Equals(object obj)
             {
@@ -105,6 +106,12 @@ namespace BooruDatasetTagManager
                 tagData.order = value;
                 OnEditableTagChanged();
             }
+        }
+
+        public bool Sortiable
+        {
+            get => tagData.sortiable;
+            set => tagData.sortiable = value;
         }
 
         public int Id

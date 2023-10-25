@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.VisualBasic;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -123,6 +124,16 @@ namespace BooruDatasetTagManager
                 }
                 isStoreHistory = true;
             }
+            else if (curHistory.Type == EditableTagHistory.HistoryType.Sort)
+            {
+                isStoreHistory = false;
+                List.Clear();
+                foreach (var item in curHistory.ClearedTags)
+                {
+                    Add(item, false);
+                }
+                isStoreHistory = true;
+            }
         }
         /// <summary>
         /// Redo
@@ -160,6 +171,16 @@ namespace BooruDatasetTagManager
             {
                 isStoreHistory = false;
                 List.Clear();
+                isStoreHistory = true;
+            }
+            else if (curHistory.Type == EditableTagHistory.HistoryType.Sort)
+            {
+                isStoreHistory = false;
+                List.Clear();
+                foreach (var item in curHistory.AddedTags)
+                {
+                    Add(item, false);
+                }
                 isStoreHistory = true;
             }
             HistoryPosition++;
@@ -447,6 +468,29 @@ namespace BooruDatasetTagManager
             return toIndex;
         }
 
+        public void Sort(int skipFirstCount = 0)
+        {
+            var h = new EditableTagHistory();
+            h.Index = 0;
+            foreach (EditableTag c in List)
+            {
+                c.Parent = null;
+                h.ClearedTags.Add((EditableTag)c.Clone());
+
+            }
+            h.Type = EditableTagHistory.HistoryType.Sort;
+            InnerList.Sort(skipFirstCount, InnerList.Count - skipFirstCount, new SortEditableTagListAscending());
+            _tags.Sort(skipFirstCount, InnerList.Count - skipFirstCount, new SortStringAscending());
+            foreach (EditableTag c in List)
+            {
+                c.Parent = null;
+                h.AddedTags.Add((EditableTag)c.Clone());
+            }
+            if (isStoreHistory)
+                AddHistory(h);
+            OnListChanged(resetEvent);
+        }
+
 
         public async Task TranslateAllAsync()
         {
@@ -696,6 +740,26 @@ namespace BooruDatasetTagManager
                 eTagList.Add((EditableTag)item.Clone(), false);
             }
             return eTagList;
+        }
+
+        private class SortEditableTagListAscending : IComparer
+        {
+            int IComparer.Compare(object x, object y)
+            {
+                EditableTag t1 = (EditableTag)x;
+                EditableTag t2 = (EditableTag)y;
+                //if (!t1.Sortiable)
+                //    return 1;
+                return t1.Tag.CompareTo(t2.Tag);
+            }
+        }
+
+        private class SortStringAscending : IComparer<string>
+        {
+            int IComparer<string>.Compare(string x, string y)
+            {
+                return (x).CompareTo(y);
+            }
         }
     }
 }

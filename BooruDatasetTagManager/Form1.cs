@@ -1649,43 +1649,18 @@ namespace BooruDatasetTagManager
 
         private void SortPrompt()
         {
-            var fixedLengthIndex = toolStrippromptFixedLengthComboBox.SelectedIndex;
-            if (fixedLengthIndex == -1) return;
-            var fixLength = fixedLengthIndex;
-            if (fixLength >= 0)
+            if (Program.DataManager == null)
             {
-                if (Program.DataManager == null)
-                {
-                    return;
-                }
-                var newRows = new List<DataGridViewRow>();
-                for (var i = 0; i < fixedLengthIndex; ++i)
-                {
-                    newRows.Add(gridViewTags.Rows[i]);
-                }
-
-                var toSortRows = new List<DataGridViewRow>();
-                var sortLength = gridViewTags.Rows.Count - fixedLengthIndex;
-                if (sortLength <= 0) return;
-
-                for (var i = fixedLengthIndex; i < gridViewTags.Rows.Count; ++i)
-                {
-                    toSortRows.Add(gridViewTags.Rows[i]);
-                }
-
-                DataGridViewRowComparer rowComparer = new DataGridViewRowComparer();
-                toSortRows.Sort(rowComparer);
-                for (var i = 0; i < sortLength; ++i)
-                {
-                    newRows.Add(toSortRows[i]);
-                }
-
-                // copy
-                gridViewTags.Rows.Clear();
-                foreach (DataGridViewRow newRow in newRows)
-                {
-                    gridViewTags.Rows.Add(newRow);
-                }
+                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
+                return;
+            }
+            var fixedLengthIndex = toolStrippromptFixedLengthComboBox.SelectedIndex;
+            if (fixedLengthIndex == -1)
+                return;
+            if (GetTagsDataSourceType() == DataSourceType.Single)
+            {
+                EditableTagList eTagList = (EditableTagList)gridViewTags.DataSource;
+                eTagList.Sort(fixedLengthIndex);
             }
         }
 
@@ -2063,19 +2038,6 @@ namespace BooruDatasetTagManager
             gridViewAutoTags.DataSource = tagList;
 
             LockEdit(false);
-        }
-    }
-    class DataGridViewRowComparer : IComparer<DataGridViewRow>
-    {
-        public int Compare(DataGridViewRow x, DataGridViewRow y)
-        {
-            if (x == null || y == null)
-                return 0;
-
-            return string.Compare(
-                x.Cells[0].Value?.ToString(),
-                y.Cells[0].Value?.ToString(),
-                StringComparison.Ordinal);
         }
     }
 }

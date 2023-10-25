@@ -13,12 +13,14 @@ namespace BooruDatasetTagManager
         public EditableTag TagOld { get; set; } = null;
         public EditableTag TagNew { get; set; } = null;
         public List<EditableTag> ClearedTags { get; set; }
+        public List<EditableTag> AddedTags { get; set; }
         //public List<EditableTag> AddedRangeTags { get; set; }
         public HistoryType Type { get; set; } = HistoryType.None;
 
         public EditableTagHistory()
         {
             ClearedTags = new List<EditableTag>();
+            AddedTags = new List<EditableTag>();
         }
 
         public enum HistoryType
@@ -28,7 +30,8 @@ namespace BooruDatasetTagManager
             Remove,
             Modify,
             Move,
-            Clear
+            Clear,
+            Sort
         }
     }
 }
