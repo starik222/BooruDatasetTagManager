@@ -101,13 +101,6 @@ namespace BooruDatasetTagManager
                         }
                     }
                 }
-
-                Hotkeys = tempSettings.Hotkeys;
-                if (Hotkeys == null)
-                {
-                    Hotkeys = new HotkeyData();
-                    Hotkeys.InitDefault();
-                }
             }
         }
 

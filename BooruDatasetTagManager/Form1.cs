@@ -1880,14 +1880,37 @@ namespace BooruDatasetTagManager
             cmds["DatasetFocus"] = delegate () { DatasetFocus(); };
             cmds["TagsFocus"] = delegate () { TagsFocus(); };
             cmds["AllTagsFocus"] = delegate () { AllTagsFocus(); };
+            cmds["AutoTagsFocus"] = delegate () { AutoTagsFocus(); };
+
+            cmds["saveAllChangesToolStripMenuItem"] = delegate () { saveAllChangesToolStripMenuItem.PerformClick(); };
+            cmds["showPreviewToolStripMenuItem"] = delegate () { showPreviewToolStripMenuItem.PerformClick(); };
+            cmds["MenuHideAllTags"] = delegate () { MenuHideAllTags.PerformClick(); };
+            cmds["MenuHideTags"] = delegate () { MenuHideTags.PerformClick(); };
+            cmds["MenuHideDataset"] = delegate () { MenuHideDataset.PerformClick(); };
+
+
             cmds["BtnTagAdd"] = delegate () { BtnTagAdd.PerformClick(); };
             cmds["BtnTagDelete"] = delegate () { BtnTagDelete.PerformClick(); };
-
             cmds["BtnTagUndo"] = delegate () { BtnTagUndo.PerformClick(); };
             cmds["BtnTagRedo"] = delegate () { BtnTagRedo.PerformClick(); };
             cmds["BtnTagUp"] = delegate () { BtnTagUp.PerformClick(); };
             cmds["BtnTagDown"] = delegate () { BtnTagDown.PerformClick(); };
             cmds["BtnTagFindInAll"] = delegate () { BtnTagFindInAll.PerformClick(); };
+            cmds["BtnTagAddToAll"] = delegate () { BtnTagAddToAll.PerformClick(); };
+            cmds["BtnTagAddToSelected"] = delegate () { BtnTagAddToSelected.PerformClick(); };
+            cmds["BtnTagAddToFiltered"] = delegate () { BtnTagAddToFiltered.PerformClick(); };
+            cmds["BtnTagDeleteForAll"] = delegate () { BtnTagDeleteForAll.PerformClick(); };
+            cmds["BtnTagDeleteForSelected"] = delegate () { BtnTagDeleteForSelected.PerformClick(); };
+            cmds["BtnTagDeleteForFiltered"] = delegate () { BtnTagDeleteForFiltered.PerformClick(); };
+            cmds["BtnTagReplace"] = delegate () { BtnTagReplace.PerformClick(); };
+            cmds["BtnImageFilter"] = delegate () { BtnImageFilter.PerformClick(); };
+            cmds["BtnImageExitFilter"] = delegate () { BtnImageExitFilter.PerformClick(); };
+            cmds["BtnTagMultiModeSwitch"] = delegate () { BtnTagMultiModeSwitch.PerformClick(); };
+            cmds["BtnTagFilter"] = delegate () { BtnTagFilter.PerformClick(); };
+            cmds["BtnTagExitFilter"] = delegate () { BtnTagExitFilter.PerformClick(); };
+            cmds["generateTagsWithCurrentSettingsToolStripMenuItem"] = delegate () { generateTagsWithCurrentSettingsToolStripMenuItem.PerformClick(); };
+            cmds["generateTagsWithSettingsWindowToolStripMenuItem"] = delegate () { generateTagsWithSettingsWindowToolStripMenuItem.PerformClick(); };
+            cmds["toolStripPromptSortBtn"] = delegate () { toolStripPromptSortBtn.PerformClick(); };
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -1914,7 +1937,14 @@ namespace BooruDatasetTagManager
 
         private void AllTagsFocus()
         {
+            tabControl1.SelectedIndex = 0;
             gridViewAllTags.Focus();
+        }
+
+        private void AutoTagsFocus()
+        {
+            tabControl1.SelectedIndex = 1;
+            gridViewAutoTags.Focus();
         }
 
         private void HideShowAllTagsWindow()

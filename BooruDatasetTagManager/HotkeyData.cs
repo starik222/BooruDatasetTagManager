@@ -46,6 +46,15 @@ namespace BooruDatasetTagManager
             Items.Add(new HotkeyItem("DatasetFocus", "Focus on image list", Keys.D1, true, false, false));
             Items.Add(new HotkeyItem("TagsFocus", "Focus on tag list", Keys.D2, true, false, false));
             Items.Add(new HotkeyItem("AllTagsFocus", "Focus on all tag list", Keys.D3, true, false, false));
+            Items.Add(new HotkeyItem("AutoTagsFocus", "Focus on AutoTagger preview", Keys.D4, true, false, false));
+            
+            Items.Add(new HotkeyItem("saveAllChangesToolStripMenuItem", "Save all changes", Keys.S, true, false, false));
+            Items.Add(new HotkeyItem("showPreviewToolStripMenuItem", "Show preview window", Keys.P, true, false, false));
+            Items.Add(new HotkeyItem("MenuHideAllTags", "Hide/show all tags window", Keys.J, true, false, false));
+            Items.Add(new HotkeyItem("MenuHideTags", "Hide/show image tags window", Keys.K, true, false, false));
+            Items.Add(new HotkeyItem("MenuHideDataset", "Hide/show dataset window", Keys.L, true, false, false));
+
+
             Items.Add(new HotkeyItem("BtnTagAdd", "Add new tag", Keys.E, true, false, false));
             Items.Add(new HotkeyItem("BtnTagDelete", "Remove selected tag", Keys.D, true, false, false));
             Items.Add(new HotkeyItem("BtnTagUndo", "Undo step", Keys.Z, true, false, false));
@@ -53,6 +62,21 @@ namespace BooruDatasetTagManager
             Items.Add(new HotkeyItem("BtnTagUp", "Up tag in list", Keys.PageUp, true, false, false));
             Items.Add(new HotkeyItem("BtnTagDown", "Down tag in list", Keys.PageDown, true, false, false));
             Items.Add(new HotkeyItem("BtnTagFindInAll", "Find selected tag in all list", Keys.F, true, false, false));
+            Items.Add(new HotkeyItem("BtnTagAddToAll", "Add tag to all", Keys.W, true, false, false));
+            Items.Add(new HotkeyItem("BtnTagAddToSelected", "Add tag to selected", Keys.W, false, true, false));
+            Items.Add(new HotkeyItem("BtnTagAddToFiltered", "Add tag to filtered", Keys.W, true, true, false));
+            Items.Add(new HotkeyItem("BtnTagDeleteForAll", "Remove tag to all", Keys.R, true, false, false));
+            Items.Add(new HotkeyItem("BtnTagDeleteForSelected", "Remove tag from selected", Keys.R, false, true, false));
+            Items.Add(new HotkeyItem("BtnTagDeleteForFiltered", "Remove tag from filtered", Keys.R, true, true, false));
+            Items.Add(new HotkeyItem("BtnTagReplace", "Replace tag in all", Keys.G, true, false, false));
+            Items.Add(new HotkeyItem("BtnImageFilter", "Find in dataset", Keys.F, true, true, false));
+            Items.Add(new HotkeyItem("BtnImageExitFilter", "Reset dataset filter", Keys.G, true, true, false));
+            Items.Add(new HotkeyItem("BtnTagMultiModeSwitch", "Switch filted mode", Keys.Y, true, false, false));
+            Items.Add(new HotkeyItem("BtnTagFilter", "Filter in all tags", Keys.F, false, true, false));
+            Items.Add(new HotkeyItem("BtnTagExitFilter", "Reset filter in all tags", Keys.G, false, true, false));
+            Items.Add(new HotkeyItem("generateTagsWithCurrentSettingsToolStripMenuItem", "Generate tags with AutoTagger (current setting)", Keys.G, false, true, false));
+            Items.Add(new HotkeyItem("generateTagsWithSettingsWindowToolStripMenuItem", "Generate tags with AutoTagger (open settings window)", Keys.H, false, true, false));
+            Items.Add(new HotkeyItem("toolStripPromptSortBtn", "Sort tags", Keys.Q, true, false, false));
         }
         
     }

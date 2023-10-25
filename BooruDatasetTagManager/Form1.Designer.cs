@@ -943,7 +943,7 @@ namespace BooruDatasetTagManager
             toolStripTagsHeader.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripLabelImageTags, toolStripPromptSortBtn, toolStrippromptFixedLengthComboBox, toolStripPromptFixTipLabel });
             toolStripTagsHeader.Location = new System.Drawing.Point(3, 0);
             toolStripTagsHeader.Name = "toolStripTagsHeader";
-            toolStripTagsHeader.Size = new System.Drawing.Size(342, 25);
+            toolStripTagsHeader.Size = new System.Drawing.Size(373, 25);
             toolStripTagsHeader.TabIndex = 0;
             // 
             // toolStripLabelImageTags
