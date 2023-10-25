@@ -1917,6 +1917,28 @@ namespace BooruDatasetTagManager
             gridViewAllTags.Focus();
         }
 
+        private void HideShowAllTagsWindow()
+        {
+            if (splitContainer2.Panel1Collapsed)
+                HideShowTagsWindow();
+            splitContainer2.Panel2Collapsed = !splitContainer2.Panel2Collapsed;
+            MenuHideAllTags.Checked = splitContainer2.Panel2Collapsed;
+        }
+
+        private void HideShowTagsWindow()
+        {
+            if (splitContainer2.Panel2Collapsed)
+                HideShowAllTagsWindow();
+            splitContainer2.Panel1Collapsed = !splitContainer2.Panel1Collapsed;
+            MenuHideTags.Checked = splitContainer2.Panel1Collapsed;
+        }
+
+        private void HideShowDataset()
+        {
+            splitContainer1.Panel1Collapsed = !splitContainer1.Panel1Collapsed;
+            MenuHideDataset.Checked = splitContainer1.Panel1Collapsed;
+        }
+
         #endregion
 
         private void autoTaggerSettingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2038,6 +2060,21 @@ namespace BooruDatasetTagManager
             gridViewAutoTags.DataSource = tagList;
 
             LockEdit(false);
+        }
+
+        private void MenuHideAllTags_Click(object sender, EventArgs e)
+        {
+            HideShowAllTagsWindow();
+        }
+
+        private void MenuHideTags_Click(object sender, EventArgs e)
+        {
+            HideShowTagsWindow();
+        }
+
+        private void MenuHideDataset_Click(object sender, EventArgs e)
+        {
+            HideShowDataset();
         }
     }
 }
