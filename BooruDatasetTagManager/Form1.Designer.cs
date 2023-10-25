@@ -70,9 +70,11 @@ namespace BooruDatasetTagManager
             showPreviewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             MenuItemTranslateTags = new System.Windows.Forms.ToolStripMenuItem();
             MenuShowTagCount = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             MenuHideAllTags = new System.Windows.Forms.ToolStripMenuItem();
             MenuHideTags = new System.Windows.Forms.ToolStripMenuItem();
             MenuHideDataset = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             MenuSetting = new System.Windows.Forms.ToolStripMenuItem();
             settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             autoTaggerSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -181,7 +183,8 @@ namespace BooruDatasetTagManager
             gridViewTags.AllowUserToAddRows = false;
             gridViewTags.AllowUserToResizeColumns = false;
             gridViewTags.AllowUserToResizeRows = false;
-            gridViewTags.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            gridViewTags.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCellsExceptHeader;
+            gridViewTags.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
             gridViewTags.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             gridViewTags.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             gridViewTags.ColumnHeadersVisible = false;
@@ -192,7 +195,7 @@ namespace BooruDatasetTagManager
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             gridViewTags.DefaultCellStyle = dataGridViewCellStyle1;
             gridViewTags.Dock = System.Windows.Forms.DockStyle.Fill;
             gridViewTags.Location = new System.Drawing.Point(0, 0);
@@ -478,7 +481,7 @@ namespace BooruDatasetTagManager
             // 
             // viewToolStripMenuItem
             // 
-            viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { showPreviewToolStripMenuItem, MenuItemTranslateTags, MenuShowTagCount, MenuHideAllTags, MenuHideTags, MenuHideDataset });
+            viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { showPreviewToolStripMenuItem, MenuItemTranslateTags, MenuShowTagCount, toolStripSeparator10, MenuHideAllTags, MenuHideTags, MenuHideDataset, toolStripSeparator11 });
             viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             viewToolStripMenuItem.Size = new System.Drawing.Size(56, 25);
             viewToolStripMenuItem.Text = "View";
@@ -504,6 +507,11 @@ namespace BooruDatasetTagManager
             MenuShowTagCount.Text = "Show tag counts";
             MenuShowTagCount.Click += MenuShowTagCount_Click;
             // 
+            // toolStripSeparator10
+            // 
+            toolStripSeparator10.Name = "toolStripSeparator10";
+            toolStripSeparator10.Size = new System.Drawing.Size(248, 6);
+            // 
             // MenuHideAllTags
             // 
             MenuHideAllTags.Name = "MenuHideAllTags";
@@ -524,6 +532,11 @@ namespace BooruDatasetTagManager
             MenuHideDataset.Size = new System.Drawing.Size(251, 26);
             MenuHideDataset.Text = "Hide dataset";
             MenuHideDataset.Click += MenuHideDataset_Click;
+            // 
+            // toolStripSeparator11
+            // 
+            toolStripSeparator11.Name = "toolStripSeparator11";
+            toolStripSeparator11.Size = new System.Drawing.Size(248, 6);
             // 
             // MenuSetting
             // 
@@ -587,6 +600,8 @@ namespace BooruDatasetTagManager
             gridViewAllTags.AllowUserToAddRows = false;
             gridViewAllTags.AllowUserToResizeColumns = false;
             gridViewAllTags.AllowUserToResizeRows = false;
+            gridViewAllTags.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCellsExceptHeader;
+            gridViewAllTags.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
             gridViewAllTags.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             gridViewAllTags.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             gridViewAllTags.ColumnHeadersVisible = false;
@@ -596,7 +611,7 @@ namespace BooruDatasetTagManager
             dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             gridViewAllTags.DefaultCellStyle = dataGridViewCellStyle2;
             gridViewAllTags.Dock = System.Windows.Forms.DockStyle.Fill;
             gridViewAllTags.Location = new System.Drawing.Point(0, 0);
@@ -1355,6 +1370,8 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripMenuItem MenuHideAllTags;
         private System.Windows.Forms.ToolStripMenuItem MenuHideTags;
         private System.Windows.Forms.ToolStripMenuItem MenuHideDataset;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
     }
 }
 

@@ -191,10 +191,13 @@ namespace UmaMusumeDBBrowser
             {
                 itemCollection[i].ForeColor = scheme.ToolStripStyle.ForeColor;
                 itemCollection[i].BackColor = scheme.ToolStripStyle.BackColor;
-                var drItems = ((ToolStripDropDownItem)itemCollection[i]).DropDownItems;
-                if (drItems.Count > 0)
+                if (!(itemCollection[i] is ToolStripSeparator))
                 {
-                    ChangeColorOnToolStripItemsCollection(drItems, scheme);
+                    var drItems = ((ToolStripDropDownItem)itemCollection[i]).DropDownItems;
+                    if (drItems.Count > 0)
+                    {
+                        ChangeColorOnToolStripItemsCollection(drItems, scheme);
+                    }
                 }
             }
         }
