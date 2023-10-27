@@ -16,8 +16,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Translator;
 using static BooruDatasetTagManager.DatasetManager;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace BooruDatasetTagManager
 {
@@ -2039,10 +2037,10 @@ namespace BooruDatasetTagManager
 
         private async void generateTagsWithCurrentSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            await GenerateTagsInTags(true);
+            await GenerateTagsInTags(true, false);
         }
 
-        private async Task GenerateTagsInTags(bool defSettings)
+        private async Task GenerateTagsInTags(bool defSettings, bool allTags)
         {
             if (Program.DataManager == null)
             {
@@ -2051,9 +2049,19 @@ namespace BooruDatasetTagManager
             }
             LockEdit(true);
             List<DataItem> selectedTagsList = new List<DataItem>();
-            for (int i = 0; i < gridViewDS.SelectedRows.Count; i++)
+            if (!allTags)
             {
-                selectedTagsList.Add(Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[i].Cells["ImageFilePath"].Value]);
+                for (int i = 0; i < gridViewDS.SelectedRows.Count; i++)
+                {
+                    selectedTagsList.Add(Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[i].Cells["ImageFilePath"].Value]);
+                }
+            }
+            else
+            {
+                foreach (var item in Program.DataManager.DataSet)
+                {
+                    selectedTagsList.Add(item.Value);
+                }
             }
             foreach (var item in selectedTagsList)
             {
@@ -2073,7 +2081,7 @@ namespace BooruDatasetTagManager
 
         private async void generateTagsWithSettingsWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            await GenerateTagsInTags(false);
+            await GenerateTagsInTags(false, false);
         }
 
         private async void btnAutoGetTagsOpenSet_Click(object sender, EventArgs e)
@@ -2190,6 +2198,11 @@ namespace BooruDatasetTagManager
                 else
                     toolStripMenuItemWeight.Value = 0;
             }
+        }
+
+        private async void generateTagsWithAutoTaggerForAllImagesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            await GenerateTagsInTags(false, true);
         }
     }
 }

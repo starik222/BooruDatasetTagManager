@@ -83,6 +83,7 @@ namespace BooruDatasetTagManager
             LanguageCNBtn = new System.Windows.Forms.ToolStripMenuItem();
             toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             replaceTransparentBackgroundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            generateTagsWithAutoTaggerForAllImagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             gridViewAllTags = new System.Windows.Forms.DataGridView();
             toolStripAllTags = new System.Windows.Forms.ToolStrip();
             BtnTagSwitch = new System.Windows.Forms.ToolStripButton();
@@ -589,7 +590,7 @@ namespace BooruDatasetTagManager
             // 
             // toolsToolStripMenuItem
             // 
-            toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { replaceTransparentBackgroundToolStripMenuItem });
+            toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { replaceTransparentBackgroundToolStripMenuItem, generateTagsWithAutoTaggerForAllImagesToolStripMenuItem });
             toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             toolsToolStripMenuItem.Size = new System.Drawing.Size(57, 25);
             toolsToolStripMenuItem.Text = "Tools";
@@ -600,6 +601,13 @@ namespace BooruDatasetTagManager
             replaceTransparentBackgroundToolStripMenuItem.Size = new System.Drawing.Size(437, 26);
             replaceTransparentBackgroundToolStripMenuItem.Text = "Replace transparent background of selected images";
             replaceTransparentBackgroundToolStripMenuItem.Click += replaceTransparentBackgroundToolStripMenuItem_Click;
+            // 
+            // generateTagsWithAutoTaggerForAllImagesToolStripMenuItem
+            // 
+            generateTagsWithAutoTaggerForAllImagesToolStripMenuItem.Name = "generateTagsWithAutoTaggerForAllImagesToolStripMenuItem";
+            generateTagsWithAutoTaggerForAllImagesToolStripMenuItem.Size = new System.Drawing.Size(437, 26);
+            generateTagsWithAutoTaggerForAllImagesToolStripMenuItem.Text = "Generate tags with AutoTagger for all images";
+            generateTagsWithAutoTaggerForAllImagesToolStripMenuItem.Click += generateTagsWithAutoTaggerForAllImagesToolStripMenuItem_Click;
             // 
             // gridViewAllTags
             // 
@@ -1420,6 +1428,7 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private ToolStripMenuItem toolStripMenuItemWeight;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBoxWeight;
+        private System.Windows.Forms.ToolStripMenuItem generateTagsWithAutoTaggerForAllImagesToolStripMenuItem;
     }
 }
 
