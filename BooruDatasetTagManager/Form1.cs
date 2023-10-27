@@ -2066,6 +2066,8 @@ namespace BooruDatasetTagManager
             foreach (var item in selectedTagsList)
             {
                 var tagList = await GetTagsWithAutoTagger(item.ImageFilePath, defSettings);
+                if (!defSettings)
+                    defSettings = true;
                 if (tagList != null)
                 {
                     item.Tags.Clear();
@@ -2076,6 +2078,9 @@ namespace BooruDatasetTagManager
             {
                 LoadSelectedImageToGrid();
             }
+            Program.DataManager.UpdateData();
+            if (gridViewAllTags.DataSource == null)
+                BindTagList();
             LockEdit(false);
         }
 
