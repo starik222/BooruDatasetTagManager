@@ -65,6 +65,35 @@ namespace BooruDatasetTagManager
             }
         }
 
+        public static int CalcBracketsCount(float weight, bool positive)
+        {
+            if (weight == 1 || weight == 0)
+                return 0;
+            int count = 0;
+            float mult = positive ? PromptParser.round_bracket_multiplier : PromptParser.square_bracket_multiplier;
+
+            if (positive)
+            {
+                while (weight > 1)
+                {
+                    weight /= mult;
+                    count++;
+                }
+            }
+            else
+            {
+                while (weight < 1)
+                {
+                    weight /= mult;
+                    count++;
+                }
+            }
+            if (weight == 1)
+                return count;
+            else
+                return 0;
+        }
+
         public static string GetBetween(this string strSource, string strStart, string strEnd)
         {
             const int kNotFound = -1;

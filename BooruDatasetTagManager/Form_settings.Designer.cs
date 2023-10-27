@@ -500,9 +500,9 @@ namespace BooruDatasetTagManager
             tabUI.Controls.Add(BtnGridviewFontChange);
             tabUI.Controls.Add(label14);
             tabUI.Controls.Add(label11);
-            tabUI.Location = new System.Drawing.Point(1, 23);
+            tabUI.Location = new System.Drawing.Point(0, 0);
             tabUI.Name = "tabUI";
-            tabUI.Size = new System.Drawing.Size(563, 403);
+            tabUI.Size = new System.Drawing.Size(0, 0);
             tabUI.Text = "UI";
             // 
             // label4
@@ -542,7 +542,7 @@ namespace BooruDatasetTagManager
             tabHotkeys.Location = new System.Drawing.Point(0, 0);
             tabHotkeys.Name = "tabHotkeys";
             tabHotkeys.Size = new System.Drawing.Size(0, 0);
-            tabHotkeys.Text = "tabHotkeys";
+            tabHotkeys.Text = "Hotkeys";
             // 
             // Form_settings
             // 

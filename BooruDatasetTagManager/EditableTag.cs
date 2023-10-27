@@ -232,7 +232,7 @@ namespace BooruDatasetTagManager
                 return "";
             else if (Weight > 1f)
             {
-                int brCount = CalcBracketsCount(Weight, true);
+                int brCount = Extensions.CalcBracketsCount(Weight, true);
                 if (brCount != 0)
                 {
                     return RepeatString("(", (int)brCount) + resTag + RepeatString(")", (int)brCount);
@@ -244,7 +244,7 @@ namespace BooruDatasetTagManager
             }
             else
             {
-                int brCount = CalcBracketsCount(Weight, false);
+                int brCount = Extensions.CalcBracketsCount(Weight, false);
                 if (brCount != 0)
                 {
                     return RepeatString("[", (int)brCount) + resTag + RepeatString("]", (int)brCount);
@@ -254,35 +254,6 @@ namespace BooruDatasetTagManager
                     return $"({resTag}:{Weight})";
                 }
             }
-        }
-
-        private int CalcBracketsCount(float weight, bool positive)
-        {
-            if (weight == 1 || weight == 0)
-                return 0;
-            int count = 0;
-            float mult = positive ? PromptParser.round_bracket_multiplier : PromptParser.square_bracket_multiplier;
-            
-            if (positive)
-            {
-                while (weight > 1)
-                {
-                    weight /= mult;
-                    count++;
-                }
-            }
-            else
-            {
-                while (weight < 1)
-                {
-                    weight /= mult;
-                    count++;
-                }
-            }
-            if (weight == 1)
-                return count;
-            else
-                return 0;
         }
 
         private string RepeatString(string text, int count)

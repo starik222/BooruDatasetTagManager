@@ -968,7 +968,7 @@ namespace BooruDatasetTagManager
             else if (gridViewTags.DataSource.GetType() == typeof(EditableTagList))
                 return DataSourceType.Single;
             else if (gridViewTags.DataSource.GetType() == typeof(MultiSelectDataTable))
-                return DataSourceType.Single;
+                return DataSourceType.Multi;
             else
                 throw new Exception("Unknown datasource type!");
         }
@@ -2105,6 +2105,91 @@ namespace BooruDatasetTagManager
         private void MenuHideDataset_Click(object sender, EventArgs e)
         {
             HideShowDataset();
+        }
+
+        private void toolStripMenuItemWeight_ValueChanged(object sender, EventArgs e)
+        {
+            if (Program.DataManager == null)
+            {
+                return;
+            }
+            int wMod = toolStripMenuItemWeight.Value;
+            float weight = 1;
+            if (wMod == 0)
+                weight = 1;
+            else if (wMod > 0)
+            {
+                weight = WeightMultiplier(weight, PromptParser.round_bracket_multiplier, wMod);
+            }
+            else
+            {
+                weight = WeightMultiplier(weight, PromptParser.square_bracket_multiplier, Math.Abs(wMod));
+            }
+            toolStripTextBoxWeight.Text = weight.ToString();
+
+            if (gridViewTags.SelectedCells.Count == 0)
+                return;
+            int rowIndex = gridViewTags.SelectedCells[0].RowIndex;
+            var dsType = GetTagsDataSourceType();
+
+            if (dsType == DataSourceType.Single)
+            {
+                ((EditableTagList)gridViewTags.DataSource)[rowIndex].Weight = weight;
+            }
+            else if (dsType == DataSourceType.Multi)
+            {
+                var dataItem = (DataItem)((MultiSelectDataRow)((MultiSelectDataTable)gridViewTags.DataSource).Rows[rowIndex]).GetDataItem();
+                dataItem.Tags[((MultiSelectDataRow)((MultiSelectDataTable)gridViewTags.DataSource).Rows[rowIndex]).GetTagIndex()].Weight = weight;
+            }
+        }
+
+        private float WeightMultiplier(float value, float multiplier, int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                value *= multiplier;
+            }
+            return value;
+        }
+
+        private void gridViewTags_SelectionChanged(object sender, EventArgs e)
+        {
+            if (gridViewTags.SelectedCells.Count == 0)
+                return;
+            int rowIndex = gridViewTags.SelectedCells[0].RowIndex;
+            var dsType = GetTagsDataSourceType();
+            float weight = 1;
+            if (dsType == DataSourceType.Single)
+            {
+                weight = ((EditableTagList)gridViewTags.DataSource)[rowIndex].Weight;
+                toolStripTextBoxWeight.Text = weight.ToString();
+            }
+            else if (dsType == DataSourceType.Multi)
+            {
+                var dataItem = (DataItem)((MultiSelectDataRow)((MultiSelectDataTable)gridViewTags.DataSource).Rows[rowIndex]).GetDataItem();
+                weight = dataItem.Tags[((MultiSelectDataRow)((MultiSelectDataTable)gridViewTags.DataSource).Rows[rowIndex]).GetTagIndex()].Weight;
+                toolStripTextBoxWeight.Text = weight.ToString();
+            }
+            else
+                return;
+            if (weight == 1)
+                toolStripMenuItemWeight.Value = 0;
+            else if (weight > 1)
+            {
+                int brCount = Extensions.CalcBracketsCount(weight, true);
+                if (brCount != 0)
+                    toolStripMenuItemWeight.Value = brCount;
+                else
+                    toolStripMenuItemWeight.Value = 0;
+            }
+            else
+            {
+                int brCount = Extensions.CalcBracketsCount(weight, false);
+                if (brCount != 0)
+                    toolStripMenuItemWeight.Value = -brCount;
+                else
+                    toolStripMenuItemWeight.Value = 0;
+            }
         }
     }
 }

@@ -169,6 +169,11 @@ namespace UmaMusumeDBBrowser
                     {
                         ((ToolStrip)ctrl).Items[i].ForeColor = scheme.ComboAndListBoxStyle.ForeColor;
                         ((ToolStrip)ctrl).Items[i].BackColor = scheme.ComboAndListBoxStyle.BackColor;
+                    }                    
+                    else if (((ToolStrip)ctrl).Items[i] is ToolStripTextBox)
+                    {
+                        ((ToolStrip)ctrl).Items[i].ForeColor = scheme.TextBoxStyle.ForeColor;
+                        ((ToolStrip)ctrl).Items[i].BackColor = scheme.TextBoxStyle.BackColor;
                     }
                 }
             }
