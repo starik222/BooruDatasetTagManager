@@ -1116,7 +1116,7 @@ namespace BooruDatasetTagManager
                         previewPicBox.Size = new Size(Program.Settings.PreviewSize, Program.Settings.PreviewSize);
                         previewPicBox.Image = dataItem.Img;
                         previewPicBox.SizeMode = PictureBoxSizeMode.AutoSize;
-                        previewPicBox.Location = new Point(splitContainer2.Panel2.Location.X, PointToClient(Cursor.Position).Y);
+                        previewPicBox.Location = new Point(splitContainer1.Panel2.Location.X + splitContainer2.Panel2.Location.X, PointToClient(Cursor.Position).Y);
 
                         if (!this.Controls.ContainsKey("previewPicBox"))
                         {
