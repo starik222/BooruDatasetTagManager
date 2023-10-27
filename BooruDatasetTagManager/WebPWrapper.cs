@@ -49,6 +49,15 @@ namespace WebPWrapper
             catch (Exception ex) { throw new Exception(ex.Message + "\r\nIn WebP.Load"); }
         }
 
+        public Bitmap Load(byte[] ImageData)
+        {
+            try
+            {
+                return Decode(ImageData);
+            }
+            catch (Exception ex) { throw new Exception(ex.Message + "\r\nIn WebP.Load"); }
+        }
+
         /// <summary>Decode a WebP image</summary>
         /// <param name="rawWebP">The data to uncompress</param>
         /// <returns>Bitmap with the WebP image</returns>
