@@ -65,7 +65,7 @@ namespace BooruDatasetTagManager
             set
             {
                 tagData.translation = value;
-                OnEditableTagChanged();
+                OnEditableTagChanged(false);
             }
         }
         
@@ -193,11 +193,11 @@ namespace BooruDatasetTagManager
             }
         }
 
-        private void OnEditableTagChanged()
+        private void OnEditableTagChanged(bool storeHistory = true)
         {
             if (!inTxn && Parent != null)
             {
-                Parent.EditableTagChanged(this, true);
+                Parent.EditableTagChanged(this, storeHistory);
             }
             //if (parent != null)
             //{

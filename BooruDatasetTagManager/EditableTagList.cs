@@ -494,12 +494,14 @@ namespace BooruDatasetTagManager
 
         public async Task TranslateAllAsync()
         {
+            isStoreHistory = false;
             for (int i = 0; i < Count; i++)
             {
                 EditableTag eTag = (EditableTag)List[i];
                 if (string.IsNullOrEmpty(eTag.Translation))
                     eTag.Translation = await Program.TransManager.TranslateAsync(eTag.Tag);
             }
+            isStoreHistory = true;
         }
 
         protected virtual void OnListChanged(ListChangedEventArgs ev)
