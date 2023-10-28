@@ -24,13 +24,20 @@ namespace BooruDatasetTagManager
         {
             if (_resourceManager == null)
                 throw new InvalidOperationException("I18n class has not been initialized.");
-            string result = _resourceManager.GetString(key);
-            var hkItem = Program.Settings.Hotkeys[key];
-            if (hkItem != null)
+            try
             {
-                result += $" ({hkItem.GetHotkeyString()})";
+                string result = _resourceManager.GetString(key);
+                var hkItem = Program.Settings.Hotkeys[key];
+                if (hkItem != null)
+                {
+                    result += $" ({hkItem.GetHotkeyString()})";
+                }
+                return result;
             }
-            return result;
+            catch (Exception ex)
+            {
+                return key;
+            }
         }
     }
 }

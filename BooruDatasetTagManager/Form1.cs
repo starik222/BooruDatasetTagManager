@@ -559,7 +559,7 @@ namespace BooruDatasetTagManager
                 return;
             }
             isShowPreview = !isShowPreview;
-            showPreviewToolStripMenuItem.Checked = isShowPreview;
+            MenuShowPreview.Checked = isShowPreview;
             if (isShowPreview)
             {
                 if (gridViewDS.SelectedRows.Count == 1)
@@ -959,11 +959,12 @@ namespace BooruDatasetTagManager
 
         private void dataGridView3_SelectionChanged(object sender, EventArgs e)
         {
-            if (isCtrlOrShiftPressed)
-            {
-                needReloadTags = true;
-                return;
-            }
+            //Disabled because it causes a bug with shift or ctrl sticking
+            //if (isCtrlOrShiftPressed)
+            //{
+            //    needReloadTags = true;
+            //    return;
+            //}
             needReloadTags = false;
             LoadSelectedImageToGrid();
         }
@@ -1558,8 +1559,11 @@ namespace BooruDatasetTagManager
             toolStripPromptFixTipLabel.Text = I18n.GetText("UILabelFixPromptLength");
             openFolderToolStripMenuItem.Text = I18n.GetText("MenuItemLoadFolder");
             saveAllChangesToolStripMenuItem.Text = I18n.GetText("MenuItemSaveChanges");
-            showPreviewToolStripMenuItem.Text = I18n.GetText("MenuItemShowPreview");
+            MenuShowPreview.Text = I18n.GetText("MenuItemShowPreview");
             MenuItemTranslateTags.Text = I18n.GetText("MenuItemTranslateTags");
+            MenuHideAllTags.Text = I18n.GetText("MenuHideAllTags");
+            MenuHideTags.Text = I18n.GetText("MenuHideTags");
+            MenuHideDataset.Text = I18n.GetText("MenuHideDataset");
 
             BtnTagAddToAll.Text = I18n.GetText("BtnTagAddToAll");
             BtnTagAdd.Text = I18n.GetText("BtnTagAdd");
@@ -1760,8 +1764,8 @@ namespace BooruDatasetTagManager
             cmds["AllTagsFocus"] = delegate () { AllTagsFocus(); };
             cmds["AutoTagsFocus"] = delegate () { AutoTagsFocus(); };
 
-            cmds["saveAllChangesToolStripMenuItem"] = delegate () { saveAllChangesToolStripMenuItem.PerformClick(); };
-            cmds["showPreviewToolStripMenuItem"] = delegate () { showPreviewToolStripMenuItem.PerformClick(); };
+            cmds["MenuItemSaveChanges"] = delegate () { saveAllChangesToolStripMenuItem.PerformClick(); };
+            cmds["MenuItemShowPreview"] = delegate () { MenuShowPreview.PerformClick(); };
             cmds["MenuHideAllTags"] = delegate () { MenuHideAllTags.PerformClick(); };
             cmds["MenuHideTags"] = delegate () { MenuHideTags.PerformClick(); };
             cmds["MenuHideDataset"] = delegate () { MenuHideDataset.PerformClick(); };

@@ -67,7 +67,7 @@ namespace BooruDatasetTagManager
             openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             saveAllChangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            showPreviewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            MenuShowPreview = new System.Windows.Forms.ToolStripMenuItem();
             MenuItemTranslateTags = new System.Windows.Forms.ToolStripMenuItem();
             MenuShowTagCount = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
@@ -490,17 +490,17 @@ namespace BooruDatasetTagManager
             // 
             // viewToolStripMenuItem
             // 
-            viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { showPreviewToolStripMenuItem, MenuItemTranslateTags, MenuShowTagCount, toolStripSeparator10, MenuHideAllTags, MenuHideTags, MenuHideDataset, toolStripSeparator11 });
+            viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { MenuShowPreview, MenuItemTranslateTags, MenuShowTagCount, toolStripSeparator10, MenuHideAllTags, MenuHideTags, MenuHideDataset, toolStripSeparator11 });
             viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             viewToolStripMenuItem.Size = new System.Drawing.Size(56, 25);
             viewToolStripMenuItem.Text = "View";
             // 
-            // showPreviewToolStripMenuItem
+            // MenuShowPreview
             // 
-            showPreviewToolStripMenuItem.Name = "showPreviewToolStripMenuItem";
-            showPreviewToolStripMenuItem.Size = new System.Drawing.Size(251, 26);
-            showPreviewToolStripMenuItem.Text = "Show preview";
-            showPreviewToolStripMenuItem.Click += showPreviewToolStripMenuItem_Click;
+            MenuShowPreview.Name = "MenuShowPreview";
+            MenuShowPreview.Size = new System.Drawing.Size(251, 26);
+            MenuShowPreview.Text = "Show preview";
+            MenuShowPreview.Click += showPreviewToolStripMenuItem_Click;
             // 
             // MenuItemTranslateTags
             // 
@@ -1339,7 +1339,7 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripMenuItem openFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAllChangesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem showPreviewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem MenuShowPreview;
         private System.Windows.Forms.DataGridView gridViewAllTags;
         private System.Windows.Forms.ToolStrip toolStripAllTags;
         private System.Windows.Forms.ToolStripButton BtnTagSwitch;

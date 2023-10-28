@@ -204,6 +204,15 @@
   <data name="LabelDeleteFile" xml:space="preserve">
     <value>Delete File</value>
   </data>
+  <data name="MenuHideAllTags" xml:space="preserve">
+    <value>Hide all tags window</value>
+  </data>
+  <data name="MenuHideDataset" xml:space="preserve">
+    <value>Hide dataset</value>
+  </data>
+  <data name="MenuHideTags" xml:space="preserve">
+    <value>Hide image tags window</value>
+  </data>
   <data name="MenuItemLoadFolder" xml:space="preserve">
     <value>Load Folder</value>
   </data>
