@@ -498,7 +498,7 @@ namespace BooruDatasetTagManager
             {
                 EditableTag eTag = (EditableTag)List[i];
                 if (string.IsNullOrEmpty(eTag.Translation))
-                    eTag.Translation = await Program.TransManager.TranslateAsync(eTag.Translation);
+                    eTag.Translation = await Program.TransManager.TranslateAsync(eTag.Tag);
             }
         }
 

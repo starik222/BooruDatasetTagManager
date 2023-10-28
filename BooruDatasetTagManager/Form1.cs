@@ -193,7 +193,8 @@ namespace BooruDatasetTagManager
                 }
 
                 MultiSelectDataTable multiSelectData = new MultiSelectDataTable();
-                multiSelectData.CreateTableFromSelectedImages(selectedTagsList);
+                multiSelectData.SetTranslationMode(isTranslate);
+                await multiSelectData.CreateTableFromSelectedImages(selectedTagsList);
                 gridViewTags.DataSource = multiSelectData;
             }
 
@@ -204,7 +205,14 @@ namespace BooruDatasetTagManager
 
             gridViewDS.Focus();
             if (isTranslate)
-                await FillTranslation(gridViewTags);
+            {
+                var dsType = GetTagsDataSourceType();
+                if (dsType == DataSourceType.Single)
+                {
+                    await ((EditableTagList)gridViewTags.DataSource).TranslateAllAsync();
+                }
+            }
+            //await FillTranslation(gridViewTags);
             if (showCount)
                 UpdateTagCount();
         }
@@ -1103,7 +1111,7 @@ namespace BooruDatasetTagManager
             ((EditableTagList)gridViewTags.DataSource).AddTag(tag, true);
         }
 
-        private void AddTagMultiselectedMode(string tag, bool skipExist, AddingType addType, int pos = -1)
+        private async void AddTagMultiselectedMode(string tag, bool skipExist, AddingType addType, int pos = -1)
         {
             if (gridViewDS.SelectedRows.Count < 2)
             {

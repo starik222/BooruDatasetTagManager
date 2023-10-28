@@ -214,6 +214,7 @@ namespace BooruDatasetTagManager
             gridViewTags.RowTemplate.Height = 29;
             gridViewTags.Size = new System.Drawing.Size(364, 614);
             gridViewTags.TabIndex = 2;
+            gridViewTags.TabStop = false;
             gridViewTags.CellEndEdit += gridViewTags_CellEndEdit;
             gridViewTags.CellMouseEnter += dataGridViewTags_CellMouseEnter;
             gridViewTags.CellMouseLeave += dataGridViewTags_CellMouseLeave;
@@ -639,6 +640,7 @@ namespace BooruDatasetTagManager
             gridViewAllTags.RowTemplate.ReadOnly = true;
             gridViewAllTags.Size = new System.Drawing.Size(352, 630);
             gridViewAllTags.TabIndex = 2;
+            gridViewAllTags.TabStop = false;
             gridViewAllTags.CellDoubleClick += dataGridView2_CellDoubleClick;
             gridViewAllTags.SelectionChanged += gridViewAllTags_SelectionChanged;
             gridViewAllTags.Enter += gridView_Enter;
@@ -885,6 +887,7 @@ namespace BooruDatasetTagManager
             gridViewDS.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             gridViewDS.Size = new System.Drawing.Size(410, 653);
             gridViewDS.TabIndex = 6;
+            gridViewDS.TabStop = false;
             gridViewDS.DataSourceChanged += dataGridView3_DataSourceChanged;
             gridViewDS.CellMouseDown += gridViewDS_CellMouseDown;
             gridViewDS.ColumnHeaderMouseClick += gridViewDS_ColumnHeaderMouseClick;
@@ -1248,6 +1251,7 @@ namespace BooruDatasetTagManager
             Controls.Add(splitContainer1);
             Controls.Add(statusStrip1);
             Controls.Add(menuStrip1);
+            DoubleBuffered = true;
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             Name = "MainForm";
