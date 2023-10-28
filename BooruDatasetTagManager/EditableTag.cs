@@ -155,7 +155,13 @@ namespace BooruDatasetTagManager
             tagData.manualEdited = false;
         }
 
-        public EditableTag() { }
+        public EditableTag()
+        {
+            tagData.translation = "";
+            tagData.weight = 1;
+            tagData.tag = "";
+            tagData.manualEdited = false;
+        }
 
         public void BeginEdit()
         {

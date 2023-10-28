@@ -107,7 +107,6 @@ namespace BooruDatasetTagManager
             gridViewDS.AutoResizeColumns();
         }
 
-        //NEED FIX TRANSLATION NOT SAVED IN DATASOURCE TRANSLATION FIELD
         private async Task FillTranslation(DataGridView grid)
         {
             if (grid.Columns.Contains("Translation") && grid.Columns["Translation"].Visible == false)
@@ -210,107 +209,6 @@ namespace BooruDatasetTagManager
                 UpdateTagCount();
         }
 
-        //private async void LoadSelectedImageToGridOld()
-        //{
-        //    if (gridViewDS.SelectedRows.Count == 0)
-        //        return;
-        //    if (gridViewDS.SelectedRows.Count == 1)
-        //    {
-        //        gridViewTags.AllowDrop = true;
-        //        gridViewTags.Rows.Clear();
-        //        ChageImageColumn(false);
-        //        List<string> tags = Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value].Tags;
-        //        gridViewTags.Tag = (string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value;
-        //        //gridViewTags.Columns["ImageTags"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-        //        if (gridViewTags.Columns.Contains("Translation"))
-        //        {
-        //            gridViewTags.Columns["Translation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-        //            gridViewTags.Columns["Translation"].ReadOnly = true;
-        //        }
-        //        foreach (var item in tags)
-        //            gridViewTags.Rows.Add(item);
-        //        if (isShowPreview)
-        //        {
-        //            ShowPreview((string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (isShowPreview)
-        //        {
-        //            HidePreview();
-        //        }
-        //        gridViewTags.AllowDrop = false;
-        //        gridViewTags.Rows.Clear();
-        //        ChageImageColumn(true);
-        //        //gridViewTags.Columns["ImageTags"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
-        //        if (gridViewTags.Columns.Contains("Translation"))
-        //        {
-        //            gridViewTags.Columns["Translation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-        //            gridViewTags.Columns["Translation"].ReadOnly = true;
-        //        }
-        //        gridViewTags.Tag = "0";
-        //        Dictionary<string, List<DataItem>> table = new Dictionary<string, List<DataItem>>();
-        //        List<DataItem> selectedTagsList = new List<DataItem>();
-        //        for (int i = 0; i < gridViewDS.SelectedRows.Count; i++)
-        //        {
-        //            selectedTagsList.Add(Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[i].Cells["ImageFilePath"].Value]);
-        //        }
-
-        //        int maxCount = selectedTagsList.Max(a => a.Tags.Count);
-
-        //        for (int i = 0; i < maxCount; i++)
-        //        {
-        //            for (int j = 0; j < selectedTagsList.Count; j++)
-        //            {
-        //                var curTags = selectedTagsList[j];
-        //                if (i < curTags.Tags.Count)
-        //                {
-        //                    if (table.ContainsKey(curTags.Tags[i]))
-        //                    {
-        //                        table[curTags.Tags[i]].Add(curTags);
-        //                    }
-        //                    else
-        //                    {
-        //                        table.Add(curTags.Tags[i], new List<DataItem>() { curTags });
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        foreach (var item in table)
-        //        {
-        //            item.Value.Sort((x, y) => x.Name.CompareTo(y.Name));
-        //            DataGridViewRow[] rows = new DataGridViewRow[item.Value.Count];
-        //            for (int i = 0; i < item.Value.Count; i++)
-        //            {
-        //                DataGridViewRow row = new DataGridViewRow();
-        //                row.CreateCells(gridViewTags);
-        //                row.Tag = item.Key;//tag
-        //                row.Cells["ImageTags".IdxFromName(gridViewTags)].Value = i == 0 ? item.Key : "";//tag
-        //                row.Cells["ImageTags".IdxFromName(gridViewTags)].Tag = item.Value[i];//tagItem
-        //                row.Cells["Image".IdxFromName(gridViewTags)].Value = item.Value[i].ImageFilePath;//ImgName
-        //                row.Cells["Image".IdxFromName(gridViewTags)].Tag = item.Key;//tag
-        //                row.Cells["Name".IdxFromName(gridViewTags)].Value = item.Value[i].Name;//ImgName
-        //                row.Cells["Name".IdxFromName(gridViewTags)].Tag = item.Key;//tag
-        //                rows[i] = row;
-        //            }
-        //            gridViewTags.Rows.AddRange(rows);
-        //        }
-        //    }
-
-        //    if (Program.Settings.AutoSort)
-        //    {
-        //        SortPrompt();
-        //    }
-
-        //    gridViewDS.Focus();
-        //    if (isTranslate)
-        //        await FillTranslation(gridViewTags);
-        //    if (showCount)
-        //        UpdateTagCount();
-        //    SetChangedStatus(false);
-        //}
-
         /// <summary>
         /// Add or remove Image column
         /// </summary>
@@ -318,26 +216,6 @@ namespace BooruDatasetTagManager
         private void ChageImageColumn(bool add)
         {
             gridViewTags.Columns["ImageName"].Visible = add;
-
-            //if (gridViewTags.Columns.Contains("Image"))
-            //{
-            //    if (!add)
-            //    {
-            //        gridViewTags.Columns.Remove("Image");
-            //        gridViewTags.Columns.Remove("Name");
-            //    }
-            //}
-            //else
-            //{
-            //    if (add)
-            //    {
-            //        gridViewTags.Columns.Add("Image", "Image");
-            //        gridViewTags.Columns["Image"].Visible = false;
-            //        gridViewTags.Columns.Add("Name", "Name");
-            //        gridViewTags.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            //        gridViewTags.Columns["ImageTags"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            //    }
-            //}
         }
 
         private Rectangle dragBoxFromMouseDown;
@@ -795,20 +673,14 @@ namespace BooruDatasetTagManager
                     ReadOnly = true,
                     AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
                 });
-                gridViewTags.Columns.Insert(1, new DataGridViewTextBoxColumn()
-                {
-                    Name = "Translation",
-                    HeaderText = "Translation",
-                    ReadOnly = true,
-                    AutoSizeMode = gridViewTags.Columns.Contains("Image") ? DataGridViewAutoSizeColumnMode.AllCellsExceptHeader : DataGridViewAutoSizeColumnMode.Fill
-                });
+                gridViewTags.Columns["Translation"].Visible = true;
                 await FillTranslation(gridViewAllTags);
                 await FillTranslation(gridViewTags);
             }
             else
             {
                 gridViewAllTags.Columns.Remove("Translation");
-                gridViewTags.Columns.Remove("Translation");
+                gridViewTags.Columns["Translation"].Visible = false;
             }
         }
 
