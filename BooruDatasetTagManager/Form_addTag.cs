@@ -26,6 +26,8 @@ namespace BooruDatasetTagManager
             comboBox1.SelectedItem = "Down";
             checkBoxSkipExist.Text = I18n.GetText("CheckBoxSkipExist");
             tagTextBox.ItemSelectionComplete += TagTextBox_ItemSelectionComplete;
+            Program.ColorManager.ChangeColorScheme(this, Program.ColorManager.SelectedScheme);
+            Program.ColorManager.ChangeColorSchemeInConteiner(Controls, Program.ColorManager.SelectedScheme);
         }
 
         private void TagTextBox_ItemSelectionComplete(object sender, EventArgs e)

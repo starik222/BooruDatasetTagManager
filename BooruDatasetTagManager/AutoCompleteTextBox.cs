@@ -107,15 +107,20 @@ namespace BooruDatasetTagManager
                 //Parent.Controls.Add(_listBox);
                 //_parent.Controls.Add(_listBox);
                 //_listBox.Parent = Parent;
+                Program.ColorManager.ChangeColorScheme(_listBox, Program.ColorManager.SelectedScheme);
                 if (Parent is Form)
                 {
                     Parent.Controls.Add(_listBox);
+                    //_listBox.BackColor = Parent.BackColor;
+                    //_listBox.ForeColor = Parent.ForeColor;
                     _listBox.Left = Left;
                     _listBox.Top = Top + Height;
                 }
                 else
                 {
                     Parent.Parent.Controls.Add(_listBox);
+                    //_listBox.BackColor = Parent.Parent.BackColor;
+                    //_listBox.ForeColor = Parent.Parent.ForeColor;
                 }
                 _isAdded = true;
             }

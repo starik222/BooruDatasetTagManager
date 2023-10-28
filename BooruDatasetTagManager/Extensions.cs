@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using System.Data;
 
 namespace BooruDatasetTagManager
 {
@@ -65,6 +66,35 @@ namespace BooruDatasetTagManager
             }
         }
 
+        public static int CalcBracketsCount(float weight, bool positive)
+        {
+            if (weight == 1 || weight == 0)
+                return 0;
+            int count = 0;
+            float mult = positive ? PromptParser.round_bracket_multiplier : PromptParser.square_bracket_multiplier;
+
+            if (positive)
+            {
+                while (weight > 1)
+                {
+                    weight /= mult;
+                    count++;
+                }
+            }
+            else
+            {
+                while (weight < 1)
+                {
+                    weight /= mult;
+                    count++;
+                }
+            }
+            if (weight == 1)
+                return count;
+            else
+                return 0;
+        }
+
         public static string GetBetween(this string strSource, string strStart, string strEnd)
         {
             const int kNotFound = -1;
@@ -102,28 +132,20 @@ namespace BooruDatasetTagManager
         public static Image GetImageFromFile(string imagePath)
         {
             bool isWebP = false;
-            using (FileStream fs = new FileStream(imagePath, FileMode.Open))
-            {
-                if (fs.Length < 4)
-                    return null;
-                byte[] signature = new byte[4];
-                fs.Read(signature, 0, 4);
-                if (BitConverter.ToInt32(signature, 0) == 1179011410 || BitConverter.ToInt32(signature, 0) == 1346520407)
-                    isWebP = true;
-            }
-
+            byte[] imageData = File.ReadAllBytes(imagePath);
+            if (imageData.Length < 4)
+                return null;
+            if (BitConverter.ToInt32(imageData, 0) == 1179011410 || BitConverter.ToInt32(imageData, 0) == 1346520407)
+                isWebP = true;
             if (!isWebP)
             {
-                using (var img = Image.FromFile(imagePath))
-                {
-                    return new Bitmap(img);
-                }
+                return Image.FromStream(new MemoryStream(imageData));
             }
             else
             {
                 using (WebPWrapper.WebP wp = new WebPWrapper.WebP())
                 {
-                    return wp.Load(imagePath);
+                    return wp.Load(imageData);
                 }
             }
         }

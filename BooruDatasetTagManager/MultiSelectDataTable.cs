@@ -12,6 +12,7 @@ namespace BooruDatasetTagManager
     public class MultiSelectDataTable : DataTable
     {
         private List<DataItem> selectedDataItems;
+        private bool isTranslateMode = false;
         public MultiSelectDataTable()
             : base()
         {
@@ -37,8 +38,12 @@ namespace BooruDatasetTagManager
             return new MultiSelectDataRow(builder);
         }
 
+        public void SetTranslationMode(bool translate)
+        {
+            this.isTranslateMode = translate;
+        }
 
-        public void CreateTableFromSelectedImages(List<DataItem> selectedDI)
+        public async Task CreateTableFromSelectedImages(List<DataItem> selectedDI)
         {
             selectedDataItems = selectedDI;
             selectedDataItems.Sort((a, b) => FileNamesComparer.StrCmpLogicalW(a.Name, b.Name));
@@ -67,6 +72,10 @@ namespace BooruDatasetTagManager
             Columns.Add("Tag", typeof(string));
             Columns.Add("Image", typeof(string));
             Columns.Add("ImageName", typeof(string));
+            if (isTranslateMode)
+            {
+                Columns.Add("Translation", typeof(string));
+            }
             foreach (var item in table)
             {
                 item.Value.Sort((x, y) => x.Value.Name.CompareTo(y.Value.Name));
@@ -77,6 +86,10 @@ namespace BooruDatasetTagManager
                     row.SetAttribute("TagIndex", item.Value[i].Key);
                     row.SetAttribute("DataItem", item.Value[i].Value);
                     row["Tag"] = i == 0 ? item.Key : "";//tag
+                    if (isTranslateMode)
+                    {
+                        row["Translation"] = i == 0 ? await Program.TransManager.TranslateAsync(item.Key) : "";//tag
+                    }
                     row["Image"] = item.Value[i].Value.ImageFilePath;//ImgName
                     row["ImageName"] = item.Value[i].Value.Name;//ImgName
                     Rows.Add(row);
@@ -166,6 +179,10 @@ namespace BooruDatasetTagManager
                         row["Tag"] = i == 0 ? tag : "";//tag
                         row["Image"] = addedItems[i].Value.ImageFilePath;//ImgName
                         row["ImageName"] = addedItems[i].Value.Name;//ImgName
+                        //if (isTranslateMode)
+                        //{
+                        //    row["Translation"] = i == 0 ? await Program.TransManager.TranslateAsync(tag) : "";//tag
+                        //}
                         Rows.Add(row);
                     }
                 }

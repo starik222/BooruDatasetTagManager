@@ -15,6 +15,8 @@ namespace BooruDatasetTagManager
         public Form_filter()
         {
             InitializeComponent();
+            Program.ColorManager.ChangeColorScheme(this, Program.ColorManager.SelectedScheme);
+            Program.ColorManager.ChangeColorSchemeInConteiner(Controls, Program.ColorManager.SelectedScheme);
         }
 
         private void button1_Click(object sender, EventArgs e)

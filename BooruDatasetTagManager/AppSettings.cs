@@ -39,6 +39,8 @@ namespace BooruDatasetTagManager
 
         public string Language { get; set; } = "en-US";
 
+        public string ColorScheme { get; set; } = "Classic";
+
         public AppSettings(string appDir)
         {
             InitAvaibleLangs();
@@ -76,6 +78,8 @@ namespace BooruDatasetTagManager
                 AutocompleteFont = tempSettings.AutocompleteFont;
                 AutoSort = tempSettings.AutoSort || false;
                 Language = tempSettings.Language;
+                if (!string.IsNullOrEmpty(tempSettings.ColorScheme))
+                    ColorScheme = tempSettings.ColorScheme;
                 AutoTagger = tempSettings.AutoTagger;
                 if (AutoTagger == null)
                 {
@@ -96,13 +100,6 @@ namespace BooruDatasetTagManager
                             hkItem.IsShift = item.IsShift;
                         }
                     }
-                }
-
-                Hotkeys = tempSettings.Hotkeys;
-                if (Hotkeys == null)
-                {
-                    Hotkeys = new HotkeyData();
-                    Hotkeys.InitDefault();
                 }
             }
         }
@@ -272,9 +269,13 @@ namespace BooruDatasetTagManager
 
     public class InterragatorSettings
     {
-        public string Name {get; set;}
+        public List<KeyValuePair<string, float>> InterragatorParams { get; set; }
         public AutoTaggerSort SortMode { get; set; } = AutoTaggerSort.None;
-        public float Threshold { get; set; } = 0.35f;
+
+        public InterragatorSettings()
+        {
+            InterragatorParams = new List<KeyValuePair<string, float>>();
+        }
     }
 
     public class FontSettings
