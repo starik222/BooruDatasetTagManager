@@ -1793,6 +1793,16 @@ namespace BooruDatasetTagManager
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
+            if (gridViewTags.IsCurrentCellInEditMode && keyData == Keys.Enter)
+            {
+                gridViewTags.EndEdit();
+                return true;
+            }
+            //else if (gridViewTags.Focused && !gridViewTags.IsCurrentCellInEditMode && keyData == Keys.Enter)
+            //{
+            //    gridViewTags.BeginEdit(true);
+            //    return true;
+            //}
             var hotkey = Program.Settings.Hotkeys.Items.Find(a => a.FullKeyData == keyData);
             if (hotkey != null)
             {
