@@ -1,14 +1,34 @@
 # -*- mode: python ; coding: utf-8 -*-
-
+from PyInstaller.utils.hooks import copy_metadata
+from PyInstaller.utils.hooks import collect_data_files
 
 a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[
+        *copy_metadata('tqdm'),
+        *copy_metadata('tensorflow'),
+        *copy_metadata('torch'),
+        *copy_metadata('regex'),
+        *copy_metadata('requests'),
+        *copy_metadata('packaging'),
+        *copy_metadata('pillow'),
+        *copy_metadata('filelock'),
+        *copy_metadata('onnxruntime_gpu'),
+        *copy_metadata('numpy'),
+        *copy_metadata('tokenizers'),
+        *copy_metadata('importlib_metadata'),
+
+        *collect_data_files('transformers', include_py_files=True, includes=['**/*.py']),
+    ],
     hiddenimports=[
         'torch',
+        'tensorflow',
         'tqdm',
+        'onnxruntime',
+        'onnxruntime_gpu',
+        'PIL',
     ],
     hookspath=[],
     hooksconfig={},

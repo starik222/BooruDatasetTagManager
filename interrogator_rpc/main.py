@@ -106,7 +106,8 @@ class InterrogatorServicer(rpc_proto.services_pb2_grpc.ImageInterrogatorServicer
 			return ret
 
 
-		tag_listing = {}
+		ret = rpc_proto.services_pb2.ImageTagResults()
+
 		try:
 
 			image_bytes = request.interrogate_image
@@ -114,12 +115,23 @@ class InterrogatorServicer(rpc_proto.services_pb2_grpc.ImageInterrogatorServicer
 			image_obj = Image.open(io.BytesIO(image_bytes))
 
 			for network_conf in request.params:
+
+
 				tag_ret = interrogate_image(network_conf.interrogator_network, image_obj)
 				network_tags = extract_tag_ret(tag_ret, network_conf.interrogator_threshold)
 
+				net_resp = rpc_proto.services_pb2.InterrogationResponse()
+				net_resp.network_name = network_conf.interrogator_network
+
 				for tag, probability in network_tags.items():
-					if probability > network_conf.interrogator_threshold:
-						tag_listing[tag] = probability
+
+					tag_obj = rpc_proto.services_pb2.TagEntry(
+							tag         = tag,
+							probability = probability,
+						)
+					net_resp.tags.append(tag_obj)
+
+				ret.responses.append(net_resp)
 
 		except Exception as e:
 			global ACTIVE_INTERROGATOR
@@ -157,23 +169,9 @@ class InterrogatorServicer(rpc_proto.services_pb2_grpc.ImageInterrogatorServicer
 			return ret
 
 
-		ret = rpc_proto.services_pb2.ImageTagResults()
 
 		ret.interrogate_ok = True
-
-		# I want to return the tags in sorted order. This is kind of silly, but w/e
-		tag_listing = [(tag, probability) for tag, probability in tag_listing.items()]
-		tag_listing.sort()
-
-		for tag, probability in tag_listing:
-			tag_obj = rpc_proto.services_pb2.TagEntry(
-					tag         = tag,
-					probability = probability,
-				)
-			ret.tags.append(tag_obj)
-
-
-		ret.error_msg = "Image successfully processed. Deduced %s tags." % (len(ret.tags), )
+		ret.error_msg = "Image successfully processed."
 
 
 		print(ret.error_msg)

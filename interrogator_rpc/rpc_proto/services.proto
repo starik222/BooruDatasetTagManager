@@ -29,10 +29,17 @@ message TagEntry {
     float probability = 2;
 }
 
+message InterrogationResponse {
+    string network_name    = 1;
+    repeated TagEntry tags = 2;
+}
+
+
+
 message ImageTagResults {
-    repeated TagEntry tags = 1;
-    bool interrogate_ok    = 2;
-    string error_msg       = 3;
+    repeated InterrogationResponse responses = 1;
+    bool interrogate_ok                      = 2;
+    string error_msg                         = 3;
 }
 
 
