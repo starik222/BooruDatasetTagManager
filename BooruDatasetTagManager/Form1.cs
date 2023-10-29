@@ -1141,7 +1141,8 @@ namespace BooruDatasetTagManager
                 }
                 else
                 {
-                    if ((string)gridViewTags.Rows[i].Tag == tag)
+                    var rowTag = (string)((MultiSelectDataRow)((MultiSelectDataTable)gridViewTags.DataSource).Rows[i]).ExtendedProperties["TextTag"];
+                    if (rowTag == tag)
                     {
                         gridViewTags.Rows.RemoveAt(i);
                     }
