@@ -20,12 +20,16 @@ class NetworkInterrogationParameters(_message.Message):
     def __init__(self, interrogator_network: _Optional[str] = ..., interrogator_threshold: _Optional[float] = ...) -> None: ...
 
 class InterrogationRequest(_message.Message):
-    __slots__ = ["params", "interrogate_image"]
+    __slots__ = ["params", "interrogate_image", "skip_internet_requests", "serialize_vram_usage"]
     PARAMS_FIELD_NUMBER: _ClassVar[int]
     INTERROGATE_IMAGE_FIELD_NUMBER: _ClassVar[int]
+    SKIP_INTERNET_REQUESTS_FIELD_NUMBER: _ClassVar[int]
+    SERIALIZE_VRAM_USAGE_FIELD_NUMBER: _ClassVar[int]
     params: _containers.RepeatedCompositeFieldContainer[NetworkInterrogationParameters]
     interrogate_image: bytes
-    def __init__(self, params: _Optional[_Iterable[_Union[NetworkInterrogationParameters, _Mapping]]] = ..., interrogate_image: _Optional[bytes] = ...) -> None: ...
+    skip_internet_requests: bool
+    serialize_vram_usage: bool
+    def __init__(self, params: _Optional[_Iterable[_Union[NetworkInterrogationParameters, _Mapping]]] = ..., interrogate_image: _Optional[bytes] = ..., skip_internet_requests: bool = ..., serialize_vram_usage: bool = ...) -> None: ...
 
 class TagEntry(_message.Message):
     __slots__ = ["tag", "probability"]
@@ -35,15 +39,23 @@ class TagEntry(_message.Message):
     probability: float
     def __init__(self, tag: _Optional[str] = ..., probability: _Optional[float] = ...) -> None: ...
 
-class ImageTagResults(_message.Message):
-    __slots__ = ["tags", "interrogate_ok", "error_msg"]
+class InterrogationResponse(_message.Message):
+    __slots__ = ["network_name", "tags"]
+    NETWORK_NAME_FIELD_NUMBER: _ClassVar[int]
     TAGS_FIELD_NUMBER: _ClassVar[int]
+    network_name: str
+    tags: _containers.RepeatedCompositeFieldContainer[TagEntry]
+    def __init__(self, network_name: _Optional[str] = ..., tags: _Optional[_Iterable[_Union[TagEntry, _Mapping]]] = ...) -> None: ...
+
+class ImageTagResults(_message.Message):
+    __slots__ = ["responses", "interrogate_ok", "error_msg"]
+    RESPONSES_FIELD_NUMBER: _ClassVar[int]
     INTERROGATE_OK_FIELD_NUMBER: _ClassVar[int]
     ERROR_MSG_FIELD_NUMBER: _ClassVar[int]
-    tags: _containers.RepeatedCompositeFieldContainer[TagEntry]
+    responses: _containers.RepeatedCompositeFieldContainer[InterrogationResponse]
     interrogate_ok: bool
     error_msg: str
-    def __init__(self, tags: _Optional[_Iterable[_Union[TagEntry, _Mapping]]] = ..., interrogate_ok: bool = ..., error_msg: _Optional[str] = ...) -> None: ...
+    def __init__(self, responses: _Optional[_Iterable[_Union[InterrogationResponse, _Mapping]]] = ..., interrogate_ok: bool = ..., error_msg: _Optional[str] = ...) -> None: ...
 
 class InterrogatorListingRequest(_message.Message):
     __slots__ = []

@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Interrogator binaries
+/interrogator_rpc/build
+/interrogator_rpc/dist
