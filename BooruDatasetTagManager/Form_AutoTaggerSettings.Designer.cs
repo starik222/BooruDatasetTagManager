@@ -37,6 +37,10 @@
             button1 = new System.Windows.Forms.Button();
             button2 = new System.Windows.Forms.Button();
             checkedListBoxcomboBoxInterrogators = new System.Windows.Forms.CheckedListBox();
+            label4 = new System.Windows.Forms.Label();
+            comboBoxUnionMode = new System.Windows.Forms.ComboBox();
+            checkBoxSerializeVRAM = new System.Windows.Forms.CheckBox();
+            checkBoxSkipInternet = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)trackBarThreshold).BeginInit();
             SuspendLayout();
             // 
@@ -52,7 +56,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(12, 285);
+            label2.Location = new System.Drawing.Point(12, 381);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(62, 15);
             label2.TabIndex = 0;
@@ -62,7 +66,7 @@
             // 
             comboBoxSortMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBoxSortMode.FormattingEnabled = true;
-            comboBoxSortMode.Location = new System.Drawing.Point(12, 303);
+            comboBoxSortMode.Location = new System.Drawing.Point(12, 399);
             comboBoxSortMode.Name = "comboBoxSortMode";
             comboBoxSortMode.Size = new System.Drawing.Size(393, 23);
             comboBoxSortMode.TabIndex = 1;
@@ -70,7 +74,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(12, 329);
+            label3.Location = new System.Drawing.Point(12, 425);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(59, 15);
             label3.TabIndex = 2;
@@ -78,7 +82,7 @@
             // 
             // trackBarThreshold
             // 
-            trackBarThreshold.Location = new System.Drawing.Point(12, 347);
+            trackBarThreshold.Location = new System.Drawing.Point(12, 443);
             trackBarThreshold.Maximum = 100;
             trackBarThreshold.Name = "trackBarThreshold";
             trackBarThreshold.Size = new System.Drawing.Size(393, 45);
@@ -88,7 +92,7 @@
             // labelPercent
             // 
             labelPercent.AutoSize = true;
-            labelPercent.Location = new System.Drawing.Point(85, 329);
+            labelPercent.Location = new System.Drawing.Point(85, 425);
             labelPercent.Name = "labelPercent";
             labelPercent.Size = new System.Drawing.Size(17, 15);
             labelPercent.TabIndex = 4;
@@ -96,7 +100,7 @@
             // 
             // button1
             // 
-            button1.Location = new System.Drawing.Point(12, 398);
+            button1.Location = new System.Drawing.Point(12, 494);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(75, 23);
             button1.TabIndex = 5;
@@ -106,7 +110,7 @@
             // 
             // button2
             // 
-            button2.Location = new System.Drawing.Point(93, 398);
+            button2.Location = new System.Drawing.Point(93, 494);
             button2.Name = "button2";
             button2.Size = new System.Drawing.Size(75, 23);
             button2.TabIndex = 6;
@@ -121,8 +125,46 @@
             checkedListBoxcomboBoxInterrogators.Location = new System.Drawing.Point(12, 27);
             checkedListBoxcomboBoxInterrogators.Name = "checkedListBoxcomboBoxInterrogators";
             checkedListBoxcomboBoxInterrogators.ScrollAlwaysVisible = true;
-            checkedListBoxcomboBoxInterrogators.Size = new System.Drawing.Size(393, 256);
+            checkedListBoxcomboBoxInterrogators.Size = new System.Drawing.Size(393, 274);
             checkedListBoxcomboBoxInterrogators.TabIndex = 7;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new System.Drawing.Point(12, 337);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(264, 15);
+            label4.TabIndex = 0;
+            label4.Text = "Mode for merging results with multiple selection";
+            // 
+            // comboBoxUnionMode
+            // 
+            comboBoxUnionMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxUnionMode.FormattingEnabled = true;
+            comboBoxUnionMode.Location = new System.Drawing.Point(12, 355);
+            comboBoxUnionMode.Name = "comboBoxUnionMode";
+            comboBoxUnionMode.Size = new System.Drawing.Size(393, 23);
+            comboBoxUnionMode.TabIndex = 1;
+            // 
+            // checkBoxSerializeVRAM
+            // 
+            checkBoxSerializeVRAM.AutoSize = true;
+            checkBoxSerializeVRAM.Location = new System.Drawing.Point(12, 315);
+            checkBoxSerializeVRAM.Name = "checkBoxSerializeVRAM";
+            checkBoxSerializeVRAM.Size = new System.Drawing.Size(138, 19);
+            checkBoxSerializeVRAM.TabIndex = 8;
+            checkBoxSerializeVRAM.Text = "Serialize VRAM usage";
+            checkBoxSerializeVRAM.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxSkipInternet
+            // 
+            checkBoxSkipInternet.AutoSize = true;
+            checkBoxSkipInternet.Location = new System.Drawing.Point(156, 315);
+            checkBoxSkipInternet.Name = "checkBoxSkipInternet";
+            checkBoxSkipInternet.Size = new System.Drawing.Size(139, 19);
+            checkBoxSkipInternet.TabIndex = 8;
+            checkBoxSkipInternet.Text = "Skip internet requests";
+            checkBoxSkipInternet.UseVisualStyleBackColor = true;
             // 
             // Form_AutoTaggerSettings
             // 
@@ -130,14 +172,18 @@
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             CancelButton = button2;
-            ClientSize = new System.Drawing.Size(417, 439);
+            ClientSize = new System.Drawing.Size(417, 531);
+            Controls.Add(checkBoxSkipInternet);
+            Controls.Add(checkBoxSerializeVRAM);
             Controls.Add(checkedListBoxcomboBoxInterrogators);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(labelPercent);
             Controls.Add(trackBarThreshold);
             Controls.Add(label3);
+            Controls.Add(comboBoxUnionMode);
             Controls.Add(comboBoxSortMode);
+            Controls.Add(label4);
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "Form_AutoTaggerSettings";
@@ -160,5 +206,9 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.CheckedListBox checkedListBoxcomboBoxInterrogators;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox comboBoxUnionMode;
+        private System.Windows.Forms.CheckBox checkBoxSerializeVRAM;
+        private System.Windows.Forms.CheckBox checkBoxSkipInternet;
     }
 }

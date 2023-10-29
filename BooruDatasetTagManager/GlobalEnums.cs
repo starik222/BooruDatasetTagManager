@@ -57,6 +57,13 @@ namespace BooruDatasetTagManager
         Xor
     }
 
+    public enum NetworkUnionMode
+    {
+        Addition,
+        Intersection,
+        Subtraction
+    }
+
     public enum DataSourceType
     {
         None,

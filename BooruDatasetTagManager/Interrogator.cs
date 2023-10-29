@@ -45,7 +45,7 @@ namespace BooruDatasetTagManager
             }
         }
 
-        public async Task<InterrogateResult> InterrogateImage(string imagePath, List<NetworkInterrogationParameters> interrogationParameters)
+        public async Task<InterrogateResult> InterrogateImage(string imagePath, List<NetworkInterrogationParameters> interrogationParameters, bool serializeVramUsage, bool SkipInternetRequests)
         {
             InterrogateResult result = new InterrogateResult();
             if (!File.Exists(imagePath) || !IsConnected)
@@ -57,15 +57,22 @@ namespace BooruDatasetTagManager
             try
             {
                 InterrogationRequest request = new InterrogationRequest();
+                request.SerializeVramUsage = serializeVramUsage;
+                request.SkipInternetRequests = SkipInternetRequests;
                 request.Params.AddRange(interrogationParameters);
                 request.InterrogateImage = ByteString.CopyFrom(File.ReadAllBytes(imagePath));
                 var response = await _client.InterrogateImageAsync(request);
                 if (response.InterrogateOk)
                 {
                     result.Success = true;
-                    foreach (var item in response.Tags)
+                    foreach (var net in response.Responses)
                     {
-                        result.Items.Add(new AutoTagItem(item.Tag, item.Probability));
+                        List<AutoTagItem> items = new List<AutoTagItem>();
+                        foreach (var item in net.Tags)
+                        {
+                            items.Add(new AutoTagItem(item.Tag, item.Probability));
+                        }
+                        result.Items[net.NetworkName] = items;
                     }
                     result.Message = response.ErrorMsg;
                     return result;
@@ -121,12 +128,71 @@ namespace BooruDatasetTagManager
     public class InterrogateResult
     {
         public bool Success { get; set; }
-        public List<AutoTagItem> Items { get; set; }
+        public Dictionary<string, List<AutoTagItem>> Items { get; set; }
         public string Message { get; set; }
 
         public InterrogateResult()
         {
-            Items = new List<AutoTagItem>();
+            Items = new Dictionary<string, List<AutoTagItem>>();
+        }
+
+        public List<AutoTagItem> GetTagList(NetworkUnionMode unionMode)
+        {
+            if (Items.Count == 0)
+                return new List<AutoTagItem>();
+            else if (Items.Count == 1)
+                return Items.ElementAt(0).Value;
+            else
+            {
+                //List<AutoTagItem> result = new List<AutoTagItem>();
+                Dictionary<string, MultitagUnionData> preResult = new Dictionary<string, MultitagUnionData>();
+                List<AutoTagItem> result = new List<AutoTagItem>();
+                foreach (var net in Items)
+                {
+                    foreach (var item in net.Value)
+                    {
+                        if (preResult.ContainsKey(item.Tag))
+                        {
+                            preResult[item.Tag].Confidence = (preResult[item.Tag].Confidence + item.Confidence) / 2;
+                            preResult[item.Tag].Count++;
+                        }
+                        else
+                            preResult[item.Tag] = new MultitagUnionData(){ Count = 1, Confidence = item.Confidence };
+                    }
+                }
+
+
+                if (unionMode == NetworkUnionMode.Addition)
+                {
+                    foreach (var item in preResult)
+                    {
+                        result.Add(new AutoTagItem(item.Key, item.Value.Confidence));
+                    }
+                }
+                else if (unionMode == NetworkUnionMode.Subtraction)
+                {
+                    foreach (var item in preResult)
+                    {
+                        if (item.Value.Count == 1)
+                            result.Add(new AutoTagItem(item.Key, item.Value.Confidence));
+                    }
+                }
+                else if (unionMode == NetworkUnionMode.Intersection)
+                {
+                    foreach (var item in preResult)
+                    {
+                        if (item.Value.Count == Items.Count)
+                            result.Add(new AutoTagItem(item.Key, item.Value.Confidence));
+                    }
+                }
+                return result;
+            }
+        }
+
+        private class MultitagUnionData
+        {
+            public int Count { get; set; }
+            public float Confidence { get; set; }
         }
     }
 

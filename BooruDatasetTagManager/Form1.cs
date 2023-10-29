@@ -1912,21 +1912,22 @@ namespace BooruDatasetTagManager
             {
                 parameters.Add(new Image_Interrogator_Ns.NetworkInterrogationParameters() { InterrogatorNetwork = item.Key, InterrogatorThreshold = item.Value });
             }
-            var listOfTags = await Program.AutoTagger.InterrogateImage(imagePath, parameters);
+            var listOfTags = await Program.AutoTagger.InterrogateImage(imagePath, parameters, Program.Settings.AutoTagger.SerializeVramUsage, Program.Settings.AutoTagger.SkipInternetRequests);
             SetStatus(listOfTags.Message);
             if (!listOfTags.Success)
             {
                 return new List<AutoTagItem>();
             }
+            List<AutoTagItem> result = listOfTags.GetTagList(Program.Settings.AutoTagger.UnionMode);
             if (Program.Settings.AutoTagger.SortMode == AutoTaggerSort.Confidence)
             {
-                listOfTags.Items.Sort((a, b) => b.Confidence.CompareTo(a.Confidence));
+                result.Sort((a, b) => b.Confidence.CompareTo(a.Confidence));
             }
             else if (Program.Settings.AutoTagger.SortMode == AutoTaggerSort.Alphabetical)
             {
-                listOfTags.Items.Sort((a, b) => a.Tag.CompareTo(b.Tag));
+                result.Sort((a, b) => a.Tag.CompareTo(b.Tag));
             }
-            return listOfTags.Items;
+            return result;
         }
 
         private async void generateTagsWithCurrentSettingsToolStripMenuItem_Click(object sender, EventArgs e)
