@@ -134,6 +134,11 @@ namespace BooruDatasetTagManager
             }
         }
 
+        internal bool IsEditing
+        {
+            get => inTxn;
+        }
+
 
         public EditableTag(int id, string tag)
         {

@@ -1799,8 +1799,14 @@ namespace BooruDatasetTagManager
         {
             if (gridViewTags.IsCurrentCellInEditMode && keyData == Keys.Enter)
             {
+                var rowIndex = gridViewTags.CurrentCell.RowIndex;
                 gridViewTags.EndEdit();
-                return true;
+                if (GetTagsDataSourceType() == DataSourceType.Single)
+                {
+                    var eTagList = ((EditableTagList)gridViewTags.DataSource);
+                    eTagList.EndEdit(rowIndex);
+                }
+                //((EditableTagList)gridViewTags.DataSource).
             }
             //else if (gridViewTags.Focused && !gridViewTags.IsCurrentCellInEditMode && keyData == Keys.Enter)
             //{
