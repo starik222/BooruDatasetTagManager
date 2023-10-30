@@ -1,5 +1,6 @@
-from transformers import Blip2Processor, Blip2ForConditionalGeneration
+# pylint: disable=bad-indentation
 
+from transformers import Blip2Processor, Blip2ForConditionalGeneration
 from .. import devices, settings, paths
 
 
@@ -9,13 +10,17 @@ class BLIP2Captioning:
         self.processor: Blip2Processor = None
         self.model: Blip2ForConditionalGeneration = None
 
-    def load(self):
+    def load(self, skip_online: bool=False):
         if self.model is None or self.processor is None:
             self.processor = Blip2Processor.from_pretrained(
-                self.MODEL_REPO, cache_dir=paths.setting_model_path
+                self.MODEL_REPO,
+                cache_dir        = paths.setting_model_path,
+                local_files_only = skip_online,
             )
             self.model = Blip2ForConditionalGeneration.from_pretrained(
-                self.MODEL_REPO, cache_dir=paths.setting_model_path
+                self.MODEL_REPO,
+                cache_dir        = paths.setting_model_path,
+                local_files_only = skip_online,
             ).to(devices.device)
 
     def unload(self):

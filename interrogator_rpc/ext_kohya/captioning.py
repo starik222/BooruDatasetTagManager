@@ -1,9 +1,11 @@
+# pylint: disable=bad-indentation
+
 from .interrogator import Interrogator
 from .interrogators import BLIPLargeCaptioning, BLIP2Captioning, GITLargeCaptioning
 
 
 class Captioning(Interrogator):
-    def start(self):
+    def start(self, skip_online: bool=False):
         pass
 
     def stop(self):
@@ -23,8 +25,8 @@ class BLIP(Captioning):
     def __init__(self):
         self.interrogator = BLIPLargeCaptioning()
     
-    def start(self):
-        self.interrogator.load()
+    def start(self, skip_online: bool=False):
+        self.interrogator.load(skip_online=skip_online)
 
     def stop(self):
         self.interrogator.unload()
@@ -46,8 +48,8 @@ class BLIP2(Captioning):
         self.interrogator = BLIP2Captioning("Salesforce/" + repo_name)
         self.repo_name = repo_name
     
-    def start(self):
-        self.interrogator.load()
+    def start(self, skip_online: bool=False):
+        self.interrogator.load(skip_online=skip_online)
 
     def stop(self):
         self.interrogator.unload()
@@ -68,8 +70,8 @@ class GITLarge(Captioning):
     def __init__(self):
         self.interrogator = GITLargeCaptioning()
 
-    def start(self):
-        self.interrogator.load()
+    def start(self, skip_online: bool=False):
+        self.interrogator.load(skip_online=skip_online)
 
     def stop(self):
         self.interrogator.unload()

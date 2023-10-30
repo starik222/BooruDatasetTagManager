@@ -31,13 +31,16 @@ def go(test_images):
 	ret = stub.ListInterrogators(null_req)
 
 
+	all_networks = True
+
 	networks = []
 	for name in ret.interrogator_names:
 
-		if "blip" in name.lower():
-			continue
-		if "GIT" in name:
-			continue
+		if not all_networks:
+			if "blip" in name.lower():
+				continue
+			if "GIT" in name:
+				continue
 
 		print(name)
 
@@ -56,6 +59,8 @@ def go(test_images):
 					interrogator_threshold = 0.1,
 				) for name in networks
 			],
+			# skip_internet_requests = True,
+			serialize_vram_usage   = all_networks,
 			interrogate_image      = im_bytes,
 
 			)
@@ -64,6 +69,7 @@ def go(test_images):
 
 		print("Result: ", ret)
 
+		return
 
 	# for in_name, intg in interrogator.INTERROGATOR_MAP.items():
 	# 	print(in_name)
