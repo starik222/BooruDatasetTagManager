@@ -122,7 +122,7 @@ namespace BooruDatasetTagManager
                 parts.Add("Shift");
             parts.Add(KeyData.ToString());
 
-            return string.Join(" + ", parts);
+            return string.Join("+", parts);
         }
 
         private Keys CalcFullKeyData()

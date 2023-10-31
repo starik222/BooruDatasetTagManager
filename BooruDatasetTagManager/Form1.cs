@@ -1809,11 +1809,11 @@ namespace BooruDatasetTagManager
                 }
                 //((EditableTagList)gridViewTags.DataSource).
             }
-            //else if (gridViewTags.Focused && !gridViewTags.IsCurrentCellInEditMode && keyData == Keys.Enter)
-            //{
-            //    gridViewTags.BeginEdit(true);
-            //    return true;
-            //}
+            else if (gridViewTags.Focused && !gridViewTags.IsCurrentCellInEditMode && keyData == Keys.Enter)
+            {
+                gridViewTags.BeginEdit(true);
+                return true;
+            }
             var hotkey = Program.Settings.Hotkeys.Items.Find(a => a.FullKeyData == keyData);
             if (hotkey != null)
             {
@@ -2081,6 +2081,10 @@ namespace BooruDatasetTagManager
             }
             else if (dsType == DataSourceType.Multi)
             {
+                if (((MultiSelectDataTable)gridViewTags.DataSource).Rows[rowIndex].RowState == DataRowState.Detached && rowIndex < gridViewTags.RowCount)
+                {
+                    rowIndex++;
+                }
                 var dataItem = (DataItem)((MultiSelectDataRow)((MultiSelectDataTable)gridViewTags.DataSource).Rows[rowIndex]).GetDataItem();
                 weight = dataItem.Tags[((MultiSelectDataRow)((MultiSelectDataTable)gridViewTags.DataSource).Rows[rowIndex]).GetTagIndex()].Weight;
                 toolStripTextBoxWeight.Text = weight.ToString();

@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Translator.Crypto;
 
 namespace BooruDatasetTagManager
 {
@@ -337,6 +338,9 @@ namespace BooruDatasetTagManager
             public string TextFilePath { get; set; }
             //[Browsable(false)]
             public string ImageFilePath { get; set; }
+            [Browsable(false)]
+            public long ImageFilePathHash { get; set; }
+
             public DateTime ImageModifyTime { get; set; }
             public DateTime TagsModifyTime { get; set; }
             [Browsable(false)]
@@ -359,6 +363,7 @@ namespace BooruDatasetTagManager
             {
                 Tags = new EditableTagList();
                 ImageFilePath = imagePath;
+                ImageFilePathHash = Adler32.GenerateHash(ImageFilePath);
                 Name = Path.GetFileNameWithoutExtension(imagePath);
                 ImageModifyTime = File.GetLastWriteTime(imagePath);
                 TextFilePath = Path.Combine(Path.GetDirectoryName(imagePath), Name + ".txt");
@@ -400,6 +405,11 @@ namespace BooruDatasetTagManager
             public override int GetHashCode()
             {
                 return ToString().GetHashCode();
+            }
+
+            public bool Equals(DataItem obj)
+            {
+                return obj.ImageFilePathHash == ImageFilePathHash;
             }
         }
     }

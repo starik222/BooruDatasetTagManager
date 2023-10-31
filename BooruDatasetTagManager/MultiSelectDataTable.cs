@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using static BooruDatasetTagManager.DatasetManager;
@@ -105,7 +106,7 @@ namespace BooruDatasetTagManager
             }
             else if(e.Action!= DataRowAction.Change)
             {
-                int aaa = 1; //for debug
+
             }
             if (e.Action == DataRowAction.Change)
             {
@@ -121,7 +122,6 @@ namespace BooruDatasetTagManager
         {
             if (e.Action == DataRowAction.Delete)
             {
-                int tagIndex = ((MultiSelectDataRow)e.Row).GetTagIndex();
                 string textTag = ((MultiSelectDataRow)e.Row).GetTagText();
                 int rowIndex = e.Row.Table.Rows.IndexOf(e.Row);
                 if (rowIndex + 1 < Rows.Count)
@@ -131,7 +131,28 @@ namespace BooruDatasetTagManager
                         Rows[rowIndex + 1]["Tag"] = textTag;
                     }
                 }
-                ((MultiSelectDataRow)e.Row).GetDataItem().Tags.RemoveAt(tagIndex);
+            }
+            base.OnRowDeleting(e);
+        }
+
+        protected override void OnRowDeleted(DataRowChangeEventArgs e)
+        {
+            if (e.Action == DataRowAction.Delete)
+            {
+                int tagIndex = ((MultiSelectDataRow)e.Row).GetTagIndex();
+                string textTag = ((MultiSelectDataRow)e.Row).GetTagText();
+                DataItem dataItem = ((MultiSelectDataRow)e.Row).GetDataItem();
+                dataItem.Tags.RemoveAt(tagIndex);
+
+                //Changing TagIndex after deleting tags
+                for (int i = 0; i < Rows.Count; i++)
+                {
+                    var row = (MultiSelectDataRow)Rows[i];
+                    if (row.GetDataItem().Equals(dataItem) && row.GetTagIndex() > tagIndex && row.GetTagText() != textTag)
+                    {
+                        row.SetTagIndex(row.GetTagIndex() - 1);
+                    }
+                }
             }
             base.OnRowDeleted(e);
         }
@@ -226,6 +247,16 @@ namespace BooruDatasetTagManager
                 }
             }
 
+            //Changing TagIndex after adding tags
+            for (int i = 0; i < Rows.Count; i++)
+            {
+                var row = (MultiSelectDataRow)Rows[i];
+                var indexForAddition = addedItems.Find(a => a.Value.Equals(row.GetDataItem())).Key;
+                if (row.GetTagIndex() >= indexForAddition && row.GetTagText() != tag)
+                {
+                    row.SetTagIndex(row.GetTagIndex() + 1);
+                }
+            }
         }
     }
 
@@ -241,7 +272,7 @@ namespace BooruDatasetTagManager
 
         public void SetAttribute(string name, object value)
         {
-            ExtendedProperties.Add(name, value);
+            ExtendedProperties[name] = value;
         }
 
         public MultiSelectDataRow()
@@ -269,6 +300,14 @@ namespace BooruDatasetTagManager
                 return (int)ExtendedProperties["TagIndex"];
             else
                 return -1;
+        }
+
+        public void SetTagIndex(int tagIndex)
+        {
+            if (ExtendedProperties["TagIndex"] != null)
+                ExtendedProperties["TagIndex"] = tagIndex;
+            else
+                throw new Exception("TagIndex not found in ExtendedProperties");
         }
 
         public string GetTagText()
