@@ -1,3 +1,5 @@
+# pylint: disable=bad-indentation
+
 from PIL import Image
 from typing import Optional
 
@@ -8,7 +10,7 @@ from . import settings
 
 
 class Tagger(Interrogator):
-    def start(self):
+    def start(self, skip_online: bool=False):
         pass
 
     def stop(self):
@@ -34,8 +36,8 @@ class DeepDanbooru(Tagger):
     def __init__(self):
         self.tagger_inst = DepDanbooruTagger()
 
-    def start(self):
-        self.tagger_inst.load()
+    def start(self, skip_online: bool=False):
+        self.tagger_inst.load(skip_online=skip_online)
         return self
 
     def stop(self):
@@ -65,8 +67,8 @@ class WaifuDiffusion(Tagger):
         self.tagger_inst = WaifuDiffusionTagger("SmilingWolf/" + repo_name)
         self.threshold = threshold
 
-    def start(self):
-        self.tagger_inst.load()
+    def start(self, skip_online: bool=False):
+        self.tagger_inst.load(skip_online=skip_online)
         return self
 
     def stop(self):

@@ -31,18 +31,37 @@ import rpc_proto.services_pb2_grpc
 
 INTERROGATOR_LOCK = threading.Lock()
 
-ACTIVE_INTERROGATOR = None
-OUT_OF_MEMORY = False
+ACTIVE_INTERROGATOR                = None
+ONE_INTERROGATOR_IN_VRAM_AT_A_TIME = False
 
-def interrogate_image(network_name, image_obj): 
+
+# Whooooo, there's a bunch of gross global state here.
+# I blame finite GPUs and gRPC being kind of crap.
+def interrogate_image(network_name, image_obj, skip_online):
 	global ACTIVE_INTERROGATOR
-	global OUT_OF_MEMORY
-	with INTERROGATOR_LOCK: 
-		if OUT_OF_MEMORY and ACTIVE_INTERROGATOR and ACTIVE_INTERROGATOR != network_name:
-			interrogator.INTERROGATOR_MAP[ACTIVE_INTERROGATOR].stop()
+	global ONE_INTERROGATOR_IN_VRAM_AT_A_TIME
 
+	# This is /maybe/ not needed, I'm not sure how multiple simultaneous usage would work. If multiple
+	# threads can use the same network loaded into VRAM, this could potentially be removed. Something
+	# to look into.
+	with INTERROGATOR_LOCK: 
+		if ONE_INTERROGATOR_IN_VRAM_AT_A_TIME and ACTIVE_INTERROGATOR and ACTIVE_INTERROGATOR != network_name:
+			print("Unloading interrogator %s" % (ACTIVE_INTERROGATOR, ))
+
+			# So one concern here is that if there are multiple other networks loaded, and we then
+			# get a call which requests serialization (e.g. for a single very large network),
+			# only the last used network will be unloaded. To fix this, we iterate over every network potentially
+			# in ram and just speculatively unload it (except the one we want, in case it is loaded).
+			for interrogator_name, interg in interrogator.INTERROGATOR_MAP.items():
+				if interrogator_name != network_name:
+					interg.stop()
+
+		if ONE_INTERROGATOR_IN_VRAM_AT_A_TIME and ACTIVE_INTERROGATOR != network_name:
+			print("Need to load network", network_name)
+
+		ACTIVE_INTERROGATOR = network_name
 		intg = interrogator.INTERROGATOR_MAP[network_name]
-		intg.start()
+		intg.start(skip_online=skip_online)
 
 		tags = intg.predict(image_obj)
 
@@ -106,6 +125,9 @@ class InterrogatorServicer(rpc_proto.services_pb2_grpc.ImageInterrogatorServicer
 			return ret
 
 
+		global ONE_INTERROGATOR_IN_VRAM_AT_A_TIME
+		ONE_INTERROGATOR_IN_VRAM_AT_A_TIME = request.serialize_vram_usage
+
 		ret = rpc_proto.services_pb2.ImageTagResults()
 
 		try:
@@ -117,7 +139,7 @@ class InterrogatorServicer(rpc_proto.services_pb2_grpc.ImageInterrogatorServicer
 			for network_conf in request.params:
 
 
-				tag_ret = interrogate_image(network_conf.interrogator_network, image_obj)
+				tag_ret = interrogate_image(network_conf.interrogator_network, image_obj, skip_online=request.skip_internet_requests)
 				network_tags = extract_tag_ret(tag_ret, network_conf.interrogator_threshold)
 
 				net_resp = rpc_proto.services_pb2.InterrogationResponse()
@@ -135,14 +157,13 @@ class InterrogatorServicer(rpc_proto.services_pb2_grpc.ImageInterrogatorServicer
 
 		except Exception as e:
 			global ACTIVE_INTERROGATOR
-			global OUT_OF_MEMORY
-			if "out of memory" in str(e).lower() and len(request.params) > 1 and not OUT_OF_MEMORY:
+			if "out of memory" in str(e).lower() and len(request.params) > 1 and not ONE_INTERROGATOR_IN_VRAM_AT_A_TIME:
 				# If we ran out of VRAM, and are trying to load multiple interrogators at once, retry
 				# without keeping all interrogators in memory.
 				# Yes, this uses globals.
 				print("Ran out of VRAM while trying to perform image interrogation. Retrying without")
 				print("keeping all interrogator networks in VRAM simultaneously.")
-				OUT_OF_MEMORY = True
+				ONE_INTERROGATOR_IN_VRAM_AT_A_TIME = True
 
 				# unload all the interrogators.
 				# CUDA is annoying and can still be propagating errors from an earlier OOM

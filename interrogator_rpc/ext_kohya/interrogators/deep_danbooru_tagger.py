@@ -1,3 +1,5 @@
+# pylint: disable=bad-indentation
+
 from PIL import Image
 import numpy as np
 import torch
@@ -11,16 +13,17 @@ class DepDanbooruTagger:
         self.model = None
         self.labels = []
 
-    def load(self):
+    def load(self, skip_online: bool=False):
         if self.model is not None:
             return
 
-        file = model_loader.load(
-            model_path=paths.models_path / "model-resnet_custom_v3.pt",
-            model_url='https://github.com/AUTOMATIC1111/TorchDeepDanbooru/releases/download/v1/model-resnet_custom_v3.pt'
+        model_file = model_loader.load(
+            model_path  = paths.models_path / "model-resnet_custom_v3.pt",
+            model_url   = 'https://github.com/AUTOMATIC1111/TorchDeepDanbooru/releases/download/v1/model-resnet_custom_v3.pt',
+            skip_online = skip_online,
         )
         self.model = deepbooru_model.DeepDanbooruModel()
-        self.model.load_state_dict(torch.load(file, map_location="cpu"))
+        self.model.load_state_dict(torch.load(model_file, map_location="cpu"))
         self.model.eval()
         self.model.to(devices.device, torch.float16)
 

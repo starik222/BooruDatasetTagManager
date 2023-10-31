@@ -1,5 +1,6 @@
-from transformers import AutoProcessor, AutoModelForCausalLM
+# pylint: disable=bad-indentation
 
+from transformers import AutoProcessor, AutoModelForCausalLM
 from .. import devices, settings, paths
 
 # brought from https://huggingface.co/docs/transformers/main/en/model_doc/git and modified
@@ -10,10 +11,18 @@ class GITLargeCaptioning:
         self.processor: AutoProcessor = None
         self.model: AutoModelForCausalLM = None
 
-    def load(self):
+    def load(self, skip_online: bool=False):
         if self.model is None or self.processor is None:
-            self.processor = AutoProcessor.from_pretrained(self.MODEL_REPO, cache_dir=paths.setting_model_path)
-            self.model = AutoModelForCausalLM.from_pretrained(self.MODEL_REPO, cache_dir=paths.setting_model_path).to(
+            self.processor = AutoProcessor.from_pretrained(
+                    self.MODEL_REPO,
+                    cache_dir        = paths.setting_model_path,
+                    local_files_only = skip_online,
+                )
+            self.model = AutoModelForCausalLM.from_pretrained(
+                    self.MODEL_REPO,
+                    cache_dir        = paths.setting_model_path,
+                    local_files_only = skip_online,
+                ).to(
                 devices.device
             )
 

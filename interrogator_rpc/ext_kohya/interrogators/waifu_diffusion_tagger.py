@@ -1,3 +1,5 @@
+# pylint: disable=bad-indentation
+
 from PIL import Image
 import numpy as np
 from typing import Tuple
@@ -17,13 +19,16 @@ class WaifuDiffusionTagger:
         self.model = None
         self.labels = []
 
-    def load(self):
+    def load(self, skip_online: bool=False):
         from huggingface_hub import hf_hub_download, try_to_load_from_cache, _CACHED_NO_EXIST
 
         if not self.model:
             path_model = try_to_load_from_cache(
                 self.MODEL_REPO, self.MODEL_FILENAME, cache_dir=paths.setting_model_path)
             if path_model is _CACHED_NO_EXIST or not isinstance(path_model, str):
+                if skip_online:
+                    raise RuntimeError("Model %s is not available locally, and downloading is disabled." % (self.MODEL_FILENAME, ))
+
                 path_model = hf_hub_download(
                     self.MODEL_REPO, self.MODEL_FILENAME, cache_dir=paths.setting_model_path
                 )
@@ -79,6 +84,9 @@ class WaifuDiffusionTagger:
                 self.MODEL_REPO, self.LABEL_FILENAME, cache_dir=paths.setting_model_path
             )
             if path_label is _CACHED_NO_EXIST or not isinstance(path_label, str):
+                if skip_online:
+                    raise RuntimeError("Label file %s is not available locally, and downloading is disabled." % (self.LABEL_FILENAME, ))
+
                 path_label = hf_hub_download(
                     self.MODEL_REPO, self.LABEL_FILENAME, cache_dir=paths.setting_model_path
                 )
