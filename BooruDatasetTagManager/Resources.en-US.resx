@@ -123,6 +123,12 @@
   <data name="BtnImageFilter" xml:space="preserve">
     <value>Filter in dataset</value>
   </data>
+  <data name="BtnMenuGenTagsWithCurrentSettings" xml:space="preserve">
+    <value>Generate tags with current settings</value>
+  </data>
+  <data name="BtnMenuGenTagsWithSetWindow" xml:space="preserve">
+    <value>Generate tags with settings window...</value>
+  </data>
   <data name="BtnTagAdd" xml:space="preserve">
     <value>Add Tag</value>
   </data>

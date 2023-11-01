@@ -113,6 +113,26 @@ namespace BooruDatasetTagManager.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap AutoTaggerDef {
+            get {
+                object obj = ResourceManager.GetObject("AutoTaggerDef", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap AutoTaggerSet {
+            get {
+                object obj = ResourceManager.GetObject("AutoTaggerSet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Change {
             get {
                 object obj = ResourceManager.GetObject("Change", resourceCulture);

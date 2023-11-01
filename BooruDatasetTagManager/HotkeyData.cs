@@ -74,8 +74,8 @@ namespace BooruDatasetTagManager
             Items.Add(new HotkeyItem("BtnTagMultiModeSwitch", "Switch filted mode", Keys.Y, true, false, false));
             Items.Add(new HotkeyItem("BtnTagFilter", "Filter in all tags", Keys.F, false, true, false));
             Items.Add(new HotkeyItem("BtnTagExitFilter", "Reset filter in all tags", Keys.G, false, true, false));
-            Items.Add(new HotkeyItem("generateTagsWithCurrentSettingsToolStripMenuItem", "Generate tags with AutoTagger (current setting)", Keys.G, false, true, false));
-            Items.Add(new HotkeyItem("generateTagsWithSettingsWindowToolStripMenuItem", "Generate tags with AutoTagger (open settings window)", Keys.H, false, true, false));
+            Items.Add(new HotkeyItem("BtnMenuGenTagsWithCurrentSettings", "Generate tags with AutoTagger (current setting)", Keys.G, false, true, false));
+            Items.Add(new HotkeyItem("BtnMenuGenTagsWithSetWindow", "Generate tags with AutoTagger (open settings window)", Keys.H, false, true, false));
             Items.Add(new HotkeyItem("toolStripPromptSortBtn", "Sort tags", Keys.Q, true, false, false));
         }
         

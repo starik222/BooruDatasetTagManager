@@ -1603,6 +1603,8 @@ namespace BooruDatasetTagManager
             BtnTagFilter.Text = I18n.GetText("BtnTagFilter");
             BtnTagExitFilter.Text = I18n.GetText("BtnTagExitFilter");
             MenuShowTagCount.Text = I18n.GetText("MenuShowCount");
+            BtnMenuGenTagsWithCurrentSettings.Text = I18n.GetText("BtnMenuGenTagsWithCurrentSettings");
+            BtnMenuGenTagsWithSetWindow.Text = I18n.GetText("BtnMenuGenTagsWithSetWindow");
 
             switch (Program.Settings.Language)
             {
@@ -1800,8 +1802,8 @@ namespace BooruDatasetTagManager
             cmds["BtnTagMultiModeSwitch"] = delegate () { BtnTagMultiModeSwitch.PerformClick(); };
             cmds["BtnTagFilter"] = delegate () { BtnTagFilter.PerformClick(); };
             cmds["BtnTagExitFilter"] = delegate () { BtnTagExitFilter.PerformClick(); };
-            cmds["generateTagsWithCurrentSettingsToolStripMenuItem"] = delegate () { generateTagsWithCurrentSettingsToolStripMenuItem.PerformClick(); };
-            cmds["generateTagsWithSettingsWindowToolStripMenuItem"] = delegate () { generateTagsWithSettingsWindowToolStripMenuItem.PerformClick(); };
+            cmds["BtnMenuGenTagsWithCurrentSettings"] = delegate () { BtnMenuGenTagsWithCurrentSettings.PerformClick(); };
+            cmds["BtnMenuGenTagsWithSetWindow"] = delegate () { BtnMenuGenTagsWithSetWindow.PerformClick(); };
             cmds["toolStripPromptSortBtn"] = delegate () { toolStripPromptSortBtn.PerformClick(); };
         }
 
