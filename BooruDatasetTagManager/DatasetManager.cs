@@ -339,7 +339,7 @@ namespace BooruDatasetTagManager
             //[Browsable(false)]
             public string ImageFilePath { get; set; }
             [Browsable(false)]
-            public long ImageFilePathHash { get; set; }
+            public int ImageFilePathHash { get; set; }
 
             public DateTime ImageModifyTime { get; set; }
             public DateTime TagsModifyTime { get; set; }
@@ -363,7 +363,7 @@ namespace BooruDatasetTagManager
             {
                 Tags = new EditableTagList();
                 ImageFilePath = imagePath;
-                ImageFilePathHash = Adler32.GenerateHash(ImageFilePath);
+                ImageFilePathHash = ImageFilePath.GetHashCode();
                 Name = Path.GetFileNameWithoutExtension(imagePath);
                 ImageModifyTime = File.GetLastWriteTime(imagePath);
                 TextFilePath = Path.Combine(Path.GetDirectoryName(imagePath), Name + ".txt");

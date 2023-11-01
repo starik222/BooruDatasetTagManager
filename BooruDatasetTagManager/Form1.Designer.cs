@@ -1227,7 +1227,7 @@ namespace BooruDatasetTagManager
             contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(28, 28);
             contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem2 });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new System.Drawing.Size(192, 48);
+            contextMenuStrip1.Size = new System.Drawing.Size(192, 70);
             // 
             // toolStripMenuItem1
             // 

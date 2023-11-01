@@ -84,9 +84,13 @@ namespace BooruDatasetTagManager
 
         private void openFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Program.DataManager != null)
+            if (Program.DataManager != null && Program.DataManager.IsDataSetChanged())
             {
-                saveAllChangesToolStripMenuItem_Click(sender, e);
+                DialogResult result = MessageBox.Show("The dataset has been changed,\ndo you want to save the changes?", "Saving changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    Program.DataManager.SaveAll();
+                }
             }
             OpenFolderDialog openFolderDialog = new OpenFolderDialog();
             if (openFolderDialog.ShowDialog() != DialogResult.OK)
@@ -311,6 +315,11 @@ namespace BooruDatasetTagManager
             {
                 using (Form_addTag addTag = new Form_addTag())
                 {
+                    if (gridViewTags.SelectedCells.Count > 0)
+                    {
+                        addTag.tagTextBox.Text = ((MultiSelectDataRow)((MultiSelectDataTable)gridViewTags.DataSource).Rows[gridViewTags.SelectedCells[0].RowIndex]).GetTagText();
+                        addTag.tagTextBox.SelectAll();
+                    }
                     if (addTag.ShowDialog() == DialogResult.OK)
                     {
                         AddingType addType = (AddingType)Enum.Parse(typeof(AddingType), (string)addTag.comboBox1.SelectedItem);
@@ -1280,7 +1289,7 @@ namespace BooruDatasetTagManager
             if (MessageBox.Show(I18n.GetText("TipDeleteFile"), I18n.GetText("LabelDeleteFile"),
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
-                gridViewTags.Rows.Clear();
+                gridViewTags.DataSource = null;
 
                 var scroll = gridViewDS.FirstDisplayedScrollingRowIndex;
                 var select = gridViewDS.SelectedRows[0].Index;
@@ -1806,6 +1815,11 @@ namespace BooruDatasetTagManager
                 {
                     var eTagList = ((EditableTagList)gridViewTags.DataSource);
                     eTagList.EndEdit(rowIndex);
+                }
+                else if (GetTagsDataSourceType() == DataSourceType.Multi)
+                {
+                    var mTagList = ((MultiSelectDataTable)gridViewTags.DataSource);
+                    mTagList.EndEdit();
                 }
                 //((EditableTagList)gridViewTags.DataSource).
             }

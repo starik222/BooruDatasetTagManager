@@ -268,11 +268,11 @@ namespace BooruDatasetTagManager
             Add(new EditableTag(GetNextId(), tag), storeHistory);
         }
 
-        public int AddTag(string tag, bool skipExist, AddingType addType, int pos = -1)
+        public (int oldIndex, int newIndex) AddTag(string tag, bool skipExist, AddingType addType, int pos = -1)
         {
             int tagIndex = IndexOf(tag);
             if (skipExist && tagIndex != -1)
-                return tagIndex;
+                return (tagIndex, tagIndex);
             int localCount = Count;
             if (tagIndex != -1)
             {
@@ -281,17 +281,17 @@ namespace BooruDatasetTagManager
                     case AddingType.Top:
                         {
                             Move(tagIndex, 0);
-                            return 0;
+                            return (tagIndex, 0);
                         }
                     case AddingType.Center:
                         {
                             Move(tagIndex, localCount / 2);
-                            return localCount / 2;
+                            return (tagIndex, localCount / 2);
                         }
                     case AddingType.Down:
                         {
                             Move(tagIndex, localCount - 1);
-                            return localCount - 1;
+                            return (tagIndex, localCount - 1);
                         }
                     case AddingType.Custom:
                         {
@@ -304,7 +304,7 @@ namespace BooruDatasetTagManager
                                 pos = 0;
                             }
                             Move(tagIndex, pos);
-                            return pos;
+                            return (tagIndex, pos);
                         }
                 }
             }
@@ -315,39 +315,39 @@ namespace BooruDatasetTagManager
                     case AddingType.Top:
                         {
                             InsertTag(0, tag, true);
-                            return 0;
+                            return (tagIndex, 0);
                         }
                     case AddingType.Center:
                         {
                             InsertTag(localCount / 2, tag, true);
-                            return localCount / 2;
+                            return (tagIndex, localCount / 2);
                         }
                     case AddingType.Down:
                         {
                             AddTag(tag, true);
-                            return localCount;
+                            return (tagIndex, localCount);
                         }
                     case AddingType.Custom:
                         {
                             if (pos >= localCount)
                             {
                                 AddTag(tag, true);
-                                return localCount;
+                                return (tagIndex, localCount);
                             }
                             else if (pos < 0)
                             {
                                 InsertTag(0, tag, true);
-                                return 0;
+                                return (tagIndex, 0);
                             }
                             else
                             {
                                 InsertTag(pos, tag, true);
-                                return pos;
+                                return (tagIndex, pos);
                             }
                         }
                 }
             }
-            return -1;
+            return (tagIndex, -1);
         }
 
         public int Add(EditableTag item, bool storeHistory)

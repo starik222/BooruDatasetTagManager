@@ -43,6 +43,31 @@ namespace BooruDatasetTagManager
         {
             this.isTranslateMode = translate;
         }
+        //For debug
+        public void CheckIndexSync()
+        {
+            for (int i = 0; i < Rows.Count; i++)
+            {
+                var row = (MultiSelectDataRow)Rows[i];
+                string textTag = row.GetTagText();
+                DataItem di = row.GetDataItem();
+                int index = row.GetTagIndex();
+                if (index >= di.Tags.Count)
+                    throw new Exception("index out of range");
+                if (di.Tags[index].Tag != textTag)
+                {
+                    throw new Exception("Bad index");
+                }
+            }
+        }
+
+        public void EndEdit()
+        {
+            for (int i = 0; i < Rows.Count; i++)
+            {
+                Rows[i].EndEdit();
+            }
+        }
 
         public async Task CreateTableFromSelectedImages(List<DataItem> selectedDI)
         {
@@ -96,23 +121,28 @@ namespace BooruDatasetTagManager
                     Rows.Add(row);
                 }
             }
+#if DEBUG
+            CheckIndexSync();
+#endif
         }
 
         protected override void OnRowChanged(DataRowChangeEventArgs e)
         {
             if (e.Action == DataRowAction.Add)
             {
-
+                int aaa = 1;
             }
             else if(e.Action!= DataRowAction.Change)
             {
-
+                int aaa = 2;
             }
             if (e.Action == DataRowAction.Change)
             {
-                if ((string)e.Row["Tag"] != ((MultiSelectDataRow)e.Row).GetTagText())
+                var rowData = (MultiSelectDataRow)e.Row;
+                if ((string)e.Row["Tag"] != rowData.GetTagText())
                 {
-                    ((MultiSelectDataRow)e.Row).GetDataItem().Tags[((MultiSelectDataRow)e.Row).GetTagIndex()].Tag = (string)e.Row["Tag"];
+                    rowData.GetDataItem().Tags[rowData.GetTagIndex()].Tag = (string)e.Row["Tag"];
+                    rowData.SetTagText((string)e.Row["Tag"]);
                 }
             }
             base.OnRowChanged(e);
@@ -155,14 +185,19 @@ namespace BooruDatasetTagManager
                 }
             }
             base.OnRowDeleted(e);
+#if DEBUG
+            CheckIndexSync();
+#endif
         }
 
 
         public void SetTagValue(string tag, int index)
         {
-            if (tag != ((MultiSelectDataRow)Rows[index]).GetTagText())
+            var rowData = ((MultiSelectDataRow)Rows[index]);
+            if (tag != rowData.GetTagText())
             {
-                ((MultiSelectDataRow)Rows[index]).GetDataItem().Tags[index].Tag = tag;
+                rowData.GetDataItem().Tags[index].Tag = tag;
+                rowData.SetTagText(tag);
             }
         }
 
@@ -171,7 +206,7 @@ namespace BooruDatasetTagManager
             if (selectedDataItems.Count == 0)
                 return;
             bool existMode = false;
-            List<KeyValuePair<int, DataItem>> addedItems = new List<KeyValuePair<int, DataItem>>();
+            List<KeyValuePair<KeyValuePair<int, int>, DataItem>> addedItems = new List<KeyValuePair<KeyValuePair<int, int>, DataItem>>();
             foreach (var item in selectedDataItems)
             {
                 if (!existMode)
@@ -181,10 +216,10 @@ namespace BooruDatasetTagManager
                         existMode = true;
                     }
                 }
-                int addedIndex = item.Tags.AddTag(tag, skipExist, addType, pos);
-                if (addedIndex != -1)
+                var addedResult = item.Tags.AddTag(tag, skipExist, addType, pos);
+                if (addedResult.newIndex != -1)
                 {
-                    addedItems.Add(new KeyValuePair<int, DataItem>(addedIndex, item));
+                    addedItems.Add(new KeyValuePair<KeyValuePair<int, int>, DataItem>(new KeyValuePair<int, int>(addedResult.oldIndex, addedResult.newIndex), item));
                 }
             }
 
@@ -195,7 +230,7 @@ namespace BooruDatasetTagManager
                     {
                         MultiSelectDataRow row = (MultiSelectDataRow)NewRow();
                         row.SetAttribute("TextTag", tag);
-                        row.SetAttribute("TagIndex", addedItems[i].Key);
+                        row.SetAttribute("TagIndex", addedItems[i].Key.Value);
                         row.SetAttribute("DataItem", addedItems[i].Value);
                         row["Tag"] = i == 0 ? tag : "";//tag
                         row["Image"] = addedItems[i].Value.ImageFilePath;//ImgName
@@ -228,7 +263,7 @@ namespace BooruDatasetTagManager
                     {
                         if (((MultiSelectDataRow)Rows[eIndex]).GetDataItem() == item.Value)
                         {
-                            ((MultiSelectDataRow)Rows[eIndex]).ExtendedProperties["TagIndex"] = item.Key;
+                            ((MultiSelectDataRow)Rows[eIndex]).ExtendedProperties["TagIndex"] = item.Key.Value;
                             found = true; 
                             break;
                         }
@@ -237,7 +272,7 @@ namespace BooruDatasetTagManager
                     {
                         MultiSelectDataRow row = (MultiSelectDataRow)NewRow();
                         row.SetAttribute("TextTag", tag);
-                        row.SetAttribute("TagIndex", item.Key);
+                        row.SetAttribute("TagIndex", item.Key.Value);
                         row.SetAttribute("DataItem", item.Value);
                         row["Tag"] = "";//tag
                         row["Image"] = item.Value.ImageFilePath;//ImgName
@@ -248,15 +283,30 @@ namespace BooruDatasetTagManager
             }
 
             //Changing TagIndex after adding tags
+            //MOVE PROBLEM!!!
             for (int i = 0; i < Rows.Count; i++)
             {
                 var row = (MultiSelectDataRow)Rows[i];
-                var indexForAddition = addedItems.Find(a => a.Value.Equals(row.GetDataItem())).Key;
-                if (row.GetTagIndex() >= indexForAddition && row.GetTagText() != tag)
+                int tagIndex = row.GetTagIndex();
+                var addRes = addedItems.Find(a => a.Value.Equals(row.GetDataItem())).Key;
+                if (addRes.Key == addRes.Value)
+                    continue;
+                else if (addRes.Key == -1 && tagIndex >= addRes.Value && row.GetTagText() != tag)
                 {
-                    row.SetTagIndex(row.GetTagIndex() + 1);
+                    row.SetTagIndex(tagIndex + 1);
+                }
+                else if (addRes.Key != -1 && addRes.Key < addRes.Value && tagIndex > addRes.Key && tagIndex <= addRes.Value && row.GetTagText() != tag)
+                {
+                    row.SetTagIndex(tagIndex - 1);
+                }
+                else if (addRes.Key != -1 && addRes.Key > addRes.Value && tagIndex >= addRes.Value && tagIndex < addRes.Key && row.GetTagText() != tag)
+                {
+                    row.SetTagIndex(tagIndex + 1);
                 }
             }
+#if DEBUG
+            CheckIndexSync();
+#endif
         }
     }
 
@@ -316,6 +366,13 @@ namespace BooruDatasetTagManager
                 return (string)ExtendedProperties["TextTag"];
             else
                 return null;
+        }
+        public void SetTagText(string tag)
+        {
+            if (ExtendedProperties["TextTag"] != null)
+                ExtendedProperties["TextTag"] = tag;
+            else
+                throw new Exception("TextTag not found in ExtendedProperties");
         }
     }
 }
