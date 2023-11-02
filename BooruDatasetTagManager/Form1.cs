@@ -1605,6 +1605,8 @@ namespace BooruDatasetTagManager
             MenuShowTagCount.Text = I18n.GetText("MenuShowCount");
             BtnMenuGenTagsWithCurrentSettings.Text = I18n.GetText("BtnMenuGenTagsWithCurrentSettings");
             BtnMenuGenTagsWithSetWindow.Text = I18n.GetText("BtnMenuGenTagsWithSetWindow");
+            toolStripPromptSortBtn.Text = I18n.GetText("toolStripPromptSortBtn");
+
 
             switch (Program.Settings.Language)
             {
@@ -2130,6 +2132,44 @@ namespace BooruDatasetTagManager
         private async void generateTagsWithAutoTaggerForAllImagesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             await GenerateTagsInTags(false, true);
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            if (gridViewTags.DataSource == null)
+            {
+                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
+                return;
+            }
+
+            if (gridViewAutoTags.SelectedCells.Count == 0)
+                return;
+            List<string> selectedTags = new List<string>();
+            for (int i = 0; i < gridViewAutoTags.SelectedCells.Count; i++)
+            {
+                string tag = (string)gridViewAutoTags["Tag", gridViewAutoTags.SelectedCells[i].RowIndex].Value;
+                if (!selectedTags.Contains(tag))
+                    selectedTags.Add(tag);
+            }
+            if (gridViewDS.SelectedRows.Count > 1)
+            {
+                foreach (var item in selectedTags)
+                {
+                    AddTagMultiselectedMode(item, true, AddingType.Down, 0);
+                }
+
+            }
+            else
+            {
+                var eTagList = ((EditableTagList)gridViewTags.DataSource);
+                foreach (var item in selectedTags)
+                {
+                    eTagList.AddTag(item, true, AddingType.Down, 0);
+                }
+            }
+            Program.DataManager.UpdateData();
+            if (showCount)
+                UpdateTagCount();
         }
     }
 }

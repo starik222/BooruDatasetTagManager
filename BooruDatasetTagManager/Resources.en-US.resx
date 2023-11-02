@@ -362,6 +362,9 @@
 When changing csv or txt files,
 the initial loading of tags may take a long time.</value>
   </data>
+  <data name="toolStripPromptSortBtn" xml:space="preserve">
+    <value>Sort</value>
+  </data>
   <data name="UILabelAllTags" xml:space="preserve">
     <value>All Tags</value>
   </data>
