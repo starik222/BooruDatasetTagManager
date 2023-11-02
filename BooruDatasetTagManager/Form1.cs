@@ -2136,6 +2136,11 @@ namespace BooruDatasetTagManager
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
+            AddSelectedAutoTagsToImageTags();
+        }
+
+        private void AddSelectedAutoTagsToImageTags()
+        {
             if (gridViewTags.DataSource == null)
             {
                 MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
@@ -2170,6 +2175,11 @@ namespace BooruDatasetTagManager
             Program.DataManager.UpdateData();
             if (showCount)
                 UpdateTagCount();
+        }
+
+        private void gridViewAutoTags_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            AddSelectedAutoTagsToImageTags();
         }
     }
 }
