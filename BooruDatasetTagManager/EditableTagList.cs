@@ -208,26 +208,32 @@ namespace BooruDatasetTagManager
         /// </summary>
         public void DeduplicateTags()
         {
-            isStoreHistory = false;
-            for (int i = List.Count - 1; i >= 0; i--)
+            lock (Program.EditableTagListLocker)
             {
-                string tagToSearch = ((EditableTag)List[i]).Tag;
-                if (string.IsNullOrWhiteSpace(tagToSearch))
-                    RemoveAt(i);
-                List<int> foundedTagIndexes = IndexOfAll(tagToSearch, 0, i);
-                if (foundedTagIndexes.Count == 1)
+                isStoreHistory = false;
+                for (int i = List.Count - 1; i >= 0; i--)
                 {
-                    RemoveAt(i);
-                }
-                else if (foundedTagIndexes.Count > 1)
-                {
-                    RemoveAt(i);
-                    for (int j = foundedTagIndexes.Count - 1; j >= 1; j--)
-                        RemoveAt(j);
-                }
+                    string tagToSearch = ((EditableTag)List[i]).Tag;
+                    if (string.IsNullOrWhiteSpace(tagToSearch))
+                    {
+                        RemoveAt(i);
+                        continue;
+                    }
+                    List<int> foundedTagIndexes = IndexOfAll(tagToSearch, 0, i);
+                    if (foundedTagIndexes.Count == 1)
+                    {
+                        RemoveAt(i);
+                    }
+                    else if (foundedTagIndexes.Count > 1)
+                    {
+                        RemoveAt(i);
+                        for (int j = foundedTagIndexes.Count - 1; j >= 1; j--)
+                            RemoveAt(j);
+                    }
 
+                }
+                isStoreHistory = true;
             }
-            isStoreHistory = true;
         }
 
 

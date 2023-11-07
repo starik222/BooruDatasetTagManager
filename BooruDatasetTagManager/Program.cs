@@ -25,6 +25,7 @@ namespace BooruDatasetTagManager
 #endif
             Application.SetCompatibleTextRenderingDefault(false);
             Settings = new AppSettings(Application.StartupPath);
+            EditableTagListLocker = new object();
             ColorManager = new ColorSchemeManager();
             ColorManager.Load(Path.Combine(Application.StartupPath, "ColorScheme.json"));
             ColorManager.SelectScheme(Program.Settings.ColorScheme);
@@ -95,5 +96,9 @@ namespace BooruDatasetTagManager
         public static Interrogator AutoTagger;
 
         public static ColorSchemeManager ColorManager;
+
+        #region locks
+        public static object EditableTagListLocker;
+        #endregion
     }
 }
