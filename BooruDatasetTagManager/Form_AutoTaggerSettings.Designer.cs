@@ -41,6 +41,8 @@
             comboBoxUnionMode = new System.Windows.Forms.ComboBox();
             checkBoxSerializeVRAM = new System.Windows.Forms.CheckBox();
             checkBoxSkipInternet = new System.Windows.Forms.CheckBox();
+            label5 = new System.Windows.Forms.Label();
+            comboBoxSetMode = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)trackBarThreshold).BeginInit();
             SuspendLayout();
             // 
@@ -57,7 +59,7 @@
             // 
             label2.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(12, 381);
+            label2.Location = new System.Drawing.Point(12, 435);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(62, 15);
             label2.TabIndex = 0;
@@ -68,7 +70,7 @@
             comboBoxSortMode.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             comboBoxSortMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBoxSortMode.FormattingEnabled = true;
-            comboBoxSortMode.Location = new System.Drawing.Point(12, 399);
+            comboBoxSortMode.Location = new System.Drawing.Point(12, 453);
             comboBoxSortMode.Name = "comboBoxSortMode";
             comboBoxSortMode.Size = new System.Drawing.Size(393, 23);
             comboBoxSortMode.TabIndex = 1;
@@ -77,7 +79,7 @@
             // 
             label3.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(12, 425);
+            label3.Location = new System.Drawing.Point(12, 479);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(59, 15);
             label3.TabIndex = 2;
@@ -86,7 +88,7 @@
             // trackBarThreshold
             // 
             trackBarThreshold.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            trackBarThreshold.Location = new System.Drawing.Point(12, 443);
+            trackBarThreshold.Location = new System.Drawing.Point(12, 497);
             trackBarThreshold.Maximum = 100;
             trackBarThreshold.Name = "trackBarThreshold";
             trackBarThreshold.Size = new System.Drawing.Size(393, 45);
@@ -97,7 +99,7 @@
             // 
             labelPercent.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             labelPercent.AutoSize = true;
-            labelPercent.Location = new System.Drawing.Point(85, 425);
+            labelPercent.Location = new System.Drawing.Point(85, 479);
             labelPercent.Name = "labelPercent";
             labelPercent.Size = new System.Drawing.Size(17, 15);
             labelPercent.TabIndex = 4;
@@ -106,7 +108,7 @@
             // button1
             // 
             button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            button1.Location = new System.Drawing.Point(12, 494);
+            button1.Location = new System.Drawing.Point(12, 548);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(75, 23);
             button1.TabIndex = 5;
@@ -117,7 +119,7 @@
             // button2
             // 
             button2.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            button2.Location = new System.Drawing.Point(93, 494);
+            button2.Location = new System.Drawing.Point(93, 548);
             button2.Name = "button2";
             button2.Size = new System.Drawing.Size(75, 23);
             button2.TabIndex = 6;
@@ -140,7 +142,7 @@
             // 
             label4.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             label4.AutoSize = true;
-            label4.Location = new System.Drawing.Point(12, 337);
+            label4.Location = new System.Drawing.Point(12, 391);
             label4.Name = "label4";
             label4.Size = new System.Drawing.Size(264, 15);
             label4.TabIndex = 0;
@@ -151,7 +153,7 @@
             comboBoxUnionMode.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             comboBoxUnionMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBoxUnionMode.FormattingEnabled = true;
-            comboBoxUnionMode.Location = new System.Drawing.Point(12, 355);
+            comboBoxUnionMode.Location = new System.Drawing.Point(12, 409);
             comboBoxUnionMode.Name = "comboBoxUnionMode";
             comboBoxUnionMode.Size = new System.Drawing.Size(393, 23);
             comboBoxUnionMode.TabIndex = 1;
@@ -160,7 +162,7 @@
             // 
             checkBoxSerializeVRAM.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             checkBoxSerializeVRAM.AutoSize = true;
-            checkBoxSerializeVRAM.Location = new System.Drawing.Point(12, 315);
+            checkBoxSerializeVRAM.Location = new System.Drawing.Point(12, 322);
             checkBoxSerializeVRAM.Name = "checkBoxSerializeVRAM";
             checkBoxSerializeVRAM.Size = new System.Drawing.Size(138, 19);
             checkBoxSerializeVRAM.TabIndex = 8;
@@ -171,12 +173,32 @@
             // 
             checkBoxSkipInternet.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             checkBoxSkipInternet.AutoSize = true;
-            checkBoxSkipInternet.Location = new System.Drawing.Point(156, 315);
+            checkBoxSkipInternet.Location = new System.Drawing.Point(156, 322);
             checkBoxSkipInternet.Name = "checkBoxSkipInternet";
             checkBoxSkipInternet.Size = new System.Drawing.Size(139, 19);
             checkBoxSkipInternet.TabIndex = 8;
             checkBoxSkipInternet.Text = "Skip internet requests";
             checkBoxSkipInternet.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            label5.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            label5.AutoSize = true;
+            label5.Location = new System.Drawing.Point(12, 345);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(112, 15);
+            label5.TabIndex = 0;
+            label5.Text = "Result output mode";
+            // 
+            // comboBoxSetMode
+            // 
+            comboBoxSetMode.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            comboBoxSetMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxSetMode.FormattingEnabled = true;
+            comboBoxSetMode.Location = new System.Drawing.Point(12, 363);
+            comboBoxSetMode.Name = "comboBoxSetMode";
+            comboBoxSetMode.Size = new System.Drawing.Size(393, 23);
+            comboBoxSetMode.TabIndex = 1;
             // 
             // Form_AutoTaggerSettings
             // 
@@ -184,7 +206,7 @@
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             CancelButton = button2;
-            ClientSize = new System.Drawing.Size(417, 531);
+            ClientSize = new System.Drawing.Size(417, 585);
             Controls.Add(checkBoxSkipInternet);
             Controls.Add(checkBoxSerializeVRAM);
             Controls.Add(checkedListBoxcomboBoxInterrogators);
@@ -193,8 +215,10 @@
             Controls.Add(labelPercent);
             Controls.Add(trackBarThreshold);
             Controls.Add(label3);
+            Controls.Add(comboBoxSetMode);
             Controls.Add(comboBoxUnionMode);
             Controls.Add(comboBoxSortMode);
+            Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -222,5 +246,7 @@
         private System.Windows.Forms.ComboBox comboBoxUnionMode;
         private System.Windows.Forms.CheckBox checkBoxSerializeVRAM;
         private System.Windows.Forms.CheckBox checkBoxSkipInternet;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox comboBoxSetMode;
     }
 }

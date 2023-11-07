@@ -1905,7 +1905,16 @@ namespace BooruDatasetTagManager
             LockEdit(true);
             var selectedImageData = Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value];
             var tagList = await GetTagsWithAutoTagger(selectedImageData.ImageFilePath, true);
-            gridViewAutoTags.DataSource = tagList;
+            if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.AllWithReplacement)
+                gridViewAutoTags.DataSource = tagList;
+            else if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.OnlyNewWithAddition)
+            {
+                foreach (var item in selectedImageData.Tags.TextTags)
+                {
+                    tagList.RemoveAll(a => a.Tag == item);
+                }
+                gridViewAutoTags.DataSource = tagList;
+            }
 
             LockEdit(false);
         }
@@ -1990,8 +1999,19 @@ namespace BooruDatasetTagManager
                     defSettings = true;
                 if (tagList != null)
                 {
-                    item.Tags.Clear();
-                    item.Tags.AddRange(tagList.Select(a => a.Tag), true);
+                    if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.AllWithReplacement)
+                    {
+                        item.Tags.Clear();
+                        item.Tags.AddRange(tagList.Select(a => a.Tag), true);
+                    }
+                    else if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.OnlyNewWithAddition)
+                    {
+                        foreach (var aTag in tagList)
+                        {
+                            item.Tags.AddTag(aTag.Tag, true, AddingType.Down, 0);
+                        }
+
+                    }
                 }
             }
             if (selectedTagsList.Count > 1)
@@ -2020,7 +2040,16 @@ namespace BooruDatasetTagManager
             LockEdit(true);
             var selectedImageData = Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value];
             var tagList = await GetTagsWithAutoTagger(selectedImageData.ImageFilePath, false);
-            gridViewAutoTags.DataSource = tagList;
+            if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.AllWithReplacement)
+                gridViewAutoTags.DataSource = tagList;
+            else if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.OnlyNewWithAddition)
+            {
+                foreach (var item in selectedImageData.Tags.TextTags)
+                {
+                    tagList.RemoveAll(a => a.Tag == item);
+                }
+                gridViewAutoTags.DataSource = tagList;
+            }
 
             LockEdit(false);
         }

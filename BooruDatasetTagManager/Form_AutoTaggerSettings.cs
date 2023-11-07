@@ -17,6 +17,7 @@ namespace BooruDatasetTagManager
             InitializeComponent();
             comboBoxSortMode.Items.AddRange(Enum.GetNames(typeof(AutoTaggerSort)));
             comboBoxUnionMode.Items.AddRange(Enum.GetNames(typeof(NetworkUnionMode)));
+            comboBoxSetMode.Items.AddRange(Enum.GetNames(typeof(NetworkResultSetMode)));
             Program.ColorManager.ChangeColorScheme(this, Program.ColorManager.SelectedScheme);
             Program.ColorManager.ChangeColorSchemeInConteiner(Controls, Program.ColorManager.SelectedScheme);
         }
@@ -61,6 +62,7 @@ namespace BooruDatasetTagManager
                 labelPercent.Text = trackBarThreshold.Value.ToString() + "%";
                 comboBoxSortMode.SelectedItem = Program.Settings.AutoTagger.SortMode.ToString();
                 comboBoxUnionMode.SelectedItem = Program.Settings.AutoTagger.UnionMode.ToString();
+                comboBoxSetMode.SelectedItem = Program.Settings.AutoTagger.SetMode.ToString();
                 checkBoxSerializeVRAM.Checked = Program.Settings.AutoTagger.SerializeVramUsage;
                 checkBoxSkipInternet.Checked = Program.Settings.AutoTagger.SkipInternetRequests;
             }
@@ -81,6 +83,7 @@ namespace BooruDatasetTagManager
             }
             Program.Settings.AutoTagger.SortMode = (AutoTaggerSort)Enum.Parse(typeof(AutoTaggerSort), (string)comboBoxSortMode.SelectedItem);
             Program.Settings.AutoTagger.UnionMode = (NetworkUnionMode)Enum.Parse(typeof(NetworkUnionMode), (string)comboBoxUnionMode.SelectedItem);
+            Program.Settings.AutoTagger.SetMode = (NetworkResultSetMode)Enum.Parse(typeof(NetworkResultSetMode), (string)comboBoxSetMode.SelectedItem);
             Program.Settings.AutoTagger.SerializeVramUsage = checkBoxSerializeVRAM.Checked;
             Program.Settings.AutoTagger.SkipInternetRequests = checkBoxSkipInternet.Checked;
             Program.Settings.SaveSettings();

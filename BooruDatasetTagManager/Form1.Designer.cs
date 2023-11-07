@@ -1099,7 +1099,7 @@ namespace BooruDatasetTagManager
             // toolStripTextBox1
             // 
             toolStripTextBox1.Name = "toolStripTextBox1";
-            toolStripTextBox1.Size = new System.Drawing.Size(229, 23);
+            toolStripTextBox1.Size = new System.Drawing.Size(229, 25);
             toolStripTextBox1.Visible = false;
             toolStripTextBox1.KeyDown += textBox1_KeyDown;
             // 
@@ -1109,7 +1109,7 @@ namespace BooruDatasetTagManager
             toolStripButton1.Image = Properties.Resources.Delete;
             toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             toolStripButton1.Name = "toolStripButton1";
-            toolStripButton1.Size = new System.Drawing.Size(23, 20);
+            toolStripButton1.Size = new System.Drawing.Size(23, 22);
             toolStripButton1.Text = "toolStripButton1";
             toolStripButton1.Visible = false;
             toolStripButton1.Click += button1_Click;
@@ -1119,7 +1119,7 @@ namespace BooruDatasetTagManager
             tabAutoTags.Controls.Add(toolStripContainer4);
             tabAutoTags.Location = new System.Drawing.Point(0, 0);
             tabAutoTags.Name = "tabAutoTags";
-            tabAutoTags.Size = new System.Drawing.Size(395, 655);
+            tabAutoTags.Size = new System.Drawing.Size(0, 0);
             tabAutoTags.Text = "AutoTagger preview window";
             // 
             // toolStripContainer4
@@ -1128,7 +1128,7 @@ namespace BooruDatasetTagManager
             // toolStripContainer4.ContentPanel
             // 
             toolStripContainer4.ContentPanel.Controls.Add(gridViewAutoTags);
-            toolStripContainer4.ContentPanel.Size = new System.Drawing.Size(354, 630);
+            toolStripContainer4.ContentPanel.Size = new System.Drawing.Size(0, 0);
             toolStripContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
             toolStripContainer4.Location = new System.Drawing.Point(0, 0);
             toolStripContainer4.Name = "toolStripContainer4";
@@ -1136,7 +1136,7 @@ namespace BooruDatasetTagManager
             // toolStripContainer4.RightToolStripPanel
             // 
             toolStripContainer4.RightToolStripPanel.Controls.Add(toolStripAutoTags);
-            toolStripContainer4.Size = new System.Drawing.Size(395, 655);
+            toolStripContainer4.Size = new System.Drawing.Size(0, 0);
             toolStripContainer4.TabIndex = 0;
             toolStripContainer4.Text = "toolStripContainer4";
             // 
@@ -1168,7 +1168,7 @@ namespace BooruDatasetTagManager
             gridViewAutoTags.RowHeadersVisible = false;
             gridViewAutoTags.RowHeadersWidth = 72;
             gridViewAutoTags.RowTemplate.Height = 29;
-            gridViewAutoTags.Size = new System.Drawing.Size(354, 630);
+            gridViewAutoTags.Size = new System.Drawing.Size(0, 0);
             gridViewAutoTags.TabIndex = 0;
             gridViewAutoTags.CellDoubleClick += gridViewAutoTags_CellDoubleClick;
             // 
@@ -1180,7 +1180,7 @@ namespace BooruDatasetTagManager
             toolStripAutoTags.Location = new System.Drawing.Point(0, 3);
             toolStripAutoTags.Name = "toolStripAutoTags";
             toolStripAutoTags.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            toolStripAutoTags.Size = new System.Drawing.Size(41, 134);
+            toolStripAutoTags.Size = new System.Drawing.Size(41, 50);
             toolStripAutoTags.TabIndex = 0;
             // 
             // btnAutoGetTagsDefSet
@@ -1224,7 +1224,7 @@ namespace BooruDatasetTagManager
             toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripLabel1 });
             toolStrip2.Location = new System.Drawing.Point(3, 0);
             toolStrip2.Name = "toolStrip2";
-            toolStrip2.Size = new System.Drawing.Size(162, 25);
+            toolStrip2.Size = new System.Drawing.Size(50, 25);
             toolStrip2.TabIndex = 0;
             // 
             // toolStripLabel1

@@ -64,6 +64,12 @@ namespace BooruDatasetTagManager
         Subtraction
     }
 
+    public enum NetworkResultSetMode
+    {
+        AllWithReplacement,
+        OnlyNewWithAddition
+    }
+
     public enum DataSourceType
     {
         None,
