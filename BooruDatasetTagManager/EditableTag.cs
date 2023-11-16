@@ -221,6 +221,11 @@ namespace BooruDatasetTagManager
             return tag;
         }
 
+        public string GetBackupTag()
+        {
+            return backupData.tag;
+        }
+
         public object Clone()
         {
             EditableTag tag = new EditableTag(tagData.id, tagData.tag);
