@@ -50,7 +50,26 @@ namespace BooruDatasetTagManager
             isStoreHistory = true;
         }
 
-        public EditableTagList(IEnumerable<PromptParser.PromptItem> tags) : base()
+        //public EditableTagList(IEnumerable<PromptParser.PromptItem> tags) : base()
+        //{
+        //    isStoreHistory = false;
+        //    _tags = new List<string>();
+        //    foreach (var tag in tags)
+        //    {
+        //        int index = GetNextId();
+        //        var eTag = new EditableTag(index, tag.Text, index);
+        //        eTag.Weight = tag.Weight;
+        //        Add(eTag, false);
+        //    }
+        //    isStoreHistory = true;
+        //}
+
+        public EditableTagList() : base()
+        {
+            _tags = new List<string>();
+        }
+
+        public void LoadFromPromptParserData(IEnumerable<PromptParser.PromptItem> tags)
         {
             isStoreHistory = false;
             _tags = new List<string>();
@@ -62,11 +81,6 @@ namespace BooruDatasetTagManager
                 Add(eTag, false);
             }
             isStoreHistory = true;
-        }
-
-        public EditableTagList() : base()
-        {
-            _tags = new List<string>();
         }
 
         public override string ToString()

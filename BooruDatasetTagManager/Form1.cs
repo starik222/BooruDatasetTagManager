@@ -408,13 +408,15 @@ namespace BooruDatasetTagManager
             }
             if (isAllTags)
             {
-                BingSourceToDGV(gridViewAllTags, Program.DataManager.AllTags);
+                //NEED MODIFY
+                gridViewAllTags.DataSource = Program.DataManager.AllTags;
+                //BingSourceToDGV(gridViewAllTags, Program.DataManager.AllTags);
             }
             else
             {
                 BingSourceToDGV(gridViewAllTags, Program.DataManager.CommonTags);
             }
-            gridViewAllTags.Columns["ImageTags"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //gridViewAllTags.Columns["ImageTags"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
         private async void BingSourceToDGV(DataGridView dgv, List<TagValue> source)
@@ -538,7 +540,8 @@ namespace BooruDatasetTagManager
             replaceAll.comboBox1.DataSource = Program.DataManager.AllTags;
             replaceAll.comboBox1.DisplayMember = "Tag";
             replaceAll.comboBox1.SelectedIndex = gridViewAllTags.SelectedCells[0].RowIndex;
-            replaceAll.comboBox2.Items.AddRange(Program.DataManager.AllTags.Select(a => a.Tag).ToArray());
+            //NEED MODIFY
+            //replaceAll.comboBox2.Items.AddRange(Program.DataManager.AllTags.Select(a => a.Tag).ToArray());
             if (replaceAll.ShowDialog() == DialogResult.OK)
             {
                 Program.DataManager.ReplaceTagInAll(((TagValue)replaceAll.comboBox1.SelectedItem).Tag, (string)replaceAll.comboBox2.Text, true);
@@ -665,8 +668,9 @@ namespace BooruDatasetTagManager
                 Program.DataManager.DeleteTagFromAll(item.Value, filtered);
                 if (gridViewDS.SelectedRows.Count > 1)
                     LoadSelectedImageToGrid();
-                if (!Program.DataManager.AllTags.Exists(a => a.Tag == item.Value))
-                    gridViewAllTags.Rows.RemoveAt(item.Key);
+                //NEED MODIFY
+                //if (!Program.DataManager.AllTags.Exists(a => a.Tag == item.Value))
+                //    gridViewAllTags.Rows.RemoveAt(item.Key);
             }
             Program.DataManager.UpdateData();
         }
@@ -823,7 +827,8 @@ namespace BooruDatasetTagManager
                 {
                     string text = Clipboard.GetText();
                     var lines = PromptParser.ParsePrompt(text, Program.Settings.SeparatorOnLoad);
-                    EditableTagList tagList = new EditableTagList(lines);
+                    EditableTagList tagList = new EditableTagList();
+                    tagList.LoadFromPromptParserData(lines);
                     gridViewTags.DataSource = tagList;
                 }
                 //MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
@@ -1442,7 +1447,8 @@ namespace BooruDatasetTagManager
             if (toolStripTextBox1.Text.Length > 0)
             {
                 isLoading = true;
-                int index = Program.DataManager.AllTags.FindIndex(a => a.Tag.StartsWith(toolStripTextBox1.Text));
+                //NEED MODIFY
+                int index = -1;// Program.DataManager.AllTags.FindIndex(a => a.Tag.StartsWith(toolStripTextBox1.Text));
                 if (index != -1)
                 {
                     //gridViewAllTags.ClearSelection();

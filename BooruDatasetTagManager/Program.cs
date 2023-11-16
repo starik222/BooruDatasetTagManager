@@ -26,6 +26,7 @@ namespace BooruDatasetTagManager
             Application.SetCompatibleTextRenderingDefault(false);
             Settings = new AppSettings(Application.StartupPath);
             EditableTagListLocker = new object();
+            ListChangeLocker = new object();
             ColorManager = new ColorSchemeManager();
             ColorManager.Load(Path.Combine(Application.StartupPath, "ColorScheme.json"));
             ColorManager.SelectScheme(Program.Settings.ColorScheme);
@@ -99,6 +100,7 @@ namespace BooruDatasetTagManager
 
         #region locks
         public static object EditableTagListLocker;
+        public static object ListChangeLocker;
         #endregion
     }
 }

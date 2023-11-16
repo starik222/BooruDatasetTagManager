@@ -46,14 +46,25 @@ namespace BooruDatasetTagManager
         public int RemoveTag(string tag, bool allTags = false)
         {
             int index = IndexOf(tag);
-            if (index != -1 && !allTags)
+            if (index != -1)
             {
-                this[index].Count--;
-            }
-            else
-            {
-                RemoveAt(index);
-                index = -1;
+                if (allTags)
+                {
+                    RemoveAt(index);
+                    index = -1;
+                }
+                else
+                {
+                    if (this[index].Count > 1)
+                    {
+                        this[index].Count--;
+                    }
+                    else
+                    {
+                        RemoveAt(index);
+                        index = -1;
+                    }
+                }
             }
             return index;
         }

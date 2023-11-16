@@ -18,7 +18,7 @@ namespace BooruDatasetTagManager
     public class DatasetManager
     {
         public ConcurrentDictionary<string, DataItem> DataSet;
-        public List<TagValue> AllTags;
+        public AllTagsList AllTags;
         public List<TagValue> CommonTags;
 
         private int originalHash;
@@ -31,7 +31,7 @@ namespace BooruDatasetTagManager
         public DatasetManager()
         {
             DataSet = new ConcurrentDictionary<string, DataItem>();
-            AllTags = new List<TagValue>();
+            AllTags = new AllTagsList();
             CommonTags = new List<TagValue>();
         }
 
@@ -52,12 +52,12 @@ namespace BooruDatasetTagManager
 
         public void UpdateData()
         {
-            AllTags = DataSet
-                .SelectMany(x => x.Value.Tags.TextTags)
-                .Distinct()
-                .OrderBy(x => x)
-                .Select(x => new TagValue(x))
-                .ToList();
+            //AllTags = DataSet
+            //    .SelectMany(x => x.Value.Tags.TextTags)
+            //    .Distinct()
+            //    .OrderBy(x => x)
+            //    .Select(x => new TagValue(x))
+            //    .ToList();
             CommonTags = DataSet
                 .Skip(1).Aggregate(
                     new HashSet<string>(DataSet.First().Value.Tags.TextTags),
@@ -67,10 +67,10 @@ namespace BooruDatasetTagManager
                 .Select(x => new TagValue(x))
                 .ToList();
         }
-
+        //NEED MODIFY
         public List<TagValue> GetFilteredAllTags(string filterText)
         {
-            return AllTags.Where(a=>a.Tag.Contains(filterText)).ToList();
+            return null;// AllTags.Where(a=>a.Tag.Contains(filterText)).ToList();
         }
 
 
@@ -273,12 +273,36 @@ namespace BooruDatasetTagManager
             int imgSize = Program.Settings.PreviewSize;
             imgs.AsParallel().ForAll(x =>
             {
-                var dt = new DataItem(x, imgSize);
+                var dt = new DataItem();
+                dt.Tags.TagsListChanged += Tags_TagsListChanged;
+                dt.LoadData(x, imgSize);
+                
                 DataSet.TryAdd(dt.ImageFilePath, dt);
             });
             UpdateDatasetHash();
             IsLossLoaded = false;
             return true;
+        }
+
+        private void Tags_TagsListChanged(string oldTag, string newTag, ListChangedType changedType)
+        {
+            lock (Program.ListChangeLocker)
+            {
+                if (changedType == ListChangedType.ItemAdded)
+                {
+                    AllTags.AddTag(newTag);
+                }
+                else if (changedType == ListChangedType.ItemDeleted)
+                {
+                    AllTags.RemoveTag(newTag);
+                }
+                else if (changedType == ListChangedType.ItemChanged)
+                {
+                    AllTags.ChangeTag(oldTag, newTag);
+                }
+                else
+                    throw new Exception("Unknown list changing operation");
+            }
         }
 
         private ImageList GetImageList(int w, int h)
@@ -359,9 +383,8 @@ namespace BooruDatasetTagManager
                 Tags = new EditableTagList();
             }
 
-            public DataItem(string imagePath, int imageSize)
+            public void LoadData(string imagePath, int imageSize)
             {
-                Tags = new EditableTagList();
                 ImageFilePath = imagePath;
                 ImageFilePathHash = ImageFilePath.GetHashCode();
                 Name = Path.GetFileNameWithoutExtension(imagePath);
@@ -386,11 +409,12 @@ namespace BooruDatasetTagManager
                     string text = File.ReadAllText(TextFilePath);
 
                     var temp_tags = PromptParser.ParsePrompt(text, Program.Settings.SeparatorOnLoad);
-                    Tags = new EditableTagList(temp_tags);
+                    //Tags = new EditableTagList(temp_tags);
+                    Tags.LoadFromPromptParserData(temp_tags);
                 }
                 else
                 {
-                    Tags = new EditableTagList();
+                    //Tags = new EditableTagList();
                     TagsModifyTime = DateTime.MinValue;
                 }
 
