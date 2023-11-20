@@ -34,6 +34,8 @@ INTERROGATOR_LOCK = threading.Lock()
 ACTIVE_INTERROGATOR                = None
 ONE_INTERROGATOR_IN_VRAM_AT_A_TIME = False
 
+DEBUG = True
+Unprompted = None
 
 # Whooooo, there's a bunch of gross global state here.
 # I blame finite GPUs and gRPC being kind of crap.
@@ -68,13 +70,93 @@ def interrogate_image(network_name, image_obj, skip_online):
 		return tags
 
 
+def import_file(full_name, path):
+	"""Allows importing of modules from full filepath, not sure why Python requires a helper function for this in 2023"""
+	from importlib import util
+
+	spec = util.spec_from_file_location(full_name, path)
+	mod = util.module_from_spec(spec)
+
+	spec.loader.exec_module(mod)
+	return mod
+
 def extract_tag_ret(tags_in, threshold):
+	global DEBUG, Unprompted
+
+	# Load middleman.json object for interrogator
+	import json, os
+	if os.path.isfile("middleman.json"):
+		middleman = json.loads(open("middleman.json", "r").read())
+		banned_tags = middleman["_BANNED"] if "_BANNED" in middleman else []
+
+		if "_UNPROMPTED" in middleman and not Unprompted:
+			try:
+				import sys
+				sys.path.insert(0, f"{middleman['_UNPROMPTED']}")
+				unprompted_path = f"{middleman['_UNPROMPTED']}/lib_unprompted/shared.py"
+				shared = import_file("unprompted", unprompted_path)
+				Unprompted = shared.Unprompted(base_dir=f"{middleman['_UNPROMPTED']}")
+			except Exception as e:
+				print("Failed to load Unprompted:", e)
+
+	else:
+		middleman = {}
+		banned_tags = []
+	
+	def do_unprompted(string):
+		if Unprompted:
+			result = Unprompted.start(str(string))
+			# Cleanup routines
+			Unprompted.cleanup()
+			return result
+		else: return string
+		
 
 	ret = {}
 
 	if isinstance(tags_in, dict):
 		for tag, probability in tags_in.items():
-			if probability > threshold:
+			# Check if this tag is defined in the middleman
+			if tag in middleman:
+				try:
+					# Re-initialize Unprompted vars
+					if Unprompted:
+						# Pass our starting values into Unprompted
+						Unprompted.shortcode_user_vars = {
+							"tag": str(tag),
+							"confidence": str(probability),
+							"threshold": str(threshold),
+						}
+
+					if ("ban" in middleman[tag] and int(do_unprompted(middleman[tag]["ban"]))) or tag in banned_tags:
+						if DEBUG: print(f"Tag `{tag}` banned, skipping.")
+						continue
+
+					new_tag_name = do_unprompted(middleman[tag]["name"]) if "name" in middleman[tag] else tag
+					new_tag_confidence = float(do_unprompted(middleman[tag]["confidence"])) if "confidence" in middleman[tag] else probability
+
+					new_threshold = float(do_unprompted(middleman[tag]["threshold"])) if "threshold" in middleman[tag] else threshold
+
+					if new_tag_confidence > new_threshold:
+						if "post_confidence" in middleman[tag]:
+							new_tag_confidence = float(do_unprompted(middleman[tag]["post_confidence"])) 
+
+						ret[new_tag_name] = new_tag_confidence
+
+						if "aliases" in middleman[tag]:
+							all_aliases = middleman[tag]["aliases"]
+							if isinstance(all_aliases, str): all_aliases = [all_aliases]
+
+							for alias in all_aliases:
+								alias = do_unprompted(alias)
+								ret[alias] = new_tag_confidence
+
+						if DEBUG:
+							print(f"Tag `{tag}` renamed to `{new_tag_name}`, confidence {probability} adjusted to {new_tag_confidence}")
+				except Exception as e:
+					print(f"Exception occurred while processing tag `{tag}`:", e)
+					if probability > threshold: ret[tag] = probability
+			elif probability > threshold:
 				ret[tag] = probability
 
 	elif isinstance(tags_in, (list, tuple)):
@@ -137,7 +219,6 @@ class InterrogatorServicer(rpc_proto.services_pb2_grpc.ImageInterrogatorServicer
 			image_obj = Image.open(io.BytesIO(image_bytes))
 
 			for network_conf in request.params:
-
 
 				tag_ret = interrogate_image(network_conf.interrogator_network, image_obj, skip_online=request.skip_internet_requests)
 				network_tags = extract_tag_ret(tag_ret, network_conf.interrogator_threshold)

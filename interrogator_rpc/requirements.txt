@@ -4,6 +4,7 @@ grpcio-tools
 onnx
 onnxruntime-gpu
 pandas
+opencv-python
 
 # This needs to be from Torch's pypi repo.
 # ONNX does not support cuda 12 yet.
