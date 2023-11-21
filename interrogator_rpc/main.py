@@ -144,7 +144,7 @@ def extract_tag_ret(tags_in, threshold):
 
 					if new_tag_confidence > new_threshold:
 						if "post" in middleman[tag]:
-							new_tag_confidence = float(do_unprompted(middleman[tag]["post"],"post"))
+							new_tag_confidence = float(do_unprompted(middleman[tag]["post"],"confidence"))
 
 						ret[new_tag_name] = new_tag_confidence
 
