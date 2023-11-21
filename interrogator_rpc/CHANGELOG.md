@@ -1,6 +1,23 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 0.1.0
+### Added
+- New special key `_INIT`: An arbitrary string that is processed by Unprompted at the start of interrogation, useful for setting up variables or custom functions, etc.
+- New special key `_WHITELIST_TAGS`: If present, only tags in this list will be returned to the client, useful if you want to evaluate a batch of images for specific tags
+- New setting `_DEBUG_TAGS`: Takes a list of tag names to print diagnostic info about in the console
+- New setting `debug`: Prints diagnostic info about the tag to the console
+- New setting `alias_multiplier`: Adjusts the confidence value of each alias, thereby interspersing synonymous tags throughout the list as opposed to stacking them next to each other
+- New file `unprompted_init.txt`: A template for housing useful functions which you can include with `"_INIT":"[call 'full/path/to/unprompted_init.txt']"`
+- New init function `multiply`: Context-aware shorthand for multiplication, e.g. `"ring":{"confidence":"[call multiply by=0.25]"}` will multiply the confidence value of the `ring` tag by 0.25
+- New init function `bounds`: Constrain the context variable to a range, e.g `"ring":{"confidence":"[call bounds min=0.7 max=0.95]"}` will ensure that the confidence value of the `ring` tag is at least 0.7 and no greater than 0.95
+
+### Changed
+- Moved Unprompted cleanup routine to the end of the interrogation cycle
+- Renamed `confidence` to `pre`
+- Renamed `post_confidence` to `post`
+- Renamed `_BANNED_TAGS` to `_BLACKLIST_TAGS`
+
 ## 0.0.1 - 20 November 2023
 ### About
 This PR introduces a number of improvements for the Tagger's RPC service, mostly notably the Middleman postprocessor. To use the postprocessor, create `middleman.json` in your `interrogator_rpc` directory.

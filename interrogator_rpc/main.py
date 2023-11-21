@@ -83,11 +83,20 @@ def import_file(full_name, path):
 def extract_tag_ret(tags_in, threshold):
 	global DEBUG, Unprompted
 
+	def do_unprompted(string,context=None):
+		if Unprompted:
+			if context: Unprompted.shortcode_user_vars["context"] = str(context)
+			result = Unprompted.start(str(string),debug=False)
+			return result
+		else: return string
+
 	# Load middleman.json object for interrogator
 	import json, os
 	if os.path.isfile("middleman.json"):
 		middleman = json.loads(open("middleman.json", "r").read())
-		banned_tags = middleman["_BANNED"] if "_BANNED" in middleman else []
+		blacklist_tags = middleman["_BLACKLIST_TAGS"] if "_BLACKLIST_TAGS" in middleman else []
+		whitelist_tags = middleman["_WHITELIST_TAGS"] if "_WHITELIST_TAGS" in middleman else []
+		debug_tags = middleman["_DEBUG_TAGS"] if "_DEBUG_TAGS" in middleman else []
 
 		if "_UNPROMPTED" in middleman and not Unprompted:
 			try:
@@ -99,59 +108,58 @@ def extract_tag_ret(tags_in, threshold):
 			except Exception as e:
 				print("Failed to load Unprompted:", e)
 
+		Unprompted.shortcode_user_vars = {}
+		if "_INIT" in middleman: do_unprompted(middleman["_INIT"])
 	else:
 		middleman = {}
-		banned_tags = []
+		blacklist_tags = []
 	
-	def do_unprompted(string):
-		if Unprompted:
-			result = Unprompted.start(str(string))
-			# Cleanup routines
-			Unprompted.cleanup()
-			return result
-		else: return string
-		
-
 	ret = {}
 
 	if isinstance(tags_in, dict):
 		for tag, probability in tags_in.items():
+			if tag in debug_tags or tag in middleman and "debug" in middleman[tag]:
+				print(f"(DEBUG) Tag `{tag}` probability: {probability}")
 			# Check if this tag is defined in the middleman
 			if tag in middleman:
 				try:
 					# Re-initialize Unprompted vars
 					if Unprompted:
 						# Pass our starting values into Unprompted
-						Unprompted.shortcode_user_vars = {
-							"tag": str(tag),
-							"confidence": str(probability),
-							"threshold": str(threshold),
-						}
+						Unprompted.shortcode_user_vars["tag"] = str(tag)
+						Unprompted.shortcode_user_vars["confidence"] = str(probability)
+						Unprompted.shortcode_user_vars["threshold"] = str(threshold)
 
-					if ("ban" in middleman[tag] and int(do_unprompted(middleman[tag]["ban"]))) or tag in banned_tags:
+					if ("ban" in middleman[tag] and int(do_unprompted(middleman[tag]["ban"],"ban"))) or tag in blacklist_tags:
 						if DEBUG: print(f"Tag `{tag}` banned, skipping.")
 						continue
+					if whitelist_tags and tag not in whitelist_tags:
+						if DEBUG: print(f"Tag `{tag}` not in whitelist, skipping.")
+						continue
 
-					new_tag_name = do_unprompted(middleman[tag]["name"]) if "name" in middleman[tag] else tag
-					new_tag_confidence = float(do_unprompted(middleman[tag]["confidence"])) if "confidence" in middleman[tag] else probability
+					new_tag_name = do_unprompted(middleman[tag]["name"],"name") if "name" in middleman[tag] else tag
+					new_tag_confidence = float(do_unprompted(middleman[tag]["pre"],"pre")) if "pre" in middleman[tag] else probability
 
-					new_threshold = float(do_unprompted(middleman[tag]["threshold"])) if "threshold" in middleman[tag] else threshold
+					new_threshold = float(do_unprompted(middleman[tag]["threshold"],"threshold")) if "threshold" in middleman[tag] else threshold
 
 					if new_tag_confidence > new_threshold:
-						if "post_confidence" in middleman[tag]:
-							new_tag_confidence = float(do_unprompted(middleman[tag]["post_confidence"])) 
+						if "post" in middleman[tag]:
+							new_tag_confidence = float(do_unprompted(middleman[tag]["post"],"post"))
 
 						ret[new_tag_name] = new_tag_confidence
 
 						if "aliases" in middleman[tag]:
 							all_aliases = middleman[tag]["aliases"]
+							alias_multiplier = float(do_unprompted(middleman[tag]["alias_multiplier"],"confidence")) if "alias_multiplier" in middleman[tag] else 0.5
+							next_confidence = new_tag_confidence * alias_multiplier
 							if isinstance(all_aliases, str): all_aliases = [all_aliases]
 
 							for alias in all_aliases:
 								alias = do_unprompted(alias)
-								ret[alias] = new_tag_confidence
+								ret[alias] = next_confidence
+								next_confidence = next_confidence * alias_multiplier
 
-						if DEBUG:
+						if DEBUG and (tag != new_tag_name or probability != new_tag_confidence):
 							print(f"Tag `{tag}` renamed to `{new_tag_name}`, confidence {probability} adjusted to {new_tag_confidence}")
 				except Exception as e:
 					print(f"Exception occurred while processing tag `{tag}`:", e)
@@ -165,6 +173,8 @@ def extract_tag_ret(tags_in, threshold):
 
 	else:
 		raise RuntimeError("Tags must either be a list or a dict")
+
+	if Unprompted: Unprompted.cleanup()
 
 	return ret
 
