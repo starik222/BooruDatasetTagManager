@@ -80,7 +80,7 @@ def import_file(full_name, path):
 	spec.loader.exec_module(mod)
 	return mod
 
-def extract_tag_ret(tags_in, threshold):
+def extract_tag_ret(tags_in, threshold, image_obj):
 	global DEBUG, Unprompted
 
 	def do_unprompted(string,context=None):
@@ -93,6 +93,7 @@ def extract_tag_ret(tags_in, threshold):
 	# Load middleman.json object for interrogator
 	import json, os
 	if os.path.isfile("middleman.json"):
+		if DEBUG: print("Running Middleman v0.2.0")
 		middleman = json.loads(open("middleman.json", "r").read())
 		blacklist_tags = middleman["_BLACKLIST_TAGS"] if "_BLACKLIST_TAGS" in middleman else []
 		whitelist_tags = middleman["_WHITELIST_TAGS"] if "_WHITELIST_TAGS" in middleman else []
@@ -107,9 +108,21 @@ def extract_tag_ret(tags_in, threshold):
 				Unprompted = shared.Unprompted(base_dir=f"{middleman['_UNPROMPTED']}")
 			except Exception as e:
 				print("Failed to load Unprompted:", e)
+		if Unprompted:
+			Unprompted.shortcode_user_vars = {}
+			Unprompted.shortcode_user_vars["threshold"] = str(threshold)
+			# Load tags into Unprompted variables
+			if isinstance(tags_in, dict):
+				for tag, confidence in tags_in.items():
+					Unprompted.shortcode_user_vars[tag] = confidence
+			
+			# Ensure that the image is PIL.Image.Image - necessary for pyiqa library
+			# (The library does not handle PIL subtypes correctly)
+			image = Image.new(image_obj.mode, image_obj.size)
+			image.putdata(list(image_obj.getdata()))
+			Unprompted.shortcode_user_vars["default_image"] = image
 
-		Unprompted.shortcode_user_vars = {}
-		if "_INIT" in middleman: do_unprompted(middleman["_INIT"])
+			if "_INIT" in middleman: do_unprompted(middleman["_INIT"])
 	else:
 		middleman = {}
 		blacklist_tags = []
@@ -118,8 +131,17 @@ def extract_tag_ret(tags_in, threshold):
 
 	if isinstance(tags_in, dict):
 		for tag, probability in tags_in.items():
-			if tag in debug_tags or tag in middleman and "debug" in middleman[tag]:
+			if tag in debug_tags or (tag in middleman and "debug" in middleman[tag]):
 				print(f"(DEBUG) Tag `{tag}` probability: {probability}")
+				del debug_tags[debug_tags.index(tag)]
+			if tag in blacklist_tags:
+				if DEBUG: print(f"Tag `{tag}` blacklisted, skipping.")
+				del blacklist_tags[blacklist_tags.index(tag)]
+				continue
+			if whitelist_tags and tag not in whitelist_tags:
+				if DEBUG: print(f"Tag `{tag}` not in whitelist, skipping.")
+				del whitelist_tags[whitelist_tags.index(tag)]
+				continue
 			# Check if this tag is defined in the middleman
 			if tag in middleman:
 				try:
@@ -128,13 +150,9 @@ def extract_tag_ret(tags_in, threshold):
 						# Pass our starting values into Unprompted
 						Unprompted.shortcode_user_vars["tag"] = str(tag)
 						Unprompted.shortcode_user_vars["confidence"] = str(probability)
-						Unprompted.shortcode_user_vars["threshold"] = str(threshold)
-
-					if ("ban" in middleman[tag] and int(do_unprompted(middleman[tag]["ban"],"ban"))) or tag in blacklist_tags:
+					
+					if ("ban" in middleman[tag] and int(do_unprompted(middleman[tag]["ban"],"ban"))):
 						if DEBUG: print(f"Tag `{tag}` banned, skipping.")
-						continue
-					if whitelist_tags and tag not in whitelist_tags:
-						if DEBUG: print(f"Tag `{tag}` not in whitelist, skipping.")
 						continue
 
 					new_tag_name = do_unprompted(middleman[tag]["name"],"name") if "name" in middleman[tag] else tag
@@ -158,9 +176,22 @@ def extract_tag_ret(tags_in, threshold):
 								alias = do_unprompted(alias)
 								ret[alias] = next_confidence
 								next_confidence = next_confidence * alias_multiplier
+						if "excludes" in middleman[tag]:
+							all_excludes = middleman[tag]["excludes"]
+							for exclude in all_excludes:
+								exclude = do_unprompted(exclude)
+								if exclude in ret: del ret[exclude]
+								elif exclude not in blacklist_tags:
+									blacklist_tags.append(exclude)
 
-						if DEBUG and (tag != new_tag_name or probability != new_tag_confidence):
-							print(f"Tag `{tag}` renamed to `{new_tag_name}`, confidence {probability} adjusted to {new_tag_confidence}")
+						if DEBUG:
+							if tag != new_tag_name: print(f"Tag `{tag}` renamed to `{new_tag_name}`")
+							if probability != new_tag_confidence: print(f"Tag `{tag}` confidence changed from {probability} to {new_tag_confidence}")
+					
+					# Update Unprompted tag variable
+					if Unprompted:
+						Unprompted.shortcode_user_vars[new_tag_name] = new_tag_confidence
+				
 				except Exception as e:
 					print(f"Exception occurred while processing tag `{tag}`:", e)
 					if probability > threshold: ret[tag] = probability
@@ -174,7 +205,21 @@ def extract_tag_ret(tags_in, threshold):
 	else:
 		raise RuntimeError("Tags must either be a list or a dict")
 
-	if Unprompted: Unprompted.cleanup()
+	if Unprompted:
+		# Process extra tags from user variables
+		new_tag_prefix = "tag_"
+		for key, value in Unprompted.shortcode_user_vars.items():
+			if key.startswith(new_tag_prefix):
+				tag_name = key[len(new_tag_prefix):].replace("_"," ")
+				if not value:
+					if tag_name in ret: del ret[tag_name]
+				else: ret[tag_name] = float(value)
+		
+		Unprompted.cleanup()
+
+	if len(debug_tags): print(f"(WARNING) Debug tags {debug_tags} are invalid!")
+	if len(blacklist_tags): print(f"(WARNING) Blacklist tags {blacklist_tags} are invalid!")
+	if len(whitelist_tags): print(f"(WARNING) Whitelist tags {whitelist_tags} are invalid!")
 
 	return ret
 
@@ -231,7 +276,7 @@ class InterrogatorServicer(rpc_proto.services_pb2_grpc.ImageInterrogatorServicer
 			for network_conf in request.params:
 
 				tag_ret = interrogate_image(network_conf.interrogator_network, image_obj, skip_online=request.skip_internet_requests)
-				network_tags = extract_tag_ret(tag_ret, network_conf.interrogator_threshold)
+				network_tags = extract_tag_ret(tag_ret, network_conf.interrogator_threshold, image_obj)
 
 				net_resp = rpc_proto.services_pb2.InterrogationResponse()
 				net_resp.network_name = network_conf.interrogator_network

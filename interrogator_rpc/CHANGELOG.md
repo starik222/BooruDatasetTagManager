@@ -1,6 +1,22 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 0.2.0
+### Added
+- New setting `excludes`: If this tag passes the threshold check, you can exclude a list of other tags from being returned to the client (the opposite of `aliases`)
+- The image object is now passed to Unprompted which allows you to make tag assessments based on image properties such as aesthetic score, dimensions, etc.
+- All interrogator tags are now passed to Unprompted as user variables
+- Unprompted variables beginning with `tag_` will be passed to the client as additional tags (undescores in the variable names will be replaced with spaces)
+- Similarly, you can set `tag_something` to 0 to remove the `something` tag from the list of tags that will be returned to the client
+- Print warnings about invalid tags in the blacklist, whitelist, or debug list
+
+### Changed
+- `unprompted_init.txt` renamed to `unprompted_init_example.txt`
+
+### Fixed
+- Fixed error that would occur if Unprompted was not enabled
+- Additional fixes for blacklist and whitelist
+
 ## 0.1.0
 ### Added
 - New special key `_INIT`: An arbitrary string that is processed by Unprompted at the start of interrogation, useful for setting up variables or custom functions, etc.
