@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace BooruDatasetTagManager
 {
-    public class AllTagsList : CollectionBase, IBindingList
+    public class AllTagsList : CollectionBase, IBindingListView//, IBindingList
     {
         private ListChangedEventArgs resetEvent = new ListChangedEventArgs(ListChangedType.Reset, -1);
         private ListChangedEventHandler onListChanged;
+        private ListSortDescriptionCollection m_SortDescriptions = new ListSortDescriptionCollection();
 
         public AllTagsItem this[int index]
         {
@@ -75,6 +76,11 @@ namespace BooruDatasetTagManager
             AddTag(newTag);
         }
 
+        public string[] GetAllTagsList()
+        {
+            return InnerList.Cast<AllTagsItem>().Select(x => x.Tag).ToArray();
+        }
+
         public int AddWithSorting(AllTagsItem item)
         {
             if (List.Count == 0)
@@ -115,6 +121,16 @@ namespace BooruDatasetTagManager
             return -1;    
         }
 
+        public int FindTagStartWith(string tag)
+        {
+            for (int i = 0; i < List.Count; i++)
+            {
+                if (((AllTagsItem)List[i]).Tag.StartsWith(tag))
+                    return i;
+            }
+            return -1;
+        }
+
         protected virtual void OnListChanged(ListChangedEventArgs ev)
         {
             if (onListChanged != null)
@@ -146,14 +162,13 @@ namespace BooruDatasetTagManager
         {
             if (oldValue != newValue)
             {
-
                 AllTagsItem olddata = (AllTagsItem)oldValue;
                 AllTagsItem newdata = (AllTagsItem)newValue;
 
                 olddata.Parent = null;
                 newdata.Parent = this;
 
-                OnListChanged(new ListChangedEventArgs(ListChangedType.ItemAdded, index));
+                OnListChanged(new ListChangedEventArgs(ListChangedType.ItemChanged, index));
             }
         }
 
@@ -244,6 +259,23 @@ namespace BooruDatasetTagManager
             get { throw new NotSupportedException(); }
         }
 
+        public string Filter { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public ListSortDescriptionCollection SortDescriptions
+        {
+            get { return m_SortDescriptions; }
+        }
+
+        public bool SupportsAdvancedSorting
+        {
+            get { return false; }
+        }
+
+        public bool SupportsFiltering
+        {
+            get { return false; }
+        }
+
         // Unsupported Methods.
         void IBindingList.AddIndex(PropertyDescriptor property)
         {
@@ -268,6 +300,16 @@ namespace BooruDatasetTagManager
         void IBindingList.RemoveSort()
         {
             throw new NotSupportedException();
+        }
+
+        public void ApplySort(ListSortDescriptionCollection sorts)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveFilter()
+        {
+            throw new NotImplementedException();
         }
 
         //public object Clone()
@@ -299,5 +341,6 @@ namespace BooruDatasetTagManager
                 return (x).CompareTo(y);
             }
         }
+
     }
 }
