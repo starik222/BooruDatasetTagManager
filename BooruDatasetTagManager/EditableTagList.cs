@@ -559,7 +559,6 @@ namespace BooruDatasetTagManager
             {
                 c.Parent = null;
                 h.ClearedTags.Add((EditableTag)c.Clone());
-                TagsListChanged?.Invoke(null, c.Tag, ListChangedType.ItemDeleted);
             }
             h.Type = EditableTagHistory.HistoryType.Clear;
             if (isStoreHistory)
@@ -569,6 +568,8 @@ namespace BooruDatasetTagManager
 
         protected override void OnClearComplete()
         {
+            foreach(var item in _tags)
+                TagsListChanged?.Invoke(null, item, ListChangedType.ItemDeleted);
             _tags.Clear();
             OnListChanged(resetEvent);
         }
@@ -578,7 +579,6 @@ namespace BooruDatasetTagManager
             EditableTag c = (EditableTag)value;
             c.Parent = this;
             OnListChanged(new ListChangedEventArgs(ListChangedType.ItemAdded, index));
-            TagsListChanged?.Invoke(null, c.Tag, ListChangedType.ItemAdded);
         }
 
         protected override void OnInsert(int index, object value)
@@ -592,6 +592,7 @@ namespace BooruDatasetTagManager
                 AddHistory(h);
             }
             _tags.Insert(index, ((EditableTag)value).Tag);
+            TagsListChanged?.Invoke(null, ((EditableTag)value).Tag, ListChangedType.ItemAdded);
             base.OnInsert(index, value);
         }
 
@@ -605,6 +606,7 @@ namespace BooruDatasetTagManager
                 h.Type = EditableTagHistory.HistoryType.Remove;
                 AddHistory(h);
             }
+            TagsListChanged?.Invoke(null, _tags[index], ListChangedType.ItemDeleted);
             _tags.RemoveAt(index);
             base.OnRemove(index, value);
         }
@@ -626,7 +628,6 @@ namespace BooruDatasetTagManager
         {
             EditableTag c = (EditableTag)value;
             c.Parent = this;
-            TagsListChanged?.Invoke(null, c.Tag, ListChangedType.ItemDeleted);
             OnListChanged(new ListChangedEventArgs(ListChangedType.ItemDeleted, index));
         }
 
@@ -640,9 +641,9 @@ namespace BooruDatasetTagManager
 
                 olddata.Parent = null;
                 newdata.Parent = this;
+                TagsListChanged?.Invoke(_tags[index], newdata.Tag, ListChangedType.ItemChanged);
                 _tags[index] = newdata.Tag;
-                TagsListChanged?.Invoke(olddata.Tag, newdata.Tag, ListChangedType.ItemChanged);
-                OnListChanged(new ListChangedEventArgs(ListChangedType.ItemAdded, index));
+                OnListChanged(new ListChangedEventArgs(ListChangedType.ItemChanged, index));
             }
         }
 
@@ -651,9 +652,8 @@ namespace BooruDatasetTagManager
         {
 
             int index = List.IndexOf(tag);
-
+            TagsListChanged?.Invoke(_tags[index], tag.Tag, ListChangedType.ItemChanged);
             _tags[index] = tag.Tag;
-
             if (storeHistory)
             {
                 var h = new EditableTagHistory();
@@ -663,7 +663,6 @@ namespace BooruDatasetTagManager
                 h.Type = EditableTagHistory.HistoryType.Modify;
                 AddHistory(h);
             }
-            TagsListChanged?.Invoke(tag.GetBackupTag(), tag.Tag, ListChangedType.ItemChanged);
             OnListChanged(new ListChangedEventArgs(ListChangedType.ItemChanged, index));
         }
 
@@ -714,7 +713,7 @@ namespace BooruDatasetTagManager
         // Methods.
         object IBindingList.AddNew()
         {
-            EditableTag c = new EditableTag(GetNextId(), this.Count.ToString());
+            EditableTag c = new EditableTag(GetNextId(), "");
             List.Add(c);
             return c;
         }

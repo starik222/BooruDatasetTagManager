@@ -38,7 +38,7 @@ namespace BooruDatasetTagManager
             }
             else
             {
-                index = Add(new AllTagsItem(tag));
+                index = AddWithSorting(new AllTagsItem(tag));
             }
             return index;
         }
@@ -73,6 +73,28 @@ namespace BooruDatasetTagManager
         {
             RemoveTag(oldTag);
             AddTag(newTag);
+        }
+
+        public int AddWithSorting(AllTagsItem item)
+        {
+            if (List.Count == 0)
+            {
+                return Add(item);
+            }
+            else
+            {
+                item.Parent = this;
+                for (int i = 0; i < List.Count; i++)
+                {
+                    int compareResult = item.Tag.CompareTo(((AllTagsItem)List[i]).Tag);
+                    if (compareResult < 0)
+                    {
+                        List.Insert(i, item);
+                        return i;
+                    }
+                }
+                return Add(item);
+            }
         }
 
         public int Add(AllTagsItem item)

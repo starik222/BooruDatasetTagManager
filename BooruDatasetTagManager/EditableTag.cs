@@ -192,9 +192,12 @@ namespace BooruDatasetTagManager
             {
                 inTxn = false;
                 if (!tagData.Equals(backupData))
+                {
                     OnEditableTagChanged();
-                backupData = new TagData();
-
+                    backupData = tagData;
+                }
+                //backupData = new TagData();
+                
             }
         }
 
@@ -281,7 +284,5 @@ namespace BooruDatasetTagManager
             }
             return result;
         }
-
-
     }
 }

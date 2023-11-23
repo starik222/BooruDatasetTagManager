@@ -1189,7 +1189,7 @@ namespace BooruDatasetTagManager
             btnAutoGetTagsDefSet.Image = Properties.Resources.AutoTaggerDef;
             btnAutoGetTagsDefSet.ImageTransparentColor = System.Drawing.Color.Magenta;
             btnAutoGetTagsDefSet.Name = "btnAutoGetTagsDefSet";
-            btnAutoGetTagsDefSet.Size = new System.Drawing.Size(35, 36);
+            btnAutoGetTagsDefSet.Size = new System.Drawing.Size(36, 36);
             btnAutoGetTagsDefSet.Text = "Generate tags with current settings";
             btnAutoGetTagsDefSet.Click += BtnAutoGetTagsDefSet_Click;
             // 
@@ -1199,14 +1199,14 @@ namespace BooruDatasetTagManager
             btnAutoGetTagsOpenSet.Image = Properties.Resources.AutoTaggerSet;
             btnAutoGetTagsOpenSet.ImageTransparentColor = System.Drawing.Color.Magenta;
             btnAutoGetTagsOpenSet.Name = "btnAutoGetTagsOpenSet";
-            btnAutoGetTagsOpenSet.Size = new System.Drawing.Size(35, 36);
+            btnAutoGetTagsOpenSet.Size = new System.Drawing.Size(36, 36);
             btnAutoGetTagsOpenSet.Text = "Generate tags with settings window...";
             btnAutoGetTagsOpenSet.Click += btnAutoGetTagsOpenSet_Click;
             // 
             // toolStripSeparator12
             // 
             toolStripSeparator12.Name = "toolStripSeparator12";
-            toolStripSeparator12.Size = new System.Drawing.Size(35, 6);
+            toolStripSeparator12.Size = new System.Drawing.Size(6, 39);
             // 
             // toolStripButton2
             // 
@@ -1214,7 +1214,7 @@ namespace BooruDatasetTagManager
             toolStripButton2.Image = Properties.Resources.Add;
             toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             toolStripButton2.Name = "toolStripButton2";
-            toolStripButton2.Size = new System.Drawing.Size(35, 36);
+            toolStripButton2.Size = new System.Drawing.Size(36, 36);
             toolStripButton2.Text = "Add selected tags to image tags";
             toolStripButton2.Click += toolStripButton2_Click;
             // 
