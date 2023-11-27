@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +13,10 @@ namespace BooruDatasetTagManager
     {
         private ListChangedEventArgs resetEvent = new ListChangedEventArgs(ListChangedType.Reset, -1);
         private ListChangedEventHandler onListChanged;
-        private ListSortDescriptionCollection m_SortDescriptions = new ListSortDescriptionCollection();
+        private ListSortDescriptionCollection sortDescriptions = new ListSortDescriptionCollection();
+        private List<AllTagsItem> tagsList = new List<AllTagsItem>();
+
+        private string filterText = string.Empty;
 
         public AllTagsItem this[int index]
         {
@@ -30,44 +34,52 @@ namespace BooruDatasetTagManager
         {
         }
 
-        public int AddTag(string tag)
+        public void AddTag(string tag)
         {
-            int index = IndexOf(tag);
-            if (index != -1)
+            int indexTagsList = IndexOfTagsList(tag);
+            int indexList = IndexOfList(tag);
+            if (indexTagsList != -1)
             {
-                this[index].Count++;
+                tagsList[indexTagsList].Count++;
             }
             else
             {
-                index = AddWithSorting(new AllTagsItem(tag));
+                var tagItem = new AllTagsItem(tag);
+                AddWithSortingInternal(tagsList, tagItem);
+                if (indexList == -1)
+                {
+                    if (CheckFilterOnTag(tagItem, filterText))
+                        AddWithSortingInternal(List, tagItem);
+                }
             }
-            return index;
         }
 
-        public int RemoveTag(string tag, bool allTags = false)
+        public void RemoveTag(string tag, bool allTags = false)
         {
-            int index = IndexOf(tag);
-            if (index != -1)
+            int indexTagsList = IndexOfTagsList(tag);
+            int indexList = IndexOfList(tag);
+            if (indexTagsList != -1)
             {
                 if (allTags)
                 {
-                    RemoveAt(index);
-                    index = -1;
+                    tagsList.RemoveAt(indexTagsList);
+                    if (indexList != -1)
+                        RemoveAt(indexList);
                 }
                 else
                 {
-                    if (this[index].Count > 1)
+                    if (tagsList[indexTagsList].Count > 1)
                     {
-                        this[index].Count--;
+                        tagsList[indexTagsList].Count--;
                     }
                     else
                     {
-                        RemoveAt(index);
-                        index = -1;
+                        tagsList.RemoveAt(indexTagsList);
+                        if (indexList != -1)
+                            RemoveAt(indexList);
                     }
                 }
             }
-            return index;
         }
 
         public void ChangeTag(string oldTag, string newTag)
@@ -78,47 +90,66 @@ namespace BooruDatasetTagManager
 
         public string[] GetAllTagsList()
         {
-            return InnerList.Cast<AllTagsItem>().Select(x => x.Tag).ToArray();
+            return tagsList.Select(x => x.Tag).ToArray();
         }
 
-        public int AddWithSorting(AllTagsItem item)
+        private void AddWithSortingInternal(IList lst, AllTagsItem item)
         {
-            if (List.Count == 0)
+            item.Parent = this;
+            if (lst.Count == 0)
             {
-                return Add(item);
+                lst.Add(item);
             }
             else
             {
-                item.Parent = this;
-                for (int i = 0; i < List.Count; i++)
+                for (int i = 0; i < lst.Count; i++)
                 {
-                    int compareResult = item.Tag.CompareTo(((AllTagsItem)List[i]).Tag);
+                    int compareResult = item.Tag.CompareTo(((AllTagsItem)lst[i]).Tag);
                     if (compareResult < 0)
                     {
-                        List.Insert(i, item);
-                        return i;
+                        lst.Insert(i, item);
+                        return;
                     }
                 }
-                return Add(item);
+                lst.Add(item);
             }
         }
 
-        public int Add(AllTagsItem item)
+        //public int Add(AllTagsItem item)
+        //{
+        //    item.Parent = this;
+        //    int res = List.Add(item);
+        //    return res;
+        //}
+
+        /// <summary>
+        /// List<AllTagsItem> tagsList
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
+        public int IndexOfTagsList(string tag)
         {
-            item.Parent = this;
-            int res = List.Add(item);
-            return res;
+            return IndexOfInternal(tagsList, tag);
+        }
+        /// <summary>
+        /// internal List
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
+        public int IndexOfList(string tag)
+        {
+            return IndexOfInternal(List, tag);
         }
 
-        public int IndexOf(string tag)
+        private int IndexOfInternal(IList lst, string tag)
         {
             int hash = tag.GetHashCode();
-            for (int i = 0; i < List.Count; i++)
+            for (int i = 0; i < lst.Count; i++)
             {
-                if (((AllTagsItem)List[i]).GetHashCode() == hash)
+                if (((AllTagsItem)lst[i]).GetHashCode() == hash)
                     return i;
             }
-            return -1;    
+            return -1;
         }
 
         public int FindTagStartWith(string tag)
@@ -129,6 +160,49 @@ namespace BooruDatasetTagManager
                     return i;
             }
             return -1;
+        }
+
+        private bool CheckFilterOnTag(AllTagsItem tagsItem, string filter)
+        {
+            if (filterText == string.Empty)
+                return true;
+            if (tagsItem.Tag.Contains(filter))
+                return true;
+            return false;
+        }
+
+        public void SetFilterByCount(int tagsCount)
+        {
+            foreach (var item in tagsList)
+            {
+                if (item.Count == tagsCount)
+                {
+                    if (!List.Contains(item))
+                        AddWithSortingInternal(List, item);
+                }
+                else
+                {
+                    if (List.Contains(item))
+                        List.Remove(item);
+                }
+            }
+        }
+
+        private void UpdateFilter()
+        {
+            foreach (var item in tagsList)
+            {
+                if (CheckFilterOnTag(item, filterText))
+                {
+                    if (!List.Contains(item))
+                        AddWithSortingInternal(List, item);
+                }
+                else
+                {
+                    if (List.Contains(item))
+                        List.Remove(item);
+                }
+            }
         }
 
         protected virtual void OnListChanged(ListChangedEventArgs ev)
@@ -230,6 +304,12 @@ namespace BooruDatasetTagManager
             return c;
         }
 
+        void IBindingListView.RemoveFilter()
+        {
+            filterText = string.Empty;
+            UpdateFilter();
+        }
+
         //private int GetNextId()
         //{
         //    if (List.Count == 0)
@@ -259,11 +339,22 @@ namespace BooruDatasetTagManager
             get { throw new NotSupportedException(); }
         }
 
-        public string Filter { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Filter
+        {
+            get
+            {
+                return filterText;
+            }
+            set
+            {
+                filterText = value;
+                UpdateFilter();
+            }
+        }
 
         public ListSortDescriptionCollection SortDescriptions
         {
-            get { return m_SortDescriptions; }
+            get { return sortDescriptions; }
         }
 
         public bool SupportsAdvancedSorting
@@ -273,7 +364,7 @@ namespace BooruDatasetTagManager
 
         public bool SupportsFiltering
         {
-            get { return false; }
+            get { return true; }
         }
 
         // Unsupported Methods.
@@ -307,10 +398,10 @@ namespace BooruDatasetTagManager
             throw new NotImplementedException();
         }
 
-        public void RemoveFilter()
-        {
-            throw new NotImplementedException();
-        }
+        //public void RemoveFilter()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         //public object Clone()
         //{

@@ -85,6 +85,9 @@ namespace BooruDatasetTagManager
             replaceTransparentBackgroundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             generateTagsWithAutoTaggerForAllImagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             gridViewAllTags = new System.Windows.Forms.DataGridView();
+            TagsColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            TranslationColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            CountColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             toolStripAllTags = new System.Windows.Forms.ToolStrip();
             BtnTagSwitch = new System.Windows.Forms.ToolStripButton();
             BtnTagAddToAll = new System.Windows.Forms.ToolStripButton();
@@ -624,6 +627,7 @@ namespace BooruDatasetTagManager
             gridViewAllTags.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             gridViewAllTags.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             gridViewAllTags.ColumnHeadersVisible = false;
+            gridViewAllTags.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { TagsColumn, TranslationColumn, CountColumn });
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -650,6 +654,32 @@ namespace BooruDatasetTagManager
             gridViewAllTags.KeyPress += gridViewAllTags_KeyPress;
             gridViewAllTags.Leave += gridView_Leave;
             // 
+            // TagsColumn
+            // 
+            TagsColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            TagsColumn.DataPropertyName = "Tag";
+            TagsColumn.HeaderText = "Tags";
+            TagsColumn.Name = "TagsColumn";
+            TagsColumn.ReadOnly = true;
+            // 
+            // TranslationColumn
+            // 
+            TranslationColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            TranslationColumn.DataPropertyName = "Translation";
+            TranslationColumn.HeaderText = "Translation";
+            TranslationColumn.Name = "TranslationColumn";
+            TranslationColumn.ReadOnly = true;
+            TranslationColumn.Visible = false;
+            // 
+            // CountColumn
+            // 
+            CountColumn.DataPropertyName = "Count";
+            CountColumn.HeaderText = "Count";
+            CountColumn.Name = "CountColumn";
+            CountColumn.ReadOnly = true;
+            CountColumn.Visible = false;
+            CountColumn.Width = 5;
+            // 
             // toolStripAllTags
             // 
             toolStripAllTags.Dock = System.Windows.Forms.DockStyle.None;
@@ -658,7 +688,7 @@ namespace BooruDatasetTagManager
             toolStripAllTags.Location = new System.Drawing.Point(0, 3);
             toolStripAllTags.Name = "toolStripAllTags";
             toolStripAllTags.Padding = new System.Windows.Forms.Padding(2, 0, 5, 0);
-            toolStripAllTags.Size = new System.Drawing.Size(43, 542);
+            toolStripAllTags.Size = new System.Drawing.Size(43, 561);
             toolStripAllTags.TabIndex = 3;
             toolStripAllTags.Text = "toolStrip2";
             // 
@@ -1455,6 +1485,9 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripMenuItem generateTagsWithAutoTaggerForAllImagesToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TagsColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TranslationColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CountColumn;
     }
 }
 

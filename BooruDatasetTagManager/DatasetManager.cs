@@ -19,7 +19,7 @@ namespace BooruDatasetTagManager
     {
         public ConcurrentDictionary<string, DataItem> DataSet;
         public AllTagsList AllTags;
-        public List<TagValue> CommonTags;
+        public BindingSource AllTagsBindingSource;
 
         private int originalHash;
 
@@ -32,7 +32,8 @@ namespace BooruDatasetTagManager
         {
             DataSet = new ConcurrentDictionary<string, DataItem>();
             AllTags = new AllTagsList();
-            CommonTags = new List<TagValue>();
+            AllTagsBindingSource = new BindingSource();
+            AllTagsBindingSource.DataSource = AllTags;
         }
 
         public bool SaveAll()
@@ -49,30 +50,6 @@ namespace BooruDatasetTagManager
             }
             return saved;
         }
-
-        public void UpdateData()
-        {
-            //AllTags = DataSet
-            //    .SelectMany(x => x.Value.Tags.TextTags)
-            //    .Distinct()
-            //    .OrderBy(x => x)
-            //    .Select(x => new TagValue(x))
-            //    .ToList();
-            CommonTags = DataSet
-                .Skip(1).Aggregate(
-                    new HashSet<string>(DataSet.First().Value.Tags.TextTags),
-                    (h, e) => { h.IntersectWith(e.Value.Tags.TextTags); return h; }
-                )
-                .OrderBy(x => x)
-                .Select(x => new TagValue(x))
-                .ToList();
-        }
-        //NEED MODIFY
-        public List<TagValue> GetFilteredAllTags(string filterText)
-        {
-            return null;// AllTags.Where(a=>a.Tag.Contains(filterText)).ToList();
-        }
-
 
         public bool Remove(string name)
         {
@@ -232,7 +209,6 @@ namespace BooruDatasetTagManager
             {
                 item.Tags.RemoveTag(tag, true);
             }
-            UpdateData();
         }
 
 

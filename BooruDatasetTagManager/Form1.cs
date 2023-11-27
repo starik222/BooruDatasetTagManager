@@ -104,8 +104,16 @@ namespace BooruDatasetTagManager
             }
 
             gridViewDS.DataSource = Program.DataManager.GetDataSource();
-            Program.DataManager.UpdateData();
-            BindTagList();
+            if (isAllTags)
+            {
+                gridViewAllTags.DataSource = Program.DataManager.AllTagsBindingSource;
+            }
+            else
+            {
+                if (gridViewAllTags.DataSource == null)
+                    gridViewAllTags.DataSource = Program.DataManager.AllTagsBindingSource;
+                Program.DataManager.AllTags.SetFilterByCount(Program.DataManager.DataSet.Count);
+            }
             ApplyDataSetGridStyle();
             isLoading = false;
             gridViewDS.AutoResizeColumns();
@@ -217,8 +225,6 @@ namespace BooruDatasetTagManager
                 }
             }
             //await FillTranslation(gridViewTags);
-            if (showCount)
-                UpdateTagCount();
         }
 
         /// <summary>
@@ -374,8 +380,6 @@ namespace BooruDatasetTagManager
             int destIndex = ((EditableTagList)gridViewTags.DataSource).Move(curIndex, curIndex - 1);
             gridViewTags.ClearSelection();
             gridViewTags["ImageTags", destIndex].Selected = true;
-            if (showCount)
-                UpdateTagCount();
         }
 
         private void toolStripButton5_Click(object sender, EventArgs e)
@@ -385,71 +389,21 @@ namespace BooruDatasetTagManager
             int curIndex = gridViewTags.SelectedCells[0].RowIndex;
             int destIndex = ((EditableTagList)gridViewTags.DataSource).Move(curIndex, curIndex + 1);
             gridViewTags["ImageTags", destIndex].Selected = true;
-            if (showCount)
-                UpdateTagCount();
         }
 
         private void toolStripButton6_Click(object sender, EventArgs e)
         {
             isAllTags = !isAllTags;
             if (isAllTags)
+            {
                 toolStripLabelAllTags.Text = I18n.GetText("UILabelAllTags");
+                Program.DataManager.AllTagsBindingSource.RemoveFilter();
+            }
             else
+            {
                 toolStripLabelAllTags.Text = I18n.GetText("UILabelCommonTags");
-            BindTagList();
-        }
-
-        private void BindTagList()
-        {
-            if (Program.DataManager == null)
-            {
-                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
-                return;
+                Program.DataManager.AllTags.SetFilterByCount(Program.DataManager.DataSet.Count);
             }
-            if (isAllTags)
-            {
-                //NEED MODIFY! Need use bindingSource and implemented filter property
-                gridViewAllTags.DataSource = Program.DataManager.AllTags;
-                //BingSourceToDGV(gridViewAllTags, Program.DataManager.AllTags);
-            }
-            else
-            {
-                BingSourceToDGV(gridViewAllTags, Program.DataManager.CommonTags);
-                gridViewAllTags.Columns["ImageTags"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            }
-        }
-
-        private async void BingSourceToDGV(DataGridView dgv, List<TagValue> source)
-        {
-            var scroll = dgv.FirstDisplayedScrollingRowIndex;
-            var all = GetSelectedTags();
-            dgv.Rows.Clear();
-            if (dgv.Columns.Count == 0)
-                dgv.Columns.Add("ImageTags", "ImageTags");
-            foreach (var item in source)
-            {
-                int row = dgv.Rows.Add(item.Tag);
-                if (row == 0)
-                    dgv.Rows[row].Selected = false;
-                if (all.Contains(item.Tag))
-                    dgv.Rows[row].Selected = true;
-            }
-
-            if (scroll >= dgv.RowCount)
-            {
-                scroll = dgv.Rows.Count - 1;
-            }
-            if (scroll != -1)
-            {
-                dgv.FirstDisplayedScrollingRowIndex = scroll;
-            }
-            if (isTranslate)
-            {
-                await FillTranslation(dgv);
-            }
-
-            if (showCount)
-                UpdateTagCount();
         }
 
         private void BtnAddTagForAll_Click(object sender, EventArgs e)
@@ -478,29 +432,11 @@ namespace BooruDatasetTagManager
                 bool skipExist = addTag.checkBoxSkipExist.Checked;
                 DatasetManager.AddingType addType = (DatasetManager.AddingType)Enum.Parse(typeof(DatasetManager.AddingType), (string)addTag.comboBox1.SelectedItem);
                 Program.DataManager.AddTagToAll(addTag.tagTextBox.Text, skipExist, addType, customIndex, filtered);
-                Program.DataManager.UpdateData();
                 if (gridViewDS.SelectedRows.Count == 1)
                 {
                     if (isTranslate)
                     {
                         await ((EditableTagList)gridViewTags.DataSource).TranslateAllAsync();
-                    }
-
-                    if (showCount)
-                        UpdateTagCount();
-
-                    var allIndex = IndexOfValueInGrig(gridViewAllTags, "ImageTags", addTag.tagTextBox.Text);
-                    if (allIndex == -1)
-                    {
-                        gridViewAllTags.Rows.Insert(index, 1);
-                        gridViewAllTags.Rows[index].Cells[0].Value = addTag.tagTextBox.Text;
-                        if (isTranslate)
-                        {
-                            gridViewAllTags.Rows[index].Cells[1].Value = await Program.TransManager.TranslateAsync(addTag.tagTextBox.Text);
-                        }
-
-                        if (showCount)
-                            UpdateTagCount();
                     }
                 }
                 else
@@ -509,21 +445,6 @@ namespace BooruDatasetTagManager
                 }
             }
             addTag.Close();
-        }
-
-        private int IndexOfValueInGrig(DataGridView gridView, string colName, string value)
-        {
-            for (int i = 0; i < gridView.RowCount; i++)
-            {
-                if (gridView[colName, i].Value != DBNull.Value)
-                {
-                    if ((string)gridView[colName, i].Value == value)
-                        return i;
-                }
-                else if (value == null)
-                    return i;
-            }
-            return -1;
         }
 
         private void toolStripButton8_Click(object sender, EventArgs e)
@@ -543,11 +464,9 @@ namespace BooruDatasetTagManager
             replaceAll.comboBox2.Items.AddRange(Program.DataManager.AllTags.GetAllTagsList());
             if (replaceAll.ShowDialog() == DialogResult.OK)
             {
-                Program.DataManager.ReplaceTagInAll(((TagValue)replaceAll.comboBox1.SelectedItem).Tag, (string)replaceAll.comboBox2.Text, true);
-                Program.DataManager.UpdateData();
+                Program.DataManager.ReplaceTagInAll(((AllTagsItem)replaceAll.comboBox1.SelectedItem).Tag, (string)replaceAll.comboBox2.Text, true);
             }
             replaceAll.Close();
-            BindTagList();
         }
 
         private void saveAllChangesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -623,8 +542,6 @@ namespace BooruDatasetTagManager
                 eTagList.AddRange(tagsBuffer, true);
                 if (isTranslate)
                     await FillTranslation(gridViewTags);
-                if (showCount)
-                    UpdateTagCount();
                 SetStatus(I18n.GetText("StatusPasted"));
             }
             else if (gridViewDS.SelectedRows.Count > 1)
@@ -657,7 +574,7 @@ namespace BooruDatasetTagManager
             for (int i = 0; i < gridViewAllTags.SelectedCells.Count; i++)
             {
                 var row = gridViewAllTags.SelectedCells[i].RowIndex;
-                tagsToDel.Add(new KeyValuePair<int, string>(row, (string)gridViewAllTags.Rows[row].Cells["ImageTags"].Value));
+                tagsToDel.Add(new KeyValuePair<int, string>(row, (string)gridViewAllTags.Rows[row].Cells["TagsColumn"].Value));
             }
 
             tagsToDel.Sort((a, b) => b.Key.CompareTo(a.Key));
@@ -668,7 +585,6 @@ namespace BooruDatasetTagManager
                 if (gridViewDS.SelectedRows.Count > 1)
                     LoadSelectedImageToGrid();
             }
-            Program.DataManager.UpdateData();
         }
 
         private async void translateTagsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -843,9 +759,6 @@ namespace BooruDatasetTagManager
                 }
                 if (isTranslate)
                     await FillTranslation(gridViewTags);
-
-                if (showCount)
-                    UpdateTagCount();
             }
         }
 
@@ -919,8 +832,6 @@ namespace BooruDatasetTagManager
                 case DialogResult.Cancel:
                     return;
             }
-            Program.DataManager.UpdateData();
-            BindTagList();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -1168,7 +1079,7 @@ namespace BooruDatasetTagManager
             for (int i = 0; i < gridViewAllTags.SelectedCells.Count; i++)
             {
                 var row = gridViewAllTags.SelectedCells[i].RowIndex;
-                var tag = (string)gridViewAllTags.Rows[row].Cells[0].Value;
+                var tag = (string)gridViewAllTags.Rows[row].Cells["TagsColumn"].Value;
                 if (!selectedTags.Contains(tag))
                     selectedTags.Add(tag);
             }
@@ -1191,9 +1102,6 @@ namespace BooruDatasetTagManager
             }
             if (isTranslate)
                 await FillTranslation(gridViewTags);
-
-            if (showCount)
-                UpdateTagCount();
         }
 
         private void RemoveSelectedAllTagsToImageTags()
@@ -1312,8 +1220,8 @@ namespace BooruDatasetTagManager
 
                     }
                 }
-                Program.DataManager.UpdateData();
-                BindTagList();
+                //NEED MODIFY!!!
+                //BindTagList();
                 //gridViewDS.DataSource = Program.DataManager.GetDataSource();
                 foreach (var item in selects)
                 {
@@ -1521,15 +1429,13 @@ namespace BooruDatasetTagManager
                 return;
             if (isAllTags)
             {
-                BingSourceToDGV(gridViewAllTags, Program.DataManager.GetFilteredAllTags(allTagsFilter.textBox1.Text));
+                ((BindingSource)gridViewAllTags.DataSource).Filter = allTagsFilter.textBox1.Text;
             }
-            //string filterText = 
-
         }
 
         private void toolStripButton25_Click(object sender, EventArgs e)
         {
-            BindTagList();
+            ((BindingSource)gridViewAllTags.DataSource).RemoveFilter();
         }
 
         private void promptSortBtn_Click(object sender, EventArgs e)
@@ -1653,53 +1559,13 @@ namespace BooruDatasetTagManager
             }
             showCount = !showCount;
             MenuShowTagCount.Checked = showCount;
-            var Header = "Count";
             if (showCount)
             {
-                gridViewAllTags.Columns.Insert(1, new DataGridViewTextBoxColumn()
-                {
-                    Name = Header,
-                    HeaderText = Header,
-                    ReadOnly = true,
-                    Width = 80,
-                });
-
-                // add count
-                LockEdit(true);
-                for (int i = 0; i < gridViewAllTags.RowCount; i++)
-                {
-                    gridViewAllTags[Header, i].ReadOnly = true;
-                    gridViewAllTags[Header, i].Value = 0;
-                }
-                UpdateTagCount();
-                LockEdit(false);
+                gridViewAllTags.Columns["CountColumn"].Visible = true;
             }
             else
             {
-                gridViewAllTags.Columns.Remove(Header);
-            }
-        }
-
-        public void UpdateTagCount()
-        {
-            var dataset = Program.DataManager.DataSet;
-            var Header = "Count";
-            int tmpCount;
-            for (int i = 0; i < gridViewAllTags.RowCount; i++)
-            {
-                tmpCount = 0;
-                foreach (var item in dataset)
-                {
-                    for (int j = 0; j < item.Value.Tags.Count; ++j)
-                    {
-                        if (item.Value.Tags[j].Tag == gridViewAllTags["Tag", i].Value.ToString())
-                        {
-                            tmpCount++;
-                            break;
-                        }
-                    }
-                }
-                gridViewAllTags[Header, i].Value = tmpCount;
+                gridViewAllTags.Columns["CountColumn"].Visible = false;
             }
         }
 
@@ -2019,9 +1885,8 @@ namespace BooruDatasetTagManager
             {
                 LoadSelectedImageToGrid();
             }
-            Program.DataManager.UpdateData();
-            if (gridViewAllTags.DataSource == null)
-                BindTagList();
+            //if (gridViewAllTags.DataSource == null)
+            //    BindTagList();
             LockEdit(false);
         }
 
@@ -2202,9 +2067,6 @@ namespace BooruDatasetTagManager
                     eTagList.AddTag(item, true, AddingType.Down, 0);
                 }
             }
-            Program.DataManager.UpdateData();
-            if (showCount)
-                UpdateTagCount();
         }
 
         private void gridViewAutoTags_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
