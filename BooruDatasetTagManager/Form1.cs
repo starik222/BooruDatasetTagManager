@@ -1652,7 +1652,7 @@ namespace BooruDatasetTagManager
             cmds["MenuHideDataset"] = delegate () { MenuHideDataset.PerformClick(); };
 
 
-            cmds["BtnTagAdd"] = delegate () { BtnTagAdd.PerformClick(); };
+            cmds["BtnTagAdd"] = delegate () { BtnTagAdd.PerformClick(); TagsFocus(); };
             cmds["BtnTagDelete"] = delegate () { BtnTagDelete.PerformClick(); };
             cmds["BtnTagUndo"] = delegate () { BtnTagUndo.PerformClick(); };
             cmds["BtnTagRedo"] = delegate () { BtnTagRedo.PerformClick(); };
