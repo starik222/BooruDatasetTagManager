@@ -34,6 +34,37 @@ namespace BooruDatasetTagManager
         {
         }
 
+
+        public void TranslateAllTags()
+        {
+            TranslateAllTagsAsync();
+        }
+
+
+        public async void TranslateAllTagsAsync()
+        {
+            for (int i = 0; i < tagsList.Count; i++)
+            {
+                if (tagsList[i].IsNeedTranslate())
+                {
+                    if (!string.IsNullOrEmpty(tagsList[i].Tag))
+                    {
+                        string result = await Program.TransManager.TranslateAsync(tagsList[i].Tag);
+                        tagsList[i].SetTranslation(result);
+                    }
+                    else
+                    {
+                        tagsList[i].SetTranslation("");
+                    }
+                    int listIndex = IndexOfInternal(List, tagsList[i]);
+                    if (listIndex != -1)
+                    {
+                        OnListChanged(new ListChangedEventArgs(ListChangedType.ItemChanged, listIndex));
+                    }
+                }
+            }
+        }
+
         public void AddTag(string tag)
         {
             int indexTagsList = IndexOfTagsList(tag);
@@ -147,6 +178,16 @@ namespace BooruDatasetTagManager
             for (int i = 0; i < lst.Count; i++)
             {
                 if (((AllTagsItem)lst[i]).GetHashCode() == hash)
+                    return i;
+            }
+            return -1;
+        }
+
+        private int IndexOfInternal(IList lst, AllTagsItem tagItem)
+        {
+            for (int i = 0; i < lst.Count; i++)
+            {
+                if (((AllTagsItem)lst[i]) == tagItem)
                     return i;
             }
             return -1;

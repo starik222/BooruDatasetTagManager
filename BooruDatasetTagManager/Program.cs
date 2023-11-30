@@ -27,6 +27,7 @@ namespace BooruDatasetTagManager
             Settings = new AppSettings(Application.StartupPath);
             EditableTagListLocker = new object();
             ListChangeLocker = new object();
+            TranslationLocker = new SemaphoreSlim(1, 1);
             ColorManager = new ColorSchemeManager();
             ColorManager.Load(Path.Combine(Application.StartupPath, "ColorScheme.json"));
             ColorManager.SelectScheme(Program.Settings.ColorScheme);
@@ -101,6 +102,7 @@ namespace BooruDatasetTagManager
         #region locks
         public static object EditableTagListLocker;
         public static object ListChangeLocker;
+        public static SemaphoreSlim TranslationLocker;
         #endregion
     }
 }

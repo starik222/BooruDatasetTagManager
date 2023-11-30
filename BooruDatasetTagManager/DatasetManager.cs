@@ -23,6 +23,8 @@ namespace BooruDatasetTagManager
 
         private int originalHash;
 
+        private bool isTranslate = false;
+
         public bool IsLossLoaded { get; private set; }
 
         private FilterType lastAndOperation = FilterType.Or;
@@ -260,6 +262,11 @@ namespace BooruDatasetTagManager
             return true;
         }
 
+        public void SetTranslationMode(bool needTranslate)
+        {
+            isTranslate = needTranslate;
+        }
+
         private void Tags_TagsListChanged(string oldTag, string newTag, ListChangedType changedType)
         {
             lock (Program.ListChangeLocker)
@@ -267,6 +274,8 @@ namespace BooruDatasetTagManager
                 if (changedType == ListChangedType.ItemAdded)
                 {
                     AllTags.AddTag(newTag);
+                    if (isTranslate)
+                        AllTags.TranslateAllTags();
                 }
                 else if (changedType == ListChangedType.ItemDeleted)
                 {
@@ -275,6 +284,8 @@ namespace BooruDatasetTagManager
                 else if (changedType == ListChangedType.ItemChanged)
                 {
                     AllTags.ChangeTag(oldTag, newTag);
+                    if (isTranslate)
+                        AllTags.TranslateAllTags();
                 }
                 else
                     throw new Exception("Unknown list changing operation");

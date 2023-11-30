@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Translator;
@@ -121,9 +122,23 @@ namespace BooruDatasetTagManager
 
         private async Task FillTranslation(DataGridView grid)
         {
-            if (grid.Columns.Contains("Translation") && grid.Columns["Translation"].Visible == false)
+            string transColumnName = string.Empty;
+            string imageTagsColumn = string.Empty;
+            if (grid.Columns.Contains("Translation"))
             {
-                grid.Columns["Translation"].Visible = true;
+                transColumnName = "Translation";
+                imageTagsColumn = "ImageTags";
+            }
+            else if (grid.Columns.Contains("TranslationColumn"))
+            {
+                transColumnName = "TranslationColumn";
+                imageTagsColumn = "TagsColumn";
+            }
+            else
+                return;
+            if (grid.Columns[transColumnName].Visible == false)
+            {
+                grid.Columns[transColumnName].Visible = true;
             }
             LockEdit(true);
             SetStatus(I18n.GetText("StatusTranslating"));
@@ -132,9 +147,9 @@ namespace BooruDatasetTagManager
                 for (int i = 0; i < grid.RowCount; i++)
                 {
                     SetStatus($"{I18n.GetText("SettingTabTranslations")} {i}/{grid.RowCount}");
-                    grid["Translation", i].ReadOnly = true;
-                    if (string.IsNullOrWhiteSpace((string)grid["Translation", i].Value) && !string.IsNullOrWhiteSpace((string)grid["ImageTags", i].Value))
-                        grid["Translation", i].Value = await Program.TransManager.TranslateAsync((string)grid["ImageTags", i].Value);
+                    grid[transColumnName, i].ReadOnly = true;
+                    if (string.IsNullOrWhiteSpace((string)grid[transColumnName, i].Value) && !string.IsNullOrWhiteSpace((string)grid[imageTagsColumn, i].Value))
+                        grid[transColumnName, i].Value = await Program.TransManager.TranslateAsync((string)grid[imageTagsColumn, i].Value);
                 }
             }
             catch (Exception ex)
@@ -590,6 +605,7 @@ namespace BooruDatasetTagManager
         private async void translateTagsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             isTranslate = !isTranslate;
+            Program.DataManager.SetTranslationMode(isTranslate);
             MenuItemTranslateTags.Checked = isTranslate;
 
             if (Program.DataManager == null)
@@ -599,21 +615,13 @@ namespace BooruDatasetTagManager
             }
             if (isTranslate)
             {
-                gridViewAllTags.Columns.Insert(1, new DataGridViewTextBoxColumn()
-                {
-                    Name = "Translation",
-                    HeaderText = "Translation",
-                    ReadOnly = true,
-                    AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-                });
-                gridViewTags.Columns["Translation"].Visible = true;
                 await FillTranslation(gridViewAllTags);
                 await FillTranslation(gridViewTags);
             }
             else
             {
-                gridViewAllTags.Columns.Remove("Translation");
                 gridViewTags.Columns["Translation"].Visible = false;
+                gridViewTags.Columns["TranslationColumn"].Visible = false;
             }
         }
 

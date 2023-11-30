@@ -38,6 +38,7 @@ namespace BooruDatasetTagManager
         private AllTagsData tagData;
         private AllTagsData backupData;
         private bool inTxn = false;
+        private bool needTranslate = false;
 
         public string Tag
         {
@@ -48,7 +49,12 @@ namespace BooruDatasetTagManager
             set
             {
                 tagData.tag = value;
-                tagData.hash = tagData.tag.GetHashCode();
+                var hCode = tagData.tag.GetHashCode();
+                if (tagData.hash != hCode)
+                {
+                    needTranslate = true;
+                }
+                tagData.hash = hCode;
                 OnEditableTagChanged();
             }
         }
@@ -62,6 +68,7 @@ namespace BooruDatasetTagManager
             set
             {
                 tagData.translation = value;
+                needTranslate = false;
                 OnEditableTagChanged();
             }
         }
@@ -97,6 +104,7 @@ namespace BooruDatasetTagManager
             tagData.tag = "";
             tagData.count = 1;
             tagData.hash = tagData.tag.GetHashCode();
+            needTranslate = false;
         }
 
         public AllTagsItem(string tag)
@@ -105,11 +113,24 @@ namespace BooruDatasetTagManager
             tagData.tag = tag;
             tagData.count = 1;
             tagData.hash = tagData.tag.GetHashCode();
+            if (!string.IsNullOrEmpty(tagData.tag))
+                needTranslate = true;
         }
 
         public override int GetHashCode()
         {
             return tagData.hash;
+        }
+
+        public bool IsNeedTranslate()
+        {
+            return needTranslate;
+        }
+
+        public void SetTranslation(string value)
+        {
+            tagData.translation = value;
+            needTranslate = false;
         }
 
         public void BeginEdit()
@@ -138,7 +159,6 @@ namespace BooruDatasetTagManager
                 if (!tagData.Equals(backupData))
                     OnEditableTagChanged();
                 backupData = new AllTagsData();
-
             }
         }
 
