@@ -1,0 +1,17 @@
+[function prep_context]
+	[if var="default"]
+		[set var][get context][/set]
+	[/if]
+	[set var][get _var="{get var}"][/set]
+[/function]
+
+[function multiply var="default" by=0.5]
+	[call prep_context]
+	[eval][get _var="{get var}"] * [get by][/eval]
+[/function]
+
+[function bounds var="default" min=0 max=1]
+	[call prep_context]
+	[set max_result][max "{get min}" "{get var}"][/set]
+	[min "{get max}" "{get max_result}"]
+[/function]
