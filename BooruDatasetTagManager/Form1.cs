@@ -98,6 +98,7 @@ namespace BooruDatasetTagManager
                 return;
             isLoading = true;
             Program.DataManager = new DatasetManager();
+            Program.DataManager.SetTranslationMode(isTranslate);
             if (!Program.DataManager.LoadFromFolder(openFolderDialog.Folder))
             {
                 SetStatus(I18n.GetText("TipFolderWrong"));
@@ -605,13 +606,10 @@ namespace BooruDatasetTagManager
         private async void translateTagsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             isTranslate = !isTranslate;
-            Program.DataManager.SetTranslationMode(isTranslate);
             MenuItemTranslateTags.Checked = isTranslate;
-
-            if (Program.DataManager == null)
+            if (Program.DataManager != null)
             {
-                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
-                return;
+                Program.DataManager.SetTranslationMode(isTranslate);
             }
             if (isTranslate)
             {
@@ -621,7 +619,7 @@ namespace BooruDatasetTagManager
             else
             {
                 gridViewTags.Columns["Translation"].Visible = false;
-                gridViewTags.Columns["TranslationColumn"].Visible = false;
+                gridViewAllTags.Columns["TranslationColumn"].Visible = false;
             }
         }
 
@@ -1560,11 +1558,6 @@ namespace BooruDatasetTagManager
 
         private void MenuShowTagCount_Click(object sender, EventArgs e)
         {
-            if (Program.DataManager == null)
-            {
-                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
-                return;
-            }
             showCount = !showCount;
             MenuShowTagCount.Checked = showCount;
             if (showCount)

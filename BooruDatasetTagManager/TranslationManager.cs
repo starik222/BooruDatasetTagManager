@@ -110,13 +110,21 @@ namespace BooruDatasetTagManager
 
         public async Task<string> TranslateAsync(string text)
         {
+            await Program.TranslationLocker.WaitAsync();
             if (string.IsNullOrWhiteSpace(text))
+            {
+                Program.TranslationLocker.Release();
                 return string.Empty;
+            }
             string result = await GetTranslationAsync(text);
             if (result != null)
+            {
+                Program.TranslationLocker.Release();
                 return result;
+            }
             result = await translator.TranslateAsync(text, "en", _language);
             await AddTranslationAsync(text, result, false);
+            Program.TranslationLocker.Release();
             return result;
         }
 
