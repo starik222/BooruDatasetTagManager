@@ -37,11 +37,11 @@ namespace BooruDatasetTagManager
 
         public void TranslateAllTags()
         {
-            TranslateAllTagsAsync();
+            TranslateAllAsync();
         }
 
 
-        public async void TranslateAllTagsAsync()
+        public async void TranslateAllAsync()
         {
             for (int i = 0; i < tagsList.Count; i++)
             {

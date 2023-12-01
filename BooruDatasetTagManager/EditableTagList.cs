@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic;
+﻿using Manina.Windows.Forms;
+using Microsoft.VisualBasic;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
@@ -17,7 +18,7 @@ namespace BooruDatasetTagManager
 {
     public class EditableTagList : CollectionBase, IBindingList, ICloneable
     {
-        public delegate void TagsListChangedHandler(string oldTag, string newTag, ListChangedType changedType);
+        public delegate void TagsListChangedHandler(object sender, string oldTag, string newTag, ListChangedType changedType);
         public event TagsListChangedHandler TagsListChanged;
         private ListChangedEventArgs resetEvent = new ListChangedEventArgs(ListChangedType.Reset, -1);
         private ListChangedEventHandler onListChanged;
@@ -569,7 +570,7 @@ namespace BooruDatasetTagManager
         protected override void OnClearComplete()
         {
             foreach(var item in _tags)
-                TagsListChanged?.Invoke(null, item, ListChangedType.ItemDeleted);
+                TagsListChanged?.Invoke(this, null, item, ListChangedType.ItemDeleted);
             _tags.Clear();
             OnListChanged(resetEvent);
         }
@@ -592,7 +593,7 @@ namespace BooruDatasetTagManager
                 AddHistory(h);
             }
             _tags.Insert(index, ((EditableTag)value).Tag);
-            TagsListChanged?.Invoke(null, ((EditableTag)value).Tag, ListChangedType.ItemAdded);
+            TagsListChanged?.Invoke(this, null, ((EditableTag)value).Tag, ListChangedType.ItemAdded);
             base.OnInsert(index, value);
         }
 
@@ -606,7 +607,7 @@ namespace BooruDatasetTagManager
                 h.Type = EditableTagHistory.HistoryType.Remove;
                 AddHistory(h);
             }
-            TagsListChanged?.Invoke(null, _tags[index], ListChangedType.ItemDeleted);
+            TagsListChanged?.Invoke(this, null, _tags[index], ListChangedType.ItemDeleted);
             _tags.RemoveAt(index);
             base.OnRemove(index, value);
         }
@@ -641,7 +642,8 @@ namespace BooruDatasetTagManager
 
                 olddata.Parent = null;
                 newdata.Parent = this;
-                TagsListChanged?.Invoke(_tags[index], newdata.Tag, ListChangedType.ItemChanged);
+                if (_tags[index] != newdata.Tag)
+                    TagsListChanged?.Invoke(this, _tags[index], newdata.Tag, ListChangedType.ItemChanged);
                 _tags[index] = newdata.Tag;
                 OnListChanged(new ListChangedEventArgs(ListChangedType.ItemChanged, index));
             }
@@ -652,7 +654,8 @@ namespace BooruDatasetTagManager
         {
 
             int index = List.IndexOf(tag);
-            TagsListChanged?.Invoke(_tags[index], tag.Tag, ListChangedType.ItemChanged);
+            if (_tags[index] != tag.Tag)
+                TagsListChanged?.Invoke(this, _tags[index], tag.Tag, ListChangedType.ItemChanged);
             _tags[index] = tag.Tag;
             if (storeHistory)
             {

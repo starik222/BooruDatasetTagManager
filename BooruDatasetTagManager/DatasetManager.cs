@@ -267,15 +267,19 @@ namespace BooruDatasetTagManager
             isTranslate = needTranslate;
         }
 
-        private void Tags_TagsListChanged(string oldTag, string newTag, ListChangedType changedType)
+        private void Tags_TagsListChanged(object sender, string oldTag, string newTag, ListChangedType changedType)
         {
+            //EditableTagList eTagList = (EditableTagList)sender;
             lock (Program.ListChangeLocker)
             {
                 if (changedType == ListChangedType.ItemAdded)
                 {
                     AllTags.AddTag(newTag);
                     if (isTranslate)
+                    {
+                        //eTagList.TranslateAllAsync();
                         AllTags.TranslateAllTags();
+                    }
                 }
                 else if (changedType == ListChangedType.ItemDeleted)
                 {
@@ -285,7 +289,10 @@ namespace BooruDatasetTagManager
                 {
                     AllTags.ChangeTag(oldTag, newTag);
                     if (isTranslate)
+                    {
+                        //eTagList.TranslateAllAsync();
                         AllTags.TranslateAllTags();
+                    }
                 }
                 else
                     throw new Exception("Unknown list changing operation");
