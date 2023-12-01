@@ -56,6 +56,24 @@ To start the service run
 ```bash
 python main.py
 ```
+If you have problems running a service in pure python, try using [anaconda](https://www.anaconda.com/download) or [miniconda](https://docs.conda.io/projects/miniconda/en/latest/).
+
+After installing anaconda, run the console, create a new conda environment and install the necessary dependencies.
+```bash
+#Creating new environment with python
+conda create -n bdtm python=3.10.9
+#Activating the created environment
+conda activate bdtm
+#Installing the necessary dependencies.
+pip install -r requirements.txt
+#Run service
+python main.py
+```
+To start an already configured service, you need to launch the console and run the following commands
+```bash
+conda activate bdtm
+python main.py
+```
 After launching the service, in the editor itself you can generate tags for all images using the "Tools" menu, generate tags for selected images using ![](https://github.com/starik222/BooruDatasetTagManager/assets/1236582/230f47f9-5cef-49bc-8b44-a67890433c42) icon, and also generate tags in a separate tab "AutoTagger preview window". To configure generation parameters, you can use the corresponding generation menu item, or the "Settings" -> "Auto tagger settings..." menu.
 
 ![bdtm06](https://github.com/starik222/BooruDatasetTagManager/assets/1236582/88c3ab34-b96e-411c-b0b9-2a92729b822c)
