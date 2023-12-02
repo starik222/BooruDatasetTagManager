@@ -983,6 +983,8 @@ namespace BooruDatasetTagManager
             if (gridViewTags.Columns["ImageTags"].Index == e.ColumnIndex && e.RowIndex != -1)
             {
                 string editedValue = (string)gridViewTags[e.ColumnIndex, e.RowIndex].Value;
+                if (string.IsNullOrEmpty(editedValue))
+                    return;
                 if (gridViewDS.SelectedRows.Count == 1)
                 {
                     for (int i = 0; i < gridViewTags.RowCount; i++)

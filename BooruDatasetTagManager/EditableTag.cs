@@ -51,7 +51,7 @@ namespace BooruDatasetTagManager
             }
             set
             {
-                tagData.tag = value;
+                tagData.tag = value == null ? "" : value;
                 OnEditableTagChanged();
             }
         }
