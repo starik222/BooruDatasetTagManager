@@ -219,7 +219,7 @@ namespace BooruDatasetTagManager
                     string url = jsonData["html_url"].ToString();
                     string[] listItems = text.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
                     StringBuilder sb = new StringBuilder();
-                    for (int i = 1; i < listItems.Length; i++)
+                    for (int i = 0; i < listItems.Length; i++)
                     {
                         sb.AppendLine(listItems[i]);
                     }
