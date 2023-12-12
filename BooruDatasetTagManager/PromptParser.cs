@@ -92,7 +92,16 @@ namespace BooruDatasetTagManager
                     foreach (var tag in clearedTags)
                     {
                         if (!string.IsNullOrWhiteSpace(tag))
-                            result.Add(new PromptItem(tag.Replace('_', ' ').ToLower().Trim(), item.Weight));
+                        {
+                            string textTag = tag.Replace('_', ' ').ToLower().Trim();
+                            int tagIndex = result.FindIndex(a => a.Text == textTag);
+                            if (tagIndex != -1)
+                            {
+                                result[tagIndex].Weight *= round_bracket_multiplier * item.Weight;
+                            }
+                            else
+                                result.Add(new PromptItem(textTag, item.Weight));
+                        }
                     }
                 }
             }

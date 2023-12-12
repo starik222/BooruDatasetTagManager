@@ -86,7 +86,7 @@ namespace BooruDatasetTagManager
 
         public override string ToString()
         {
-            DeduplicateTags();
+            //DeduplicateTags(); //Not need??
             List<string> tempTagList = new List<string>();
             for (int i = 0; i < List.Count; i++)
             {
@@ -223,32 +223,31 @@ namespace BooruDatasetTagManager
         /// </summary>
         public void DeduplicateTags()
         {
-            lock (Program.EditableTagListLocker)
+            Program.EditableTagListLocker.Wait();
+            isStoreHistory = false;
+            for (int i = List.Count - 1; i >= 0; i--)
             {
-                isStoreHistory = false;
-                for (int i = List.Count - 1; i >= 0; i--)
+                string tagToSearch = ((EditableTag)List[i]).Tag;
+                if (string.IsNullOrWhiteSpace(tagToSearch))
                 {
-                    string tagToSearch = ((EditableTag)List[i]).Tag;
-                    if (string.IsNullOrWhiteSpace(tagToSearch))
-                    {
-                        RemoveAt(i);
-                        continue;
-                    }
-                    List<int> foundedTagIndexes = IndexOfAll(tagToSearch, 0, i);
-                    if (foundedTagIndexes.Count == 1)
-                    {
-                        RemoveAt(i);
-                    }
-                    else if (foundedTagIndexes.Count > 1)
-                    {
-                        RemoveAt(i);
-                        for (int j = foundedTagIndexes.Count - 1; j >= 1; j--)
-                            RemoveAt(j);
-                    }
-
+                    RemoveAt(i);
+                    continue;
                 }
-                isStoreHistory = true;
+                List<int> foundedTagIndexes = IndexOfAll(tagToSearch, 0, i);
+                if (foundedTagIndexes.Count == 1)
+                {
+                    RemoveAt(i);
+                }
+                else if (foundedTagIndexes.Count > 1)
+                {
+                    RemoveAt(i);
+                    for (int j = foundedTagIndexes.Count - 1; j >= 1; j--)
+                        RemoveAt(j);
+                }
+
             }
+            isStoreHistory = true;
+            Program.EditableTagListLocker.Release();
         }
 
 

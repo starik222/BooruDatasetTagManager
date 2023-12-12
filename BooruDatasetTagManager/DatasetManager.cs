@@ -417,7 +417,7 @@ namespace BooruDatasetTagManager
 
             public override string ToString()
             {
-                return String.Join(Program.Settings.SeparatorOnSave, Tags);
+                return Tags.ToString();
             }
 
             public override int GetHashCode()
