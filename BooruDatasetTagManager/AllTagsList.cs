@@ -17,6 +17,8 @@ namespace BooruDatasetTagManager
         private List<AllTagsItem> tagsList = new List<AllTagsItem>();
 
         private string filterText = string.Empty;
+        private bool filterByCount = false;
+        private int filterTagsCount = 0;
 
         public AllTagsItem this[int index]
         {
@@ -39,6 +41,8 @@ namespace BooruDatasetTagManager
         {
             TranslateAllAsync();
         }
+
+        public bool IsFilterByCount() => filterByCount;
 
 
         public async void TranslateAllAsync()
@@ -214,6 +218,7 @@ namespace BooruDatasetTagManager
 
         public void SetFilterByCount(int tagsCount)
         {
+            filterTagsCount = tagsCount;
             foreach (var item in tagsList)
             {
                 if (item.Count == tagsCount)
@@ -227,21 +232,29 @@ namespace BooruDatasetTagManager
                         List.Remove(item);
                 }
             }
+            filterByCount = true;
         }
 
-        private void UpdateFilter()
+        public void UpdateFilter()
         {
-            foreach (var item in tagsList)
+            if (filterByCount)
             {
-                if (CheckFilterOnTag(item, filterText))
+                SetFilterByCount(filterTagsCount);
+            }
+            else
+            {
+                foreach (var item in tagsList)
                 {
-                    if (!List.Contains(item))
-                        AddWithSortingInternal(List, item);
-                }
-                else
-                {
-                    if (List.Contains(item))
-                        List.Remove(item);
+                    if (CheckFilterOnTag(item, filterText))
+                    {
+                        if (!List.Contains(item))
+                            AddWithSortingInternal(List, item);
+                    }
+                    else
+                    {
+                        if (List.Contains(item))
+                            List.Remove(item);
+                    }
                 }
             }
         }
@@ -348,6 +361,7 @@ namespace BooruDatasetTagManager
         void IBindingListView.RemoveFilter()
         {
             filterText = string.Empty;
+            filterByCount = false;
             UpdateFilter();
         }
 

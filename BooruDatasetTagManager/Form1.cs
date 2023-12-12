@@ -106,16 +106,9 @@ namespace BooruDatasetTagManager
             }
 
             gridViewDS.DataSource = Program.DataManager.GetDataSource();
-            if (isAllTags)
-            {
-                gridViewAllTags.DataSource = Program.DataManager.AllTagsBindingSource;
-            }
-            else
-            {
-                if (gridViewAllTags.DataSource == null)
-                    gridViewAllTags.DataSource = Program.DataManager.AllTagsBindingSource;
-                Program.DataManager.AllTags.SetFilterByCount(Program.DataManager.DataSet.Count);
-            }
+            isAllTags = true;
+            toolStripLabelAllTags.Text = I18n.GetText("UILabelAllTags");
+            gridViewAllTags.DataSource = Program.DataManager.AllTagsBindingSource;
             ApplyDataSetGridStyle();
             isLoading = false;
             gridViewDS.AutoResizeColumns();

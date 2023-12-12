@@ -296,6 +296,8 @@ namespace BooruDatasetTagManager
                 }
                 else
                     throw new Exception("Unknown list changing operation");
+                if (AllTags.IsFilterByCount())
+                    AllTags.UpdateFilter();
             }
         }
 
