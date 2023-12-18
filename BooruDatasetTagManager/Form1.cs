@@ -565,6 +565,11 @@ namespace BooruDatasetTagManager
 
         private void toolStripButton11_Click(object sender, EventArgs e)
         {
+            if (GetTagsDataSourceType() != DataSourceType.Single)
+            {
+                MessageBox.Show(I18n.GetText("TipStateMultiselectNotSupported"));
+                return;
+            }
             ((EditableTagList)gridViewTags.DataSource).PrevState();
             //return;
             //LoadSelectedImageToGrid();
@@ -1567,6 +1572,11 @@ namespace BooruDatasetTagManager
 
         private void BtnTagRedo_Click(object sender, EventArgs e)
         {
+            if (GetTagsDataSourceType() != DataSourceType.Single)
+            {
+                MessageBox.Show(I18n.GetText("TipStateMultiselectNotSupported"));
+                return;
+            }
             ((EditableTagList)gridViewTags.DataSource).NextState();
         }
 

@@ -357,6 +357,9 @@
   <data name="TipSelectImage" xml:space="preserve">
     <value>Please select an image.</value>
   </data>
+  <data name="TipStateMultiselectNotSupported" xml:space="preserve">
+    <value>State changing is only supported for single selection.</value>
+  </data>
   <data name="TipTagLoad" xml:space="preserve">
     <value>Please wait while the tags are loading.
 When changing csv or txt files,

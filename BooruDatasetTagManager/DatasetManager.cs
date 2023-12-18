@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace BooruDatasetTagManager
 {
     public class DatasetManager
     {
-        public ConcurrentDictionary<string, DataItem> DataSet;
+        public Dictionary<string, DataItem> DataSet;
         public AllTagsList AllTags;
         public BindingSource AllTagsBindingSource;
 
@@ -32,7 +33,7 @@ namespace BooruDatasetTagManager
 
         public DatasetManager()
         {
-            DataSet = new ConcurrentDictionary<string, DataItem>();
+            DataSet = new Dictionary<string, DataItem>();
             AllTags = new AllTagsList();
             AllTagsBindingSource = new BindingSource();
             AllTagsBindingSource.DataSource = AllTags;
@@ -55,7 +56,7 @@ namespace BooruDatasetTagManager
 
         public bool Remove(string name)
         {
-            return DataSet.TryRemove(name, out _);
+            return DataSet.Remove(name, out _);
         }
 
         private IEnumerable<DataItem> GetEnumerator(bool useFilter)
@@ -240,6 +241,8 @@ namespace BooruDatasetTagManager
 
         public bool LoadFromFolder(string folder)
         {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
             List<string> imagesExt = new List<string>() { ".jpg", ".png", ".bmp", ".jpeg", ".webp" };
             string[] imgs = Directory.GetFiles(folder, "*.*", SearchOption.AllDirectories);
             if (imgs.Length == 0)
@@ -254,11 +257,13 @@ namespace BooruDatasetTagManager
                 var dt = new DataItem();
                 dt.Tags.TagsListChanged += Tags_TagsListChanged;
                 dt.LoadData(x, imgSize);
-                
+
                 DataSet.TryAdd(dt.ImageFilePath, dt);
             });
             UpdateDatasetHash();
             IsLossLoaded = false;
+            stopwatch.Stop();
+            System.Windows.Forms.MessageBox.Show(stopwatch.Elapsed.TotalSeconds.ToString());
             return true;
         }
 
