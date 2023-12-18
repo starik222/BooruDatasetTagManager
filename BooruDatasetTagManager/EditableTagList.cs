@@ -411,6 +411,8 @@ namespace BooruDatasetTagManager
 
         public void ReplaceTag(string oldTag, string newTag)
         {
+            if (oldTag == newTag)
+                return;
             int index = IndexOf(oldTag);
             if (index != -1)
             {
