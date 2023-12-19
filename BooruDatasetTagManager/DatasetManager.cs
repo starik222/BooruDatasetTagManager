@@ -241,8 +241,6 @@ namespace BooruDatasetTagManager
 
         public bool LoadFromFolder(string folder)
         {
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
             List<string> imagesExt = new List<string>() { ".jpg", ".png", ".bmp", ".jpeg", ".webp" };
             string[] imgs = Directory.GetFiles(folder, "*.*", SearchOption.AllDirectories);
             if (imgs.Length == 0)
@@ -262,8 +260,6 @@ namespace BooruDatasetTagManager
             });
             UpdateDatasetHash();
             IsLossLoaded = false;
-            stopwatch.Stop();
-            System.Windows.Forms.MessageBox.Show(stopwatch.Elapsed.TotalSeconds.ToString());
             return true;
         }
 
