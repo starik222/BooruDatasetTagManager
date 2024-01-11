@@ -42,6 +42,7 @@ namespace BooruDatasetTagManager
             numericUpDown1.Value = Program.Settings.PreviewSize;
             numericUpDown2.Value = Program.Settings.ShowAutocompleteAfterCharCount;
             CheckAskChange.Checked = Program.Settings.AskSaveChanges;
+            checkBoxFixOnLoad.Checked = Program.Settings.FixTagsOnSaveLoad;
             AutoSortCheckBox.Checked = Program.Settings.AutoSort;
             //UI
             numericUpDown3.Value = Program.Settings.GridViewRowHeight;
@@ -88,6 +89,7 @@ namespace BooruDatasetTagManager
                     Program.Settings.AutocompleteSort = (AutocompleteSort)Enum.Parse(typeof(AutocompleteSort_ZH_CN), comboAutocompSort.SelectedItem.ToString(), true);
                     break;
             }
+            Program.Settings.FixTagsOnSaveLoad = checkBoxFixOnLoad.Checked;
             Program.Settings.SeparatorOnLoad = textBox1.Text;
             Program.Settings.SeparatorOnSave = textBox2.Text;
             Program.Settings.AskSaveChanges = CheckAskChange.Checked;
@@ -158,6 +160,7 @@ namespace BooruDatasetTagManager
             LabelTagFont.Text = I18n.GetText("SettingUITagFont");
             LabelTagHeight.Text = I18n.GetText("SettingUIRowHeight");
             CheckAskChange.Text = I18n.GetText("SettingPromptToSave");
+            checkBoxFixOnLoad.Text = I18n.GetText("SettingFixTagLoad");
             AutoSortCheckBox.Text = I18n.GetText("SettingAutoSortCheck");
             BtnSave.Text = I18n.GetText("SettingBtnSave");
             BtnCancel.Text = I18n.GetText("SettingBtnCancel");

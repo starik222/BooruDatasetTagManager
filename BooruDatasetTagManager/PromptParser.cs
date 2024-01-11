@@ -16,8 +16,40 @@ namespace BooruDatasetTagManager
         public static float round_bracket_multiplier = 1.1f;
         public static float square_bracket_multiplier = 1f / 1.1f;
 
-        public static List<PromptItem> ParsePrompt(string promptString, string splitSeparator = ",")
+        public static List<PromptItem> ParsePrompt(string promptString, bool fixTagsForWeight, string splitSeparator = ",")
         {
+            List<PromptItem> result = new List<PromptItem>();
+            splitSeparator = splitSeparator.Replace("\\n", "\n").Replace("\\r", "\r").Replace("\\t", "\t");
+            if (fixTagsForWeight)
+            {
+                result = ParsePromptWeight(promptString, splitSeparator);
+            }
+            else
+            {
+                string[] tags = promptString.Split(new string[] { splitSeparator }, StringSplitOptions.RemoveEmptyEntries);
+                if (tags.Length > 0)
+                {
+                    foreach (var tag in tags)
+                    {
+                        if (!string.IsNullOrWhiteSpace(tag))
+                        {
+                            string textTag = tag.ToLower().Trim();
+                            int tagIndex = result.FindIndex(a => a.Text == textTag);
+                            if (tagIndex == -1)
+                            {
+                                result.Add(new PromptItem(textTag, 1f));
+                            }
+                                
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+        public static List<PromptItem> ParsePromptWeight(string promptString, string splitSeparator = ",")
+        {
+            
             List<PromptItem> res = new List<PromptItem>();
             List<int> round_brackets = new List<int>();
             List<int> square_brackets = new List<int>();

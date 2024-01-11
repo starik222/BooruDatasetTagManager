@@ -688,7 +688,7 @@ namespace BooruDatasetTagManager
             toolStripAllTags.Location = new System.Drawing.Point(0, 3);
             toolStripAllTags.Name = "toolStripAllTags";
             toolStripAllTags.Padding = new System.Windows.Forms.Padding(2, 0, 5, 0);
-            toolStripAllTags.Size = new System.Drawing.Size(43, 561);
+            toolStripAllTags.Size = new System.Drawing.Size(43, 542);
             toolStripAllTags.TabIndex = 3;
             toolStripAllTags.Text = "toolStrip2";
             // 

@@ -92,7 +92,8 @@ namespace BooruDatasetTagManager
             {
                 tempTagList.Add(List[i].ToString());
             }
-            return string.Join(Program.Settings.SeparatorOnSave, tempTagList);
+            string fixedSeparator = Program.Settings.SeparatorOnSave.Replace("\\n", "\n").Replace("\\r", "\r").Replace("\\t", "\t");
+            return string.Join(fixedSeparator, tempTagList);
         }
 
 

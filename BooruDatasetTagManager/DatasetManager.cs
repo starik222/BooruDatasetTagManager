@@ -18,7 +18,7 @@ namespace BooruDatasetTagManager
 {
     public class DatasetManager
     {
-        public Dictionary<string, DataItem> DataSet;
+        public ConcurrentDictionary<string, DataItem> DataSet;
         public AllTagsList AllTags;
         public BindingSource AllTagsBindingSource;
 
@@ -33,7 +33,7 @@ namespace BooruDatasetTagManager
 
         public DatasetManager()
         {
-            DataSet = new Dictionary<string, DataItem>();
+            DataSet = new ConcurrentDictionary<string, DataItem>();
             AllTags = new AllTagsList();
             AllTagsBindingSource = new BindingSource();
             AllTagsBindingSource.DataSource = AllTags;
@@ -56,7 +56,7 @@ namespace BooruDatasetTagManager
 
         public bool Remove(string name)
         {
-            return DataSet.Remove(name, out _);
+            return DataSet.TryRemove(name, out _);
         }
 
         private IEnumerable<DataItem> GetEnumerator(bool useFilter)
@@ -405,7 +405,7 @@ namespace BooruDatasetTagManager
                     TagsModifyTime = File.GetLastWriteTime(TextFilePath);
                     string text = File.ReadAllText(TextFilePath);
 
-                    var temp_tags = PromptParser.ParsePrompt(text, Program.Settings.SeparatorOnLoad);
+                    var temp_tags = PromptParser.ParsePrompt(text, Program.Settings.FixTagsOnSaveLoad, Program.Settings.SeparatorOnLoad);
                     //Tags = new EditableTagList(temp_tags);
                     Tags.LoadFromPromptParserData(temp_tags);
                 }

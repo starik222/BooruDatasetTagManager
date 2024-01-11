@@ -19,7 +19,7 @@ namespace BooruDatasetTagManager
         public bool OnlyManualTransInAutocomplete { get; set; } = false;
         public AutocompleteMode AutocompleteMode { get; set; } = AutocompleteMode.StartWith;
         public AutocompleteSort AutocompleteSort { get; set; } = AutocompleteSort.Alphabetical;
-        //public bool FixTagsOnLoad { get; set; } = true;
+        public bool FixTagsOnSaveLoad { get; set; } = true;
         //public bool FixTagsOnSave { get; set; } = true;
         public string SeparatorOnLoad { get; set; } = ",";
         public string SeparatorOnSave { get; set; } = ", ";
@@ -69,6 +69,7 @@ namespace BooruDatasetTagManager
                 OnlyManualTransInAutocomplete = tempSettings.OnlyManualTransInAutocomplete;
                 AutocompleteMode = tempSettings.AutocompleteMode;
                 AutocompleteSort = tempSettings.AutocompleteSort;
+                FixTagsOnSaveLoad = tempSettings.FixTagsOnSaveLoad;
                 SeparatorOnLoad = tempSettings.SeparatorOnLoad;
                 SeparatorOnSave = tempSettings.SeparatorOnSave;
                 ShowAutocompleteAfterCharCount = tempSettings.ShowAutocompleteAfterCharCount;

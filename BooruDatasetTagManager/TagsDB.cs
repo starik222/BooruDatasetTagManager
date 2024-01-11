@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -13,10 +14,11 @@ namespace BooruDatasetTagManager
     public class TagsDB
     {
         public int Version;
+        public bool FixTags;
         public List<TagItem> Tags;
         public Dictionary<string, long> LoadedFiles;
         private Dictionary<long, int> hashes;
-        private const int curVersion = 100;
+        private const int curVersion = 101;
 
         public TagsDB()
         {
@@ -48,6 +50,11 @@ namespace BooruDatasetTagManager
         {
             Tags.Clear();
             hashes.Clear();
+        }
+
+        public void SetNeedFixTags(bool fixTags)
+        {
+            FixTags = fixTags;
         }
 
         public void ResetVersion()
@@ -179,15 +186,20 @@ namespace BooruDatasetTagManager
         {
             if (string.IsNullOrWhiteSpace(tag))
                 return tag;
-            tag = tag.Replace('_', ' ');
-            tag = tag.Replace("\\(", "(");
-            tag = tag.Replace("\\)", ")");
+            if (FixTags)
+            {
+                tag = tag.Replace('_', ' ');
+                tag = tag.Replace("\\(", "(");
+                tag = tag.Replace("\\)", ")");
+            }
             return tag;
         }
 
         public bool IsNeedUpdate(string dirToCheck)
         {
             if (Version != curVersion)
+                return true;
+            if (Program.Settings.FixTagsOnSaveLoad != FixTags)
                 return true;
             FileInfo[] tagFiles = new DirectoryInfo(dirToCheck).GetFiles("*.csv", SearchOption.TopDirectoryOnly).
                 Concat(new DirectoryInfo(dirToCheck).GetFiles("*.txt", SearchOption.TopDirectoryOnly)).ToArray();
@@ -230,7 +242,7 @@ namespace BooruDatasetTagManager
                 }
             }
             else
-                return new TagsDB();
+                return null;
         }
 
         public void SaveTags(string fPath)

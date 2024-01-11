@@ -68,6 +68,7 @@ namespace BooruDatasetTagManager
                         TagsList = new TagsDB();
                     if (TagsList.IsNeedUpdate(tagsDir))
                     {
+                        TagsList.SetNeedFixTags(Program.Settings.FixTagsOnSaveLoad);
                         TagsList.ClearDb();
                         TagsList.ClearLoadedFiles();
                         TagsList.ResetVersion();

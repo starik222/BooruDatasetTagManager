@@ -240,39 +240,44 @@ namespace BooruDatasetTagManager
 
         public override string ToString()
         {
-            string resTag = Tag;
-            if (!resTag.Contains("\\(") && resTag.Contains('('))
-                resTag = resTag.Replace("(", "\\(");
-            if (!resTag.Contains("\\)") && resTag.Contains(')'))
-                resTag = resTag.Replace(")", "\\)");
-            if (Weight == 1f)
-                return resTag;
-            else if (Weight == 0f)
-                return "";
-            else if (Weight > 1f)
+            if (Program.Settings.FixTagsOnSaveLoad)
             {
-                int brCount = Extensions.CalcBracketsCount(Weight, true);
-                if (brCount != 0)
+                string resTag = Tag;
+                if (!resTag.Contains("\\(") && resTag.Contains('('))
+                    resTag = resTag.Replace("(", "\\(");
+                if (!resTag.Contains("\\)") && resTag.Contains(')'))
+                    resTag = resTag.Replace(")", "\\)");
+                if (Weight == 1f)
+                    return resTag;
+                else if (Weight == 0f)
+                    return "";
+                else if (Weight > 1f)
                 {
-                    return RepeatString("(", (int)brCount) + resTag + RepeatString(")", (int)brCount);
+                    int brCount = Extensions.CalcBracketsCount(Weight, true);
+                    if (brCount != 0)
+                    {
+                        return RepeatString("(", (int)brCount) + resTag + RepeatString(")", (int)brCount);
+                    }
+                    else
+                    {
+                        return $"({resTag}:{Weight})";
+                    }
                 }
                 else
                 {
-                    return $"({resTag}:{Weight})";
+                    int brCount = Extensions.CalcBracketsCount(Weight, false);
+                    if (brCount != 0)
+                    {
+                        return RepeatString("[", (int)brCount) + resTag + RepeatString("]", (int)brCount);
+                    }
+                    else
+                    {
+                        return $"({resTag}:{Weight})";
+                    }
                 }
             }
             else
-            {
-                int brCount = Extensions.CalcBracketsCount(Weight, false);
-                if (brCount != 0)
-                {
-                    return RepeatString("[", (int)brCount) + resTag + RepeatString("]", (int)brCount);
-                }
-                else
-                {
-                    return $"({resTag}:{Weight})";
-                }
-            }
+                return Tag;
         }
 
         private string RepeatString(string text, int count)

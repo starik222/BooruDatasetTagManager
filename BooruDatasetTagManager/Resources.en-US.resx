@@ -274,7 +274,9 @@
     <value>Save</value>
   </data>
   <data name="SettingFixTagLoad" xml:space="preserve">
-    <value>Fix tags on loading (replace '_' -&gt; ' ')</value>
+    <value>Fix tags when loading ( '_'-&gt;' ', '\(' -&gt; '(', '\)' -&gt; ')' ). 
+If this option is disabled, weighted tags are not supported!
+Warning! Changing this option will re-index the tag database. This may take a long time.</value>
   </data>
   <data name="SettingFixTagSave" xml:space="preserve">
     <value>Fix tags on saving ('('-&gt;'\(', ')'-&gt;'\)' )</value>

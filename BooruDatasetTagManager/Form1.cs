@@ -742,7 +742,7 @@ namespace BooruDatasetTagManager
                 if (Clipboard.ContainsText())
                 {
                     string text = Clipboard.GetText();
-                    var lines = PromptParser.ParsePrompt(text, Program.Settings.SeparatorOnLoad);
+                    var lines = PromptParser.ParsePrompt(text, Program.Settings.FixTagsOnSaveLoad, Program.Settings.SeparatorOnLoad);
                     EditableTagList tagList = new EditableTagList();
                     tagList.LoadFromPromptParserData(lines);
                     gridViewTags.DataSource = tagList;
@@ -753,7 +753,7 @@ namespace BooruDatasetTagManager
             if (Clipboard.ContainsText())
             {
                 string text = Clipboard.GetText();
-                var lines = PromptParser.ParsePrompt(text, Program.Settings.SeparatorOnLoad);
+                var lines = PromptParser.ParsePrompt(text, Program.Settings.FixTagsOnSaveLoad, Program.Settings.SeparatorOnLoad);
                 var tagsDSType = GetTagsDataSourceType();
                 if (tagsDSType == DataSourceType.Single)
                 {
