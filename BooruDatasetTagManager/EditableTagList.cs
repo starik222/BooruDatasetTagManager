@@ -1,10 +1,12 @@
 ﻿using Manina.Windows.Forms;
 using Microsoft.VisualBasic;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -551,7 +553,42 @@ namespace BooruDatasetTagManager
                 onListChanged(this, ev);
             }
             if (!CheckSyncLists())
-                throw new InvalidAsynchronousStateException("List desynchronization detected!");
+            {
+                CreateDataForDebug();
+                throw new InvalidAsynchronousStateException("List desynchronization detected!\nPlease post the file \""+Path.Combine(Program.AppPath, "ErrorData.json") +"\" in the topic\nhttps://github.com/starik222/BooruDatasetTagManager/discussions/111");
+            }
+        }
+
+        private void CreateDataForDebug()
+        {
+            ListsDebugInfo info = new ListsDebugInfo();
+            for (int i = 0; i < InnerList.Count; i++)
+            {
+                string tag = ((EditableTag)InnerList[i]).Tag == null ? "NULL" : ((EditableTag)InnerList[i]).Tag;
+                info.EditableList.Add(tag);
+            }
+            for (int i = 0; i < _tags.Count; i++)
+            {
+                string tag = _tags[i] == null ? "NULL" : _tags[i];
+                info.TextList.Add(tag);
+            }
+            info.History = History;
+            File.WriteAllText("ErrorData.json", JsonConvert.SerializeObject(info, Formatting.Indented));
+        }
+
+        public class ListsDebugInfo
+        {
+            public List<string> EditableList;
+            public List<string> TextList;
+            public List<EditableTagHistory> History;
+
+            public ListsDebugInfo()
+            {
+                EditableList = new List<string>();
+                TextList = new List<string>();
+                History = new List<EditableTagHistory>();
+            }
+
         }
 
         protected override void OnClear()

@@ -24,6 +24,7 @@ namespace BooruDatasetTagManager
             Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
 #endif
             Application.SetCompatibleTextRenderingDefault(false);
+            AppPath = Application.StartupPath;
             Settings = new AppSettings(Application.StartupPath);
             EditableTagListLocker = new SemaphoreSlim(1,1);
             ListChangeLocker = new object();
@@ -87,6 +88,8 @@ namespace BooruDatasetTagManager
 
             Application.Run(new MainForm());
         }
+
+        public static string AppPath;
 
         public static TranslationManager TransManager;
 
