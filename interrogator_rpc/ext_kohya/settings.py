@@ -11,7 +11,7 @@ class Settings(NamedTuple):
     image_columns: int = 6
     max_resolution: int = 0
     filename_word_regex: str = ""
-    tagger_use_spaces: bool = True
+    tagger_use_spaces: bool = False
     interrogator_use_cpu: bool = False
     interrogator_keep_in_memory: bool = False
     interrogator_max_length: int = 60

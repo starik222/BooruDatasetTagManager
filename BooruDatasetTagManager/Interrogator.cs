@@ -70,7 +70,7 @@ namespace BooruDatasetTagManager
                         List<AutoTagItem> items = new List<AutoTagItem>();
                         foreach (var item in net.Tags)
                         {
-                            items.Add(new AutoTagItem(item.Tag, item.Probability));
+                            items.Add(new AutoTagItem(Program.Settings.FixTagsOnSaveLoad ? item.Tag.Replace('_', ' ') : item.Tag, item.Probability));
                         }
                         result.Items[net.NetworkName] = items;
                     }
