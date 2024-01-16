@@ -225,6 +225,7 @@
             Name = "Form_AutoTaggerSettings";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Auto tagger settings";
+            FormClosing += Form_AutoTaggerSettings_FormClosing;
             Load += Form_AutoTaggerSettings_Load;
             ((System.ComponentModel.ISupportInitialize)trackBarThreshold).EndInit();
             ResumeLayout(false);
