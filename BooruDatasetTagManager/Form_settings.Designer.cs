@@ -69,12 +69,16 @@ namespace BooruDatasetTagManager
             Hotkey = new System.Windows.Forms.DataGridViewTextBoxColumn();
             SettingFrame = new Manina.Windows.Forms.TabControl();
             tabGeneral = new Manina.Windows.Forms.Tab();
+            checkBoxFixOnLoad = new System.Windows.Forms.CheckBox();
+            textBox3 = new System.Windows.Forms.TextBox();
+            label5 = new System.Windows.Forms.Label();
             tabUI = new Manina.Windows.Forms.Tab();
             label4 = new System.Windows.Forms.Label();
             comboBoxColorScheme = new System.Windows.Forms.ComboBox();
             tabTranslations = new Manina.Windows.Forms.Tab();
             tabHotkeys = new Manina.Windows.Forms.Tab();
-            checkBoxFixOnLoad = new System.Windows.Forms.CheckBox();
+            label6 = new System.Windows.Forms.Label();
+            textBox4 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown3).BeginInit();
@@ -155,7 +159,7 @@ namespace BooruDatasetTagManager
             // AutoSortCheckBox
             // 
             AutoSortCheckBox.AutoSize = true;
-            AutoSortCheckBox.Location = new System.Drawing.Point(15, 285);
+            AutoSortCheckBox.Location = new System.Drawing.Point(15, 360);
             AutoSortCheckBox.Name = "AutoSortCheckBox";
             AutoSortCheckBox.Size = new System.Drawing.Size(215, 19);
             AutoSortCheckBox.TabIndex = 10;
@@ -165,7 +169,7 @@ namespace BooruDatasetTagManager
             // CheckAskChange
             // 
             CheckAskChange.AutoSize = true;
-            CheckAskChange.Location = new System.Drawing.Point(15, 255);
+            CheckAskChange.Location = new System.Drawing.Point(15, 330);
             CheckAskChange.Name = "CheckAskChange";
             CheckAskChange.Size = new System.Drawing.Size(288, 19);
             CheckAskChange.TabIndex = 9;
@@ -401,7 +405,7 @@ namespace BooruDatasetTagManager
             // 
             label2.AutoSize = true;
             label2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            label2.Location = new System.Drawing.Point(0, 388);
+            label2.Location = new System.Drawing.Point(0, -15);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(286, 15);
             label2.TabIndex = 1;
@@ -423,7 +427,7 @@ namespace BooruDatasetTagManager
             dataGridViewHotkeys.RowHeadersVisible = false;
             dataGridViewHotkeys.RowTemplate.Height = 25;
             dataGridViewHotkeys.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewHotkeys.Size = new System.Drawing.Size(563, 388);
+            dataGridViewHotkeys.Size = new System.Drawing.Size(0, 0);
             dataGridViewHotkeys.TabIndex = 0;
             dataGridViewHotkeys.KeyDown += dataGridView1_KeyDown;
             // 
@@ -473,8 +477,12 @@ namespace BooruDatasetTagManager
             tabGeneral.Controls.Add(LabelPreviewImageSize);
             tabGeneral.Controls.Add(CheckAskChange);
             tabGeneral.Controls.Add(numericUpDown1);
+            tabGeneral.Controls.Add(textBox4);
+            tabGeneral.Controls.Add(textBox3);
             tabGeneral.Controls.Add(textBox2);
             tabGeneral.Controls.Add(numericUpDown2);
+            tabGeneral.Controls.Add(label6);
+            tabGeneral.Controls.Add(label5);
             tabGeneral.Controls.Add(LabelSeparatorSave);
             tabGeneral.Controls.Add(LabelAutocompAfter);
             tabGeneral.Controls.Add(textBox1);
@@ -488,6 +496,32 @@ namespace BooruDatasetTagManager
             tabGeneral.Name = "tabGeneral";
             tabGeneral.Size = new System.Drawing.Size(563, 403);
             tabGeneral.Text = "General";
+            // 
+            // checkBoxFixOnLoad
+            // 
+            checkBoxFixOnLoad.AutoSize = true;
+            checkBoxFixOnLoad.Location = new System.Drawing.Point(15, 272);
+            checkBoxFixOnLoad.Name = "checkBoxFixOnLoad";
+            checkBoxFixOnLoad.Size = new System.Drawing.Size(491, 49);
+            checkBoxFixOnLoad.TabIndex = 11;
+            checkBoxFixOnLoad.Text = resources.GetString("checkBoxFixOnLoad.Text");
+            checkBoxFixOnLoad.UseVisualStyleBackColor = true;
+            // 
+            // textBox3
+            // 
+            textBox3.Location = new System.Drawing.Point(140, 195);
+            textBox3.Name = "textBox3";
+            textBox3.Size = new System.Drawing.Size(100, 23);
+            textBox3.TabIndex = 8;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new System.Drawing.Point(10, 198);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(99, 15);
+            label5.TabIndex = 7;
+            label5.Text = "Default extension";
             // 
             // tabUI
             // 
@@ -503,9 +537,9 @@ namespace BooruDatasetTagManager
             tabUI.Controls.Add(BtnGridviewFontChange);
             tabUI.Controls.Add(label14);
             tabUI.Controls.Add(label11);
-            tabUI.Location = new System.Drawing.Point(1, 23);
+            tabUI.Location = new System.Drawing.Point(0, 0);
             tabUI.Name = "tabUI";
-            tabUI.Size = new System.Drawing.Size(563, 403);
+            tabUI.Size = new System.Drawing.Size(0, 0);
             tabUI.Text = "UI";
             // 
             // label4
@@ -533,29 +567,35 @@ namespace BooruDatasetTagManager
             tabTranslations.Controls.Add(label3);
             tabTranslations.Controls.Add(comboBox1);
             tabTranslations.Controls.Add(comboBox2);
-            tabTranslations.Location = new System.Drawing.Point(1, 23);
+            tabTranslations.Location = new System.Drawing.Point(0, 0);
             tabTranslations.Name = "tabTranslations";
-            tabTranslations.Size = new System.Drawing.Size(563, 403);
+            tabTranslations.Size = new System.Drawing.Size(0, 0);
             tabTranslations.Text = "Translations";
             // 
             // tabHotkeys
             // 
             tabHotkeys.Controls.Add(dataGridViewHotkeys);
             tabHotkeys.Controls.Add(label2);
-            tabHotkeys.Location = new System.Drawing.Point(1, 23);
+            tabHotkeys.Location = new System.Drawing.Point(0, 0);
             tabHotkeys.Name = "tabHotkeys";
-            tabHotkeys.Size = new System.Drawing.Size(563, 403);
+            tabHotkeys.Size = new System.Drawing.Size(0, 0);
             tabHotkeys.Text = "Hotkeys";
             // 
-            // checkBoxFixOnLoad
+            // label6
             // 
-            checkBoxFixOnLoad.AutoSize = true;
-            checkBoxFixOnLoad.Location = new System.Drawing.Point(15, 197);
-            checkBoxFixOnLoad.Name = "checkBoxFixOnLoad";
-            checkBoxFixOnLoad.Size = new System.Drawing.Size(491, 49);
-            checkBoxFixOnLoad.TabIndex = 11;
-            checkBoxFixOnLoad.Text = resources.GetString("checkBoxFixOnLoad.Text");
-            checkBoxFixOnLoad.UseVisualStyleBackColor = true;
+            label6.AutoSize = true;
+            label6.Location = new System.Drawing.Point(10, 230);
+            label6.Name = "label6";
+            label6.Size = new System.Drawing.Size(127, 15);
+            label6.TabIndex = 7;
+            label6.Text = "Caption file extensions";
+            // 
+            // textBox4
+            // 
+            textBox4.Location = new System.Drawing.Point(140, 227);
+            textBox4.Name = "textBox4";
+            textBox4.Size = new System.Drawing.Size(272, 23);
+            textBox4.TabIndex = 8;
             // 
             // Form_settings
             // 
@@ -635,5 +675,9 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox comboBoxColorScheme;
         private System.Windows.Forms.CheckBox checkBoxFixOnLoad;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Label label6;
     }
 }

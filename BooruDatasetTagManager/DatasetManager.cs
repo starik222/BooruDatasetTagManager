@@ -386,7 +386,16 @@ namespace BooruDatasetTagManager
                 ImageFilePathHash = ImageFilePath.GetHashCode();
                 Name = Path.GetFileNameWithoutExtension(imagePath);
                 ImageModifyTime = File.GetLastWriteTime(imagePath);
-                TextFilePath = Path.Combine(Path.GetDirectoryName(imagePath), Name + ".txt");
+                foreach (var item in Program.Settings.GetTagFilesExtensions())
+                {
+                    TextFilePath = Path.Combine(Path.GetDirectoryName(imagePath), Name + "." + item);
+                    if (File.Exists(TextFilePath))
+                        break;
+                    else
+                        TextFilePath = string.Empty;
+                }
+                if (string.IsNullOrEmpty(TextFilePath))
+                    TextFilePath = Path.Combine(Path.GetDirectoryName(imagePath), Name + "." + Program.Settings.DefaultTagsFileExtension);
                 GetTagsFromFile();
                 Img = Extensions.MakeThumb(imagePath, imageSize);
             }

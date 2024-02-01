@@ -39,6 +39,8 @@ namespace BooruDatasetTagManager
             comboBoxColorScheme.SelectedItem = Program.Settings.ColorScheme;
             textBox1.Text = Program.Settings.SeparatorOnLoad;
             textBox2.Text = Program.Settings.SeparatorOnSave;
+            textBox3.Text = Program.Settings.DefaultTagsFileExtension;
+            textBox4.Text = Program.Settings.CaptionFileExtensions;
             numericUpDown1.Value = Program.Settings.PreviewSize;
             numericUpDown2.Value = Program.Settings.ShowAutocompleteAfterCharCount;
             CheckAskChange.Checked = Program.Settings.AskSaveChanges;
@@ -92,6 +94,8 @@ namespace BooruDatasetTagManager
             Program.Settings.FixTagsOnSaveLoad = checkBoxFixOnLoad.Checked;
             Program.Settings.SeparatorOnLoad = textBox1.Text;
             Program.Settings.SeparatorOnSave = textBox2.Text;
+            Program.Settings.DefaultTagsFileExtension = textBox3.Text;
+            Program.Settings.CaptionFileExtensions = textBox4.Text;
             Program.Settings.AskSaveChanges = CheckAskChange.Checked;
             Program.Settings.AutoSort = AutoSortCheckBox.Checked;
             //UI

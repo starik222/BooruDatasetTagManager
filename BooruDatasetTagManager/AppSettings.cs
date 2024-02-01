@@ -23,6 +23,18 @@ namespace BooruDatasetTagManager
         //public bool FixTagsOnSave { get; set; } = true;
         public string SeparatorOnLoad { get; set; } = ",";
         public string SeparatorOnSave { get; set; } = ", ";
+        public string DefaultTagsFileExtension { get; set; } = "txt";
+        public string CaptionFileExtensions
+        {
+            get
+            {
+                return string.Join(',', _tagsFilesExt);
+            }
+            set
+            {
+                _tagsFilesExt = value.Split(new char[] { ',' }, StringSplitOptions.TrimEntries);
+            }
+        }
         public int ShowAutocompleteAfterCharCount { get; set; } = 3;
         public bool AskSaveChanges { get; set; } = true;
         public int GridViewRowHeight { get; set; } = 29;
@@ -40,6 +52,9 @@ namespace BooruDatasetTagManager
         public string Language { get; set; } = "en-US";
 
         public string ColorScheme { get; set; } = "Classic";
+
+        private string[] _tagsFilesExt = { "txt", "caption" };
+
 
         public AppSettings(string appDir)
         {
@@ -79,6 +94,8 @@ namespace BooruDatasetTagManager
                 AutocompleteFont = tempSettings.AutocompleteFont;
                 AutoSort = tempSettings.AutoSort || false;
                 Language = tempSettings.Language;
+                DefaultTagsFileExtension = tempSettings.DefaultTagsFileExtension;
+                CaptionFileExtensions = tempSettings.CaptionFileExtensions;
                 if (!string.IsNullOrEmpty(tempSettings.ColorScheme))
                     ColorScheme = tempSettings.ColorScheme;
                 AutoTagger = tempSettings.AutoTagger;
@@ -108,6 +125,11 @@ namespace BooruDatasetTagManager
         public void SaveSettings()
         {
             File.WriteAllText(settingsFile, JsonConvert.SerializeObject(this));
+        }
+
+        public string[] GetTagFilesExtensions()
+        {
+            return _tagsFilesExt;
         }
 
         public void InitAvaibleLangs()
