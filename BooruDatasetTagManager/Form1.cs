@@ -69,6 +69,11 @@ namespace BooruDatasetTagManager
             gridViewDS.DefaultCellStyle.Font = Program.Settings.GridViewFont.GetFont();
             //splitContainer2.SplitterDistance = Width / 3;
             toolStrippromptFixedLengthComboBox.SelectedIndex = 0;
+            if (!Program.Settings.FixTagsOnSaveLoad)
+            {
+                toolStripMenuItemWeight.Enabled = false;
+                toolStripTextBoxWeight.Enabled = false;
+            }
 #if !DEBUG
             Extensions.CheckForUpdateAsync(Application.ProductVersion);
 #endif

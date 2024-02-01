@@ -997,7 +997,7 @@ namespace BooruDatasetTagManager
             toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripLabel2, toolStripMenuItemWeight, toolStripTextBoxWeight });
             toolStrip3.Location = new System.Drawing.Point(3, 0);
             toolStrip3.Name = "toolStrip3";
-            toolStrip3.Size = new System.Drawing.Size(362, 38);
+            toolStrip3.Size = new System.Drawing.Size(393, 38);
             toolStrip3.TabIndex = 0;
             // 
             // toolStripLabel2
