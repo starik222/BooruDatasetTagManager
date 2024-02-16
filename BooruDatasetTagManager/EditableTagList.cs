@@ -598,8 +598,9 @@ namespace BooruDatasetTagManager
             h.Index = 0;
             foreach (EditableTag c in List)
             {
-                c.Parent = null;
-                h.ClearedTags.Add((EditableTag)c.Clone());
+                var clonedETag = (EditableTag)c.Clone();
+                clonedETag.Parent = null;
+                h.ClearedTags.Add(clonedETag);
             }
             h.Type = EditableTagHistory.HistoryType.Clear;
             if (isStoreHistory)
