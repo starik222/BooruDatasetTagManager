@@ -499,17 +499,18 @@ namespace BooruDatasetTagManager
             h.Index = 0;
             foreach (EditableTag c in List)
             {
-                c.Parent = null;
-                h.ClearedTags.Add((EditableTag)c.Clone());
-
+                var clonedETag = (EditableTag)c.Clone();
+                clonedETag.Parent = null;
+                h.ClearedTags.Add(clonedETag);
             }
             h.Type = EditableTagHistory.HistoryType.Sort;
             InnerList.Sort(skipFirstCount, InnerList.Count - skipFirstCount, new SortEditableTagListAscending());
-            _tags.Sort(skipFirstCount, InnerList.Count - skipFirstCount, new SortStringAscending());
+            _tags.Sort(skipFirstCount, _tags.Count - skipFirstCount, new SortStringAscending());
             foreach (EditableTag c in List)
             {
-                c.Parent = null;
-                h.AddedTags.Add((EditableTag)c.Clone());
+                var clonedETag = (EditableTag)c.Clone();
+                clonedETag.Parent = null;
+                h.AddedTags.Add(clonedETag);
             }
             if (isStoreHistory)
                 AddHistory(h);
@@ -671,6 +672,11 @@ namespace BooruDatasetTagManager
             OnListChanged(new ListChangedEventArgs(ListChangedType.ItemDeleted, index));
         }
 
+        protected override void OnSet(int index, object oldValue, object newValue)
+        {
+            base.OnSet(index, oldValue, newValue);
+        }
+
         protected override void OnSetComplete(int index, object oldValue, object newValue)
         {
             if (oldValue != newValue)
@@ -681,9 +687,10 @@ namespace BooruDatasetTagManager
 
                 olddata.Parent = null;
                 newdata.Parent = this;
-                if (_tags[index] != newdata.Tag)
-                    TagsListChanged?.Invoke(this, _tags[index], newdata.Tag, ListChangedType.ItemChanged);
+                string oldTagText = _tags[index];
                 _tags[index] = newdata.Tag;
+                if (oldTagText != newdata.Tag)
+                    TagsListChanged?.Invoke(this, oldTagText, newdata.Tag, ListChangedType.ItemChanged);
                 OnListChanged(new ListChangedEventArgs(ListChangedType.ItemChanged, index));
             }
         }

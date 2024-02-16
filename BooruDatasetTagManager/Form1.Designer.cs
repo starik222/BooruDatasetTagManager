@@ -997,7 +997,7 @@ namespace BooruDatasetTagManager
             toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripLabel2, toolStripMenuItemWeight, toolStripTextBoxWeight });
             toolStrip3.Location = new System.Drawing.Point(3, 0);
             toolStrip3.Name = "toolStrip3";
-            toolStrip3.Size = new System.Drawing.Size(393, 38);
+            toolStrip3.Size = new System.Drawing.Size(362, 38);
             toolStrip3.TabIndex = 0;
             // 
             // toolStripLabel2
@@ -1027,7 +1027,7 @@ namespace BooruDatasetTagManager
             toolStripTagsHeader.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripLabelImageTags, toolStripPromptSortBtn, toolStrippromptFixedLengthComboBox, toolStripPromptFixTipLabel });
             toolStripTagsHeader.Location = new System.Drawing.Point(3, 0);
             toolStripTagsHeader.Name = "toolStripTagsHeader";
-            toolStripTagsHeader.Size = new System.Drawing.Size(317, 25);
+            toolStripTagsHeader.Size = new System.Drawing.Size(348, 25);
             toolStripTagsHeader.TabIndex = 0;
             // 
             // toolStripLabelImageTags
