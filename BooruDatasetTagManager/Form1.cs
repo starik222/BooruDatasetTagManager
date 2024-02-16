@@ -198,7 +198,7 @@ namespace BooruDatasetTagManager
                 {
                     ShowPreview((string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value);
                 }
-
+                gridViewTags.AllowDrop = true;
             }
             else
             {
