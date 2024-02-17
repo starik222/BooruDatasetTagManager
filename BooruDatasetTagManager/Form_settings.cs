@@ -53,6 +53,7 @@ namespace BooruDatasetTagManager
             label14.Text = Program.Settings.AutocompleteFont.ToString();
             autocompleteFontSettings = Program.Settings.AutocompleteFont;
             comboBoxLanguage.Text = Program.Settings.Language;
+            comboBoxPreviewType.SelectedIndex = Program.Settings.PreviewType;
             //hotkeys
             foreach (var item in Program.Settings.Hotkeys.Items)
             {
@@ -105,6 +106,7 @@ namespace BooruDatasetTagManager
             Program.Settings.Language = (string)comboBoxLanguage.SelectedItem;
             Program.Settings.ColorScheme = (string)comboBoxColorScheme.SelectedItem;
             Program.ColorManager.SelectScheme(Program.Settings.ColorScheme);
+            Program.Settings.PreviewType = comboBoxPreviewType.SelectedIndex;
             //hotkeys
             if (tempHotkeys.Count > 0)
             {

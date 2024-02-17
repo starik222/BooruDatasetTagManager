@@ -29,10 +29,10 @@ namespace BooruDatasetTagManager
             this.Location = new Point(screen.WorkingArea.Width / 2 - this.Width / 2, screen.WorkingArea.Height / 2 - this.Height / 2);
         }
 
-        public void Show(string img)
+        public void Show(Image img)
         {
             pictureBox1.Image?.Dispose();
-            pictureBox1.Image = Extensions.GetImageFromFile(img);
+            pictureBox1.Image = img;
 
             if (!loaded)
             {

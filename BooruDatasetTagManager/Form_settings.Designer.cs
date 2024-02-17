@@ -70,15 +70,17 @@ namespace BooruDatasetTagManager
             SettingFrame = new Manina.Windows.Forms.TabControl();
             tabGeneral = new Manina.Windows.Forms.Tab();
             checkBoxFixOnLoad = new System.Windows.Forms.CheckBox();
+            textBox4 = new System.Windows.Forms.TextBox();
             textBox3 = new System.Windows.Forms.TextBox();
+            label6 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
             tabUI = new Manina.Windows.Forms.Tab();
+            label7 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
+            comboBoxPreviewType = new System.Windows.Forms.ComboBox();
             comboBoxColorScheme = new System.Windows.Forms.ComboBox();
             tabTranslations = new Manina.Windows.Forms.Tab();
             tabHotkeys = new Manina.Windows.Forms.Tab();
-            label6 = new System.Windows.Forms.Label();
-            textBox4 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown3).BeginInit();
@@ -507,12 +509,28 @@ namespace BooruDatasetTagManager
             checkBoxFixOnLoad.Text = resources.GetString("checkBoxFixOnLoad.Text");
             checkBoxFixOnLoad.UseVisualStyleBackColor = true;
             // 
+            // textBox4
+            // 
+            textBox4.Location = new System.Drawing.Point(140, 227);
+            textBox4.Name = "textBox4";
+            textBox4.Size = new System.Drawing.Size(272, 23);
+            textBox4.TabIndex = 8;
+            // 
             // textBox3
             // 
             textBox3.Location = new System.Drawing.Point(140, 195);
             textBox3.Name = "textBox3";
             textBox3.Size = new System.Drawing.Size(100, 23);
             textBox3.TabIndex = 8;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new System.Drawing.Point(10, 230);
+            label6.Name = "label6";
+            label6.Size = new System.Drawing.Size(127, 15);
+            label6.TabIndex = 7;
+            label6.Text = "Caption file extensions";
             // 
             // label5
             // 
@@ -525,9 +543,11 @@ namespace BooruDatasetTagManager
             // 
             // tabUI
             // 
+            tabUI.Controls.Add(label7);
             tabUI.Controls.Add(label4);
             tabUI.Controls.Add(LabelLanguage);
             tabUI.Controls.Add(LabelTagFont);
+            tabUI.Controls.Add(comboBoxPreviewType);
             tabUI.Controls.Add(comboBoxColorScheme);
             tabUI.Controls.Add(comboBoxLanguage);
             tabUI.Controls.Add(LabelAutocompFont);
@@ -537,10 +557,19 @@ namespace BooruDatasetTagManager
             tabUI.Controls.Add(BtnGridviewFontChange);
             tabUI.Controls.Add(label14);
             tabUI.Controls.Add(label11);
-            tabUI.Location = new System.Drawing.Point(0, 0);
+            tabUI.Location = new System.Drawing.Point(1, 23);
             tabUI.Name = "tabUI";
-            tabUI.Size = new System.Drawing.Size(0, 0);
+            tabUI.Size = new System.Drawing.Size(563, 403);
             tabUI.Text = "UI";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new System.Drawing.Point(9, 174);
+            label7.Name = "label7";
+            label7.Size = new System.Drawing.Size(130, 15);
+            label7.TabIndex = 6;
+            label7.Text = "Image preview location";
             // 
             // label4
             // 
@@ -550,6 +579,16 @@ namespace BooruDatasetTagManager
             label4.Size = new System.Drawing.Size(80, 15);
             label4.TabIndex = 6;
             label4.Text = "Color scheme";
+            // 
+            // comboBoxPreviewType
+            // 
+            comboBoxPreviewType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxPreviewType.FormattingEnabled = true;
+            comboBoxPreviewType.Items.AddRange(new object[] { "\"Preview\" tab in main window", "Separate window" });
+            comboBoxPreviewType.Location = new System.Drawing.Point(185, 171);
+            comboBoxPreviewType.Name = "comboBoxPreviewType";
+            comboBoxPreviewType.Size = new System.Drawing.Size(121, 23);
+            comboBoxPreviewType.TabIndex = 5;
             // 
             // comboBoxColorScheme
             // 
@@ -580,22 +619,6 @@ namespace BooruDatasetTagManager
             tabHotkeys.Name = "tabHotkeys";
             tabHotkeys.Size = new System.Drawing.Size(0, 0);
             tabHotkeys.Text = "Hotkeys";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new System.Drawing.Point(10, 230);
-            label6.Name = "label6";
-            label6.Size = new System.Drawing.Size(127, 15);
-            label6.TabIndex = 7;
-            label6.Text = "Caption file extensions";
-            // 
-            // textBox4
-            // 
-            textBox4.Location = new System.Drawing.Point(140, 227);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new System.Drawing.Size(272, 23);
-            textBox4.TabIndex = 8;
             // 
             // Form_settings
             // 
@@ -679,5 +702,7 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox comboBoxPreviewType;
     }
 }

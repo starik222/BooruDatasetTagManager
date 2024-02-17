@@ -172,16 +172,27 @@ namespace BooruDatasetTagManager
             toolStripAutoTags.Enabled = !locked;
         }
 
-        private void ShowPreview(string img)
+        private void ShowPreview(string imgPath, bool separateWindow = false)
         {
-            if (fPreview == null || fPreview.IsDisposed)
-                fPreview = new Form_preview();
-            fPreview.Show(img);
+            Image img = Extensions.GetImageFromFile(imgPath);
+            if (separateWindow || Program.Settings.PreviewType == 1)
+            {
+                if (fPreview == null || fPreview.IsDisposed)
+                    fPreview = new Form_preview();
+                fPreview.Show(img);
+            }
+            else if (Program.Settings.PreviewType == 0)
+            {
+                pictureBoxPreview.Image?.Dispose();
+                pictureBoxPreview.Image = img;
+            }
         }
 
         private void HidePreview()
         {
             fPreview?.Hide();
+            pictureBoxPreview.Image?.Dispose();
+            pictureBoxPreview.Image = null;
         }
 
         private async void LoadSelectedImageToGrid()
@@ -506,6 +517,7 @@ namespace BooruDatasetTagManager
             MenuShowPreview.Checked = isShowPreview;
             if (isShowPreview)
             {
+                tabPreview.Show();
                 if (gridViewDS.SelectedRows.Count == 1)
                 {
                     ShowPreview((string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value);
@@ -1258,7 +1270,7 @@ namespace BooruDatasetTagManager
             if (e.Button == MouseButtons.Left && gridViewDS.SelectedRows.Count > 0)
             {
                 var file = (string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value;
-                ShowPreview(file);
+                ShowPreview(file, true);
             }
         }
 
@@ -1596,6 +1608,12 @@ namespace BooruDatasetTagManager
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            bool previewHided = false;
+            if (fPreview != null && !fPreview.IsDisposed && fPreview.Visible)
+            {
+                previewHided = true;
+                HidePreview();
+            }
             Form_settings settings = new Form_settings();
             if (settings.ShowDialog() == DialogResult.OK)
             {
@@ -1603,6 +1621,10 @@ namespace BooruDatasetTagManager
             }
             settings.Close();
             switchLanguage();
+            if (previewHided && Program.Settings.PreviewType == 1)
+            {
+                fPreview.Show();
+            }
         }
 
         private async void replaceTransparentBackgroundToolStripMenuItem_Click(object sender, EventArgs e)
