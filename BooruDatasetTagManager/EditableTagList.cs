@@ -33,6 +33,8 @@ namespace BooruDatasetTagManager
 
         public List<string> TextTags { get { return _tags; } }
 
+        public List<EditableTagHistory> HistoryForDebug { get { return History; } }
+
         public EditableTag this[int index]
         {
             get

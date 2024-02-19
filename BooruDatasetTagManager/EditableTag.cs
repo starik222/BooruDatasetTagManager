@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -10,7 +11,6 @@ namespace BooruDatasetTagManager
 {
     public class EditableTag : IEditableObject, ICloneable
     {
-
         struct TagData
         {
             internal int id;
@@ -42,7 +42,6 @@ namespace BooruDatasetTagManager
         private TagData backupData;
         private bool inTxn = false;
 
-        //[DisplayName("ImageTags")]
         public string Tag
         {
             get
@@ -68,7 +67,7 @@ namespace BooruDatasetTagManager
                 OnEditableTagChanged(false);
             }
         }
-        
+        [JsonIgnore()]
         public bool IsManual
         {
             get
@@ -94,7 +93,7 @@ namespace BooruDatasetTagManager
                 OnEditableTagChanged();
             }
         }
-        
+        [JsonIgnore()]
         public int Order
         {
             get
@@ -107,13 +106,12 @@ namespace BooruDatasetTagManager
                 OnEditableTagChanged();
             }
         }
-
+        [JsonIgnore()]
         public bool Sortiable
         {
             get => tagData.sortiable;
             set => tagData.sortiable = value;
         }
-
         public int Id
         {
             get
@@ -121,7 +119,7 @@ namespace BooruDatasetTagManager
                 return tagData.id;
             }
         }
-
+        [JsonIgnore()]
         internal EditableTagList Parent
         {
             get
@@ -133,7 +131,6 @@ namespace BooruDatasetTagManager
                 parent = value;
             }
         }
-
         internal bool IsEditing
         {
             get => inTxn;

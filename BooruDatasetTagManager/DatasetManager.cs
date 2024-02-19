@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +14,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Translator.Crypto;
+using static BooruDatasetTagManager.EditableTagList;
 
 namespace BooruDatasetTagManager
 {
@@ -50,8 +52,55 @@ namespace BooruDatasetTagManager
                     File.WriteAllText(item.Value.TextFilePath, item.Value.Tags.ToString());
                     saved = true;
                 }
+                if (!CheckPromptFile(item.Value.ImageFilePath))
+                {
+                    throw new InvalidAsynchronousStateException("The saved data for the image \""+item.Value.ImageFilePath+"\" does not match what is available in the program!!\nPlease post the file \"" + Path.Combine(Program.AppPath, "ErrorData.json") + "\" in the issue\nhttps://github.com/starik222/BooruDatasetTagManager/issues/104");
+                }
             }
             return saved;
+        }
+
+        private bool CheckPromptFile(string imgFile)
+        {
+            DataItem dt = new DataItem();
+            dt.LoadData(imgFile, 1);
+            DataItem origItem = DataSet[imgFile];
+            if (dt.Tags.Count != origItem.Tags.Count)
+            {
+                CreateDataForDebug(dt, origItem);
+                dt.Dispose();
+                return false;
+            }
+            else
+            {
+                for (int i = 0; i < dt.Tags.Count; i++)
+                {
+                    if (dt.Tags[i].Tag != origItem.Tags[i].Tag)
+                    {
+                        CreateDataForDebug(dt, origItem);
+                        dt.Dispose();
+                        return false;
+                    }
+                }
+            }
+            dt.Dispose();
+            return true;
+        }
+
+        private void CreateDataForDebug(DataItem orig, DataItem loaded)
+        {
+            SaveDebugInfo info = new SaveDebugInfo();
+            info.LoadedData = loaded;
+            info.OrigData = orig;
+            info.FullDataSet = this;
+            File.WriteAllText("ErrorData.json", JsonConvert.SerializeObject(info, Formatting.Indented));
+        }
+
+        private class SaveDebugInfo
+        {
+            public DataItem OrigData { get; set; }
+            public DataItem LoadedData { get; set; }
+            public DatasetManager FullDataSet { get; set; }
         }
 
         public bool Remove(string name)
@@ -348,8 +397,9 @@ namespace BooruDatasetTagManager
             TagsModifyTime
         }
 
-        public class DataItem
+        public class DataItem : IDisposable
         {
+            [JsonIgnore()]
             [DisplayName("Image")]
             public Image Img { get; set; }
             public string Name { get; set; }
@@ -440,6 +490,12 @@ namespace BooruDatasetTagManager
             public bool Equals(DataItem obj)
             {
                 return obj.ImageFilePathHash == ImageFilePathHash;
+            }
+
+            public void Dispose()
+            {
+                Img?.Dispose();
+                Tags.Clear();
             }
         }
     }

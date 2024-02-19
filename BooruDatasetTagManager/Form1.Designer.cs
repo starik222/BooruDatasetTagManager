@@ -1276,7 +1276,7 @@ namespace BooruDatasetTagManager
             tabPreview.Controls.Add(pictureBoxPreview);
             tabPreview.Location = new System.Drawing.Point(0, 0);
             tabPreview.Name = "tabPreview";
-            tabPreview.Size = new System.Drawing.Size(395, 655);
+            tabPreview.Size = new System.Drawing.Size(0, 0);
             tabPreview.Text = "Preview";
             // 
             // pictureBoxPreview
@@ -1285,7 +1285,7 @@ namespace BooruDatasetTagManager
             pictureBoxPreview.Dock = System.Windows.Forms.DockStyle.Fill;
             pictureBoxPreview.Location = new System.Drawing.Point(0, 0);
             pictureBoxPreview.Name = "pictureBoxPreview";
-            pictureBoxPreview.Size = new System.Drawing.Size(395, 655);
+            pictureBoxPreview.Size = new System.Drawing.Size(0, 0);
             pictureBoxPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             pictureBoxPreview.TabIndex = 0;
             pictureBoxPreview.TabStop = false;
