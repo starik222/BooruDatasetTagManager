@@ -117,7 +117,7 @@ namespace BooruDatasetTagManager
             toolStripContainer2 = new System.Windows.Forms.ToolStripContainer();
             toolStrip3 = new System.Windows.Forms.ToolStrip();
             toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
-            toolStripMenuItemWeight = new ToolStripMenuItem();
+            toolStripMenuItemWeight = new ToolStripCustomMenuItem();
             toolStripTextBoxWeight = new System.Windows.Forms.ToolStripTextBox();
             toolStripTagsHeader = new System.Windows.Forms.ToolStrip();
             toolStripLabelImageTags = new System.Windows.Forms.ToolStripLabel();
@@ -147,6 +147,7 @@ namespace BooruDatasetTagManager
             contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(components);
             toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            contextMenuImageGridHeader = new System.Windows.Forms.ContextMenuStrip(components);
             ((System.ComponentModel.ISupportInitialize)gridViewTags).BeginInit();
             toolStripTags.SuspendLayout();
             menuStrip1.SuspendLayout();
@@ -1320,6 +1321,11 @@ namespace BooruDatasetTagManager
             toolStripMenuItem2.Text = "Delete image and tags";
             toolStripMenuItem2.Click += toolStripMenuItem2_Click;
             // 
+            // contextMenuImageGridHeader
+            // 
+            contextMenuImageGridHeader.Name = "contextMenuImageGridHeader";
+            contextMenuImageGridHeader.Size = new System.Drawing.Size(61, 4);
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1508,7 +1514,7 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
         private System.Windows.Forms.ToolStrip toolStrip3;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
-        private ToolStripMenuItem toolStripMenuItemWeight;
+        private ToolStripCustomMenuItem toolStripMenuItemWeight;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBoxWeight;
         private System.Windows.Forms.ToolStripMenuItem generateTagsWithAutoTaggerForAllImagesToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
@@ -1518,6 +1524,7 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.DataGridViewTextBoxColumn CountColumn;
         private Manina.Windows.Forms.Tab tabPreview;
         private System.Windows.Forms.PictureBox pictureBoxPreview;
+        private System.Windows.Forms.ContextMenuStrip contextMenuImageGridHeader;
     }
 }
 

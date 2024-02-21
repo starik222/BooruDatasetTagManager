@@ -14,6 +14,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Windows.Forms;
 using Translator;
 using static BooruDatasetTagManager.DatasetManager;
@@ -37,7 +38,10 @@ namespace BooruDatasetTagManager
             Program.ColorManager.ChangeColorScheme(this, Program.ColorManager.SelectedScheme);
             Program.ColorManager.ChangeColorSchemeInConteiner(Controls, Program.ColorManager.SelectedScheme);
             Program.ColorManager.SchemeChanded += ColorManager_SchemeChanded;
+            contextMenuImageGridHeader.ItemClicked += ContextMenuImageGridHeader_ItemClicked;
         }
+
+
 
         private Form_filter allTagsFilter;
         List<string> tagsBuffer;
@@ -77,6 +81,29 @@ namespace BooruDatasetTagManager
 #if !DEBUG
             Extensions.CheckForUpdateAsync(Application.ProductVersion);
 #endif
+        }
+
+        private void ContextMenuImageGridHeader_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            ToolStripMenuItem tsi = (ToolStripMenuItem)e.ClickedItem;
+            if (gridViewDS.Columns.Contains(tsi.Name))
+            {
+                int visibleCount = 0;
+                for (int i = 0; i < gridViewDS.ColumnCount; i++)
+                {
+                    if (gridViewDS.Columns[i].Visible)
+                        visibleCount++;
+                }
+                if (visibleCount > 1 || !tsi.Checked)
+                {
+                    tsi.Checked = !tsi.Checked;
+                    gridViewDS.Columns[tsi.Name].Visible = tsi.Checked;
+                }
+                else
+                {
+                    MessageBox.Show("At least one column must be visible.");
+                }
+            }
         }
 
         private void ColorManager_SchemeChanded(object sender, EventArgs e)
@@ -1290,6 +1317,19 @@ namespace BooruDatasetTagManager
                 gridViewDS.ClearSelection();
                 gridViewDS.Rows[e.RowIndex].Selected = true;
                 contextMenuStrip1.Show(MousePosition);
+            }
+            else if (e.RowIndex == -1 && gridViewDS.Rows.Count > 0 && e.Button == MouseButtons.Right)
+            {
+                contextMenuImageGridHeader.Items.Clear();
+                for (int i = 0; i < gridViewDS.ColumnCount; i++)
+                {
+                    ToolStripMenuItem tsi = new ToolStripMenuItem();
+                    tsi.Name = gridViewDS.Columns[i].Name;
+                    tsi.Text = gridViewDS.Columns[i].HeaderText;
+                    tsi.Checked = gridViewDS.Columns[i].Visible;
+                    contextMenuImageGridHeader.Items.Add(tsi);
+                }
+                contextMenuImageGridHeader.Show(MousePosition);
             }
         }
 

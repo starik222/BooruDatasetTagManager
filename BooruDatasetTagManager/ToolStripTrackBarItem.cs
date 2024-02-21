@@ -12,9 +12,9 @@ namespace BooruDatasetTagManager
 {
     [System.ComponentModel.DesignerCategory("code")]
     [ToolStripItemDesignerAvailability(ToolStripItemDesignerAvailability.ContextMenuStrip | ToolStripItemDesignerAvailability.MenuStrip | ToolStripItemDesignerAvailability.ToolStrip)]
-    public partial class ToolStripMenuItem : ToolStripControlHost
+    public partial class ToolStripCustomMenuItem : ToolStripControlHost
     {
-        public ToolStripMenuItem()
+        public ToolStripCustomMenuItem()
             : base(CreateControlInstance())
         {
         }

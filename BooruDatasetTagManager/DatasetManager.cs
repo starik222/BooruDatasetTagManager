@@ -14,7 +14,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Translator.Crypto;
-using static BooruDatasetTagManager.EditableTagList;
 
 namespace BooruDatasetTagManager
 {
