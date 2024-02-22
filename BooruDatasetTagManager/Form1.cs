@@ -544,7 +544,7 @@ namespace BooruDatasetTagManager
             MenuShowPreview.Checked = isShowPreview;
             if (isShowPreview)
             {
-                tabPreview.Show();
+                //tabPreview.Show();
                 if (gridViewDS.SelectedRows.Count == 1)
                 {
                     ShowPreview((string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value);
@@ -1648,12 +1648,7 @@ namespace BooruDatasetTagManager
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            bool previewHided = false;
-            if (fPreview != null && !fPreview.IsDisposed && fPreview.Visible)
-            {
-                previewHided = true;
-                HidePreview();
-            }
+            HidePreview();
             Form_settings settings = new Form_settings();
             if (settings.ShowDialog() == DialogResult.OK)
             {
@@ -1661,9 +1656,16 @@ namespace BooruDatasetTagManager
             }
             settings.Close();
             switchLanguage();
-            if (previewHided && Program.Settings.PreviewType == 1)
+            if (isShowPreview)
             {
-                fPreview.Show();
+                if (gridViewDS.SelectedRows.Count == 1)
+                {
+                    ShowPreview((string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value);
+                }
+                else
+                {
+                    HidePreview();
+                }
             }
         }
 
