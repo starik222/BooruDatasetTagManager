@@ -62,7 +62,7 @@ namespace BooruDatasetTagManager
         private bool CheckPromptFile(string imgFile)
         {
             DataItem dt = new DataItem();
-            dt.LoadData(imgFile, 1);
+            dt.LoadData(imgFile, 0);
             DataItem origItem = DataSet[imgFile];
             if (dt.Tags.Count != origItem.Tags.Count)
             {
@@ -446,7 +446,8 @@ namespace BooruDatasetTagManager
                 if (string.IsNullOrEmpty(TextFilePath))
                     TextFilePath = Path.Combine(Path.GetDirectoryName(imagePath), Name + "." + Program.Settings.DefaultTagsFileExtension);
                 GetTagsFromFile();
-                Img = Extensions.MakeThumb(imagePath, imageSize);
+                if (imageSize > 0)
+                    Img = Extensions.MakeThumb(imagePath, imageSize);
             }
 
             public void DeduplicateTags()
