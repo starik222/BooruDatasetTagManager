@@ -13,6 +13,7 @@ using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.Data;
+using Newtonsoft.Json;
 
 namespace BooruDatasetTagManager
 {
@@ -195,7 +196,7 @@ namespace BooruDatasetTagManager
                         client.DefaultRequestHeaders.Add("Accept", "application/vnd.github+jso");
                         client.DefaultRequestHeaders.Add("X-GitHub-Api-Version", "2022-11-28");
                         client.DefaultRequestHeaders.Add("User-Agent", "BooruDatasetTagManager");
-                        data = await client.GetStringAsync("https://api.github.com/repos/starik222/BooruDatasetTagManager/releases/latest");
+                        data = await client.GetStringAsync("https://api.github.com/repos/starik222/BooruDatasetTagManager/releases");
                     }
                 }
                 catch (Exception)
@@ -207,23 +208,28 @@ namespace BooruDatasetTagManager
             {
                 try
                 {
-                    JObject jsonData = JObject.Parse(data);
-                    string version = jsonData["tag_name"].ToString();
-                    if (version.StartsWith("v"))
-                        version = version.Substring(1);
-                    if (currentVersion.StartsWith(version))
-                    {
+                    List<ReleaseInfo> releasesList = JsonConvert.DeserializeObject<List<ReleaseInfo>>(data);
+
+                    releasesList.Sort((b,a)=>a.published_at.CompareTo(b.published_at));
+                    currentVersion = "v" + currentVersion;
+                    int curIndex = releasesList.FindIndex(a => currentVersion.StartsWith(a.tag_name));
+                    if (curIndex <= 0)
                         return;
-                    }
-                    string text = jsonData["body"].ToString();
-                    string url = jsonData["html_url"].ToString();
-                    string[] listItems = text.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-                    StringBuilder sb = new StringBuilder();
-                    for (int i = 0; i < listItems.Length; i++)
+
+                    List<ReleaseInfo> nVersions = releasesList.Take(curIndex).ToList();
+                    string url = nVersions[0].html_url;
+                    StringBuilder releaseNote = new StringBuilder();
+                    foreach (var item in nVersions)
                     {
-                        sb.AppendLine(listItems[i]);
+                        string text = item.body;
+                        string[] listItems = text.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+                        releaseNote.AppendLine(item.tag_name + ":");
+                        for (int i = 0; i < listItems.Length; i++)
+                        {
+                            releaseNote.AppendLine(listItems[i]);
+                        }
                     }
-                    if (MessageBox.Show($"A new version of the program has been detected ({version}).\nNew in version:\n{sb}\nDo you want to go to the program download page?",
+                    if (MessageBox.Show($"A new version of the program has been detected ({nVersions[0].tag_name.Substring(1)}).\nNew in version:\n{releaseNote}\nDo you want to go to the program download page?",
                         "Software update found", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                     {
                         Process.Start(new ProcessStartInfo
