@@ -74,7 +74,7 @@ namespace BooruDatasetTagManager
             {
                 for (int i = 0; i < dt.Tags.Count; i++)
                 {
-                    if (dt.Tags[i].Tag != origItem.Tags[i].Tag)
+                    if (PrepareTag(dt.Tags[i].Tag) != PrepareTag(origItem.Tags[i].Tag))
                     {
                         CreateDataForDebug(dt, origItem);
                         dt.Dispose();
@@ -86,12 +86,25 @@ namespace BooruDatasetTagManager
             return true;
         }
 
+        private string PrepareTag(string tag)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < tag.Length; i++)
+            {
+                if (tag[i] == '\\' || tag[i] == '_' || tag[i] == ' ' || tag[i] == '(' || tag[i] == ')')
+                    continue;
+                sb.Append(tag[i]);
+            }
+            return sb.ToString();
+        }
+
         private void CreateDataForDebug(DataItem orig, DataItem loaded)
         {
             SaveDebugInfo info = new SaveDebugInfo();
             info.LoadedData = loaded;
             info.OrigData = orig;
             info.FullDataSet = this;
+            info.Settings = Program.Settings;
             File.WriteAllText("ErrorData.json", JsonConvert.SerializeObject(info, Formatting.Indented));
         }
 
@@ -100,6 +113,7 @@ namespace BooruDatasetTagManager
             public DataItem OrigData { get; set; }
             public DataItem LoadedData { get; set; }
             public DatasetManager FullDataSet { get; set; }
+            public AppSettings Settings { get; set; }
         }
 
         public bool Remove(string name)
