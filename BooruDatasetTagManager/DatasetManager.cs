@@ -95,7 +95,7 @@ namespace BooruDatasetTagManager
                     continue;
                 sb.Append(tag[i]);
             }
-            return sb.ToString();
+            return sb.ToString().ToLower();
         }
 
         private void CreateDataForDebug(DataItem orig, DataItem loaded)
