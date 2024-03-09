@@ -45,15 +45,27 @@ namespace BooruDatasetTagManager
             bool saved = false;
             foreach (var item in DataSet)
             {
-                if (item.Value.IsModified)
+                // if (item.Value.IsModified)
+                // {
+                int tagCount = item.Value.Tags.Count;
+                item.Value.DeduplicateTags();
+                if (tagCount > 0 && item.Value.Tags.Count == 0)
                 {
-                    item.Value.DeduplicateTags();
-                    File.WriteAllText(item.Value.TextFilePath, item.Value.Tags.ToString());
-                    saved = true;
+                    CreateDataForDebug(item.Value, null);
+                    throw new InvalidAsynchronousStateException("After calling DeduplicateTags(), the number of tags in the image \"" + item.Value.ImageFilePath + "\" became 0!\nPlease post the file \"" + Path.Combine(Program.AppPath, "ErrorData.json") + "\" in the issue\nhttps://github.com/starik222/BooruDatasetTagManager/issues/104");
                 }
+                string promptText = item.Value.Tags.ToString();
+                if (string.IsNullOrWhiteSpace(promptText) && item.Value.Tags.HistoryForDebug.Count > 0)
+                {
+                    CreateDataForDebug(null, item.Value);
+                    throw new InvalidAsynchronousStateException("After calling ToString(), the number of tags in the image \"" + item.Value.ImageFilePath + "\" became 0, but history is not empty!\nPlease post the file \"" + Path.Combine(Program.AppPath, "ErrorData.json") + "\" in the issue\nhttps://github.com/starik222/BooruDatasetTagManager/issues/104");
+                }
+                File.WriteAllText(item.Value.TextFilePath, promptText);
+                saved = true;
+                //}
                 if (!CheckPromptFile(item.Value.ImageFilePath))
                 {
-                    throw new InvalidAsynchronousStateException("The saved data for the image \""+item.Value.ImageFilePath+"\" does not match what is available in the program!!\nPlease post the file \"" + Path.Combine(Program.AppPath, "ErrorData.json") + "\" in the issue\nhttps://github.com/starik222/BooruDatasetTagManager/issues/104");
+                    throw new InvalidAsynchronousStateException("The saved data for the image \"" + item.Value.ImageFilePath + "\" does not match what is available in the program!!\nPlease post the file \"" + Path.Combine(Program.AppPath, "ErrorData.json") + "\" in the issue\nhttps://github.com/starik222/BooruDatasetTagManager/issues/104");
                 }
             }
             return saved;
