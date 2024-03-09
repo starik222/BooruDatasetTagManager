@@ -1,8 +1,8 @@
 
 grpcio
 grpcio-tools
-onnx
-onnxruntime-gpu
+onnx==1.15.0
+onnxruntime-gpu==1.17.1
 pandas
 
 # This needs to be from Torch's pypi repo.
