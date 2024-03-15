@@ -37,7 +37,6 @@ class WaifuDiffusionTagger:
             else:
                 providers = [
                     "CUDAExecutionProvider",
-                    "DmlExecutionProvider",
                     "CPUExecutionProvider",
                 ]
 
@@ -80,6 +79,14 @@ class WaifuDiffusionTagger:
             import onnxruntime as ort
 
             self.model = ort.InferenceSession(path_model, providers=providers)
+            sessionProviders = self.model.get_providers()
+            if len(sessionProviders) > 0 and \
+                sessionProviders[0] == "CUDAExecutionProvider" and \
+                self.MODEL_REPO == "SmilingWolf/wd-v1-4-swinv2-tagger-v2":
+                self.model = None
+                raise RuntimeError(
+                    "wd-v1-4-swinv2-tagger-v2 supported only for CPU. To use this model, run 'pip install onnxruntime==1.17.1' but this will cause all models to use CPU to generate")
+
             path_label = try_to_load_from_cache(
                 self.MODEL_REPO, self.LABEL_FILENAME, cache_dir=paths.setting_model_path
             )
