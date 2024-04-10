@@ -45,87 +45,15 @@ namespace BooruDatasetTagManager
             bool saved = false;
             foreach (var item in DataSet)
             {
-                // if (item.Value.IsModified)
-                // {
-                int tagCount = item.Value.Tags.Count;
-                item.Value.DeduplicateTags();
-                if (tagCount > 0 && item.Value.Tags.Count == 0)
+                if (item.Value.IsModified)
                 {
-                    CreateDataForDebug(item.Value, null);
-                    throw new InvalidAsynchronousStateException("After calling DeduplicateTags(), the number of tags in the image \"" + item.Value.ImageFilePath + "\" became 0!\nPlease post the file \"" + Path.Combine(Program.AppPath, "ErrorData.json") + "\" in the issue\nhttps://github.com/starik222/BooruDatasetTagManager/issues/104");
-                }
-                string promptText = item.Value.Tags.ToString();
-                if (string.IsNullOrWhiteSpace(promptText) && item.Value.Tags.HistoryForDebug.Count > 0)
-                {
-                    CreateDataForDebug(null, item.Value);
-                    throw new InvalidAsynchronousStateException("After calling ToString(), the number of tags in the image \"" + item.Value.ImageFilePath + "\" became 0, but history is not empty!\nPlease post the file \"" + Path.Combine(Program.AppPath, "ErrorData.json") + "\" in the issue\nhttps://github.com/starik222/BooruDatasetTagManager/issues/104");
-                }
-                File.WriteAllText(item.Value.TextFilePath, promptText);
-                saved = true;
-                //}
-                if (!CheckPromptFile(item.Value.ImageFilePath))
-                {
-                    throw new InvalidAsynchronousStateException("The saved data for the image \"" + item.Value.ImageFilePath + "\" does not match what is available in the program!!\nPlease post the file \"" + Path.Combine(Program.AppPath, "ErrorData.json") + "\" in the issue\nhttps://github.com/starik222/BooruDatasetTagManager/issues/104");
+                    item.Value.DeduplicateTags();
+                    string promptText = item.Value.Tags.ToString();
+                    File.WriteAllText(item.Value.TextFilePath, promptText);
+                    saved = true;
                 }
             }
             return saved;
-        }
-
-        private bool CheckPromptFile(string imgFile)
-        {
-            DataItem dt = new DataItem();
-            dt.LoadData(imgFile, 0);
-            DataItem origItem = DataSet[imgFile];
-            if (dt.Tags.Count != origItem.Tags.Count)
-            {
-                CreateDataForDebug(dt, origItem);
-                dt.Dispose();
-                return false;
-            }
-            else
-            {
-                for (int i = 0; i < dt.Tags.Count; i++)
-                {
-                    if (PrepareTag(dt.Tags[i].Tag) != PrepareTag(origItem.Tags[i].Tag))
-                    {
-                        CreateDataForDebug(dt, origItem);
-                        dt.Dispose();
-                        return false;
-                    }
-                }
-            }
-            dt.Dispose();
-            return true;
-        }
-
-        private string PrepareTag(string tag)
-        {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < tag.Length; i++)
-            {
-                if (tag[i] == '\\' || tag[i] == '_' || tag[i] == ' ' || tag[i] == '(' || tag[i] == ')')
-                    continue;
-                sb.Append(tag[i]);
-            }
-            return sb.ToString().ToLower();
-        }
-
-        private void CreateDataForDebug(DataItem orig, DataItem loaded)
-        {
-            SaveDebugInfo info = new SaveDebugInfo();
-            info.LoadedData = loaded;
-            info.OrigData = orig;
-            info.FullDataSet = this;
-            info.Settings = Program.Settings;
-            File.WriteAllText("ErrorData.json", JsonConvert.SerializeObject(info, Formatting.Indented));
-        }
-
-        private class SaveDebugInfo
-        {
-            public DataItem OrigData { get; set; }
-            public DataItem LoadedData { get; set; }
-            public DatasetManager FullDataSet { get; set; }
-            public AppSettings Settings { get; set; }
         }
 
         public bool Remove(string name)
