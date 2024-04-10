@@ -736,7 +736,7 @@ namespace BooruDatasetTagManager
 
                 gridViewDS.DataSource = Program.DataManager.GetDataSource(DatasetManager.OrderType.Name, filterAnd, GetSelectedTags());
                 if (gridViewDS.RowCount == 0)
-                    gridViewTags.Rows.Clear();
+                    gridViewTags.DataSource = null;
                 isFiltered = true;
                 LoadSelectedInViewDs();
                 BtnImageExitFilter.Enabled = true;
