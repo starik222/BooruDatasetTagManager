@@ -47,6 +47,7 @@ namespace BooruDatasetTagManager
             Items.Add(new HotkeyItem("TagsFocus", "Focus on tag list", Keys.D2, true, false, false));
             Items.Add(new HotkeyItem("AllTagsFocus", "Focus on all tag list", Keys.D3, true, false, false));
             Items.Add(new HotkeyItem("AutoTagsFocus", "Focus on AutoTagger preview", Keys.D4, true, false, false));
+            Items.Add(new HotkeyItem("PreviewTabFocus", "Focus on preview tab", Keys.D5, true, false, false));
             
             Items.Add(new HotkeyItem("MenuItemSaveChanges", "Save all changes", Keys.S, true, false, false));
             Items.Add(new HotkeyItem("MenuItemShowPreview", "Show preview window", Keys.P, true, false, false));
