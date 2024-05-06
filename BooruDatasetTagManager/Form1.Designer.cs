@@ -292,7 +292,7 @@ namespace BooruDatasetTagManager
             toolStripTags.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { BtnTagAdd, BtnTagDelete, BtnTagUndo, BtnTagRedo, toolStripSeparator1, BtnTagCopy, BtnTagPaste, BtnTagSetToAll, toolStripSeparator2, BtnTagPasteFromClipBoard, BtnTagShow, toolStripSplitButton1, toolStripSeparator4, BtnTagUp, BtnTagDown, toolStripSeparator7, BtnTagFindInAll, toolStripSeparator9 });
             toolStripTags.Location = new System.Drawing.Point(0, 3);
             toolStripTags.Name = "toolStripTags";
-            toolStripTags.Size = new System.Drawing.Size(37, 548);
+            toolStripTags.Size = new System.Drawing.Size(37, 567);
             toolStripTags.TabIndex = 3;
             toolStripTags.Text = "toolStrip2";
             // 
@@ -368,7 +368,7 @@ namespace BooruDatasetTagManager
             BtnTagSetToAll.ImageTransparentColor = System.Drawing.Color.Magenta;
             BtnTagSetToAll.Name = "BtnTagSetToAll";
             BtnTagSetToAll.Size = new System.Drawing.Size(35, 36);
-            BtnTagSetToAll.Text = "Set current tag list to all";
+            BtnTagSetToAll.Text = "Set current tag list to all images";
             BtnTagSetToAll.Click += toolStripButton17_Click;
             // 
             // toolStripSeparator2
