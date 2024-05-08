@@ -61,11 +61,14 @@ namespace BooruDatasetTagManager
         {
             InitAvaibleLangs();
             Hotkeys = new HotkeyData();
+            Hotkeys.InitDefault();
             LoadData(appDir);
         }
 
         public AppSettings()
         {
+            Hotkeys = new HotkeyData();
+            Hotkeys.InitDefault();
         }
 
         private void LoadData(string appDir)
@@ -105,8 +108,7 @@ namespace BooruDatasetTagManager
                 {
                     AutoTagger = new InterragatorSettings();
                 }
-                Hotkeys = new HotkeyData();
-                Hotkeys.InitDefault();
+
                 if (tempSettings.Hotkeys != null)
                 {
                     foreach (var item in tempSettings.Hotkeys.Items)
