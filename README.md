@@ -2,7 +2,7 @@
 A simple tag editor for a dataset created for training hypernetworks, embeddings, lora, etc. You can create a dataset from scratch using only images, or you can use a program to edit a dataset created using automatic tagging ([wd14-tagger](https://github.com/toriato/stable-diffusion-webui-wd14-tagger), [stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui), etc.)
 The editor is primarily intended for booru-style tagged data, but you can adapt it for other datasets as well.
 
-# Running
+# Build
 This is a tool designed in C and you will need to run it in Visual Studio (not Visual Studio Code). Steps to achieve this are:
 1. Download [visual Studio](https://visualstudio.microsoft.com/downloads/)
 2. Clone this repo into a folder somewhere on your computer
