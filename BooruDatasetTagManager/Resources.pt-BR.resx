@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BtnImageExitFilter" xml:space="preserve">
+    <value>Sair do filtro de dataset</value>
+  </data>
+  <data name="BtnImageFilter" xml:space="preserve">
+    <value>Filtrar no dataset</value>
+  </data>
+  <data name="BtnMenuGenTagsWithCurrentSettings" xml:space="preserve">
+    <value>Gerar tags com as configurações atuais</value>
+  </data>
+  <data name="BtnMenuGenTagsWithSetWindow" xml:space="preserve">
+    <value>Gerar tags com janela de configurações...</value>
+  </data>
+  <data name="BtnTagAdd" xml:space="preserve">
+    <value>Adicionar tag</value>
+  </data>
+  <data name="BtnTagAddToAll" xml:space="preserve">
+    <value>Adicionar tag a todas</value>
+  </data>
+  <data name="BtnTagAddToFiltered" xml:space="preserve">
+    <value>Adicionar tag em filtrado</value>
+  </data>
+  <data name="BtnTagAddToSelected" xml:space="preserve">
+    <value>Adicionar tags selecionadas à imagem selecionada</value>
+  </data>
+  <data name="BtnTagApply" xml:space="preserve">
+    <value>Aplicar tags</value>
+  </data>
+  <data name="BtnTagCopy" xml:space="preserve">
+    <value>Copiar todas as tags da imagem atual</value>
+  </data>
+  <data name="BtnTagDelete" xml:space="preserve">
+    <value>Excluir tag</value>
+  </data>
+  <data name="BtnTagDeleteForAll" xml:space="preserve">
+    <value>Excluir tag de todas as imagens</value>
+  </data>
+  <data name="BtnTagDeleteForFiltered" xml:space="preserve">
+    <value>Excluir tag de filtrado</value>
+  </data>
+  <data name="BtnTagDeleteForSelected" xml:space="preserve">
+    <value>Remover tags selecionadas da imagem selecionada</value>
+  </data>
+  <data name="BtnTagDown" xml:space="preserve">
+    <value>Abaixo</value>
+  </data>
+  <data name="BtnTagExitFilter" xml:space="preserve">
+    <value>Redefinir filtro</value>
+  </data>
+  <data name="BtnTagFilter" xml:space="preserve">
+    <value>Filtrar em todas as tags</value>
+  </data>
+  <data name="BtnTagFindInAll" xml:space="preserve">
+    <value>Encontrar tag em "Todas as Tags"</value>
+  </data>
+  <data name="BtnTagMultiModeSwitch" xml:space="preserve">
+    <value>Modo de filtragem de várias tags</value>
+  </data>
+  <data name="BtnTagPaste" xml:space="preserve">
+    <value>Colar tags</value>
+  </data>
+  <data name="BtnTagPasteFromClipBoard" xml:space="preserve">
+    <value>Colar tags da área de transferência (substituir)</value>
+  </data>
+  <data name="BtnTagRedo" xml:space="preserve">
+    <value>Refazer</value>
+  </data>
+  <data name="BtnTagReplace" xml:space="preserve">
+    <value>Substituir tag</value>
+  </data>
+  <data name="BtnTagSetToAll" xml:space="preserve">
+    <value>Definir tag atual para todas as imagens</value>
+  </data>
+  <data name="BtnTagShow" xml:space="preserve">
+    <value>Mostrar texto formatado da tag</value>
+  </data>
+  <data name="BtnTagSwitch" xml:space="preserve">
+    <value>Alternar modo de todas as tags/tags comuns</value>
+  </data>
+  <data name="BtnTagUndo" xml:space="preserve">
+    <value>Desfazer</value>
+  </data>
+  <data name="BtnTagUp" xml:space="preserve">
+    <value>Acima</value>
+  </data>
+  <data name="CheckBoxSkipExist" xml:space="preserve">
+    <value>Pular tags existentes</value>
+  </data>
+  <data name="GridCount" xml:space="preserve">
+    <value>Contagem</value>
+  </data>
+  <data name="LabelDeleteFile" xml:space="preserve">
+    <value>Excluir Arquivo</value>
+  </data>
+  <data name="MenuHideAllTags" xml:space="preserve">
+    <value>Ocultar janela de todas as tags</value>
+  </data>
+  <data name="MenuHideDataset" xml:space="preserve">
+    <value>Ocultar dataset</value>
+  </data>
+  <data name="MenuHideTags" xml:space="preserve">
+    <value>Ocultar janela de tags de imagem</value>
+  </data>
+  <data name="MenuItemLoadFolder" xml:space="preserve">
+    <value>Carregar Pasta</value>
+  </data>
+  <data name="MenuItemLoadLoss" xml:space="preserve">
+    <value>Carregar perda do arquivo</value>
+  </data>
+  <data name="MenuItemSaveChanges" xml:space="preserve">
+    <value>Salvar Alterações</value>
+  </data>
+  <data name="MenuItemShowPreview" xml:space="preserve">
+    <value>Mostrar Prévia</value>
+  </data>
+  <data name="MenuItemTranslateTags" xml:space="preserve">
+    <value>Traduzir Tags</value>
+  </data>
+  <data name="MenuLabelFile" xml:space="preserve">
+    <value>Arquivo</value>
+  </data>
+  <data name="MenuLabelSettings" xml:space="preserve">
+    <value>Configurações</value>
+  </data>
+  <data name="MenuLabelView" xml:space="preserve">
+    <value>Visualizar</value>
+  </data>
+  <data name="MenuShowCount" xml:space="preserve">
+    <value>Mostrar contagem de tag em todas as tags</value>
+  </data>
+  <data name="ReplaceTransparentBackgroundToolStripMenuItem" xml:space="preserve">
+    <value>Substituir o fundo transparente das imagens selecionadas</value>
+  </data>
+  <data name="SettingAutocompChars" xml:space="preserve">
+    <value>Caracteres</value>
+  </data>
+  <data name="SettingAutocompFont" xml:space="preserve">
+    <value>Fonte de Autocompletar</value>
+  </data>
+  <data name="SettingAutocompMode" xml:space="preserve">
+    <value>Modo de Autocompletar</value>
+  </data>
+  <data name="SettingAutocompPrefix" xml:space="preserve">
+    <value>Mostrar autocompletar após</value>
+  </data>
+  <data name="SettingAutocompSort" xml:space="preserve">
+    <value>Ordenação de autocompletar</value>
+  </data>
+  <data name="SettingAutoSortCheck" xml:space="preserve">
+    <value>Ordenar automaticamente ao mudar seleções</value>
+  </data>
+  <data name="SettingBtnCancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="SettingBtnChange" xml:space="preserve">
+    <value>Alterar...</value>
+  </data>
+  <data name="SettingBtnSave" xml:space="preserve">
+    <value>Salvar</value>
+  </data>
+  <data name="SettingFixTagLoad" xml:space="preserve">
+    <value>Corrigir tags ao carregar ( '_'-&gt;' ', '\(' -&gt; '(', '\)' -&gt; ')' ). 
+Se esta opção estiver desativada, tags ponderadas não são suportadas!
+Aviso! Alterar esta opção irá reindexar o banco de dados de tags. Isso pode levar muito tempo.</value>
+  </data>
+  <data name="SettingFixTagSave" xml:space="preserve">
+    <value>Corrigir tags ao salvar ('('-&gt;'\(', ')'-&gt;'\)' )</value>
+  </data>
+  <data name="SettingPreviewImageSize" xml:space="preserve">
+    <value>Tamanho da Prévia da Imagem</value>
+  </data>
+  <data name="SettingPromptToSave" xml:space="preserve">
+    <value>Perguntar para salvar alterações ao mudar a seleção</value>
+  </data>
+  <data name="SettingSeperatorLoad" xml:space="preserve">
+    <value>Separador ao carregar</value>
+  </data>
+  <data name="SettingSeperatorSave" xml:space="preserve">
+    <value>Separador ao salvar</value>
+  </data>
+  <data name="SettingTabGeneral" xml:space="preserve">
+    <value>Geral</value>
+  </data>
+  <data name="SettingTabTranslations" xml:space="preserve">
+    <value>Traduções</value>
+  </data>
+  <data name="SettingTabUI" xml:space="preserve">
+    <value>Interface</value>
+  </data>
+  <data name="SettingTranslationLanguage" xml:space="preserve">
+    <value>Idioma de Tradução</value>
+  </data>
+  <data name="SettingTranslationOnlyManual" xml:space="preserve">
+    <value>Carregar apenas traduções manuais no autocompletar</value>
+  </data>
+  <data name="SettingTranslationService" xml:space="preserve">
+    <value>Serviço de Tradução</value>
+  </data>
+  <data name="SettingUILanguage" xml:space="preserve">
+    <value>Idioma da Interface</value>
+  </data>
+  <data name="SettingUIRowHeight" xml:space="preserve">
+    <value>Altura das linhas das tags</value>
+  </data>
+  <data name="SettingUITagFont" xml:space="preserve">
+    <value>Fonte das Tags</value>
+  </data>
+  <data name="StatusCopied" xml:space="preserve">
+    <value>Copiado!</value>
+  </data>
+  <data name="StatusPasted" xml:space="preserve">
+    <value>Colado!</value>
+  </data>
+  <data name="StatusSaved" xml:space="preserve">
+    <value>Salvo.</value>
+  </data>
+  <data name="StatusSettingsSaved" xml:space="preserve">
+    <value>Configurações foram salvas.</value>
+  </data>
+  <data name="StatusTranslating" xml:space="preserve">
+    <value>Traduzindo, por favor aguarde...</value>
+  </data>
+  <data name="StatusTranslationComplete" xml:space="preserve">
+    <value>Tradução concluída.</value>
+  </data>
+  <data name="TipDatasetNoLoad" xml:space="preserve">
+    <value>Dataset não carregado.</value>
+  </data>
+  <data name="TipDeleteFile" xml:space="preserve">
+    <value>Tem certeza de que deseja excluir o arquivo de imagem selecionado?</value>
+  </data>
+  <data name="TipFolderWrong" xml:space="preserve">
+    <value>O diretório selecionado não contém imagens!</value>
+  </data>
+  <data name="TipMultiImageCopy" xml:space="preserve">
+    <value>Copiar é suportado apenas para seleção única.</value>
+  </data>
+  <data name="TipMultiImagePaste" xml:space="preserve">
+    <value>Colar é suportado apenas para seleção única.</value>
+  </data>
+  <data name="TipSaveSettings" xml:space="preserve">
+    <value>Você deve reiniciar o aplicativo para que as configurações tenham efeito.</value>
+  </data>
+  <data name="TipSelectImage" xml:space="preserve">
+    <value>Por favor, selecione uma imagem.</value>
+  </data>
+  <data name="TipStateMultiselectNotSupported" xml:space="preserve">
+    <value>A mudança de estado é suportada apenas para seleção única.</value>
+  </data>
+  <data name="TipTagLoad" xml:space="preserve">
+    <value>Por favor, aguarde enquanto as tags estão sendo carregadas.
+Ao mudar arquivos csv ou txt,
+o carregamento inicial das tags pode levar muito tempo.</value>
+  </data>
+  <data name="toolStripPromptSortBtn" xml:space="preserve">
+    <value>Ordenar</value>
+  </data>
+  <data name="UILabelAllTags" xml:space="preserve">
+    <value>Todas as Tags</value>
+  </data>
+  <data name="UILabelCommonTags" xml:space="preserve">
+    <value>Tags Comuns</value>
+  </data>
+  <data name="UILabelDataSet" xml:space="preserve">
+    <value>Dataset</value>
+  </data>
+  <data name="UILabelFixPromptLength" xml:space="preserve">
+    <value>Não ordenar as primeiras N linhas :</value>
+  </data>
+  <data name="UILabelImageTags" xml:space="preserve">
+    <value>Tags da Imagem</value>
+  </data>
+</root>
