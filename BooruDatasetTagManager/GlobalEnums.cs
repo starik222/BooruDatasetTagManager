@@ -30,6 +30,15 @@ namespace BooruDatasetTagManager
         字母包括或者翻译包含
     }
 
+    public enum AutocompleteMode_PT_BR
+    {
+        NãoUsar,
+        PrefixoLetrasCorrespondente,
+        PrefixoLetrasCorrespondenteOuContendo,
+        PrefixoLetrasCorrespondenteOuTraducaoCorrespondente,
+        LetrasContidasOuTraducaoContida
+    }
+
     public enum AutocompleteSort
     {
         Alphabetical,
@@ -47,6 +56,12 @@ namespace BooruDatasetTagManager
     {
         字母,
         频率
+    }
+
+    public enum AutocompleteSort_PT_BR
+    {
+        Alfabetico, // Alphabetical
+        PorContagem // ByCount
     }
 
     public enum FilterType

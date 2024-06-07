@@ -19,6 +19,7 @@ namespace BooruDatasetTagManager
             Program.ColorManager.ChangeColorScheme(this, Program.ColorManager.SelectedScheme);
             Program.ColorManager.ChangeColorSchemeInConteiner(Controls, Program.ColorManager.SelectedScheme);
             Program.ColorManager.SchemeChanded += ColorManager_SchemeChanded;
+            Program.Settings.TranslationLanguage ??= "en-US";
         }
         private FontSettings gridFontSettings = null;
         private FontSettings autocompleteFontSettings = null;
@@ -90,6 +91,10 @@ namespace BooruDatasetTagManager
                 case "zh-CN":
                     Program.Settings.AutocompleteMode = (AutocompleteMode)Enum.Parse(typeof(AutocompleteMode_ZH_CN), comboAutocompMode.SelectedItem.ToString(), true);
                     Program.Settings.AutocompleteSort = (AutocompleteSort)Enum.Parse(typeof(AutocompleteSort_ZH_CN), comboAutocompSort.SelectedItem.ToString(), true);
+                    break;
+                case "pt-BR":
+                    Program.Settings.AutocompleteMode = (AutocompleteMode)Enum.Parse(typeof(AutocompleteMode_PT_BR), comboAutocompMode.SelectedItem.ToString(), true);
+                    Program.Settings.AutocompleteSort = (AutocompleteSort)Enum.Parse(typeof(AutocompleteSort_PT_BR), comboAutocompSort.SelectedItem.ToString(), true);
                     break;
             }
             Program.Settings.FixTagsOnSaveLoad = checkBoxFixOnLoad.Checked;
@@ -193,6 +198,14 @@ namespace BooruDatasetTagManager
                     comboAutocompSort.Items.AddRange(defaultAutocompSort);
                     comboAutocompMode.SelectedItem = Enum.GetName(typeof(AutocompleteMode_ZH_CN), Enum.ToObject(typeof(AutocompleteMode_ZH_CN), Program.Settings.AutocompleteMode));
                     comboAutocompSort.SelectedItem = Enum.GetName(typeof(AutocompleteSort_ZH_CN), Enum.ToObject(typeof(AutocompleteSort_ZH_CN), Program.Settings.AutocompleteSort));
+                    break;
+                case "pt-BR":
+                    defaultAutocompMode = Enum.GetNames(typeof(AutocompleteMode_PT_BR));
+                    defaultAutocompSort = Enum.GetNames(typeof(AutocompleteSort_PT_BR));
+                    comboAutocompMode.Items.AddRange(defaultAutocompMode);
+                    comboAutocompSort.Items.AddRange(defaultAutocompSort);
+                    comboAutocompMode.SelectedItem = Enum.GetName(typeof(AutocompleteMode_PT_BR), Enum.ToObject(typeof(AutocompleteMode_PT_BR), Program.Settings.AutocompleteMode));
+                    comboAutocompSort.SelectedItem = Enum.GetName(typeof(AutocompleteSort_PT_BR), Enum.ToObject(typeof(AutocompleteSort_PT_BR), Program.Settings.AutocompleteSort));
                     break;
             }
         }

@@ -294,7 +294,7 @@ namespace BooruDatasetTagManager
             // 
             comboBoxLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBoxLanguage.FormattingEnabled = true;
-            comboBoxLanguage.Items.AddRange(new object[] { "zh-CN", "en-US" });
+            comboBoxLanguage.Items.AddRange(new object[] { "pt-BR", "zh-CN", "en-US" });
             comboBoxLanguage.Location = new System.Drawing.Point(185, 113);
             comboBoxLanguage.Name = "comboBoxLanguage";
             comboBoxLanguage.Size = new System.Drawing.Size(121, 23);
