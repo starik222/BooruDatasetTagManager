@@ -1583,10 +1583,17 @@ namespace BooruDatasetTagManager
                 case "en-US":
                     LanguageENBtn.Checked = true;
                     LanguageCNBtn.Checked = false;
+                    LanguageBRBtn.Checked = false;
                     break;
                 case "zh-CN":
                     LanguageENBtn.Checked = false;
                     LanguageCNBtn.Checked = true;
+                    LanguageBRBtn.Checked = false;
+                    break;
+                case "pt-BR":
+                    LanguageENBtn.Checked = false;
+                    LanguageCNBtn.Checked = false;
+                    LanguageBRBtn.Checked = true;
                     break;
                 default:
                     break;
@@ -1601,6 +1608,7 @@ namespace BooruDatasetTagManager
             switchLanguage();
             LanguageENBtn.Checked = true;
             LanguageCNBtn.Checked = false;
+            LanguageBRBtn.Checked = false;
         }
 
         private void LanguageCNBtn_Click(object sender, EventArgs e)
@@ -1611,6 +1619,18 @@ namespace BooruDatasetTagManager
             switchLanguage();
             LanguageCNBtn.Checked = true;
             LanguageENBtn.Checked = false;
+            LanguageBRBtn.Checked = false;
+        }
+
+        private void LanguageBRBtn_Click(object sender, EventArgs e)
+        {
+            if (LanguageBRBtn.Checked) { return; }
+            Program.Settings.Language = "pt-BR";
+            Program.Settings.SaveSettings();
+            switchLanguage();
+            LanguageBRBtn.Checked = true;
+            LanguageENBtn.Checked = false;
+            LanguageCNBtn.Checked = false;
         }
 
         private void MenuShowTagCount_Click(object sender, EventArgs e)

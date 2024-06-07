@@ -81,6 +81,7 @@ namespace BooruDatasetTagManager
             MenuLanguage = new System.Windows.Forms.ToolStripMenuItem();
             LanguageENBtn = new System.Windows.Forms.ToolStripMenuItem();
             LanguageCNBtn = new System.Windows.Forms.ToolStripMenuItem();
+            LanguageBRBtn = new System.Windows.Forms.ToolStripMenuItem();
             toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             replaceTransparentBackgroundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             generateTagsWithAutoTaggerForAllImagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -581,24 +582,31 @@ namespace BooruDatasetTagManager
             // 
             // MenuLanguage
             // 
-            MenuLanguage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { LanguageENBtn, LanguageCNBtn });
+            MenuLanguage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { LanguageENBtn, LanguageCNBtn, LanguageBRBtn });
             MenuLanguage.Name = "MenuLanguage";
-            MenuLanguage.Size = new System.Drawing.Size(229, 26);
-            MenuLanguage.Text = "Language/语言";
+            MenuLanguage.Size = new System.Drawing.Size(242, 26);
+            MenuLanguage.Text = "Language/语言/Idioma";
             // 
             // LanguageENBtn
             // 
             LanguageENBtn.Name = "LanguageENBtn";
-            LanguageENBtn.Size = new System.Drawing.Size(148, 26);
+            LanguageENBtn.Size = new System.Drawing.Size(183, 26);
             LanguageENBtn.Text = "English";
             LanguageENBtn.Click += LanguageENBtn_Click;
             // 
             // LanguageCNBtn
             // 
             LanguageCNBtn.Name = "LanguageCNBtn";
-            LanguageCNBtn.Size = new System.Drawing.Size(148, 26);
+            LanguageCNBtn.Size = new System.Drawing.Size(183, 26);
             LanguageCNBtn.Text = "简体中文";
             LanguageCNBtn.Click += LanguageCNBtn_Click;
+            // 
+            // LanguageBRBtn
+            // 
+            LanguageBRBtn.Name = "LanguageBRBtn";
+            LanguageBRBtn.Size = new System.Drawing.Size(183, 26);
+            LanguageBRBtn.Text = "Português (BR)";
+            LanguageBRBtn.Click += LanguageBRBtn_Click;
             // 
             // toolsToolStripMenuItem
             // 
@@ -1476,6 +1484,7 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripMenuItem MenuLanguage;
         private System.Windows.Forms.ToolStripMenuItem LanguageENBtn;
         private System.Windows.Forms.ToolStripMenuItem LanguageCNBtn;
+        private System.Windows.Forms.ToolStripMenuItem LanguageBRBtn;
         private System.Windows.Forms.ToolStripMenuItem replaceTransparentBackgroundToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
