@@ -21,24 +21,6 @@ namespace BooruDatasetTagManager
         StartWithAndContainsIncludeTranslations
     }
 
-    public enum AutocompleteMode_ZH_CN
-    {
-        不使用,
-        前缀字母符合,
-        前缀字母符合或者包含,
-        前缀字母符合或者前缀翻译符合,
-        字母包括或者翻译包含
-    }
-
-    public enum AutocompleteMode_PT_BR
-    {
-        NãoUsar,
-        PrefixoLetrasCorrespondente,
-        PrefixoLetrasCorrespondenteOuContendo,
-        PrefixoLetrasCorrespondenteOuTraducaoCorrespondente,
-        LetrasContidasOuTraducaoContida
-    }
-
     public enum AutocompleteSort
     {
         Alphabetical,
@@ -52,17 +34,6 @@ namespace BooruDatasetTagManager
         Alphabetical
     }
 
-    public enum AutocompleteSort_ZH_CN
-    {
-        字母,
-        频率
-    }
-
-    public enum AutocompleteSort_PT_BR
-    {
-        Alfabetico, // Alphabetical
-        PorContagem // ByCount
-    }
 
     public enum FilterType
     {

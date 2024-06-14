@@ -30,15 +30,27 @@ namespace BooruDatasetTagManager
             previewPicBox = new PictureBox();
             previewPicBox.Name = "previewPicBox";
             allTagsFilter = new Form_filter();
-            switchLanguage();
+            CreateLangMenuItems();
             InitHotkeyCommands();
-
             //test color scheme
             //Program.ColorManager.SelectScheme("Dark");
             Program.ColorManager.ChangeColorScheme(this, Program.ColorManager.SelectedScheme);
             Program.ColorManager.ChangeColorSchemeInConteiner(Controls, Program.ColorManager.SelectedScheme);
             Program.ColorManager.SchemeChanded += ColorManager_SchemeChanded;
             contextMenuImageGridHeader.ItemClicked += ContextMenuImageGridHeader_ItemClicked;
+            switchLanguage();
+        }
+
+        private void CreateLangMenuItems()
+        {
+            foreach (var lang in I18n.GetLanguages())
+            {
+                ToolStripMenuItem menuItem = new ToolStripMenuItem();
+                menuItem.Name = "btn_" + lang;
+                menuItem.Text = I18n.GetText(menuItem.Name);
+                menuItem.Click += LanguageXXBtn_Click;
+                MenuLanguage.DropDownItems.Add(menuItem);
+            }
         }
 
 
@@ -1523,10 +1535,6 @@ namespace BooruDatasetTagManager
             }
         }
 
-        private void settingsToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-        }
-
         public void switchLanguage()
         {
             I18n.Initialize(Program.Settings.Language);
@@ -1544,6 +1552,7 @@ namespace BooruDatasetTagManager
             MenuHideAllTags.Text = I18n.GetText("MenuHideAllTags");
             MenuHideTags.Text = I18n.GetText("MenuHideTags");
             MenuHideDataset.Text = I18n.GetText("MenuHideDataset");
+            MenuLanguage.Text = I18n.GetText("MenuMenuLanguage");
 
             BtnTagAddToAll.Text = I18n.GetText("BtnTagAddToAll");
             BtnTagAdd.Text = I18n.GetText("BtnTagAdd");
@@ -1578,59 +1587,28 @@ namespace BooruDatasetTagManager
             toolStripPromptSortBtn.Text = I18n.GetText("toolStripPromptSortBtn");
 
 
-            switch (Program.Settings.Language)
+            foreach (ToolStripMenuItem item in MenuLanguage.DropDownItems)
             {
-                case "en-US":
-                    LanguageENBtn.Checked = true;
-                    LanguageCNBtn.Checked = false;
-                    LanguageBRBtn.Checked = false;
-                    break;
-                case "zh-CN":
-                    LanguageENBtn.Checked = false;
-                    LanguageCNBtn.Checked = true;
-                    LanguageBRBtn.Checked = false;
-                    break;
-                case "pt-BR":
-                    LanguageENBtn.Checked = false;
-                    LanguageCNBtn.Checked = false;
-                    LanguageBRBtn.Checked = true;
-                    break;
-                default:
-                    break;
+                if (item.Name == "btn_" + Program.Settings.Language)
+                {
+                    item.Checked = true;
+                }
+                else
+                {
+                    item.Checked = false;
+                }
             }
         }
 
-        private void LanguageENBtn_Click(object sender, EventArgs e)
+        private void LanguageXXBtn_Click(object sender, EventArgs e)
         {
-            if (LanguageENBtn.Checked) { return; }
-            Program.Settings.Language = "en-US";
+            ToolStripMenuItem item = (ToolStripMenuItem)sender;
+            if (item.Checked)
+                return;
+            string lang = item.Name.Substring(4);
+            Program.Settings.Language = lang;
             Program.Settings.SaveSettings();
             switchLanguage();
-            LanguageENBtn.Checked = true;
-            LanguageCNBtn.Checked = false;
-            LanguageBRBtn.Checked = false;
-        }
-
-        private void LanguageCNBtn_Click(object sender, EventArgs e)
-        {
-            if (LanguageCNBtn.Checked) { return; }
-            Program.Settings.Language = "zh-CN";
-            Program.Settings.SaveSettings();
-            switchLanguage();
-            LanguageCNBtn.Checked = true;
-            LanguageENBtn.Checked = false;
-            LanguageBRBtn.Checked = false;
-        }
-
-        private void LanguageBRBtn_Click(object sender, EventArgs e)
-        {
-            if (LanguageBRBtn.Checked) { return; }
-            Program.Settings.Language = "pt-BR";
-            Program.Settings.SaveSettings();
-            switchLanguage();
-            LanguageBRBtn.Checked = true;
-            LanguageENBtn.Checked = false;
-            LanguageCNBtn.Checked = false;
         }
 
         private void MenuShowTagCount_Click(object sender, EventArgs e)

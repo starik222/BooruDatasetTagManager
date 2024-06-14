@@ -124,12 +124,12 @@ namespace BooruDatasetTagManager
             // 
             // numericUpDown1
             // 
-            numericUpDown1.Location = new System.Drawing.Point(140, 11);
+            numericUpDown1.Location = new System.Drawing.Point(222, 11);
             numericUpDown1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             numericUpDown1.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
             numericUpDown1.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.Size = new System.Drawing.Size(140, 23);
+            numericUpDown1.Size = new System.Drawing.Size(81, 23);
             numericUpDown1.TabIndex = 3;
             numericUpDown1.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
@@ -180,9 +180,9 @@ namespace BooruDatasetTagManager
             // 
             // textBox2
             // 
-            textBox2.Location = new System.Drawing.Point(140, 135);
+            textBox2.Location = new System.Drawing.Point(222, 135);
             textBox2.Name = "textBox2";
-            textBox2.Size = new System.Drawing.Size(100, 23);
+            textBox2.Size = new System.Drawing.Size(184, 23);
             textBox2.TabIndex = 8;
             // 
             // LabelSeparatorSave
@@ -196,9 +196,9 @@ namespace BooruDatasetTagManager
             // 
             // textBox1
             // 
-            textBox1.Location = new System.Drawing.Point(140, 103);
+            textBox1.Location = new System.Drawing.Point(222, 103);
             textBox1.Name = "textBox1";
-            textBox1.Size = new System.Drawing.Size(100, 23);
+            textBox1.Size = new System.Drawing.Size(184, 23);
             textBox1.TabIndex = 8;
             // 
             // LabelSeparatorLoad
@@ -214,10 +214,10 @@ namespace BooruDatasetTagManager
             // 
             comboAutocompSort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboAutocompSort.FormattingEnabled = true;
-            comboAutocompSort.Location = new System.Drawing.Point(140, 71);
+            comboAutocompSort.Location = new System.Drawing.Point(222, 71);
             comboAutocompSort.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboAutocompSort.Name = "comboAutocompSort";
-            comboAutocompSort.Size = new System.Drawing.Size(272, 23);
+            comboAutocompSort.Size = new System.Drawing.Size(356, 23);
             comboAutocompSort.TabIndex = 5;
             // 
             // LabelAutocompSort
@@ -234,10 +234,10 @@ namespace BooruDatasetTagManager
             // 
             comboAutocompMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboAutocompMode.FormattingEnabled = true;
-            comboAutocompMode.Location = new System.Drawing.Point(140, 40);
+            comboAutocompMode.Location = new System.Drawing.Point(222, 40);
             comboAutocompMode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboAutocompMode.Name = "comboAutocompMode";
-            comboAutocompMode.Size = new System.Drawing.Size(272, 23);
+            comboAutocompMode.Size = new System.Drawing.Size(356, 23);
             comboAutocompMode.TabIndex = 5;
             // 
             // LabelAutocompMode
@@ -253,7 +253,7 @@ namespace BooruDatasetTagManager
             // LabelChars
             // 
             LabelChars.AutoSize = true;
-            LabelChars.Location = new System.Drawing.Point(228, 165);
+            LabelChars.Location = new System.Drawing.Point(311, 166);
             LabelChars.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             LabelChars.Name = "LabelChars";
             LabelChars.Size = new System.Drawing.Size(35, 15);
@@ -272,12 +272,12 @@ namespace BooruDatasetTagManager
             // 
             // numericUpDown2
             // 
-            numericUpDown2.Location = new System.Drawing.Point(172, 163);
+            numericUpDown2.Location = new System.Drawing.Point(222, 164);
             numericUpDown2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             numericUpDown2.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             numericUpDown2.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numericUpDown2.Name = "numericUpDown2";
-            numericUpDown2.Size = new System.Drawing.Size(48, 23);
+            numericUpDown2.Size = new System.Drawing.Size(81, 23);
             numericUpDown2.TabIndex = 3;
             numericUpDown2.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
@@ -465,7 +465,7 @@ namespace BooruDatasetTagManager
             SettingFrame.Location = new System.Drawing.Point(2, 1);
             SettingFrame.Name = "SettingFrame";
             SettingFrame.SelectedIndex = 0;
-            SettingFrame.Size = new System.Drawing.Size(565, 427);
+            SettingFrame.Size = new System.Drawing.Size(630, 427);
             SettingFrame.TabIndex = 6;
             SettingFrame.Tabs.Add(tabGeneral);
             SettingFrame.Tabs.Add(tabUI);
@@ -496,7 +496,7 @@ namespace BooruDatasetTagManager
             tabGeneral.Controls.Add(LabelAutocompSort);
             tabGeneral.Location = new System.Drawing.Point(1, 23);
             tabGeneral.Name = "tabGeneral";
-            tabGeneral.Size = new System.Drawing.Size(563, 403);
+            tabGeneral.Size = new System.Drawing.Size(628, 403);
             tabGeneral.Text = "General";
             // 
             // checkBoxFixOnLoad
@@ -511,16 +511,16 @@ namespace BooruDatasetTagManager
             // 
             // textBox4
             // 
-            textBox4.Location = new System.Drawing.Point(140, 227);
+            textBox4.Location = new System.Drawing.Point(222, 227);
             textBox4.Name = "textBox4";
-            textBox4.Size = new System.Drawing.Size(272, 23);
+            textBox4.Size = new System.Drawing.Size(356, 23);
             textBox4.TabIndex = 8;
             // 
             // textBox3
             // 
-            textBox3.Location = new System.Drawing.Point(140, 195);
+            textBox3.Location = new System.Drawing.Point(222, 195);
             textBox3.Name = "textBox3";
-            textBox3.Size = new System.Drawing.Size(100, 23);
+            textBox3.Size = new System.Drawing.Size(184, 23);
             textBox3.TabIndex = 8;
             // 
             // label6
@@ -557,9 +557,9 @@ namespace BooruDatasetTagManager
             tabUI.Controls.Add(BtnGridviewFontChange);
             tabUI.Controls.Add(label14);
             tabUI.Controls.Add(label11);
-            tabUI.Location = new System.Drawing.Point(1, 23);
+            tabUI.Location = new System.Drawing.Point(0, 0);
             tabUI.Name = "tabUI";
-            tabUI.Size = new System.Drawing.Size(563, 403);
+            tabUI.Size = new System.Drawing.Size(0, 0);
             tabUI.Text = "UI";
             // 
             // label7
@@ -626,7 +626,7 @@ namespace BooruDatasetTagManager
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             CancelButton = BtnCancel;
-            ClientSize = new System.Drawing.Size(570, 479);
+            ClientSize = new System.Drawing.Size(635, 479);
             Controls.Add(SettingFrame);
             Controls.Add(BtnCancel);
             Controls.Add(BtnSave);
