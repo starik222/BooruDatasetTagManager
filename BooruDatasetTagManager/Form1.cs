@@ -113,7 +113,7 @@ namespace BooruDatasetTagManager
                 }
                 else
                 {
-                    MessageBox.Show("At least one column must be visible.");
+                    MessageBox.Show(I18n.GetText("TipColumnMustVisible"));
                 }
             }
         }
@@ -131,7 +131,7 @@ namespace BooruDatasetTagManager
         {
             if (Program.DataManager != null && Program.DataManager.IsDataSetChanged())
             {
-                DialogResult result = MessageBox.Show("The dataset has been changed,\ndo you want to save the changes?", "Saving changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show(I18n.GetText("TipDSChangeSaveText"), I18n.GetText("TipDSChangeSaveTitle"), MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
                     Program.DataManager.SaveAll();
@@ -515,7 +515,7 @@ namespace BooruDatasetTagManager
         {
             if (gridViewDS.SelectedRows.Count != 1)
             {
-                MessageBox.Show("Replace does not support multiple selection. Choose one image.");
+                MessageBox.Show(I18n.GetText("TipReplaceNotSupportMultSel"));
                 return;
             }
 
@@ -881,7 +881,7 @@ namespace BooruDatasetTagManager
                 return;
             }
             EditableTagList clonedTagList = (EditableTagList)((EditableTagList)gridViewTags.DataSource).Clone();
-            switch (MessageBox.Show("Set tag list to empty images only?\nYes - only empty, No - to all images, Cancel - do nothing.", "Tag setting option", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
+            switch (MessageBox.Show(I18n.GetText("TipSetToAllText"), I18n.GetText("TipSetToAllTitle"), MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
             {
                 case DialogResult.Yes:
                     Program.DataManager.SetTagListToAll(clonedTagList, true);
@@ -898,7 +898,7 @@ namespace BooruDatasetTagManager
         {
             if (Program.DataManager != null && Program.DataManager.IsDataSetChanged())
             {
-                DialogResult result = MessageBox.Show("The dataset has been changed,\ndo you want to save the changes?", "Saving changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show(I18n.GetText("TipDSChangeSaveText"), I18n.GetText("TipDSChangeSaveTitle"), MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
                     Program.DataManager.SaveAll();
@@ -929,12 +929,6 @@ namespace BooruDatasetTagManager
                     ((DataGridViewImageColumn)gridViewDS.Columns[i]).ImageLayout = DataGridViewImageCellLayout.NotSet;
                     gridViewDS.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 }
-                if (gridViewDS.Columns[i].Name == "Loss" || gridViewDS.Columns[i].Name == "LastLoss")
-                {
-                    gridViewDS.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
-                    gridViewDS.Columns[i].Visible = Program.DataManager.IsLossLoaded;
-                }
-
             }
         }
 
@@ -1057,7 +1051,7 @@ namespace BooruDatasetTagManager
                 {
                     if (string.IsNullOrEmpty((string)gridViewTags["Image", e.RowIndex].Value))
                     {
-                        MessageBox.Show("Image name must be filled!");
+                        MessageBox.Show(I18n.GetText("TipImageNameMustFilled"));
                         this.BeginInvoke(new MethodInvoker(() =>
                         {
                             gridViewTags.Rows.RemoveAt(e.RowIndex);
@@ -1081,7 +1075,7 @@ namespace BooruDatasetTagManager
         {
             if (gridViewDS.SelectedRows.Count != 1)
             {
-                SetStatus("The number of selected images is not equal to 1");
+                SetStatus(I18n.GetText("TipSelectedImgMustEqual1"));
                 return;
             }
 
@@ -1099,7 +1093,7 @@ namespace BooruDatasetTagManager
         {
             if (gridViewDS.SelectedRows.Count < 2)
             {
-                SetStatus("The number of selected images must be greater than 1");
+                SetStatus(I18n.GetText("TipSelectedImgMustGreated1"));
                 return;
             }
             ((MultiSelectDataTable)gridViewTags.DataSource).AddTag(tag, skipExist, addType, pos);
@@ -1109,7 +1103,7 @@ namespace BooruDatasetTagManager
         {
             if (gridViewDS.SelectedRows.Count == 0)
             {
-                SetStatus("The number of selected images must be greater than 0");
+                SetStatus(I18n.GetText("TipSelectedImgMustGreated0"));
                 return;
             }
 
@@ -1152,7 +1146,7 @@ namespace BooruDatasetTagManager
         {
             if (gridViewAllTags.SelectedCells.Count == 0 || gridViewDS.SelectedRows.Count == 0)
             {
-                SetStatus("Images or tags not selected!");
+                SetStatus(I18n.GetText("TipImgOrTagNotSelect"));
                 return;
             }
             foreach (var item in GetSelectedTagsInAllTags())
@@ -1170,7 +1164,7 @@ namespace BooruDatasetTagManager
         {
             if (gridViewAllTags.SelectedCells.Count == 0 || gridViewDS.SelectedRows.Count == 0)
             {
-                SetStatus("Images or tags not selected!");
+                SetStatus(I18n.GetText("TipImgOrTagNotSelect"));
                 return;
             }
             foreach (var item in GetSelectedTagsInAllTags())
@@ -1539,7 +1533,6 @@ namespace BooruDatasetTagManager
         {
             I18n.Initialize(Program.Settings.Language);
             fileToolStripMenuItem.Text = I18n.GetText("MenuLabelFile");
-            MenuSetting.Text = I18n.GetText("MenuLabelSettings");
             viewToolStripMenuItem.Text = I18n.GetText("MenuLabelView");
             toolStripLabelDataSet.Text = I18n.GetText("UILabelDataSet");
             toolStripLabelAllTags.Text = I18n.GetText("UILabelAllTags");
@@ -1553,6 +1546,12 @@ namespace BooruDatasetTagManager
             MenuHideTags.Text = I18n.GetText("MenuHideTags");
             MenuHideDataset.Text = I18n.GetText("MenuHideDataset");
             MenuLanguage.Text = I18n.GetText("MenuMenuLanguage");
+            MenuSetting.Text = I18n.GetText("MenuLabelOptions");
+            settingsToolStripMenuItem.Text = I18n.GetText("MenuSettings");
+            autoTaggerSettingsToolStripMenuItem.Text = I18n.GetText("MenuAutoTaggerSettings");
+            toolsToolStripMenuItem.Text = I18n.GetText("MenuTools");
+            replaceTransparentBackgroundToolStripMenuItem.Text = I18n.GetText("MenuReplaceTranspColor");
+            generateTagsWithAutoTaggerForAllImagesToolStripMenuItem.Text = I18n.GetText("MenuGenTagsForAllImages");
 
             BtnTagAddToAll.Text = I18n.GetText("BtnTagAddToAll");
             BtnTagAdd.Text = I18n.GetText("BtnTagAdd");
@@ -1567,6 +1566,10 @@ namespace BooruDatasetTagManager
             BtnTagUp.Text = I18n.GetText("BtnTagUp");
             BtnTagDown.Text = I18n.GetText("BtnTagDown");
             BtnTagFindInAll.Text = I18n.GetText("BtnTagFindInAll");
+            toolStripSplitButton1.Text = I18n.GetText("BtnAutoGenerateTagsRoot");
+            btnAutoGetTagsDefSet.Text = I18n.GetText("BtnAutoGetTagsDefSet");
+            btnAutoGetTagsOpenSet.Text = I18n.GetText("BtnAutoGetTagsOpenSet");
+            btnAutoAddSelToImageTags.Text = I18n.GetText("BtnAutoAddSelToImageTags");
 
             BtnTagSwitch.Text = I18n.GetText("BtnTagSwitch");
             BtnTagAddToAll.Text = I18n.GetText("BtnTagAddToAll");
@@ -1585,6 +1588,10 @@ namespace BooruDatasetTagManager
             BtnMenuGenTagsWithCurrentSettings.Text = I18n.GetText("BtnMenuGenTagsWithCurrentSettings");
             BtnMenuGenTagsWithSetWindow.Text = I18n.GetText("BtnMenuGenTagsWithSetWindow");
             toolStripPromptSortBtn.Text = I18n.GetText("toolStripPromptSortBtn");
+            toolStripLabelWeight.Text = I18n.GetText("UILabelWeight");
+            tabAllTags.Text = I18n.GetText("UITabAllTags");
+            tabAutoTags.Text = I18n.GetText("UITabAutoTags");
+            tabPreview.Text = I18n.GetText("UITabPreview");
 
 
             foreach (ToolStripMenuItem item in MenuLanguage.DropDownItems)
@@ -1650,7 +1657,7 @@ namespace BooruDatasetTagManager
             Form_settings settings = new Form_settings();
             if (settings.ShowDialog() == DialogResult.OK)
             {
-                SetStatus("Settings have been saved");
+                SetStatus(I18n.GetText("TipSettingsSaved"));
             }
             settings.Close();
             switchLanguage();
@@ -1675,7 +1682,7 @@ namespace BooruDatasetTagManager
             if (backgroundReplace.ShowDialog() != DialogResult.OK)
                 return;
             LockEdit(true);
-            SetStatus("In progress, please wait...");
+            SetStatus(I18n.GetText("InProgress"));
             bool randomColor = backgroundReplace.checkBox1.Checked;
             Color replColor = backgroundReplace.pictureBox1.BackColor;
             List<DataItem> selectedTagsList = new List<DataItem>();
@@ -1702,7 +1709,7 @@ namespace BooruDatasetTagManager
                 }
             });
             LockEdit(false);
-            SetStatus("Background replacement complete!");
+            SetStatus(I18n.GetText("TipBackgrRepComplete"));
         }
 
         #region HotkeysCode
@@ -1875,7 +1882,7 @@ namespace BooruDatasetTagManager
                 if (autoTaggerSettings.ShowDialog() != DialogResult.OK || Program.Settings.AutoTagger.InterragatorParams.Count == 0)
                 {
                     autoTaggerSettings.Close();
-                    SetStatus("Generation operation canceled");
+                    SetStatus(I18n.GetText("TipGenCancel"));
                     return new List<AutoTagItem>();
                 }
             }
@@ -1883,7 +1890,7 @@ namespace BooruDatasetTagManager
             {
                 if (!await Program.AutoTagger.ConnectAsync())
                 {
-                    SetStatus("Unable to connect to the Interrogator service! Please start the service from the interrogator_rpc folder.");
+                    SetStatus(I18n.GetText("TipUnConnectInterrogator"));
                     return new List<AutoTagItem>();
                 }
             }

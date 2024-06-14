@@ -35,7 +35,7 @@ namespace BooruDatasetTagManager
             }
             try
             {
-                string result = null;
+                string result = "";
                 if (!currentLangDict.TryGetValue(key, out result))
                 {
                     result = key;

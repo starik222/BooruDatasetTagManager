@@ -55,13 +55,14 @@ namespace BooruDatasetTagManager
             autocompleteFontSettings = Program.Settings.AutocompleteFont;
             comboBoxLanguage.Text = Program.Settings.Language;
             comboBoxPreviewType.SelectedIndex = Program.Settings.PreviewType;
+            SwitchLanguage();
             //hotkeys
             foreach (var item in Program.Settings.Hotkeys.Items)
             {
                 dataGridViewHotkeys.Rows.Add(item.Id, item.Text, item.GetHotkeyString());
             }
             //--
-            SwitchLanguage();
+            
         }
 
         private void ColorManager_SchemeChanded(object sender, EventArgs e)
@@ -175,6 +176,8 @@ namespace BooruDatasetTagManager
             comboAutocompMode.SelectedIndex = Extensions.GetEnumIndexFromValue<AutocompleteMode>(Program.Settings.AutocompleteMode.ToString());
             comboAutocompSort.Items.AddRange(Extensions.GetFriendlyEnumValues<AutocompleteSort>());
             comboAutocompSort.SelectedIndex = Extensions.GetEnumIndexFromValue<AutocompleteSort>(Program.Settings.AutocompleteSort.ToString());
+
+            Program.Settings.Hotkeys.ChangeLanguage();
         }
         bool isControlKeyPressed = false;
         Dictionary<string, HotkeyItem> tempHotkeys = new Dictionary<string, HotkeyItem>();

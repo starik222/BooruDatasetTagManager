@@ -48,7 +48,7 @@ namespace BooruDatasetTagManager
             Items.Add(new HotkeyItem("AllTagsFocus", "Focus on all tag list", Keys.D3, true, false, false));
             Items.Add(new HotkeyItem("AutoTagsFocus", "Focus on AutoTagger preview", Keys.D4, true, false, false));
             Items.Add(new HotkeyItem("PreviewTabFocus", "Focus on preview tab", Keys.D5, true, false, false));
-            
+
             Items.Add(new HotkeyItem("MenuItemSaveChanges", "Save all changes", Keys.S, true, false, false));
             Items.Add(new HotkeyItem("MenuItemShowPreview", "Show preview window", Keys.P, true, false, false));
             Items.Add(new HotkeyItem("MenuHideAllTags", "Hide/show all tags window", Keys.J, true, false, false));
@@ -79,10 +79,47 @@ namespace BooruDatasetTagManager
             Items.Add(new HotkeyItem("BtnMenuGenTagsWithSetWindow", "Generate tags with AutoTagger (open settings window)", Keys.H, false, true, false));
             Items.Add(new HotkeyItem("toolStripPromptSortBtn", "Sort tags", Keys.Q, true, false, false));
         }
-        
+
+        public void ChangeLanguage()
+        {
+            this["DatasetFocus"].Text = I18n.GetText("HKDatasetFocus");
+            this["TagsFocus"].Text = I18n.GetText("HKTagsFocus");
+            this["AllTagsFocus"].Text = I18n.GetText("HKAllTagsFocus");
+            this["AutoTagsFocus"].Text = I18n.GetText("HKAutoTagsFocus");
+            this["PreviewTabFocus"].Text = I18n.GetText("HKPreviewTabFocus");
+            this["MenuItemSaveChanges"].Text = I18n.GetText("HKMenuItemSaveChanges");
+            this["MenuItemShowPreview"].Text = I18n.GetText("HKMenuItemShowPreview");
+            this["MenuHideAllTags"].Text = I18n.GetText("HKMenuHideAllTags");
+            this["MenuHideTags"].Text = I18n.GetText("HKMenuHideTags");
+            this["MenuHideDataset"].Text = I18n.GetText("HKMenuHideDataset");
+            this["BtnTagAdd"].Text = I18n.GetText("HKBtnTagAdd");
+            this["BtnTagDelete"].Text = I18n.GetText("HKBtnTagDelete");
+            this["BtnTagUndo"].Text = I18n.GetText("HKBtnTagUndo");
+            this["BtnTagRedo"].Text = I18n.GetText("HKBtnTagRedo");
+            this["BtnTagUp"].Text = I18n.GetText("HKBtnTagUp");
+            this["BtnTagDown"].Text = I18n.GetText("HKBtnTagDown");
+            this["BtnTagFindInAll"].Text = I18n.GetText("HKBtnTagFindInAll");
+            this["BtnTagAddToAll"].Text = I18n.GetText("HKBtnTagAddToAll");
+            this["BtnTagAddToSelected"].Text = I18n.GetText("HKBtnTagAddToSelected");
+            this["BtnTagAddToFiltered"].Text = I18n.GetText("HKBtnTagAddToFiltered");
+            this["BtnTagDeleteForAll"].Text = I18n.GetText("HKBtnTagDeleteForAll");
+            this["BtnTagDeleteForSelected"].Text = I18n.GetText("HKBtnTagDeleteForSelected");
+            this["BtnTagDeleteForFiltered"].Text = I18n.GetText("HKBtnTagDeleteForFiltered");
+            this["BtnTagReplace"].Text = I18n.GetText("HKBtnTagReplace");
+            this["BtnImageFilter"].Text = I18n.GetText("HKBtnImageFilter");
+            this["BtnImageExitFilter"].Text = I18n.GetText("HKBtnImageExitFilter");
+            this["BtnTagMultiModeSwitch"].Text = I18n.GetText("HKBtnTagMultiModeSwitch");
+            this["BtnTagFilter"].Text = I18n.GetText("HKBtnTagFilter");
+            this["BtnTagExitFilter"].Text = I18n.GetText("HKBtnTagExitFilter");
+            this["BtnMenuGenTagsWithCurrentSettings"].Text = I18n.GetText("HKBtnMenuGenTagsWithCurrentSettings");
+            this["BtnMenuGenTagsWithSetWindow"].Text = I18n.GetText("HKBtnMenuGenTagsWithSetWindow");
+            this["toolStripPromptSortBtn"].Text = I18n.GetText("HKtoolStripPromptSortBtn");
+        }
+
+
     }
 
-    public class HotkeyItem : ICloneable
+        public class HotkeyItem : ICloneable
     {
         public string Id {get; set; }
         [JsonIgnore]

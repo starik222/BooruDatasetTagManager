@@ -114,7 +114,7 @@ namespace BooruDatasetTagManager
             splitContainer2 = new System.Windows.Forms.SplitContainer();
             toolStripContainer2 = new System.Windows.Forms.ToolStripContainer();
             toolStrip3 = new System.Windows.Forms.ToolStrip();
-            toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            toolStripLabelWeight = new System.Windows.Forms.ToolStripLabel();
             toolStripMenuItemWeight = new ToolStripCustomMenuItem();
             toolStripTextBoxWeight = new System.Windows.Forms.ToolStripTextBox();
             toolStripTagsHeader = new System.Windows.Forms.ToolStrip();
@@ -136,7 +136,7 @@ namespace BooruDatasetTagManager
             btnAutoGetTagsDefSet = new System.Windows.Forms.ToolStripButton();
             btnAutoGetTagsOpenSet = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
-            toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            btnAutoAddSelToImageTags = new System.Windows.Forms.ToolStripButton();
             toolStrip2 = new System.Windows.Forms.ToolStrip();
             toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             tabPreview = new Manina.Windows.Forms.Tab();
@@ -982,17 +982,17 @@ namespace BooruDatasetTagManager
             // toolStrip3
             // 
             toolStrip3.Dock = System.Windows.Forms.DockStyle.None;
-            toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripLabel2, toolStripMenuItemWeight, toolStripTextBoxWeight });
+            toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripLabelWeight, toolStripMenuItemWeight, toolStripTextBoxWeight });
             toolStrip3.Location = new System.Drawing.Point(3, 0);
             toolStrip3.Name = "toolStrip3";
             toolStrip3.Size = new System.Drawing.Size(362, 38);
             toolStrip3.TabIndex = 0;
             // 
-            // toolStripLabel2
+            // toolStripLabelWeight
             // 
-            toolStripLabel2.Name = "toolStripLabel2";
-            toolStripLabel2.Size = new System.Drawing.Size(48, 35);
-            toolStripLabel2.Text = "Weight:";
+            toolStripLabelWeight.Name = "toolStripLabelWeight";
+            toolStripLabelWeight.Size = new System.Drawing.Size(48, 35);
+            toolStripLabelWeight.Text = "Weight:";
             // 
             // toolStripMenuItemWeight
             // 
@@ -1196,7 +1196,7 @@ namespace BooruDatasetTagManager
             // 
             toolStripAutoTags.Dock = System.Windows.Forms.DockStyle.None;
             toolStripAutoTags.ImageScalingSize = new System.Drawing.Size(32, 32);
-            toolStripAutoTags.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { btnAutoGetTagsDefSet, btnAutoGetTagsOpenSet, toolStripSeparator12, toolStripButton2 });
+            toolStripAutoTags.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { btnAutoGetTagsDefSet, btnAutoGetTagsOpenSet, toolStripSeparator12, btnAutoAddSelToImageTags });
             toolStripAutoTags.Location = new System.Drawing.Point(0, 3);
             toolStripAutoTags.Name = "toolStripAutoTags";
             toolStripAutoTags.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
@@ -1228,15 +1228,15 @@ namespace BooruDatasetTagManager
             toolStripSeparator12.Name = "toolStripSeparator12";
             toolStripSeparator12.Size = new System.Drawing.Size(6, 39);
             // 
-            // toolStripButton2
+            // btnAutoAddSelToImageTags
             // 
-            toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            toolStripButton2.Image = Properties.Resources.Add;
-            toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            toolStripButton2.Name = "toolStripButton2";
-            toolStripButton2.Size = new System.Drawing.Size(36, 36);
-            toolStripButton2.Text = "Add selected tags to image tags";
-            toolStripButton2.Click += toolStripButton2_Click;
+            btnAutoAddSelToImageTags.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            btnAutoAddSelToImageTags.Image = Properties.Resources.Add;
+            btnAutoAddSelToImageTags.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btnAutoAddSelToImageTags.Name = "btnAutoAddSelToImageTags";
+            btnAutoAddSelToImageTags.Size = new System.Drawing.Size(36, 36);
+            btnAutoAddSelToImageTags.Text = "Add selected tags to image tags";
+            btnAutoAddSelToImageTags.Click += toolStripButton2_Click;
             // 
             // toolStrip2
             // 
@@ -1494,12 +1494,12 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
         private System.Windows.Forms.ToolStrip toolStrip3;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.ToolStripLabel toolStripLabelWeight;
         private ToolStripCustomMenuItem toolStripMenuItemWeight;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBoxWeight;
         private System.Windows.Forms.ToolStripMenuItem generateTagsWithAutoTaggerForAllImagesToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton btnAutoAddSelToImageTags;
         private System.Windows.Forms.DataGridViewTextBoxColumn TagsColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn TranslationColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn CountColumn;

@@ -35,6 +35,7 @@ namespace BooruDatasetTagManager
             #region waitForm
             Form f_wait = new Form();
             I18n.Initialize(Program.Settings.Language);
+            Settings.Hotkeys.ChangeLanguage();
             f_wait.AutoScaleMode = AutoScaleMode.Dpi;
             f_wait.Width = 480;
             f_wait.Height = 144;
