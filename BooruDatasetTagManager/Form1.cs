@@ -18,6 +18,7 @@ using System.Transactions;
 using System.Windows.Forms;
 using Translator;
 using static BooruDatasetTagManager.DatasetManager;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BooruDatasetTagManager
 {
@@ -214,13 +215,13 @@ namespace BooruDatasetTagManager
         private void ShowPreview(string imgPath, bool separateWindow = false)
         {
             Image img = Extensions.GetImageFromFile(imgPath);
-            if (separateWindow || Program.Settings.PreviewType == 1)
+            if (separateWindow || Program.Settings.PreviewType == ImagePreviewType.SeparateWindow)
             {
                 if (fPreview == null || fPreview.IsDisposed)
                     fPreview = new Form_preview();
                 fPreview.Show(img);
             }
-            else if (Program.Settings.PreviewType == 0)
+            else if (Program.Settings.PreviewType ==  ImagePreviewType.PreviewInMainWindow)
             {
                 pictureBoxPreview.Image?.Dispose();
                 pictureBoxPreview.Image = img;
@@ -392,7 +393,7 @@ namespace BooruDatasetTagManager
                     }
                     if (addTag.ShowDialog() == DialogResult.OK)
                     {
-                        AddingType addType = (AddingType)Enum.Parse(typeof(AddingType), (string)addTag.comboBox1.SelectedItem);
+                        AddingType addType = Extensions.GetEnumItemFromFriendlyText<DatasetManager.AddingType>((string)addTag.comboBox1.SelectedItem);
                         int customIndex = (int)addTag.numericUpDown1.Value;
                         bool skipExist = addTag.checkBoxSkipExist.Checked;
                         AddTagMultiselectedMode(addTag.tagTextBox.Text, skipExist, addType, customIndex);
@@ -494,7 +495,7 @@ namespace BooruDatasetTagManager
             {
                 int customIndex = (int)addTag.numericUpDown1.Value;
                 bool skipExist = addTag.checkBoxSkipExist.Checked;
-                DatasetManager.AddingType addType = (DatasetManager.AddingType)Enum.Parse(typeof(DatasetManager.AddingType), (string)addTag.comboBox1.SelectedItem);
+                DatasetManager.AddingType addType = Extensions.GetEnumItemFromFriendlyText<DatasetManager.AddingType>((string)addTag.comboBox1.SelectedItem);
                 Program.DataManager.AddTagToAll(addTag.tagTextBox.Text, skipExist, addType, customIndex, filtered);
                 if (gridViewDS.SelectedRows.Count == 1)
                 {
@@ -1592,6 +1593,7 @@ namespace BooruDatasetTagManager
             tabAllTags.Text = I18n.GetText("UITabAllTags");
             tabAutoTags.Text = I18n.GetText("UITabAutoTags");
             tabPreview.Text = I18n.GetText("UITabPreview");
+            toolStripLabel1.Text = I18n.GetText("UITabAutoTagsAutoGenLabel");
 
 
             foreach (ToolStripMenuItem item in MenuLanguage.DropDownItems)

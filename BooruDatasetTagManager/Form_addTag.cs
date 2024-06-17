@@ -22,12 +22,13 @@ namespace BooruDatasetTagManager
             tagTextBox.Size = new Size(this.Width - tagTextBox.Location.X - 20, 23);
             Controls.Add(tagTextBox);
             tagTextBox.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
-            comboBox1.Items.AddRange(Enum.GetNames(typeof(DatasetManager.AddingType)));
-            comboBox1.SelectedItem = "Down";
-            checkBoxSkipExist.Text = I18n.GetText("CheckBoxSkipExist");
+            comboBox1.Items.AddRange(Extensions.GetFriendlyEnumValues<DatasetManager.AddingType>());
+            comboBox1.SelectedIndex = Extensions.GetEnumIndexFromValue<DatasetManager.AddingType>("Down");
+
             tagTextBox.ItemSelectionComplete += TagTextBox_ItemSelectionComplete;
             Program.ColorManager.ChangeColorScheme(this, Program.ColorManager.SelectedScheme);
             Program.ColorManager.ChangeColorSchemeInConteiner(Controls, Program.ColorManager.SelectedScheme);
+            SwitchLanguage();
         }
 
         private void TagTextBox_ItemSelectionComplete(object sender, EventArgs e)
@@ -62,7 +63,8 @@ namespace BooruDatasetTagManager
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if ((string)comboBox1.SelectedItem == "Custom")
+            
+            if (Extensions.GetEnumItemFromFriendlyText<DatasetManager.AddingType>((string)comboBox1.SelectedItem) == DatasetManager.AddingType.Custom)
             {
                 numericUpDown1.Visible = true;
             }
@@ -79,6 +81,14 @@ namespace BooruDatasetTagManager
         {
             if (tagTextBox.IsListBoxVisible())
                 tagTextBox.ResetListBox();
+        }
+
+        private void SwitchLanguage()
+        {
+            this.Text = I18n.GetText("UIAddTagForm");
+            label2.Text = I18n.GetText("UIAddTagAddingPosition");
+            label1.Text = I18n.GetText("UIAddTagTag");
+            checkBoxSkipExist.Text = I18n.GetText("CheckBoxSkipExist");
         }
     }
 }

@@ -173,7 +173,7 @@
             // 
             checkBoxSkipInternet.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             checkBoxSkipInternet.AutoSize = true;
-            checkBoxSkipInternet.Location = new System.Drawing.Point(156, 322);
+            checkBoxSkipInternet.Location = new System.Drawing.Point(240, 322);
             checkBoxSkipInternet.Name = "checkBoxSkipInternet";
             checkBoxSkipInternet.Size = new System.Drawing.Size(139, 19);
             checkBoxSkipInternet.TabIndex = 8;

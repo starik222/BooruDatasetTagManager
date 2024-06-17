@@ -43,6 +43,12 @@ namespace BooruDatasetTagManager
         Xor
     }
 
+    public enum ImagePreviewType
+    {
+        PreviewInMainWindow,
+        SeparateWindow
+    }
+
     public enum NetworkUnionMode
     {
         Addition,

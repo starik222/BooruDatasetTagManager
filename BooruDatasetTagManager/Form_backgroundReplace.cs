@@ -37,5 +37,12 @@ namespace BooruDatasetTagManager
                 return;
             pictureBox1.BackColor = colorDialog.Color;
         }
+
+        private void SwitchLanguage()
+        {
+            this.Text = I18n.GetText("UIAutoTagForm");
+            label1.Text = I18n.GetText("UIAutoBackRepReplacementColor");
+            checkBox1.Text = I18n.GetText("UIAutoBackRepRandomColor");
+        }
     }
 }

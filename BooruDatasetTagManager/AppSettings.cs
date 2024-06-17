@@ -20,7 +20,7 @@ namespace BooruDatasetTagManager
         public AutocompleteMode AutocompleteMode { get; set; } = AutocompleteMode.StartWith;
         public AutocompleteSort AutocompleteSort { get; set; } = AutocompleteSort.Alphabetical;
         public bool FixTagsOnSaveLoad { get; set; } = true;
-        public int PreviewType { get; set; } = 0;
+        public ImagePreviewType PreviewType { get; set; } = ImagePreviewType.PreviewInMainWindow;
         //public bool FixTagsOnSave { get; set; } = true;
         public string SeparatorOnLoad { get; set; } = ",";
         public string SeparatorOnSave { get; set; } = ", ";

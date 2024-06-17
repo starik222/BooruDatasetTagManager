@@ -29,7 +29,7 @@ namespace BooruDatasetTagManager
             comboBox1.DisplayMember = "Name";
             comboBox1.ValueMember = "Code";
             comboBox1.SelectedValue = Program.Settings.TranslationLanguage;
-            checkBox1.Checked = Program.Settings.OnlyManualTransInAutocomplete;
+            checkBoxLoadOnlyManual.Checked = Program.Settings.OnlyManualTransInAutocomplete;
             comboBox2.Items.AddRange(Extensions.GetFriendlyEnumValues<TranslationService>());
             comboBox2.SelectedIndex = Extensions.GetEnumIndexFromValue<TranslationService>(Program.Settings.TransService.ToString());
             comboAutocompMode.Items.AddRange(Extensions.GetFriendlyEnumValues<AutocompleteMode>());
@@ -53,8 +53,10 @@ namespace BooruDatasetTagManager
             gridFontSettings = Program.Settings.GridViewFont;
             label14.Text = Program.Settings.AutocompleteFont.ToString();
             autocompleteFontSettings = Program.Settings.AutocompleteFont;
-            comboBoxLanguage.Text = Program.Settings.Language;
-            comboBoxPreviewType.SelectedIndex = Program.Settings.PreviewType;
+            comboBoxLanguage.Items.AddRange(I18n.GetLanguages().ToArray());
+            comboBoxLanguage.SelectedItem = Program.Settings.Language;
+            comboBoxPreviewType.Items.AddRange(Extensions.GetFriendlyEnumValues<ImagePreviewType>());
+            comboBoxPreviewType.SelectedIndex = Extensions.GetEnumIndexFromValue<ImagePreviewType>(Program.Settings.PreviewType.ToString());
             SwitchLanguage();
             //hotkeys
             foreach (var item in Program.Settings.Hotkeys.Items)
@@ -82,7 +84,7 @@ namespace BooruDatasetTagManager
             Program.Settings.TranslationLanguage = (string)comboBox1.SelectedValue;
             //Program.Settings.TransService = (TranslationService)Enum.Parse(typeof(TranslationService), comboBox2.SelectedItem.ToString(), true);
             Program.Settings.TransService = Extensions.GetEnumItemFromFriendlyText<TranslationService>(comboBox2.SelectedItem.ToString());
-            Program.Settings.OnlyManualTransInAutocomplete = checkBox1.Checked;
+            Program.Settings.OnlyManualTransInAutocomplete = checkBoxLoadOnlyManual.Checked;
             Program.Settings.AutocompleteMode = Extensions.GetEnumItemFromFriendlyText<AutocompleteMode>(comboAutocompMode.SelectedItem.ToString());
             Program.Settings.AutocompleteSort = Extensions.GetEnumItemFromFriendlyText<AutocompleteSort>(comboAutocompSort.SelectedItem.ToString());
             Program.Settings.FixTagsOnSaveLoad = checkBoxFixOnLoad.Checked;
@@ -99,7 +101,7 @@ namespace BooruDatasetTagManager
             Program.Settings.Language = (string)comboBoxLanguage.SelectedItem;
             Program.Settings.ColorScheme = (string)comboBoxColorScheme.SelectedItem;
             Program.ColorManager.SelectScheme(Program.Settings.ColorScheme);
-            Program.Settings.PreviewType = comboBoxPreviewType.SelectedIndex;
+            Program.Settings.PreviewType = Extensions.GetEnumItemFromFriendlyText<ImagePreviewType>(comboBoxPreviewType.SelectedItem.ToString());
             //hotkeys
             if (tempHotkeys.Count > 0)
             {
@@ -165,6 +167,17 @@ namespace BooruDatasetTagManager
             BtnCancel.Text = I18n.GetText("SettingBtnCancel");
             BtnGridviewFontChange.Text = I18n.GetText("SettingBtnChange");
             BtnAutocompFontChange.Text = I18n.GetText("SettingBtnChange");
+            labelDelExt.Text = I18n.GetText("SettingDefExt");
+            labelCaptionFileExt.Text = I18n.GetText("SettingCaptionExt");
+            labelColorScheme.Text = I18n.GetText("SettingColorScheme");
+            labelPreviewLocation.Text = I18n.GetText("SettingPreviewLocation");
+            tabHotkeys.Text = I18n.GetText("SettingHotkeysTab");
+            labelHotkeysHelp.Text = I18n.GetText("SettingHotkeysHelpText");
+            dataGridViewHotkeys.Columns["Command"].HeaderText = I18n.GetText("SettingHotkeysCommandColumn");
+            dataGridViewHotkeys.Columns["Hotkey"].HeaderText = I18n.GetText("SettingHotkeysHotkeyColumn");
+            labelTransLang.Text = I18n.GetText("SettingTranslationLang");
+            labelTranslService.Text = I18n.GetText("SettingTranslationSrv");
+            checkBoxLoadOnlyManual.Text = I18n.GetText("SettingLoadOnlyManualAutocomplete");
 
             comboAutocompMode.Items.Clear();
             comboAutocompSort.Items.Clear();

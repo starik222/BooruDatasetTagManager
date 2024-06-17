@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BooruDatasetTagManager
 {
@@ -15,14 +16,15 @@ namespace BooruDatasetTagManager
         public Form_AutoTaggerSettings()
         {
             InitializeComponent();
-            comboBoxSortMode.Items.AddRange(Enum.GetNames(typeof(AutoTaggerSort)));
-            comboBoxUnionMode.Items.AddRange(Enum.GetNames(typeof(NetworkUnionMode)));
-            comboBoxSetMode.Items.AddRange(Enum.GetNames(typeof(NetworkResultSetMode)));
+            comboBoxSortMode.Items.AddRange(Extensions.GetFriendlyEnumValues<AutoTaggerSort>());
+            comboBoxUnionMode.Items.AddRange(Extensions.GetFriendlyEnumValues<NetworkUnionMode>());
+            comboBoxSetMode.Items.AddRange(Extensions.GetFriendlyEnumValues<NetworkResultSetMode>());
             Program.ColorManager.ChangeColorScheme(this, Program.ColorManager.SelectedScheme);
             Program.ColorManager.ChangeColorSchemeInConteiner(Controls, Program.ColorManager.SelectedScheme);
             connectRechecker = new Timer();
             connectRechecker.Tick += ConnectRechecker_Tick;
             connectRechecker.Interval = 5000;
+            SwitchLanguage();
         }
 
         private async void ConnectRechecker_Tick(object sender, EventArgs e)
@@ -50,7 +52,7 @@ namespace BooruDatasetTagManager
                 {
                     Label errLabel = new Label();
                     errLabel.Name = "errorLabel";
-                    errLabel.Text = "Unable to connect to the Interrogator service! Please start the service from the interrogator_rpc folder.";
+                    errLabel.Text = I18n.GetText("TipAutoTagUnableConnect");
                     errLabel.Location = new Point(10, 10);
                     errLabel.Size = new Size(Width - 20, Height / 2 - 15);
                     errLabel.Font = new Font("Segoe UI", 12);
@@ -80,9 +82,9 @@ namespace BooruDatasetTagManager
                     }
                 }
                 labelPercent.Text = trackBarThreshold.Value.ToString() + "%";
-                comboBoxSortMode.SelectedItem = Program.Settings.AutoTagger.SortMode.ToString();
-                comboBoxUnionMode.SelectedItem = Program.Settings.AutoTagger.UnionMode.ToString();
-                comboBoxSetMode.SelectedItem = Program.Settings.AutoTagger.SetMode.ToString();
+                comboBoxSortMode.SelectedIndex = Extensions.GetEnumIndexFromValue<AutoTaggerSort>(Program.Settings.AutoTagger.SortMode.ToString());
+                comboBoxUnionMode.SelectedIndex = Extensions.GetEnumIndexFromValue<NetworkUnionMode>(Program.Settings.AutoTagger.UnionMode.ToString());
+                comboBoxSetMode.SelectedIndex = Extensions.GetEnumIndexFromValue<NetworkResultSetMode>(Program.Settings.AutoTagger.SetMode.ToString());
                 checkBoxSerializeVRAM.Checked = Program.Settings.AutoTagger.SerializeVramUsage;
                 checkBoxSkipInternet.Checked = Program.Settings.AutoTagger.SkipInternetRequests;
             }
@@ -101,9 +103,9 @@ namespace BooruDatasetTagManager
             {
                 Program.Settings.AutoTagger.InterragatorParams.Add(new KeyValuePair<string, float>((string)checkedListBoxcomboBoxInterrogators.CheckedItems[i], threshold));
             }
-            Program.Settings.AutoTagger.SortMode = (AutoTaggerSort)Enum.Parse(typeof(AutoTaggerSort), (string)comboBoxSortMode.SelectedItem);
-            Program.Settings.AutoTagger.UnionMode = (NetworkUnionMode)Enum.Parse(typeof(NetworkUnionMode), (string)comboBoxUnionMode.SelectedItem);
-            Program.Settings.AutoTagger.SetMode = (NetworkResultSetMode)Enum.Parse(typeof(NetworkResultSetMode), (string)comboBoxSetMode.SelectedItem);
+            Program.Settings.AutoTagger.SortMode = Extensions.GetEnumItemFromFriendlyText<AutoTaggerSort>(comboBoxSortMode.SelectedItem.ToString());
+            Program.Settings.AutoTagger.UnionMode = Extensions.GetEnumItemFromFriendlyText<NetworkUnionMode>(comboBoxUnionMode.SelectedItem.ToString());
+            Program.Settings.AutoTagger.SetMode = Extensions.GetEnumItemFromFriendlyText<NetworkResultSetMode>(comboBoxSetMode.SelectedItem.ToString());
             Program.Settings.AutoTagger.SerializeVramUsage = checkBoxSerializeVRAM.Checked;
             Program.Settings.AutoTagger.SkipInternetRequests = checkBoxSkipInternet.Checked;
             Program.Settings.SaveSettings();
@@ -123,6 +125,18 @@ namespace BooruDatasetTagManager
             {
                 Controls.RemoveByKey("errorLabel");
             }
+        }
+
+        private void SwitchLanguage()
+        {
+            this.Text = I18n.GetText("UIAutoTagForm");
+            label1.Text = I18n.GetText("UIAutoTagInterrogatorLabel");
+            label5.Text = I18n.GetText("UIAutoTagResultOutputMode");
+            label4.Text = I18n.GetText("UIAutoTagModeMerging");
+            label2.Text = I18n.GetText("UIAutoTagSortMode");
+            label3.Text = I18n.GetText("UIAutoTagThreshold");
+            checkBoxSerializeVRAM.Text = I18n.GetText("UIAutoTagSerializeVram");
+            checkBoxSkipInternet.Text = I18n.GetText("UIAutoTagSkipInternetReq");
         }
     }
 }

@@ -30,7 +30,7 @@ namespace BooruDatasetTagManager
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_settings));
-            label1 = new System.Windows.Forms.Label();
+            labelTransLang = new System.Windows.Forms.Label();
             comboBox1 = new System.Windows.Forms.ComboBox();
             LabelPreviewImageSize = new System.Windows.Forms.Label();
             numericUpDown1 = new System.Windows.Forms.NumericUpDown();
@@ -59,10 +59,10 @@ namespace BooruDatasetTagManager
             LabelTagHeight = new System.Windows.Forms.Label();
             LabelAutocompFont = new System.Windows.Forms.Label();
             LabelTagFont = new System.Windows.Forms.Label();
-            checkBox1 = new System.Windows.Forms.CheckBox();
-            label3 = new System.Windows.Forms.Label();
+            checkBoxLoadOnlyManual = new System.Windows.Forms.CheckBox();
+            labelTranslService = new System.Windows.Forms.Label();
             comboBox2 = new System.Windows.Forms.ComboBox();
-            label2 = new System.Windows.Forms.Label();
+            labelHotkeysHelp = new System.Windows.Forms.Label();
             dataGridViewHotkeys = new System.Windows.Forms.DataGridView();
             CmdId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Command = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -72,11 +72,11 @@ namespace BooruDatasetTagManager
             checkBoxFixOnLoad = new System.Windows.Forms.CheckBox();
             textBox4 = new System.Windows.Forms.TextBox();
             textBox3 = new System.Windows.Forms.TextBox();
-            label6 = new System.Windows.Forms.Label();
-            label5 = new System.Windows.Forms.Label();
+            labelCaptionFileExt = new System.Windows.Forms.Label();
+            labelDelExt = new System.Windows.Forms.Label();
             tabUI = new Manina.Windows.Forms.Tab();
-            label7 = new System.Windows.Forms.Label();
-            label4 = new System.Windows.Forms.Label();
+            labelPreviewLocation = new System.Windows.Forms.Label();
+            labelColorScheme = new System.Windows.Forms.Label();
             comboBoxPreviewType = new System.Windows.Forms.ComboBox();
             comboBoxColorScheme = new System.Windows.Forms.ComboBox();
             tabTranslations = new Manina.Windows.Forms.Tab();
@@ -92,21 +92,21 @@ namespace BooruDatasetTagManager
             tabHotkeys.SuspendLayout();
             SuspendLayout();
             // 
-            // label1
+            // labelTransLang
             // 
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(10, 16);
-            label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(116, 15);
-            label1.TabIndex = 0;
-            label1.Text = "Translation language";
+            labelTransLang.AutoSize = true;
+            labelTransLang.Location = new System.Drawing.Point(10, 16);
+            labelTransLang.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            labelTransLang.Name = "labelTransLang";
+            labelTransLang.Size = new System.Drawing.Size(116, 15);
+            labelTransLang.TabIndex = 0;
+            labelTransLang.Text = "Translation language";
             // 
             // comboBox1
             // 
             comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new System.Drawing.Point(141, 13);
+            comboBox1.Location = new System.Drawing.Point(201, 13);
             comboBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new System.Drawing.Size(263, 23);
@@ -217,7 +217,7 @@ namespace BooruDatasetTagManager
             comboAutocompSort.Location = new System.Drawing.Point(222, 71);
             comboAutocompSort.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboAutocompSort.Name = "comboAutocompSort";
-            comboAutocompSort.Size = new System.Drawing.Size(356, 23);
+            comboAutocompSort.Size = new System.Drawing.Size(397, 23);
             comboAutocompSort.TabIndex = 5;
             // 
             // LabelAutocompSort
@@ -237,7 +237,7 @@ namespace BooruDatasetTagManager
             comboAutocompMode.Location = new System.Drawing.Point(222, 40);
             comboAutocompMode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboAutocompMode.Name = "comboAutocompMode";
-            comboAutocompMode.Size = new System.Drawing.Size(356, 23);
+            comboAutocompMode.Size = new System.Drawing.Size(397, 23);
             comboAutocompMode.TabIndex = 5;
             // 
             // LabelAutocompMode
@@ -294,15 +294,14 @@ namespace BooruDatasetTagManager
             // 
             comboBoxLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBoxLanguage.FormattingEnabled = true;
-            comboBoxLanguage.Items.AddRange(new object[] { "pt-BR", "zh-CN", "en-US" });
-            comboBoxLanguage.Location = new System.Drawing.Point(185, 113);
+            comboBoxLanguage.Location = new System.Drawing.Point(230, 113);
             comboBoxLanguage.Name = "comboBoxLanguage";
             comboBoxLanguage.Size = new System.Drawing.Size(121, 23);
             comboBoxLanguage.TabIndex = 5;
             // 
             // BtnAutocompFontChange
             // 
-            BtnAutocompFontChange.Location = new System.Drawing.Point(362, 81);
+            BtnAutocompFontChange.Location = new System.Drawing.Point(409, 81);
             BtnAutocompFontChange.Name = "BtnAutocompFontChange";
             BtnAutocompFontChange.Size = new System.Drawing.Size(75, 23);
             BtnAutocompFontChange.TabIndex = 4;
@@ -312,7 +311,7 @@ namespace BooruDatasetTagManager
             // 
             // numericUpDown3
             // 
-            numericUpDown3.Location = new System.Drawing.Point(185, 47);
+            numericUpDown3.Location = new System.Drawing.Point(230, 47);
             numericUpDown3.Name = "numericUpDown3";
             numericUpDown3.Size = new System.Drawing.Size(62, 23);
             numericUpDown3.TabIndex = 3;
@@ -320,7 +319,7 @@ namespace BooruDatasetTagManager
             // label14
             // 
             label14.AutoSize = true;
-            label14.Location = new System.Drawing.Point(185, 81);
+            label14.Location = new System.Drawing.Point(230, 81);
             label14.Name = "label14";
             label14.Size = new System.Drawing.Size(12, 15);
             label14.TabIndex = 2;
@@ -329,7 +328,7 @@ namespace BooruDatasetTagManager
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new System.Drawing.Point(185, 17);
+            label11.Location = new System.Drawing.Point(230, 17);
             label11.Name = "label11";
             label11.Size = new System.Drawing.Size(12, 15);
             label11.TabIndex = 2;
@@ -337,7 +336,7 @@ namespace BooruDatasetTagManager
             // 
             // BtnGridviewFontChange
             // 
-            BtnGridviewFontChange.Location = new System.Drawing.Point(362, 17);
+            BtnGridviewFontChange.Location = new System.Drawing.Point(409, 17);
             BtnGridviewFontChange.Name = "BtnGridviewFontChange";
             BtnGridviewFontChange.Size = new System.Drawing.Size(75, 23);
             BtnGridviewFontChange.TabIndex = 1;
@@ -372,46 +371,46 @@ namespace BooruDatasetTagManager
             LabelTagFont.TabIndex = 0;
             LabelTagFont.Text = "Tags gridview font";
             // 
-            // checkBox1
+            // checkBoxLoadOnlyManual
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new System.Drawing.Point(13, 75);
-            checkBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new System.Drawing.Size(286, 19);
-            checkBox1.TabIndex = 2;
-            checkBox1.Text = "Load only manual translations into autocomplete";
-            checkBox1.UseVisualStyleBackColor = true;
+            checkBoxLoadOnlyManual.AutoSize = true;
+            checkBoxLoadOnlyManual.Location = new System.Drawing.Point(13, 75);
+            checkBoxLoadOnlyManual.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            checkBoxLoadOnlyManual.Name = "checkBoxLoadOnlyManual";
+            checkBoxLoadOnlyManual.Size = new System.Drawing.Size(286, 19);
+            checkBoxLoadOnlyManual.TabIndex = 2;
+            checkBoxLoadOnlyManual.Text = "Load only manual translations into autocomplete";
+            checkBoxLoadOnlyManual.UseVisualStyleBackColor = true;
             // 
-            // label3
+            // labelTranslService
             // 
-            label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(10, 47);
-            label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(103, 15);
-            label3.TabIndex = 0;
-            label3.Text = "Translation service";
+            labelTranslService.AutoSize = true;
+            labelTranslService.Location = new System.Drawing.Point(10, 47);
+            labelTranslService.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            labelTranslService.Name = "labelTranslService";
+            labelTranslService.Size = new System.Drawing.Size(103, 15);
+            labelTranslService.TabIndex = 0;
+            labelTranslService.Text = "Translation service";
             // 
             // comboBox2
             // 
             comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new System.Drawing.Point(141, 44);
+            comboBox2.Location = new System.Drawing.Point(201, 44);
             comboBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBox2.Name = "comboBox2";
             comboBox2.Size = new System.Drawing.Size(263, 23);
             comboBox2.TabIndex = 1;
             // 
-            // label2
+            // labelHotkeysHelp
             // 
-            label2.AutoSize = true;
-            label2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            label2.Location = new System.Drawing.Point(0, -15);
-            label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(286, 15);
-            label2.TabIndex = 1;
-            label2.Text = "Select row with shortcut and press shortcut you need";
+            labelHotkeysHelp.AutoSize = true;
+            labelHotkeysHelp.Dock = System.Windows.Forms.DockStyle.Bottom;
+            labelHotkeysHelp.Location = new System.Drawing.Point(0, -15);
+            labelHotkeysHelp.Name = "labelHotkeysHelp";
+            labelHotkeysHelp.Size = new System.Drawing.Size(286, 15);
+            labelHotkeysHelp.TabIndex = 1;
+            labelHotkeysHelp.Text = "Select row with shortcut and press shortcut you need";
             // 
             // dataGridViewHotkeys
             // 
@@ -483,8 +482,8 @@ namespace BooruDatasetTagManager
             tabGeneral.Controls.Add(textBox3);
             tabGeneral.Controls.Add(textBox2);
             tabGeneral.Controls.Add(numericUpDown2);
-            tabGeneral.Controls.Add(label6);
-            tabGeneral.Controls.Add(label5);
+            tabGeneral.Controls.Add(labelCaptionFileExt);
+            tabGeneral.Controls.Add(labelDelExt);
             tabGeneral.Controls.Add(LabelSeparatorSave);
             tabGeneral.Controls.Add(LabelAutocompAfter);
             tabGeneral.Controls.Add(textBox1);
@@ -513,7 +512,7 @@ namespace BooruDatasetTagManager
             // 
             textBox4.Location = new System.Drawing.Point(222, 227);
             textBox4.Name = "textBox4";
-            textBox4.Size = new System.Drawing.Size(356, 23);
+            textBox4.Size = new System.Drawing.Size(184, 23);
             textBox4.TabIndex = 8;
             // 
             // textBox3
@@ -523,28 +522,28 @@ namespace BooruDatasetTagManager
             textBox3.Size = new System.Drawing.Size(184, 23);
             textBox3.TabIndex = 8;
             // 
-            // label6
+            // labelCaptionFileExt
             // 
-            label6.AutoSize = true;
-            label6.Location = new System.Drawing.Point(10, 230);
-            label6.Name = "label6";
-            label6.Size = new System.Drawing.Size(127, 15);
-            label6.TabIndex = 7;
-            label6.Text = "Caption file extensions";
+            labelCaptionFileExt.AutoSize = true;
+            labelCaptionFileExt.Location = new System.Drawing.Point(10, 230);
+            labelCaptionFileExt.Name = "labelCaptionFileExt";
+            labelCaptionFileExt.Size = new System.Drawing.Size(127, 15);
+            labelCaptionFileExt.TabIndex = 7;
+            labelCaptionFileExt.Text = "Caption file extensions";
             // 
-            // label5
+            // labelDelExt
             // 
-            label5.AutoSize = true;
-            label5.Location = new System.Drawing.Point(10, 198);
-            label5.Name = "label5";
-            label5.Size = new System.Drawing.Size(99, 15);
-            label5.TabIndex = 7;
-            label5.Text = "Default extension";
+            labelDelExt.AutoSize = true;
+            labelDelExt.Location = new System.Drawing.Point(10, 198);
+            labelDelExt.Name = "labelDelExt";
+            labelDelExt.Size = new System.Drawing.Size(99, 15);
+            labelDelExt.TabIndex = 7;
+            labelDelExt.Text = "Default extension";
             // 
             // tabUI
             // 
-            tabUI.Controls.Add(label7);
-            tabUI.Controls.Add(label4);
+            tabUI.Controls.Add(labelPreviewLocation);
+            tabUI.Controls.Add(labelColorScheme);
             tabUI.Controls.Add(LabelLanguage);
             tabUI.Controls.Add(LabelTagFont);
             tabUI.Controls.Add(comboBoxPreviewType);
@@ -557,53 +556,52 @@ namespace BooruDatasetTagManager
             tabUI.Controls.Add(BtnGridviewFontChange);
             tabUI.Controls.Add(label14);
             tabUI.Controls.Add(label11);
-            tabUI.Location = new System.Drawing.Point(0, 0);
+            tabUI.Location = new System.Drawing.Point(1, 23);
             tabUI.Name = "tabUI";
-            tabUI.Size = new System.Drawing.Size(0, 0);
+            tabUI.Size = new System.Drawing.Size(628, 403);
             tabUI.Text = "UI";
             // 
-            // label7
+            // labelPreviewLocation
             // 
-            label7.AutoSize = true;
-            label7.Location = new System.Drawing.Point(9, 174);
-            label7.Name = "label7";
-            label7.Size = new System.Drawing.Size(130, 15);
-            label7.TabIndex = 6;
-            label7.Text = "Image preview location";
+            labelPreviewLocation.AutoSize = true;
+            labelPreviewLocation.Location = new System.Drawing.Point(9, 174);
+            labelPreviewLocation.Name = "labelPreviewLocation";
+            labelPreviewLocation.Size = new System.Drawing.Size(130, 15);
+            labelPreviewLocation.TabIndex = 6;
+            labelPreviewLocation.Text = "Image preview location";
             // 
-            // label4
+            // labelColorScheme
             // 
-            label4.AutoSize = true;
-            label4.Location = new System.Drawing.Point(9, 146);
-            label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(80, 15);
-            label4.TabIndex = 6;
-            label4.Text = "Color scheme";
+            labelColorScheme.AutoSize = true;
+            labelColorScheme.Location = new System.Drawing.Point(9, 146);
+            labelColorScheme.Name = "labelColorScheme";
+            labelColorScheme.Size = new System.Drawing.Size(80, 15);
+            labelColorScheme.TabIndex = 6;
+            labelColorScheme.Text = "Color scheme";
             // 
             // comboBoxPreviewType
             // 
             comboBoxPreviewType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBoxPreviewType.FormattingEnabled = true;
-            comboBoxPreviewType.Items.AddRange(new object[] { "\"Preview\" tab in main window", "Separate window" });
-            comboBoxPreviewType.Location = new System.Drawing.Point(185, 171);
+            comboBoxPreviewType.Location = new System.Drawing.Point(230, 171);
             comboBoxPreviewType.Name = "comboBoxPreviewType";
-            comboBoxPreviewType.Size = new System.Drawing.Size(121, 23);
+            comboBoxPreviewType.Size = new System.Drawing.Size(254, 23);
             comboBoxPreviewType.TabIndex = 5;
             // 
             // comboBoxColorScheme
             // 
             comboBoxColorScheme.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBoxColorScheme.FormattingEnabled = true;
-            comboBoxColorScheme.Location = new System.Drawing.Point(185, 142);
+            comboBoxColorScheme.Location = new System.Drawing.Point(230, 142);
             comboBoxColorScheme.Name = "comboBoxColorScheme";
             comboBoxColorScheme.Size = new System.Drawing.Size(121, 23);
             comboBoxColorScheme.TabIndex = 5;
             // 
             // tabTranslations
             // 
-            tabTranslations.Controls.Add(checkBox1);
-            tabTranslations.Controls.Add(label1);
-            tabTranslations.Controls.Add(label3);
+            tabTranslations.Controls.Add(checkBoxLoadOnlyManual);
+            tabTranslations.Controls.Add(labelTransLang);
+            tabTranslations.Controls.Add(labelTranslService);
             tabTranslations.Controls.Add(comboBox1);
             tabTranslations.Controls.Add(comboBox2);
             tabTranslations.Location = new System.Drawing.Point(0, 0);
@@ -614,7 +612,7 @@ namespace BooruDatasetTagManager
             // tabHotkeys
             // 
             tabHotkeys.Controls.Add(dataGridViewHotkeys);
-            tabHotkeys.Controls.Add(label2);
+            tabHotkeys.Controls.Add(labelHotkeysHelp);
             tabHotkeys.Location = new System.Drawing.Point(0, 0);
             tabHotkeys.Name = "tabHotkeys";
             tabHotkeys.Size = new System.Drawing.Size(0, 0);
@@ -653,15 +651,15 @@ namespace BooruDatasetTagManager
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelTransLang;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label LabelPreviewImageSize;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Button BtnSave;
         private System.Windows.Forms.Button BtnCancel;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelTranslService;
         private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBoxLoadOnlyManual;
         private System.Windows.Forms.ComboBox comboAutocompMode;
         private System.Windows.Forms.Label LabelAutocompMode;
         private System.Windows.Forms.ComboBox comboAutocompSort;
@@ -686,7 +684,7 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.Label LabelLanguage;
         private System.Windows.Forms.ComboBox comboBoxLanguage;
         private System.Windows.Forms.DataGridView dataGridViewHotkeys;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelHotkeysHelp;
         private System.Windows.Forms.DataGridViewTextBoxColumn CmdId;
         private System.Windows.Forms.DataGridViewTextBoxColumn Command;
         private System.Windows.Forms.DataGridViewTextBoxColumn Hotkey;
@@ -695,14 +693,14 @@ namespace BooruDatasetTagManager
         private Manina.Windows.Forms.Tab tabUI;
         private Manina.Windows.Forms.Tab tabTranslations;
         private Manina.Windows.Forms.Tab tabHotkeys;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label labelColorScheme;
         private System.Windows.Forms.ComboBox comboBoxColorScheme;
         private System.Windows.Forms.CheckBox checkBoxFixOnLoad;
         private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label labelDelExt;
         private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label labelCaptionFileExt;
+        private System.Windows.Forms.Label labelPreviewLocation;
         private System.Windows.Forms.ComboBox comboBoxPreviewType;
     }
 }
