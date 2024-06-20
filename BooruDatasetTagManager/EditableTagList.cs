@@ -536,6 +536,17 @@ namespace BooruDatasetTagManager
                 eTag.EndEdit();
         }
 
+        public bool IsEditMode()
+        {
+            for (int i = 0; i < List.Count; i++)
+            {
+                var eTag = (EditableTag)List[i];
+                if (eTag.IsEditing)
+                    return true;
+            }
+            return false;
+        }
+
 
         public async Task TranslateAllAsync()
         {

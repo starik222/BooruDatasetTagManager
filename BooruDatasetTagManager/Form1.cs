@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
+using System.Security.AccessControl;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -219,7 +220,7 @@ namespace BooruDatasetTagManager
                     fPreview = new Form_preview();
                 fPreview.Show(img);
             }
-            else if (Program.Settings.PreviewType ==  ImagePreviewType.PreviewInMainWindow)
+            else if (Program.Settings.PreviewType == ImagePreviewType.PreviewInMainWindow)
             {
                 pictureBoxPreview.Image?.Dispose();
                 pictureBoxPreview.Image = img;
@@ -790,7 +791,7 @@ namespace BooruDatasetTagManager
             ResetFilter();
         }
 
-        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
+        private async void dataGridView1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete)
             {
@@ -799,6 +800,54 @@ namespace BooruDatasetTagManager
             else if (e.KeyCode == Keys.Insert)
             {
                 BtnTagAdd.PerformClick();
+            }
+            else if (e.Control && e.KeyCode == Keys.V)
+            {
+                await PasteTagsFromClipboard();
+                e.SuppressKeyPress = true;
+            }
+            else if (e.Control && e.KeyCode == Keys.C)
+            {
+                if (!gridViewTags.CurrentCell.IsInEditMode)
+                {
+                    List<string> tagsToCopy = new List<string>();
+                    tagsToCopy.Add((string)gridViewTags["ImageTags", gridViewTags.CurrentCell.RowIndex].Value);
+                    Clipboard.SetData("PartTagList", tagsToCopy);
+                    SetStatus(I18n.GetText("StatusCopied"));
+                    e.SuppressKeyPress = true;
+                }
+            }
+        }
+
+        private async Task PasteTagsFromClipboard()
+        {
+            if (Clipboard.ContainsData("PartTagList"))
+            {
+                List<string> copiedTags = (List<string>)Clipboard.GetData("PartTagList");
+                if (copiedTags.Count > 0)
+                {
+                    if (gridViewDS.SelectedRows.Count == 1)
+                    {
+
+                        var eTagList = (EditableTagList)gridViewTags.DataSource;
+                        eTagList.AddRange(copiedTags, true);
+                        if (isTranslate)
+                            await FillTranslation(gridViewTags);
+                        SetStatus(I18n.GetText("StatusPasted"));
+
+                    }
+                    else if (gridViewDS.SelectedRows.Count > 1)
+                    {
+                        foreach (var t in copiedTags)
+                        {
+                            AddTagMultiselectedMode(t, true, AddingType.Down);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                SetStatus(I18n.GetText("TipClipboardEmpty"));
             }
         }
 
@@ -1250,13 +1299,18 @@ namespace BooruDatasetTagManager
 
         }
 
-        private void gridViewDS_KeyDown(object sender, KeyEventArgs e)
+        private async void gridViewDS_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete)
             {
                 DeleteImage();
             }
-            if (e.Control || e.Shift)
+            if (e.Control && e.KeyCode == Keys.V)
+            {
+                await PasteTagsFromClipboard();
+                e.SuppressKeyPress = true;
+            }
+            else if (e.Control || e.Shift)
             {
                 isCtrlOrShiftPressed = true;
             }
@@ -2174,6 +2228,25 @@ namespace BooruDatasetTagManager
         private void gridViewAutoTags_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             AddSelectedAutoTagsToImageTags();
+        }
+
+        private void gridViewAllTags_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.C)
+            {
+                if (gridViewAllTags.SelectedCells.Count > 0)
+                {
+                    List<string> tagsToCopy = new List<string>();
+                    for (int i = 0; i < gridViewAllTags.SelectedCells.Count; i++)
+                    {
+                        tagsToCopy.Add((string)gridViewAllTags["TagsColumn", gridViewAllTags.SelectedCells[i].RowIndex].Value);
+                    }
+
+                    Clipboard.SetData("PartTagList", tagsToCopy);
+                    SetStatus(I18n.GetText("StatusCopied"));
+                }
+                e.SuppressKeyPress = true;
+            }
         }
     }
 }
