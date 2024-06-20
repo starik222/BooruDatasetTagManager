@@ -204,3 +204,4 @@ Top=Верх
 Center=Центр
 Down=Низ
 Custom=Другое
+TipClipboardEmpty=Буфер обмена не содержит данных

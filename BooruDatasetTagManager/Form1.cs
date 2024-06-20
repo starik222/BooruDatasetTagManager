@@ -27,7 +27,6 @@ namespace BooruDatasetTagManager
         public MainForm()
         {
             InitializeComponent();
-            tagsBuffer = new List<string>();
             previewPicBox = new PictureBox();
             previewPicBox.Name = "previewPicBox";
             allTagsFilter = new Form_filter();
@@ -57,7 +56,6 @@ namespace BooruDatasetTagManager
 
 
         private Form_filter allTagsFilter;
-        List<string> tagsBuffer;
 
         private bool isAllTags = true;
         private bool isTranslate = false;
@@ -577,11 +575,12 @@ namespace BooruDatasetTagManager
         {
             if (gridViewDS.SelectedRows.Count == 1)
             {
-                tagsBuffer.Clear();
+                List<string> tagsToCopy = new List<string>();
                 for (int i = 0; i < gridViewTags.RowCount; i++)
                 {
-                    tagsBuffer.Add((string)gridViewTags["ImageTags", i].Value);
+                    tagsToCopy.Add((string)gridViewTags["ImageTags", i].Value);
                 }
+                Clipboard.SetData("TagList", tagsToCopy);
                 SetStatus(I18n.GetText("StatusCopied"));
             }
             else if (gridViewDS.SelectedRows.Count > 1)
@@ -603,12 +602,27 @@ namespace BooruDatasetTagManager
         {
             if (gridViewDS.SelectedRows.Count == 1)
             {
-                var eTagList = (EditableTagList)gridViewTags.DataSource;
-                eTagList.Clear();
-                eTagList.AddRange(tagsBuffer, true);
-                if (isTranslate)
-                    await FillTranslation(gridViewTags);
-                SetStatus(I18n.GetText("StatusPasted"));
+                if (Clipboard.ContainsData("TagList"))
+                {
+                    List<string> copiedTags = (List<string>)Clipboard.GetData("TagList");
+                    if (copiedTags.Count > 0)
+                    {
+                        var eTagList = (EditableTagList)gridViewTags.DataSource;
+                        eTagList.Clear();
+                        eTagList.AddRange(copiedTags, true);
+                        if (isTranslate)
+                            await FillTranslation(gridViewTags);
+                        SetStatus(I18n.GetText("StatusPasted"));
+                    }
+                    else
+                    {
+                        MessageBox.Show(I18n.GetText("TipClipboardEmpty"));
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(I18n.GetText("TipClipboardEmpty"));
+                }
             }
             else if (gridViewDS.SelectedRows.Count > 1)
             {
