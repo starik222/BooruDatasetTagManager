@@ -202,8 +202,21 @@ namespace BooruDatasetTagManager
 
         public static T GetEnumItemFromFriendlyText<T>(string text)
         {
-            string index = I18n.GetIndex(text);
-            return (T)Enum.Parse(typeof(T), index, true);
+            string[] indexes = I18n.GetAllIndexes(text);
+            if (indexes.Length == 1)
+                return (T)Enum.Parse(typeof(T), indexes[0], true);
+            else if (indexes.Length > 1)
+            {
+                object result;
+                foreach (var item in indexes)
+                {
+                    if (Enum.TryParse(typeof(T), item, out result))
+                    {
+                        return (T)result;
+                    }
+                }
+            }
+            throw new InvalidEnumArgumentException("Cannot find Enum value");
         }
 
 

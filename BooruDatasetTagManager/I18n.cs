@@ -69,6 +69,11 @@ namespace BooruDatasetTagManager
             return currentLangDict.First(a => a.Value == text).Key;
         }
 
+        public static string[] GetAllIndexes(string text)
+        {
+            return currentLangDict.Where(a => a.Value == text).Select(a => a.Key).ToArray();
+        }
+
         //private static ResourceManager _resourceManager;
 
         //public static void Initialize(string language)
