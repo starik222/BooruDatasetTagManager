@@ -204,4 +204,4 @@ Top=Superior
 Center=Centro
 Down=Inferior
 Custom=Personalizado
-TipClipboardEmpty=Clipboard contains no data
+TipClipboardEmpty=A área de transferência está vazia.
