@@ -1,5 +1,5 @@
-# BooruDatasetTagManager
-這是一個簡單的標籤編輯器，用於編輯訓練超網路、嵌入、LoRA建立的資料集。tagger、stable-diffusion-webui等）所建立的資料集。
+# BooruDatasetTagManager ~Booru資料標標機~
+這是一個簡單的標籤編輯器，用於編輯訓練超網路、嵌入、LoRA建立的資料集。tagger、stable-diffusion-webui等所建立的資料集。
 這個編輯器主要用於booru風格的標記數據，但您也可以根據需要將其用於其他類型的資料集。
 
 # Using
