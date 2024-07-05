@@ -1,4 +1,6 @@
+<div align="center">
 [**English**](./README.md) | [**中文简体**](./README_zh_CN.md)
+</div>
 
 # BooruDatasetTagManager
 A simple tag editor for a dataset created for training hypernetworks, embeddings, lora, etc. You can create a dataset from scratch using only images, or you can use a program to edit a dataset created using automatic tagging ([wd14-tagger](https://github.com/toriato/stable-diffusion-webui-wd14-tagger), [stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui), etc.)

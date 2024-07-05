@@ -1,4 +1,6 @@
+<div align="center">
 [**English**](./README.md) | [**中文简体**](./README_zh_CN.md)
+</div>
 
 # BooruDatasetTagManager ~Booru資料標標機~
 這是一個簡單的標籤編輯器，用於編輯訓練超網路、嵌入、LoRA建立的資料集。tagger、stable-diffusion-webui等所建立的資料集。
