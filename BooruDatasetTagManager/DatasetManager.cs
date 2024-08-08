@@ -58,6 +58,7 @@ namespace BooruDatasetTagManager
 
         public bool Remove(string name)
         {
+            DataSet[name].Tags.Clear();
             return DataSet.TryRemove(name, out _);
         }
 
