@@ -1976,6 +1976,32 @@ namespace BooruDatasetTagManager
                 return new List<AutoTagItem>();
             }
             List<AutoTagItem> result = listOfTags.GetTagList(Program.Settings.AutoTagger.UnionMode);
+
+            if (Program.Settings.AutoTagger.TagFilteringMode != TagFilteringMode.None && !string.IsNullOrEmpty(Program.Settings.AutoTagger.TagFilter))
+            {
+                if (Program.Settings.AutoTagger.TagFilteringMode == TagFilteringMode.Regex)
+                    try
+                    {
+                        result = result.Where(t => Regex.IsMatch(t.Tag, Program.Settings.AutoTagger.TagFilter, RegexOptions.IgnoreCase)).ToList();
+                    }
+                    catch
+                    {
+                        SetStatus(I18n.GetText("TipInvalidRegex"));
+                    }
+                else
+                {
+                    string[] tagFilter = Program.Settings.AutoTagger.TagFilter.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+                    if (Program.Settings.AutoTagger.TagFilteringMode == TagFilteringMode.Equal)
+                        result = result.Where(t => tagFilter.Any(f => string.Equals(t.Tag, f, StringComparison.OrdinalIgnoreCase))).ToList();
+                    else if (Program.Settings.AutoTagger.TagFilteringMode == TagFilteringMode.NotEqual)
+                        result = result.Where(t => !tagFilter.Any(f => string.Equals(t.Tag, f, StringComparison.OrdinalIgnoreCase))).ToList();
+                    else if (Program.Settings.AutoTagger.TagFilteringMode == TagFilteringMode.Containing)
+                        result = result.Where(t => tagFilter.Any(f => t.Tag.Contains(f, StringComparison.OrdinalIgnoreCase))).ToList();
+                    else if (Program.Settings.AutoTagger.TagFilteringMode == TagFilteringMode.NotContaining)
+                        result = result.Where(t => !tagFilter.Any(f => t.Tag.Contains(f, StringComparison.OrdinalIgnoreCase))).ToList();
+                }
+            }
+
             if (Program.Settings.AutoTagger.SortMode == AutoTaggerSort.Confidence)
             {
                 result.Sort((a, b) => b.Confidence.CompareTo(a.Confidence));
