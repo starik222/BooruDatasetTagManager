@@ -1928,15 +1928,23 @@ namespace BooruDatasetTagManager
             LockEdit(true);
             var selectedImageData = Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value];
             var tagList = await GetTagsWithAutoTagger(selectedImageData.ImageFilePath, true);
-            if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.AllWithReplacement)
-                gridViewAutoTags.DataSource = tagList;
-            else if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.OnlyNewWithAddition)
+            if (tagList != null)
             {
-                foreach (var item in selectedImageData.Tags.TextTags)
+                if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.AllWithReplacement)
+                    gridViewAutoTags.DataSource = tagList;
+                else if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.OnlyNewWithAddition)
                 {
-                    tagList.RemoveAll(a => a.Tag == item);
+                    foreach (var item in selectedImageData.Tags.TextTags)
+                    {
+                        tagList.RemoveAll(a => a.Tag == item);
+                    }
+                    gridViewAutoTags.DataSource = tagList;
                 }
-                gridViewAutoTags.DataSource = tagList;
+                else if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.SkipExistTagList)
+                {
+                    if (selectedImageData.Tags.Count == 0)
+                        gridViewAutoTags.DataSource = tagList;
+                }
             }
 
             LockEdit(false);
@@ -1945,7 +1953,7 @@ namespace BooruDatasetTagManager
         private async Task<List<AutoTagItem>> GetTagsWithAutoTagger(string imagePath, bool defSettings)
         {
             if (gridViewDS.SelectedRows.Count == 0)
-                return new List<AutoTagItem>();
+                return null;
             if (!defSettings || Program.Settings.AutoTagger.InterragatorParams.Count == 0)
             {
                 Form_AutoTaggerSettings autoTaggerSettings = new Form_AutoTaggerSettings();
@@ -1953,7 +1961,7 @@ namespace BooruDatasetTagManager
                 {
                     autoTaggerSettings.Close();
                     SetStatus(I18n.GetText("TipGenCancel"));
-                    return new List<AutoTagItem>();
+                    return null;
                 }
             }
             if (!Program.AutoTagger.IsConnected)
@@ -1961,7 +1969,7 @@ namespace BooruDatasetTagManager
                 if (!await Program.AutoTagger.ConnectAsync())
                 {
                     SetStatus(I18n.GetText("TipUnConnectInterrogator"));
-                    return new List<AutoTagItem>();
+                    return null;
                 }
             }
             List<Image_Interrogator_Ns.NetworkInterrogationParameters> parameters = new List<Image_Interrogator_Ns.NetworkInterrogationParameters>();
@@ -1973,7 +1981,7 @@ namespace BooruDatasetTagManager
             SetStatus(listOfTags.Message);
             if (!listOfTags.Success)
             {
-                return new List<AutoTagItem>();
+                return null;
             }
             List<AutoTagItem> result = listOfTags.GetTagList(Program.Settings.AutoTagger.UnionMode);
             if (Program.Settings.AutoTagger.SortMode == AutoTaggerSort.Confidence)
@@ -2033,8 +2041,19 @@ namespace BooruDatasetTagManager
                         {
                             item.Tags.AddTag(aTag.Tag, true, AddingType.Down, 0);
                         }
-
                     }
+                    else if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.SkipExistTagList)
+                    {
+                        if (item.Tags.Count == 0)
+                        {
+                            item.Tags.AddRange(tagList.Select(a => a.Tag), true);
+                        }
+                    }
+                }
+                else
+                {
+                    LockEdit(false);
+                    return;
                 }
             }
             if (selectedTagsList.Count > 1)
@@ -2062,15 +2081,25 @@ namespace BooruDatasetTagManager
             LockEdit(true);
             var selectedImageData = Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value];
             var tagList = await GetTagsWithAutoTagger(selectedImageData.ImageFilePath, false);
-            if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.AllWithReplacement)
-                gridViewAutoTags.DataSource = tagList;
-            else if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.OnlyNewWithAddition)
+            if (tagList != null)
             {
-                foreach (var item in selectedImageData.Tags.TextTags)
+                if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.AllWithReplacement)
+                    gridViewAutoTags.DataSource = tagList;
+                else if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.OnlyNewWithAddition)
                 {
-                    tagList.RemoveAll(a => a.Tag == item);
+                    foreach (var item in selectedImageData.Tags.TextTags)
+                    {
+                        tagList.RemoveAll(a => a.Tag == item);
+                    }
+                    gridViewAutoTags.DataSource = tagList;
                 }
-                gridViewAutoTags.DataSource = tagList;
+                else if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.SkipExistTagList)
+                {
+                    if (selectedImageData.Tags.Count == 0)
+                    {
+                        gridViewAutoTags.DataSource = tagList;
+                    }
+                }
             }
 
             LockEdit(false);
