@@ -205,3 +205,4 @@ Center=Centro
 Down=Inferior
 Custom=Personalizado
 TipClipboardEmpty=A área de transferência está vazia.
+SkipExistTagList=Skipping existing tag lists

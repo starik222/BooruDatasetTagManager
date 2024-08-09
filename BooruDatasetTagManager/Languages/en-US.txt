@@ -205,3 +205,4 @@ Center=Center
 Down=Down
 Custom=Custom
 TipClipboardEmpty=Clipboard contains no data
+SkipExistTagList=Skipping existing tag lists

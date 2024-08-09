@@ -206,3 +206,4 @@ btn_en-US=English
 btn_zh-CN=简体中文
 btn_pt-BR=Português (BR)
 TipClipboardEmpty=Clipboard contains no data
+SkipExistTagList=Skipping existing tag lists

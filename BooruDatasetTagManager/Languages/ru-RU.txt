@@ -205,3 +205,4 @@ Center=Центр
 Down=Низ
 Custom=Другое
 TipClipboardEmpty=Буфер обмена не содержит данных
+SkipExistTagList=Пропуск существующих списков тегов
