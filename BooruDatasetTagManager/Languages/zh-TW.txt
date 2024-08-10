@@ -208,3 +208,4 @@ btn_zh-TW=哞體中文
 btn_pt-BR=Português (BR)
 TipClipboardEmpty=Clipboard contains no data
 btn_ru-RU=Русский
+SkipExistTagList=Skipping existing tag lists

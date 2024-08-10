@@ -59,7 +59,8 @@ namespace BooruDatasetTagManager
     public enum NetworkResultSetMode
     {
         AllWithReplacement,
-        OnlyNewWithAddition
+        OnlyNewWithAddition,
+        SkipExistTagList
     }
 
     public enum TagFilteringMode
