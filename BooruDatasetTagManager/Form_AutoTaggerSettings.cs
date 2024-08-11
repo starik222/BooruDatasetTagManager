@@ -55,8 +55,8 @@ namespace BooruDatasetTagManager
                     Label errLabel = new Label();
                     errLabel.Name = "errorLabel";
                     errLabel.Text = I18n.GetText("TipAutoTagUnableConnect");
-                    errLabel.Location = new Point(10, 10);
-                    errLabel.Size = new Size(Width - 20, Height / 2 - 15);
+                    errLabel.Location = checkedListBoxcomboBoxInterrogators.Location;
+                    errLabel.Size = checkedListBoxcomboBoxInterrogators.Size;
                     errLabel.Font = new Font("Segoe UI", 12);
                     errLabel.ForeColor = Color.Red;
                     Controls.Add(errLabel);
