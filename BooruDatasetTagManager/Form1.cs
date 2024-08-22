@@ -812,7 +812,10 @@ namespace BooruDatasetTagManager
                 {
                     List<string> tagsToCopy = new List<string>();
                     tagsToCopy.Add((string)gridViewTags["ImageTags", gridViewTags.CurrentCell.RowIndex].Value);
-                    Clipboard.SetData("PartTagList", tagsToCopy);
+                    DataObject d = new DataObject();
+                    d.SetText(string.Join("\r\n", tagsToCopy));
+                    d.SetData("PartTagList", tagsToCopy);
+                    Clipboard.SetDataObject(d);
                     SetStatus(I18n.GetText("StatusCopied"));
                     e.SuppressKeyPress = true;
                 }
@@ -2270,8 +2273,10 @@ namespace BooruDatasetTagManager
                     {
                         tagsToCopy.Add((string)gridViewAllTags["TagsColumn", gridViewAllTags.SelectedCells[i].RowIndex].Value);
                     }
-
-                    Clipboard.SetData("PartTagList", tagsToCopy);
+                    DataObject d = new DataObject();
+                    d.SetText(string.Join("\r\n", tagsToCopy));
+                    d.SetData("PartTagList", tagsToCopy);
+                    Clipboard.SetDataObject(d);
                     SetStatus(I18n.GetText("StatusCopied"));
                 }
                 e.SuppressKeyPress = true;
