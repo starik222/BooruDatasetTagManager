@@ -63,6 +63,16 @@ namespace BooruDatasetTagManager
         SkipExistTagList
     }
 
+    public enum TagFilteringMode
+    {
+        None,
+        Equal,
+        Containing,
+        NotEqual,
+        NotContaining,
+        Regex
+    }
+
     public enum DataSourceType
     {
         None,

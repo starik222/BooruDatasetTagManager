@@ -301,6 +301,8 @@ namespace BooruDatasetTagManager
         public AutoTaggerSort SortMode { get; set; } = AutoTaggerSort.None;
         public NetworkUnionMode UnionMode { get; set; } = NetworkUnionMode.Addition;
         public NetworkResultSetMode SetMode { get; set; } = NetworkResultSetMode.AllWithReplacement;
+        public TagFilteringMode TagFilteringMode { get; set; } = TagFilteringMode.None;
+        public string TagFilter { get; set; } = "";
         public bool SerializeVramUsage { get; set; } = false;
         public bool SkipInternetRequests { get; set; } = false;
 
