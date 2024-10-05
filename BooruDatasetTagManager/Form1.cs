@@ -1978,7 +1978,19 @@ namespace BooruDatasetTagManager
             List<Image_Interrogator_Ns.NetworkInterrogationParameters> parameters = new List<Image_Interrogator_Ns.NetworkInterrogationParameters>();
             foreach (var item in Program.Settings.AutoTagger.InterragatorParams)
             {
-                parameters.Add(new Image_Interrogator_Ns.NetworkInterrogationParameters() { InterrogatorNetwork = item.Key, InterrogatorThreshold = item.Value });
+                List<Image_Interrogator_Ns.AdditionalNetworkParameter> additionalParameters = new List<Image_Interrogator_Ns.AdditionalNetworkParameter>();
+                foreach (var parameter in item.Value)
+                {
+                    additionalParameters.Add(new Image_Interrogator_Ns.AdditionalNetworkParameter()
+                    {
+                        Key = parameter.Key,
+                        Value = parameter.Value,
+                        Type = parameter.Type
+                    });
+                }
+                var pData = new Image_Interrogator_Ns.NetworkInterrogationParameters() { InterrogatorNetwork = item.Key };
+                pData.AdditionalParameters.AddRange(additionalParameters);
+                parameters.Add(pData);
             }
             var listOfTags = await Program.AutoTagger.InterrogateImage(imagePath, parameters, Program.Settings.AutoTagger.SerializeVramUsage, Program.Settings.AutoTagger.SkipInternetRequests);
             SetStatus(listOfTags.Message);

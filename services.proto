@@ -13,8 +13,8 @@ message InterrogatorListing {
 
 message NetworkInterrogationParameters {
     string interrogator_network   = 1;
-    //float  interrogator_threshold = 2;
-    repeated AdditionalNetworkParameter AdditionalParameters = 2;
+    float  interrogator_threshold = 2;
+    repeated AdditionalNetworkParameter AdditionalParameters = 3;
 }
 
 message InterrogationRequest {
@@ -45,7 +45,6 @@ message TagEntry {
 message AdditionalNetworkParameter {
     string key        = 1;
     string value = 2;
-    string type = 3;
 }
 
 message InterrogationResponse {

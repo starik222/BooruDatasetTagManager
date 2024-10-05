@@ -7,7 +7,7 @@ class Interrogator:
         self.stop()
         pass
 
-    def start(self, skip_online: bool=False):
+    def start(self, net_params: dict, skip_online: bool=False):
         pass
 
     def stop(self):

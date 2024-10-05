@@ -35,6 +35,9 @@ def get_cuda():
     else:
         return torch.cuda.device("cuda")
 
+def get_torch_dtype():
+    return torch.float16 if torch.cuda.is_available() else torch.float32
+
 
 def get_cuda_device():
     opts = cmd_args.get_args()

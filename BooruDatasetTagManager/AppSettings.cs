@@ -60,6 +60,7 @@ namespace BooruDatasetTagManager
         public AppSettings(string appDir)
         {
             InitAvaibleLangs();
+            AutoTagger = new InterragatorSettings();
             Hotkeys = new HotkeyData();
             Hotkeys.InitDefault();
             LoadData(appDir);
@@ -67,6 +68,7 @@ namespace BooruDatasetTagManager
 
         public AppSettings()
         {
+            AutoTagger = new InterragatorSettings();
             Hotkeys = new HotkeyData();
             Hotkeys.InitDefault();
         }
@@ -81,7 +83,17 @@ namespace BooruDatasetTagManager
             }
             else
             {
-                var tempSettings = JsonConvert.DeserializeObject<AppSettings>(File.ReadAllText(settingsFile));
+            NextTry:
+                AppSettings tempSettings = null;
+                try
+                {
+                    tempSettings = JsonConvert.DeserializeObject<AppSettings>(File.ReadAllText(settingsFile));
+                }
+                catch (Exception)
+                {
+                    File.WriteAllText(settingsFile, JsonConvert.SerializeObject(this));
+                    goto NextTry;
+                }
                 TranslationLanguage = tempSettings.TranslationLanguage;
                 PreviewSize = tempSettings.PreviewSize;
                 TransService = tempSettings.TransService;
@@ -297,7 +309,7 @@ namespace BooruDatasetTagManager
 
     public class InterragatorSettings
     {
-        public List<KeyValuePair<string, float>> InterragatorParams { get; set; }
+        public Dictionary<string, List<AdditionalParameters>> InterragatorParams { get; set; }
         public AutoTaggerSort SortMode { get; set; } = AutoTaggerSort.None;
         public NetworkUnionMode UnionMode { get; set; } = NetworkUnionMode.Addition;
         public NetworkResultSetMode SetMode { get; set; } = NetworkResultSetMode.AllWithReplacement;
@@ -308,8 +320,15 @@ namespace BooruDatasetTagManager
 
         public InterragatorSettings()
         {
-            InterragatorParams = new List<KeyValuePair<string, float>>();
+            InterragatorParams = new Dictionary<string, List<AdditionalParameters>>();
         }
+    }
+
+    public class AdditionalParameters
+    {
+        public string Key { get; set; }
+        public string Value { get; set; }
+        public string Type { get; set; }
     }
 
     public class FontSettings

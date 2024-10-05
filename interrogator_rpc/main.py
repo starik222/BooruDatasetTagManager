@@ -22,6 +22,8 @@ import io
 from PIL import Image
 from concurrent import futures
 
+import collections
+
 import grpc
 
 import interrogator
@@ -37,7 +39,7 @@ ONE_INTERROGATOR_IN_VRAM_AT_A_TIME = False
 
 # Whooooo, there's a bunch of gross global state here.
 # I blame finite GPUs and gRPC being kind of crap.
-def interrogate_image(network_name, image_obj, skip_online):
+def interrogate_image(network_name, image_obj, net_params, skip_online):
 	global ACTIVE_INTERROGATOR
 	global ONE_INTERROGATOR_IN_VRAM_AT_A_TIME
 
@@ -61,7 +63,7 @@ def interrogate_image(network_name, image_obj, skip_online):
 
 		ACTIVE_INTERROGATOR = network_name
 		intg = interrogator.INTERROGATOR_MAP[network_name]
-		intg.start(skip_online=skip_online)
+		intg.start(net_params, skip_online=skip_online)
 
 		tags = intg.predict(image_obj)
 
@@ -86,6 +88,23 @@ def extract_tag_ret(tags_in, threshold):
 
 	return ret
 
+def createInterrogatorParameter(key, value, type):
+	return rpc_proto.services_pb2.AdditionalNetworkParameter(
+		key=key,
+		value=value,
+		type = type
+	)
+
+def createDictFromAdditionalParameters(paramList):
+	result = {}
+	for param in paramList:
+		if param.type == "float1":
+			result[param.key] = float(param.value)
+		elif param.type == "string":
+			result[param.key] = param.value
+		elif param.type == "list":
+			result[param.key] = param.value
+	return result
 
 class InterrogatorServicer(rpc_proto.services_pb2_grpc.ImageInterrogatorServicer):
 	"""Provides methods that implement functionality of route guide server."""
@@ -98,11 +117,40 @@ class InterrogatorServicer(rpc_proto.services_pb2_grpc.ImageInterrogatorServicer
 				interrogator_names = list(interrogator.INTERROGATOR_MAP.keys())
 			)
 
+	def InterrogatorParameters(self, request, context):
+		ret = rpc_proto.services_pb2.InterrogatorParamResponse(
+			ErrMes="",
+			Result=True
+		)
+		if request.interrogator_network not in interrogator.INTERROGATOR_MAP:
+			ret.Result = False
+			ret.ErrMes = "Interrogator not found!"
+			print(ret.ErrMes)
+			return ret
+		intInstance = interrogator.INTERROGATOR_MAP[request.interrogator_network]
+		if intInstance.type == "wd":
+			ret.Type = "wd"
+			ret.Parameters.append(createInterrogatorParameter("threshold", str(intInstance.threshold), "float1"))
+		elif intInstance.type == "florence2":
+			ret.Type = "florence2"
+			ret.Parameters.append(createInterrogatorParameter("cmd", (",").join(intInstance.commands), "list"))
+			ret.Parameters.append(createInterrogatorParameter("prompt", intInstance.defaultPrompt, "string"))
+		elif intInstance.type == "blip":
+			ret.Type = "blip"
+		elif intInstance.type == "blip2":
+			ret.Type = "blip2"
+		elif intInstance.type == "gitlarge":
+			ret.Type = "gitlarge"
+		elif intInstance.type == "dd":
+			ret.Type = "dd"
+		return ret
+
 
 	def InterrogateImage(self, request, context):
 
 		print("Interrogate Request!")
 		print("Network: ", request.params)
+		print("File name: ", request.image_name)
 		print("File size: ", len(request.interrogate_image))
 		for network_conf in request.params:
 			if network_conf.interrogator_network not in interrogator.INTERROGATOR_MAP:
@@ -137,10 +185,12 @@ class InterrogatorServicer(rpc_proto.services_pb2_grpc.ImageInterrogatorServicer
 			image_obj = Image.open(io.BytesIO(image_bytes))
 
 			for network_conf in request.params:
-
-
-				tag_ret = interrogate_image(network_conf.interrogator_network, image_obj, skip_online=request.skip_internet_requests)
-				network_tags = extract_tag_ret(tag_ret, network_conf.interrogator_threshold)
+				paramDict = createDictFromAdditionalParameters(network_conf.AdditionalParameters)
+				threshold = 1.0
+				if 'threshold' in paramDict:
+					threshold = paramDict['threshold']
+				tag_ret = interrogate_image(network_conf.interrogator_network, image_obj, paramDict, skip_online=request.skip_internet_requests)
+				network_tags = extract_tag_ret(tag_ret, threshold)
 
 				net_resp = rpc_proto.services_pb2.InterrogationResponse()
 				net_resp.network_name = network_conf.interrogator_network

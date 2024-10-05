@@ -61,6 +61,7 @@ namespace BooruDatasetTagManager
                 request.SkipInternetRequests = SkipInternetRequests;
                 request.Params.AddRange(interrogationParameters);
                 request.InterrogateImage = ByteString.CopyFrom(File.ReadAllBytes(imagePath));
+                request.ImageName = Path.GetFileName(imagePath);
                 var response = await _client.InterrogateImageAsync(request);
                 if (response.InterrogateOk)
                 {
@@ -90,6 +91,16 @@ namespace BooruDatasetTagManager
                 result.Message = ex.Message;
                 return result;
             }
+        }
+
+        public async Task<InterrogatorParamResponse> GetInterrogatorParams(string name)
+        {
+            InterrogatorParamRequest request = new InterrogatorParamRequest()
+            {
+                InterrogatorNetwork = name
+            };
+            InterrogatorParamResponse resp;
+            return await _client.InterrogatorParametersAsync(request);
         }
 
         public void Dispose()

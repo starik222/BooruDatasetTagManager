@@ -29,6 +29,13 @@ BLIP2_CAPTIONING_NAMES = [
     "blip2-flan-t5-xxl",
 ]
 
+FLORENCE2_CAPTIONING_NAMES = [
+    "Florence-2-base-ft",
+    "Florence-2-base",
+    "Florence-2-large-ft",
+    "Florence-2-large",
+]
+
 WD_TAGGER_NAMES = [
     "wd-v1-4-convnext-tagger",
     "wd-v1-4-convnext-tagger-v2",
@@ -42,6 +49,14 @@ WD_TAGGER_NAMES = [
     "wd-convnext-tagger-v3",
     "wd-vit-large-tagger-v3",
     "wd-eva02-large-tagger-v3",
+]
+
+FLORENCE2_COMMANDS = [
+    "<CAPTION>",
+    "<DETAILED_CAPTION>",
+    "<MORE_DETAILED_CAPTION>",
+    "<CAPTION_TO_PHRASE_GROUNDING>",
+    "<OD>",
 ]
 
 WD_TAGGER_THRESHOLDS = [
@@ -63,12 +78,13 @@ WD_TAGGER_THRESHOLDS = [
 
 
 INTERROGATORS = (
-    [captioning.BLIP()]
-    + [captioning.BLIP2(name) for name in BLIP2_CAPTIONING_NAMES]
-    + [captioning.GITLarge()]
-    + [tagger.DeepDanbooru()]
+    [captioning.BLIP("blip")]
+    + [captioning.BLIP2(name, "blip2") for name in BLIP2_CAPTIONING_NAMES]
+    + [captioning.GITLarge("gitlarge")]
+    + [captioning.Florence2(name, FLORENCE2_COMMANDS, "", "florence2") for name in FLORENCE2_CAPTIONING_NAMES]
+    + [tagger.DeepDanbooru("dd")]
     + [
-        tagger.WaifuDiffusion(name, WD_TAGGER_THRESHOLDS[i])
+        tagger.WaifuDiffusion(name, WD_TAGGER_THRESHOLDS[i], "wd")
         for i, name in enumerate(WD_TAGGER_NAMES)
     ]
 )

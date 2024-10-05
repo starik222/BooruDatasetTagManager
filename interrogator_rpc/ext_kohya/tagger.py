@@ -10,7 +10,7 @@ from . import settings
 
 
 class Tagger(Interrogator):
-    def start(self, skip_online: bool=False):
+    def start(self, net_params: dict, skip_online: bool=False):
         pass
 
     def stop(self):
@@ -33,10 +33,11 @@ def get_arranged_tags(probs: dict[str, float]):
 
 
 class DeepDanbooru(Tagger):
-    def __init__(self):
+    def __init__(self, intType):
         self.tagger_inst = DepDanbooruTagger()
+        self.type = intType
 
-    def start(self, skip_online: bool=False):
+    def start(self, net_params: dict, skip_online: bool=False):
         self.tagger_inst.load(skip_online=skip_online)
         return self
 
@@ -62,12 +63,13 @@ class DeepDanbooru(Tagger):
 
 
 class WaifuDiffusion(Tagger):
-    def __init__(self, repo_name, threshold):
+    def __init__(self, repo_name, threshold, intType):
         self.repo_name = repo_name
         self.tagger_inst = WaifuDiffusionTagger("SmilingWolf/" + repo_name)
         self.threshold = threshold
+        self.type = intType
 
-    def start(self, skip_online: bool=False):
+    def start(self, net_params: dict, skip_online: bool=False):
         self.tagger_inst.load(skip_online=skip_online)
         return self
 
