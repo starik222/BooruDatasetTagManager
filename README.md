@@ -58,6 +58,15 @@ To configure interrogator_rpc, run the command:
 ```bash
 pip install -r requirements.txt
 ```
+Since the latest version of onnxruntime requires msvc runtime 2015 version, it is recommended to install this package.
+If you use anaconda:
+```bash
+conda install conda-forge::vs2015_runtime
+```
+If you install it normally with pip:
+```bash
+pip install msvc-runtime
+```
 To start the service run
 ```bash
 python main.py
