@@ -700,7 +700,7 @@ namespace BooruDatasetTagManager
             toolStripAllTags.Location = new System.Drawing.Point(0, 3);
             toolStripAllTags.Name = "toolStripAllTags";
             toolStripAllTags.Padding = new System.Windows.Forms.Padding(2, 0, 5, 0);
-            toolStripAllTags.Size = new System.Drawing.Size(43, 606);
+            toolStripAllTags.Size = new System.Drawing.Size(43, 587);
             toolStripAllTags.TabIndex = 3;
             toolStripAllTags.Text = "toolStrip2";
             // 
@@ -874,21 +874,21 @@ namespace BooruDatasetTagManager
             // BtnMenuSortNameAsc
             // 
             BtnMenuSortNameAsc.Name = "BtnMenuSortNameAsc";
-            BtnMenuSortNameAsc.Size = new System.Drawing.Size(180, 22);
+            BtnMenuSortNameAsc.Size = new System.Drawing.Size(171, 22);
             BtnMenuSortNameAsc.Text = "Name ascending";
             BtnMenuSortNameAsc.Click += nameAscendingToolStripMenuItem_Click;
             // 
             // BtnMenuSortCountAsc
             // 
             BtnMenuSortCountAsc.Name = "BtnMenuSortCountAsc";
-            BtnMenuSortCountAsc.Size = new System.Drawing.Size(180, 22);
+            BtnMenuSortCountAsc.Size = new System.Drawing.Size(171, 22);
             BtnMenuSortCountAsc.Text = "Count ascending";
             BtnMenuSortCountAsc.Click += countAscendingToolStripMenuItem_Click;
             // 
             // BtnMenuSortCountDesc
             // 
             BtnMenuSortCountDesc.Name = "BtnMenuSortCountDesc";
-            BtnMenuSortCountDesc.Size = new System.Drawing.Size(180, 22);
+            BtnMenuSortCountDesc.Size = new System.Drawing.Size(171, 22);
             BtnMenuSortCountDesc.Text = "Count descending";
             BtnMenuSortCountDesc.Click += countDescendingToolStripMenuItem_Click;
             // 

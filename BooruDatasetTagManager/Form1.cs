@@ -834,7 +834,7 @@ namespace BooruDatasetTagManager
                     {
 
                         var eTagList = (EditableTagList)gridViewTags.DataSource;
-                        eTagList.AddRange(copiedTags, true);
+                        copiedTags.ForEach(a => eTagList.AddTag(a, true, AddingType.Down));
                         if (isTranslate)
                             await FillTranslation(gridViewTags);
                         SetStatus(I18n.GetText("StatusPasted"));
