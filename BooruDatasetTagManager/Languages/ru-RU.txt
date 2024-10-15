@@ -216,3 +216,7 @@ Regex=Регулярное выражение
 TipInvalidRegex=Недопустимое регулярное выражение
 TipInvalidValue=Недопустимое значение
 Required=Обязательно
+BtnMenuSorting=Сортировка списка всех тегов
+BtnMenuSortNameAsc=Имя тега (по возрастанию)
+BtnMenuSortCountAsc=Количество (по возрастанию)
+BtnMenuSortCountDesc=Количество (по убыванию)

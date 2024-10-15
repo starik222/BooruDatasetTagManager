@@ -216,3 +216,7 @@ Regex=Regular expression
 TipInvalidRegex=Invalid regular expression
 TipInvalidValue=Invalid value
 Required=Required
+BtnMenuSorting=All tags sorting
+BtnMenuSortNameAsc=Name ascending
+BtnMenuSortCountAsc=Count ascending
+BtnMenuSortCountDesc=Count descending

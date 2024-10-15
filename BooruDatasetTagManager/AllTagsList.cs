@@ -20,6 +20,10 @@ namespace BooruDatasetTagManager
         private bool filterByCount = false;
         private int filterTagsCount = 0;
 
+        private bool _isSorted = false;
+        private PropertyDescriptor _propertyDescriptor;
+        private ListSortDirection _sortDirection = ListSortDirection.Ascending;
+
         public AllTagsItem this[int index]
         {
             get
@@ -76,6 +80,10 @@ namespace BooruDatasetTagManager
             if (indexTagsList != -1)
             {
                 tagsList[indexTagsList].Count++;
+                if (_isSorted && _propertyDescriptor.Name == "Count")
+                {
+                    ((IBindingListView)this).ApplySort(_propertyDescriptor, _sortDirection);
+                }
             }
             else
             {
@@ -106,6 +114,10 @@ namespace BooruDatasetTagManager
                     if (tagsList[indexTagsList].Count > 1)
                     {
                         tagsList[indexTagsList].Count--;
+                        if (_isSorted && _propertyDescriptor.Name == "Count")
+                        {
+                            ((IBindingListView)this).ApplySort(_propertyDescriptor, _sortDirection);
+                        }
                     }
                     else
                     {
@@ -139,7 +151,29 @@ namespace BooruDatasetTagManager
             {
                 for (int i = 0; i < lst.Count; i++)
                 {
-                    int compareResult = item.Tag.CompareTo(((AllTagsItem)lst[i]).Tag);
+                    int compareResult = 0;
+                    if (_propertyDescriptor == null)
+                        compareResult = item.Tag.CompareTo(((AllTagsItem)lst[i]).Tag);
+                    else if (_propertyDescriptor.Name == "Tag" && _sortDirection == ListSortDirection.Ascending)
+                        compareResult = item.Tag.CompareTo(((AllTagsItem)lst[i]).Tag);
+                    else if (_propertyDescriptor.Name == "Tag" && _sortDirection == ListSortDirection.Descending)
+                        compareResult = ((AllTagsItem)lst[i]).Tag.CompareTo(item.Tag);
+                    else if (_propertyDescriptor.Name == "Count" && _sortDirection == ListSortDirection.Ascending)
+                    {
+                        compareResult = item.Count.CompareTo(((AllTagsItem)lst[i]).Count);
+                        if (compareResult == 0)
+                        {
+                            compareResult = item.Tag.CompareTo(((AllTagsItem)lst[i]).Tag);
+                        }
+                    }
+                    else if (_propertyDescriptor.Name == "Count" && _sortDirection == ListSortDirection.Descending)
+                    {
+                        compareResult = ((AllTagsItem)lst[i]).Count.CompareTo(item.Count);
+                        if (compareResult == 0)
+                        {
+                            compareResult = item.Tag.CompareTo(((AllTagsItem)lst[i]).Tag);
+                        }
+                    }
                     if (compareResult < 0)
                     {
                         lst.Insert(i, item);
@@ -334,7 +368,7 @@ namespace BooruDatasetTagManager
 
         bool IBindingList.SupportsSorting
         {
-            get { return false; }
+            get { return true; }
         }
 
         // Events.
@@ -381,17 +415,17 @@ namespace BooruDatasetTagManager
         // Unsupported properties.
         bool IBindingList.IsSorted
         {
-            get { throw new NotSupportedException(); }
+            get { return _isSorted; }
         }
 
         ListSortDirection IBindingList.SortDirection
         {
-            get { throw new NotSupportedException(); }
+            get { return _sortDirection; }
         }
 
         PropertyDescriptor IBindingList.SortProperty
         {
-            get { throw new NotSupportedException(); }
+            get { return _propertyDescriptor; }
         }
 
         public string Filter
@@ -430,7 +464,38 @@ namespace BooruDatasetTagManager
 
         void IBindingList.ApplySort(PropertyDescriptor property, ListSortDirection direction)
         {
-            throw new NotSupportedException();
+            _propertyDescriptor = property;
+            _sortDirection = direction;
+            _isSorted = true;
+            if (property.Name == "Tag")
+            {
+                if (direction == ListSortDirection.Ascending)
+                {
+                    this.InnerList.Sort(new SortByTagNameAscending());
+                    this.tagsList.Sort(new SortByTagNameTIAscending());
+                }
+                else
+                {
+                    this.InnerList.Sort(new SortByTagNameDescending());
+                    this.tagsList.Sort(new SortByTagNameTIDescending());
+                }
+            }
+            else if (property.Name == "Count")
+            {
+                if (direction == ListSortDirection.Ascending)
+                {
+                    this.InnerList.Sort(new SortByCountAscending());
+                    this.tagsList.Sort(new SortByCountTIAscending());
+                }
+                else
+                {
+                    this.InnerList.Sort(new SortByCountDescending());
+                    this.tagsList.Sort(new SortByCountTIDescending());
+                }
+            }
+            else
+                { throw new NotSupportedException(); }
+            OnListChanged(resetEvent);
         }
 
         int IBindingList.Find(PropertyDescriptor property, object key)
@@ -468,25 +533,88 @@ namespace BooruDatasetTagManager
         //    return eTagList;
         //}
 
-        private class SortEditableTagListAscending : IComparer
+        private class SortByTagNameAscending : IComparer
         {
             int IComparer.Compare(object x, object y)
             {
                 AllTagsItem t1 = (AllTagsItem)x;
                 AllTagsItem t2 = (AllTagsItem)y;
-                //if (!t1.Sortiable)
-                //    return 1;
                 return t1.Tag.CompareTo(t2.Tag);
             }
         }
 
-        private class SortStringAscending : IComparer<string>
+        private class SortByTagNameDescending : IComparer
         {
-            int IComparer<string>.Compare(string x, string y)
+            int IComparer.Compare(object x, object y)
             {
-                return (x).CompareTo(y);
+                AllTagsItem t1 = (AllTagsItem)x;
+                AllTagsItem t2 = (AllTagsItem)y;
+                return t2.Tag.CompareTo(t1.Tag);
             }
         }
 
+        private class SortByTagNameTIAscending : IComparer<AllTagsItem>
+        {
+            int IComparer<AllTagsItem>.Compare(AllTagsItem x, AllTagsItem y)
+            {
+                return x.Tag.CompareTo(y.Tag);
+            }
+        }
+
+        private class SortByTagNameTIDescending : IComparer<AllTagsItem>
+        {
+            int IComparer<AllTagsItem>.Compare(AllTagsItem x, AllTagsItem y)
+            {
+                return y.Tag.CompareTo(x.Tag);
+            }
+        }
+
+        private class SortByCountAscending : IComparer
+        {
+            int IComparer.Compare(object x, object y)
+            {
+                AllTagsItem t1 = (AllTagsItem)x;
+                AllTagsItem t2 = (AllTagsItem)y;
+                var result = t1.Count.CompareTo(t2.Count);
+                if(result == 0)
+                    return t1.Tag.CompareTo(t2.Tag);
+                return result;
+            }
+        }
+
+        private class SortByCountDescending : IComparer
+        {
+            int IComparer.Compare(object x, object y)
+            {
+                AllTagsItem t1 = (AllTagsItem)x;
+                AllTagsItem t2 = (AllTagsItem)y;
+                var result = t2.Count.CompareTo(t1.Count);
+                if (result == 0)
+                    return t1.Tag.CompareTo(t2.Tag);
+                return result;
+            }
+        }
+
+        private class SortByCountTIAscending : IComparer<AllTagsItem>
+        {
+            int IComparer<AllTagsItem>.Compare(AllTagsItem x, AllTagsItem y)
+            {
+                var result = x.Count.CompareTo(y.Count);
+                if (result == 0)
+                    return x.Tag.CompareTo(y.Tag);
+                return result;
+            }
+        }
+
+        private class SortByCountTIDescending : IComparer<AllTagsItem>
+        {
+            int IComparer<AllTagsItem>.Compare(AllTagsItem x, AllTagsItem y)
+            {
+                var result = y.Count.CompareTo(x.Count);
+                if (result == 0)
+                    return x.Tag.CompareTo(y.Tag);
+                return result;
+            }
+        }
     }
 }

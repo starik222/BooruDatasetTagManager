@@ -27,8 +27,6 @@ namespace BooruDatasetTagManager
 
         private bool isTranslate = false;
 
-        public bool IsLossLoaded { get; private set; }
-
         private FilterType lastAndOperation = FilterType.Or;
         private IEnumerable<string> lastTagsFilter = null;
 
@@ -248,7 +246,6 @@ namespace BooruDatasetTagManager
             string[] imgs = Directory.GetFiles(folder, "*.*", SearchOption.AllDirectories);
             if (imgs.Length == 0)
             {
-                IsLossLoaded = false;
                 return false;
             }
             imgs = imgs.Where(a => imagesExt.Contains(Path.GetExtension(a).ToLower())).OrderBy(a => a, new FileNamesComparer()).ToArray();
@@ -262,7 +259,7 @@ namespace BooruDatasetTagManager
                 DataSet.TryAdd(dt.ImageFilePath, dt);
             });
             UpdateDatasetHash();
-            IsLossLoaded = false;
+            AllTagsBindingSource.Sort = "Tag ASC";
             return true;
         }
 

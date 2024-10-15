@@ -217,3 +217,7 @@ Regex=正则表达式
 TipInvalidRegex=无效的正则表达式
 TipInvalidValue=无效的值
 Required=必填
+BtnMenuSorting=All tags sorting
+BtnMenuSortNameAsc=Name ascending
+BtnMenuSortCountAsc=Count ascending
+BtnMenuSortCountDesc=Count descending

@@ -19,7 +19,6 @@ using System.Transactions;
 using System.Windows.Forms;
 using Translator;
 using static BooruDatasetTagManager.DatasetManager;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BooruDatasetTagManager
 {
@@ -92,6 +91,8 @@ namespace BooruDatasetTagManager
             }
 #if !DEBUG
             Extensions.CheckForUpdateAsync(Application.ProductVersion);
+#else
+            debugToolStripMenuItem.Visible = true;
 #endif
         }
 
@@ -1642,6 +1643,10 @@ namespace BooruDatasetTagManager
             btnAutoGetTagsDefSet.Text = I18n.GetText("BtnAutoGetTagsDefSet");
             btnAutoGetTagsOpenSet.Text = I18n.GetText("BtnAutoGetTagsOpenSet");
             btnAutoAddSelToImageTags.Text = I18n.GetText("BtnAutoAddSelToImageTags");
+            BtnMenuSorting.Text = I18n.GetText("BtnMenuSorting");
+            BtnMenuSortNameAsc.Text = I18n.GetText("BtnMenuSortNameAsc");
+            BtnMenuSortCountAsc.Text = I18n.GetText("BtnMenuSortCountAsc");
+            BtnMenuSortCountDesc.Text = I18n.GetText("BtnMenuSortCountDesc");
 
             BtnTagSwitch.Text = I18n.GetText("BtnTagSwitch");
             BtnTagAddToAll.Text = I18n.GetText("BtnTagAddToAll");
@@ -2319,6 +2324,44 @@ namespace BooruDatasetTagManager
                 }
                 e.SuppressKeyPress = true;
             }
+        }
+        #region Debug
+        private void testSortingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var allTags = ((BindingSource)gridViewAllTags.DataSource);
+            allTags.Sort = "Count DESC";
+            //gridViewAllTags.Sort(gridViewAllTags.Columns["CountColumn"], System.ComponentModel.ListSortDirection.Descending);
+        }
+        #endregion
+
+        private void nameAscendingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Program.DataManager == null)
+            {
+                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
+                return;
+            }
+            ((BindingSource)gridViewAllTags.DataSource).Sort = "Tag ASC";
+        }
+
+        private void countAscendingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Program.DataManager == null)
+            {
+                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
+                return;
+            }
+            ((BindingSource)gridViewAllTags.DataSource).Sort = "Count ASC";
+        }
+
+        private void countDescendingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Program.DataManager == null)
+            {
+                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
+                return;
+            }
+            ((BindingSource)gridViewAllTags.DataSource).Sort = "Count DESC";
         }
     }
 }

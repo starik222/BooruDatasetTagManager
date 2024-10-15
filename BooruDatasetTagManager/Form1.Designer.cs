@@ -82,6 +82,8 @@ namespace BooruDatasetTagManager
             toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             replaceTransparentBackgroundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             generateTagsWithAutoTaggerForAllImagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            testSortingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             gridViewAllTags = new System.Windows.Forms.DataGridView();
             TagsColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             TranslationColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -104,6 +106,11 @@ namespace BooruDatasetTagManager
             toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             BtnTagFilter = new System.Windows.Forms.ToolStripButton();
             BtnTagExitFilter = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
+            BtnMenuSorting = new System.Windows.Forms.ToolStripDropDownButton();
+            BtnMenuSortNameAsc = new System.Windows.Forms.ToolStripMenuItem();
+            BtnMenuSortCountAsc = new System.Windows.Forms.ToolStripMenuItem();
+            BtnMenuSortCountDesc = new System.Windows.Forms.ToolStripMenuItem();
             statusStrip1 = new System.Windows.Forms.StatusStrip();
             statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -468,7 +475,7 @@ namespace BooruDatasetTagManager
             // 
             menuStrip1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             menuStrip1.ImageScalingSize = new System.Drawing.Size(28, 28);
-            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem, viewToolStripMenuItem, MenuSetting, toolsToolStripMenuItem });
+            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem, viewToolStripMenuItem, MenuSetting, toolsToolStripMenuItem, debugToolStripMenuItem });
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
@@ -604,6 +611,21 @@ namespace BooruDatasetTagManager
             generateTagsWithAutoTaggerForAllImagesToolStripMenuItem.Text = "Generate tags with AutoTagger for all images";
             generateTagsWithAutoTaggerForAllImagesToolStripMenuItem.Click += generateTagsWithAutoTaggerForAllImagesToolStripMenuItem_Click;
             // 
+            // debugToolStripMenuItem
+            // 
+            debugToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { testSortingToolStripMenuItem });
+            debugToolStripMenuItem.Name = "debugToolStripMenuItem";
+            debugToolStripMenuItem.Size = new System.Drawing.Size(68, 25);
+            debugToolStripMenuItem.Text = "Debug";
+            debugToolStripMenuItem.Visible = false;
+            // 
+            // testSortingToolStripMenuItem
+            // 
+            testSortingToolStripMenuItem.Name = "testSortingToolStripMenuItem";
+            testSortingToolStripMenuItem.Size = new System.Drawing.Size(161, 26);
+            testSortingToolStripMenuItem.Text = "Test Sorting";
+            testSortingToolStripMenuItem.Click += testSortingToolStripMenuItem_Click;
+            // 
             // gridViewAllTags
             // 
             gridViewAllTags.AllowDrop = true;
@@ -662,22 +684,23 @@ namespace BooruDatasetTagManager
             // 
             // CountColumn
             // 
+            CountColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
             CountColumn.DataPropertyName = "Count";
             CountColumn.HeaderText = "Count";
+            CountColumn.MinimumWidth = 20;
             CountColumn.Name = "CountColumn";
             CountColumn.ReadOnly = true;
             CountColumn.Visible = false;
-            CountColumn.Width = 5;
             // 
             // toolStripAllTags
             // 
             toolStripAllTags.Dock = System.Windows.Forms.DockStyle.None;
             toolStripAllTags.ImageScalingSize = new System.Drawing.Size(32, 32);
-            toolStripAllTags.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { BtnTagSwitch, BtnTagAddToAll, BtnTagDeleteForAll, BtnTagReplace, toolStripSeparator3, BtnTagAddToSelected, BtnTagDeleteForSelected, toolStripSeparator5, BtnTagAddToFiltered, BtnTagDeleteForFiltered, toolStripSeparator6, BtnTagMultiModeSwitch, BtnImageFilter, BtnImageExitFilter, toolStripSeparator8, BtnTagFilter, BtnTagExitFilter });
+            toolStripAllTags.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { BtnTagSwitch, BtnTagAddToAll, BtnTagDeleteForAll, BtnTagReplace, toolStripSeparator3, BtnTagAddToSelected, BtnTagDeleteForSelected, toolStripSeparator5, BtnTagAddToFiltered, BtnTagDeleteForFiltered, toolStripSeparator6, BtnTagMultiModeSwitch, BtnImageFilter, BtnImageExitFilter, toolStripSeparator8, BtnTagFilter, BtnTagExitFilter, toolStripSeparator13, BtnMenuSorting });
             toolStripAllTags.Location = new System.Drawing.Point(0, 3);
             toolStripAllTags.Name = "toolStripAllTags";
             toolStripAllTags.Padding = new System.Windows.Forms.Padding(2, 0, 5, 0);
-            toolStripAllTags.Size = new System.Drawing.Size(43, 542);
+            toolStripAllTags.Size = new System.Drawing.Size(43, 606);
             toolStripAllTags.TabIndex = 3;
             toolStripAllTags.Text = "toolStrip2";
             // 
@@ -831,6 +854,43 @@ namespace BooruDatasetTagManager
             BtnTagExitFilter.Size = new System.Drawing.Size(35, 36);
             BtnTagExitFilter.Text = "Remove filter";
             BtnTagExitFilter.Click += toolStripButton25_Click;
+            // 
+            // toolStripSeparator13
+            // 
+            toolStripSeparator13.Name = "toolStripSeparator13";
+            toolStripSeparator13.Size = new System.Drawing.Size(35, 6);
+            // 
+            // BtnMenuSorting
+            // 
+            BtnMenuSorting.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnMenuSorting.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { BtnMenuSortNameAsc, BtnMenuSortCountAsc, BtnMenuSortCountDesc });
+            BtnMenuSorting.Image = Properties.Resources.Sorting;
+            BtnMenuSorting.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnMenuSorting.Name = "BtnMenuSorting";
+            BtnMenuSorting.ShowDropDownArrow = false;
+            BtnMenuSorting.Size = new System.Drawing.Size(35, 36);
+            BtnMenuSorting.Text = "All tags sorting";
+            // 
+            // BtnMenuSortNameAsc
+            // 
+            BtnMenuSortNameAsc.Name = "BtnMenuSortNameAsc";
+            BtnMenuSortNameAsc.Size = new System.Drawing.Size(180, 22);
+            BtnMenuSortNameAsc.Text = "Name ascending";
+            BtnMenuSortNameAsc.Click += nameAscendingToolStripMenuItem_Click;
+            // 
+            // BtnMenuSortCountAsc
+            // 
+            BtnMenuSortCountAsc.Name = "BtnMenuSortCountAsc";
+            BtnMenuSortCountAsc.Size = new System.Drawing.Size(180, 22);
+            BtnMenuSortCountAsc.Text = "Count ascending";
+            BtnMenuSortCountAsc.Click += countAscendingToolStripMenuItem_Click;
+            // 
+            // BtnMenuSortCountDesc
+            // 
+            BtnMenuSortCountDesc.Name = "BtnMenuSortCountDesc";
+            BtnMenuSortCountDesc.Size = new System.Drawing.Size(180, 22);
+            BtnMenuSortCountDesc.Text = "Count descending";
+            BtnMenuSortCountDesc.Click += countDescendingToolStripMenuItem_Click;
             // 
             // statusStrip1
             // 
@@ -1501,12 +1561,19 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripMenuItem generateTagsWithAutoTaggerForAllImagesToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
         private System.Windows.Forms.ToolStripButton btnAutoAddSelToImageTags;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TagsColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TranslationColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CountColumn;
         private Manina.Windows.Forms.Tab tabPreview;
         private System.Windows.Forms.PictureBox pictureBoxPreview;
         private System.Windows.Forms.ContextMenuStrip contextMenuImageGridHeader;
+        private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem testSortingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
+        private System.Windows.Forms.ToolStripDropDownButton BtnMenuSorting;
+        private System.Windows.Forms.ToolStripMenuItem BtnMenuSortNameAsc;
+        private System.Windows.Forms.ToolStripMenuItem BtnMenuSortCountAsc;
+        private System.Windows.Forms.ToolStripMenuItem BtnMenuSortCountDesc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TagsColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TranslationColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CountColumn;
     }
 }
 
