@@ -234,6 +234,7 @@ namespace BooruDatasetTagManager
                 lbl.Text = item.Key;
                 lbl.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
                 panel.Controls.Add(lbl, 0, panel.RowCount - 1);
+                lbl.Dock = DockStyle.Fill;
                 if (item.Type == "float1")
                 {
                     panel.RowCount++;
