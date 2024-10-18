@@ -76,7 +76,7 @@ If you have problems running a service in pure python, try using [anaconda](http
 After installing anaconda, run the console, create a new conda environment and install the necessary dependencies.
 ```bash
 #Creating new environment with python
-conda create -n bdtm python=3.10.9
+conda create -n bdtm python=3.10.13
 #Activating the created environment
 conda activate bdtm
 #Installing the necessary dependencies.
