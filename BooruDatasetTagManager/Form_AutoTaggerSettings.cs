@@ -279,6 +279,8 @@ namespace BooruDatasetTagManager
                 }
 
             }
+            Program.ColorManager.ChangeColorScheme(tab, Program.ColorManager.SelectedScheme);
+            Program.ColorManager.ChangeColorSchemeInConteiner(tab.Controls, Program.ColorManager.SelectedScheme);
             TaggerSettingTabs.ResumeLayout();
             return true;
         }
