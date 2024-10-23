@@ -128,20 +128,15 @@ namespace BooruDatasetTagManager
 
         protected override void OnRowChanged(DataRowChangeEventArgs e)
         {
-            if (e.Action == DataRowAction.Add)
-            {
-                int aaa = 1;
-            }
-            else if(e.Action!= DataRowAction.Change)
-            {
-                int aaa = 2;
-            }
             if (e.Action == DataRowAction.Change)
             {
                 var rowData = (MultiSelectDataRow)e.Row;
                 if ((string)e.Row["Tag"] != rowData.GetTagText())
                 {
-                    rowData.GetDataItem().Tags[rowData.GetTagIndex()].Tag = (string)e.Row["Tag"];
+                    var eTag = rowData.GetDataItem().Tags[rowData.GetTagIndex()];
+                    eTag.Tag = (string)e.Row["Tag"];
+                    if (eTag.IsEditing)
+                        eTag.EndEdit();
                     rowData.SetTagText((string)e.Row["Tag"]);
                 }
             }

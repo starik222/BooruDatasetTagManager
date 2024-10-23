@@ -542,6 +542,7 @@ namespace BooruDatasetTagManager
             Program.DataManager.SaveAll();
             Program.DataManager.UpdateDatasetHash();
             SetStatus(I18n.GetText("StatusSaved"));
+            LoadSelectedImageToGrid();
         }
 
         private void showPreviewToolStripMenuItem_Click(object sender, EventArgs e)
