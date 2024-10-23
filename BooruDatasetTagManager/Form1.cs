@@ -70,8 +70,6 @@ namespace BooruDatasetTagManager
         private bool isLoading = false;
         private List<string> selectedFiles = new List<string>();
 
-        private bool isCtrlOrShiftPressed = false;
-        private bool needReloadTags = false;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -1002,13 +1000,6 @@ namespace BooruDatasetTagManager
 
         private void dataGridView3_SelectionChanged(object sender, EventArgs e)
         {
-            //Disabled because it causes a bug with shift or ctrl sticking
-            //if (isCtrlOrShiftPressed)
-            //{
-            //    needReloadTags = true;
-            //    return;
-            //}
-            needReloadTags = false;
             LoadSelectedImageToGrid();
         }
 
@@ -1314,10 +1305,6 @@ namespace BooruDatasetTagManager
                 await PasteTagsFromClipboard();
                 e.SuppressKeyPress = true;
             }
-            else if (e.Control || e.Shift)
-            {
-                isCtrlOrShiftPressed = true;
-            }
         }
 
         private void DeleteImage()
@@ -1541,18 +1528,6 @@ namespace BooruDatasetTagManager
                     pos = 1;
                 int index = gridViewAllTags.CurrentCell.RowIndex;
                 gridViewAllTags.CurrentCell = gridViewAllTags.Rows[index + pos].Cells[0];
-            }
-        }
-
-        private void gridViewDS_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (isCtrlOrShiftPressed && !e.Control && !e.Shift)
-            {
-                isCtrlOrShiftPressed = false;
-                if (needReloadTags)
-                {
-                    dataGridView3_SelectionChanged(sender, EventArgs.Empty);
-                }
             }
         }
 
