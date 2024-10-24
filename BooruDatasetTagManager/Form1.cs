@@ -126,7 +126,7 @@ namespace BooruDatasetTagManager
             }
         }
 
-        private void openFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void openFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Program.DataManager != null && Program.DataManager.IsDataSetChanged())
             {
@@ -141,7 +141,7 @@ namespace BooruDatasetTagManager
                 return;
             isLoading = true;
             Program.DataManager = new DatasetManager();
-            Program.DataManager.SetTranslationMode(isTranslate);
+            //Program.DataManager.SetTranslationMode(isTranslate);
             if (!Program.DataManager.LoadFromFolder(openFolderDialog.Folder))
             {
                 SetStatus(I18n.GetText("TipFolderWrong"));
@@ -153,6 +153,7 @@ namespace BooruDatasetTagManager
             toolStripLabelAllTags.Text = I18n.GetText("UILabelAllTags");
             gridViewAllTags.DataSource = Program.DataManager.AllTagsBindingSource;
             ApplyDataSetGridStyle();
+            await ApplyTranslation(isTranslate);
             isLoading = false;
             gridViewDS.AutoResizeColumns();
         }
@@ -676,12 +677,17 @@ namespace BooruDatasetTagManager
         private async void translateTagsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             isTranslate = !isTranslate;
-            MenuItemTranslateTags.Checked = isTranslate;
+            await ApplyTranslation(isTranslate);
+        }
+
+        private async Task ApplyTranslation(bool needTranslate)
+        {
+            MenuItemTranslateTags.Checked = needTranslate;
             if (Program.DataManager != null)
             {
-                Program.DataManager.SetTranslationMode(isTranslate);
+                Program.DataManager.SetTranslationMode(needTranslate);
             }
-            if (isTranslate)
+            if (needTranslate)
             {
                 await FillTranslation(gridViewAllTags);
                 await FillTranslation(gridViewTags);
