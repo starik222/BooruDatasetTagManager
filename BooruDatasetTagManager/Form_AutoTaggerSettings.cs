@@ -10,12 +10,14 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Manina.Windows.Forms;
+using Microsoft.VisualBasic.Devices;
 
 namespace BooruDatasetTagManager
 {
     public partial class Form_AutoTaggerSettings : Form
     {
         private Dictionary<string, Control> interrogatorSettingsControls = new Dictionary<string, Control>();
+        private List<string> selectedInterrogators = new List<string>();
         private string ctrlPattern = "(.*?)_ctrl_(.*)";
         public Form_AutoTaggerSettings()
         {
@@ -214,6 +216,7 @@ namespace BooruDatasetTagManager
                 MessageBox.Show(intParams.ErrMes, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
+            selectedInterrogators.Add(name);
             Tab tab = new Tab();
             tab.Name = name;
             tab.Text = name;
@@ -293,6 +296,7 @@ namespace BooruDatasetTagManager
             {
                 TaggerSettingTabs.Tabs.Remove(tab);
             }
+            selectedInterrogators.Remove(name);
             var ctrlsToRemove = interrogatorSettingsControls.Where(a => a.Key.StartsWith(name + "_ctrl")).Select(a => a.Key);
             foreach(var item in ctrlsToRemove)
                 interrogatorSettingsControls.Remove(item);
@@ -332,6 +336,15 @@ namespace BooruDatasetTagManager
         private void SaveSettingsFromControls()
         {
             Program.Settings.AutoTagger.InterragatorParams.Clear();
+
+            foreach (var network in selectedInterrogators)
+            {
+                if (!Program.Settings.AutoTagger.InterragatorParams.ContainsKey(network))
+                {
+                    Program.Settings.AutoTagger.InterragatorParams.Add(network, new List<AdditionalParameters>());
+                }
+            }
+
             foreach (var item in interrogatorSettingsControls)
             {
                 Regex r = new Regex(ctrlPattern, RegexOptions.Compiled);
