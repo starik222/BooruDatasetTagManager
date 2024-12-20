@@ -30,8 +30,11 @@ namespace BooruDatasetTagManager
         private FilterType lastAndOperation = FilterType.Or;
         private IEnumerable<string> lastTagsFilter = null;
 
+        private Dictionary<string, Image> imagesCache;
+
         public DatasetManager()
         {
+            imagesCache = new Dictionary<string, Image>();
             DataSet = new ConcurrentDictionary<string, DataItem>();
             AllTags = new AllTagsList();
             AllTagsBindingSource = new BindingSource();
@@ -58,6 +61,23 @@ namespace BooruDatasetTagManager
         {
             DataSet[name].Tags.Clear();
             return DataSet.TryRemove(name, out _);
+        }
+
+        public Image GetImageFromFileWithCache(string path)
+        {
+            if (Program.Settings.CacheOpenImages)
+            {
+                if (imagesCache.ContainsKey(path))
+                    return imagesCache[path];
+                else
+                {
+                    Image img = Extensions.GetImageFromFile(path);
+                    imagesCache[path] = img;
+                    return img;
+                }
+            }
+            else
+                return Extensions.GetImageFromFile(path);
         }
 
         private IEnumerable<DataItem> GetEnumerator(bool useFilter)

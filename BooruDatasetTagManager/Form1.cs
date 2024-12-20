@@ -213,7 +213,7 @@ namespace BooruDatasetTagManager
 
         private void ShowPreview(string imgPath, bool separateWindow = false)
         {
-            Image img = Extensions.GetImageFromFile(imgPath);
+            Image img = Program.DataManager.GetImageFromFileWithCache(imgPath);
             if (separateWindow || Program.Settings.PreviewType == ImagePreviewType.SeparateWindow)
             {
                 if (fPreview == null || fPreview.IsDisposed)
@@ -238,9 +238,13 @@ namespace BooruDatasetTagManager
         {
             gridViewTags.AutoGenerateColumns = false;
             if (gridViewDS.SelectedRows.Count == 0)
+            {
+                BtnTagImageChecker.Enabled = true;
                 return;
+            }
             if (gridViewDS.SelectedRows.Count == 1)
             {
+                BtnTagImageChecker.Enabled = false;
                 gridViewTags.Tag = (string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value;
                 ChageImageColumn(false);
                 gridViewTags.DataSource = Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value].Tags;
@@ -252,6 +256,7 @@ namespace BooruDatasetTagManager
             }
             else
             {
+                BtnTagImageChecker.Enabled = true;
                 if (isShowPreview)
                 {
                     HidePreview();
@@ -1190,8 +1195,6 @@ namespace BooruDatasetTagManager
                         gridViewTags.Rows.RemoveAt(i);
                     }
                 }
-
-
             }
         }
 
@@ -1629,6 +1632,7 @@ namespace BooruDatasetTagManager
             BtnMenuSortNameAsc.Text = I18n.GetText("BtnMenuSortNameAsc");
             BtnMenuSortCountAsc.Text = I18n.GetText("BtnMenuSortCountAsc");
             BtnMenuSortCountDesc.Text = I18n.GetText("BtnMenuSortCountDesc");
+            BtnTagImageChecker.Text = I18n.GetText("BtnTagImageChecker");
 
             BtnTagSwitch.Text = I18n.GetText("BtnTagSwitch");
             BtnTagAddToAll.Text = I18n.GetText("BtnTagAddToAll");
@@ -1815,6 +1819,7 @@ namespace BooruDatasetTagManager
             cmds["BtnMenuGenTagsWithCurrentSettings"] = delegate () { BtnMenuGenTagsWithCurrentSettings.PerformClick(); };
             cmds["BtnMenuGenTagsWithSetWindow"] = delegate () { BtnMenuGenTagsWithSetWindow.PerformClick(); };
             cmds["toolStripPromptSortBtn"] = delegate () { toolStripPromptSortBtn.PerformClick(); };
+            cmds["BtnTagImageChecker"] = delegate () { BtnTagImageChecker.PerformClick(); };
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -2344,6 +2349,36 @@ namespace BooruDatasetTagManager
                 return;
             }
             ((BindingSource)gridViewAllTags.DataSource).Sort = "Count DESC";
+        }
+
+        private void openImageGridFormToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form_TagImagesGrid imgGrid = new Form_TagImagesGrid();
+            imgGrid.ShowDialog();
+        }
+
+        private void BtnTagImageChecker_Click(object sender, EventArgs e)
+        {
+            if (gridViewTags.SelectedCells.Count == 0)
+                return;
+            int rowIndex = gridViewTags.SelectedCells[0].RowIndex;
+            if (GetTagsDataSourceType() != DataSourceType.Multi)
+            {
+                return;
+            }
+
+            Form_TagImagesGrid imgGrid = new Form_TagImagesGrid();
+            var dt = (MultiSelectDataTable)gridViewTags.DataSource;
+            var dr = (MultiSelectDataRow)dt.Rows[rowIndex];
+            imgGrid.AddDataItems(dt.GetSelectedDataItems(), dr.GetTagText());
+            if (imgGrid.ShowDialog() != DialogResult.OK)
+            {
+                imgGrid.Close();
+                return;
+            }
+            var result = imgGrid.GetResult();
+            dt.UpdateDataForTag(dr.GetTagText(), result);
+            gridViewTags.Refresh();
         }
     }
 }

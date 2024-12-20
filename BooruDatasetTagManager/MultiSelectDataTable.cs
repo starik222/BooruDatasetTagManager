@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using static BooruDatasetTagManager.DatasetManager;
@@ -185,7 +186,10 @@ namespace BooruDatasetTagManager
 #endif
         }
 
-
+        public List<DataItem> GetSelectedDataItems()
+        {
+            return selectedDataItems;
+        }
         public void SetTagValue(string tag, int index)
         {
             var rowData = ((MultiSelectDataRow)Rows[index]);
@@ -196,9 +200,32 @@ namespace BooruDatasetTagManager
             }
         }
 
+        public void UpdateDataForTag(string tag, List<KeyValuePair<DatasetManager.DataItem, bool>> data)
+        {
+            var lstToAdd = data.Where(a => a.Value).Select(a => a.Key).ToList();
+            var lstToRemove = data.Where(a => !a.Value).Select(a=>a.Key).ToList();
+            AddTag(tag, lstToAdd, true, AddingType.Down);
+
+            for (int i = Rows.Count - 1; i >= 0; i--)
+            {
+                var dr = (MultiSelectDataRow)Rows[i];
+                var drTag = dr.GetTagText();
+                var drDataItem = dr.GetDataItem();
+                if (tag == drTag && lstToRemove.Contains(drDataItem))
+                {
+                    this.Rows.Remove(dr);
+                }
+            }
+        }
+
         public void AddTag(string tag, bool skipExist, AddingType addType, int pos = -1)
         {
-            if (selectedDataItems.Count == 0)
+            AddTag(tag, selectedDataItems, skipExist, addType, pos);
+        }
+
+        public void AddTag(string tag, List<DataItem> dataItemToUpdate, bool skipExist, AddingType addType, int pos = -1)
+        {
+            if (dataItemToUpdate.Count == 0)
                 return;
             bool existMode = false;
             List<KeyValuePair<KeyValuePair<int, int>, DataItem>> addedItems = new List<KeyValuePair<KeyValuePair<int, int>, DataItem>>();
@@ -211,10 +238,13 @@ namespace BooruDatasetTagManager
                         existMode = true;
                     }
                 }
-                var addedResult = item.Tags.AddTag(tag, skipExist, addType, pos);
-                if (addedResult.newIndex != -1)
+                if (dataItemToUpdate.Contains(item))
                 {
-                    addedItems.Add(new KeyValuePair<KeyValuePair<int, int>, DataItem>(new KeyValuePair<int, int>(addedResult.oldIndex, addedResult.newIndex), item));
+                    var addedResult = item.Tags.AddTag(tag, skipExist, addType, pos);
+                    if (addedResult.newIndex != -1)
+                    {
+                        addedItems.Add(new KeyValuePair<KeyValuePair<int, int>, DataItem>(new KeyValuePair<int, int>(addedResult.oldIndex, addedResult.newIndex), item));
+                    }
                 }
             }
 

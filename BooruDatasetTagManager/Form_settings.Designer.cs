@@ -75,6 +75,7 @@ namespace BooruDatasetTagManager
             labelCaptionFileExt = new System.Windows.Forms.Label();
             labelDelExt = new System.Windows.Forms.Label();
             tabUI = new Manina.Windows.Forms.Tab();
+            checkBoxCacheImages = new System.Windows.Forms.CheckBox();
             labelPreviewLocation = new System.Windows.Forms.Label();
             labelColorScheme = new System.Windows.Forms.Label();
             comboBoxPreviewType = new System.Windows.Forms.ComboBox();
@@ -542,6 +543,7 @@ namespace BooruDatasetTagManager
             // 
             // tabUI
             // 
+            tabUI.Controls.Add(checkBoxCacheImages);
             tabUI.Controls.Add(labelPreviewLocation);
             tabUI.Controls.Add(labelColorScheme);
             tabUI.Controls.Add(LabelLanguage);
@@ -560,6 +562,16 @@ namespace BooruDatasetTagManager
             tabUI.Name = "tabUI";
             tabUI.Size = new System.Drawing.Size(628, 403);
             tabUI.Text = "UI";
+            // 
+            // checkBoxCacheImages
+            // 
+            checkBoxCacheImages.AutoSize = true;
+            checkBoxCacheImages.Location = new System.Drawing.Point(9, 206);
+            checkBoxCacheImages.Name = "checkBoxCacheImages";
+            checkBoxCacheImages.Size = new System.Drawing.Size(430, 19);
+            checkBoxCacheImages.TabIndex = 7;
+            checkBoxCacheImages.Text = "Cache open images (Speeds up reopening previews, but uses more memory)";
+            checkBoxCacheImages.UseVisualStyleBackColor = true;
             // 
             // labelPreviewLocation
             // 
@@ -702,5 +714,6 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.Label labelCaptionFileExt;
         private System.Windows.Forms.Label labelPreviewLocation;
         private System.Windows.Forms.ComboBox comboBoxPreviewType;
+        private System.Windows.Forms.CheckBox checkBoxCacheImages;
     }
 }

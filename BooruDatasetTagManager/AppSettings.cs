@@ -46,7 +46,7 @@ namespace BooruDatasetTagManager
 
         public InterragatorSettings AutoTagger { get; set; }
 
-        private string settingsFile;
+        public int TagImagesGridSize { get; set; } = 400;
 
         public bool AutoSort { get; set; } = false;
 
@@ -54,7 +54,11 @@ namespace BooruDatasetTagManager
 
         public string ColorScheme { get; set; } = "Classic";
 
+        public bool CacheOpenImages { get; set; } = true;
+
         private string[] _tagsFilesExt = { "txt", "caption" };
+
+        private string settingsFile;
 
 
         public AppSettings(string appDir)
@@ -113,6 +117,8 @@ namespace BooruDatasetTagManager
                 PreviewType = tempSettings.PreviewType;
                 DefaultTagsFileExtension = tempSettings.DefaultTagsFileExtension;
                 CaptionFileExtensions = tempSettings.CaptionFileExtensions;
+                TagImagesGridSize = tempSettings.TagImagesGridSize;
+                CacheOpenImages = tempSettings.CacheOpenImages;
                 if (!string.IsNullOrEmpty(tempSettings.ColorScheme))
                     ColorScheme = tempSettings.ColorScheme;
                 AutoTagger = tempSettings.AutoTagger;

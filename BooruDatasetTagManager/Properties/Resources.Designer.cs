@@ -223,6 +223,16 @@ namespace BooruDatasetTagManager.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap MulTagEditor {
+            get {
+                object obj = ResourceManager.GetObject("MulTagEditor", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap NOTIcon {
             get {
                 object obj = ResourceManager.GetObject("NOTIcon", resourceCulture);

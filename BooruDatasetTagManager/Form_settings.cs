@@ -48,6 +48,7 @@ namespace BooruDatasetTagManager
             checkBoxFixOnLoad.Checked = Program.Settings.FixTagsOnSaveLoad;
             AutoSortCheckBox.Checked = Program.Settings.AutoSort;
             //UI
+            checkBoxCacheImages.Checked = Program.Settings.CacheOpenImages;
             numericUpDown3.Value = Program.Settings.GridViewRowHeight;
             label11.Text = Program.Settings.GridViewFont.ToString();
             gridFontSettings = Program.Settings.GridViewFont;
@@ -95,6 +96,7 @@ namespace BooruDatasetTagManager
             Program.Settings.AskSaveChanges = CheckAskChange.Checked;
             Program.Settings.AutoSort = AutoSortCheckBox.Checked;
             //UI
+            Program.Settings.CacheOpenImages = checkBoxCacheImages.Checked;
             Program.Settings.GridViewRowHeight = (int)numericUpDown3.Value;
             Program.Settings.GridViewFont = gridFontSettings;
             Program.Settings.AutocompleteFont = autocompleteFontSettings;
@@ -178,6 +180,7 @@ namespace BooruDatasetTagManager
             labelTransLang.Text = I18n.GetText("SettingTranslationLang");
             labelTranslService.Text = I18n.GetText("SettingTranslationSrv");
             checkBoxLoadOnlyManual.Text = I18n.GetText("SettingLoadOnlyManualAutocomplete");
+            checkBoxCacheImages.Text = I18n.GetText("SettingsCheckBoxCacheImages");
 
             comboAutocompMode.Items.Clear();
             comboAutocompSort.Items.Clear();

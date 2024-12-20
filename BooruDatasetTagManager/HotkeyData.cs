@@ -78,6 +78,7 @@ namespace BooruDatasetTagManager
             Items.Add(new HotkeyItem("BtnMenuGenTagsWithCurrentSettings", "Generate tags with AutoTagger (current setting)", Keys.G, false, true, false));
             Items.Add(new HotkeyItem("BtnMenuGenTagsWithSetWindow", "Generate tags with AutoTagger (open settings window)", Keys.H, false, true, false));
             Items.Add(new HotkeyItem("toolStripPromptSortBtn", "Sort tags", Keys.Q, true, false, false));
+            Items.Add(new HotkeyItem("BtnTagImageChecker", "Visual editor of the selected tag for selected images", Keys.T, false, true, false));
         }
 
         public void ChangeLanguage()
@@ -114,6 +115,7 @@ namespace BooruDatasetTagManager
             this["BtnMenuGenTagsWithCurrentSettings"].Text = I18n.GetText("HKBtnMenuGenTagsWithCurrentSettings");
             this["BtnMenuGenTagsWithSetWindow"].Text = I18n.GetText("HKBtnMenuGenTagsWithSetWindow");
             this["toolStripPromptSortBtn"].Text = I18n.GetText("HKtoolStripPromptSortBtn");
+            this["BtnTagImageChecker"].Text = I18n.GetText("HKBtnTagImageChecker");
         }
 
 
