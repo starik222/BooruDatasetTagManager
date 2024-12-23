@@ -222,7 +222,8 @@ namespace BooruDatasetTagManager
             }
             else if (Program.Settings.PreviewType == ImagePreviewType.PreviewInMainWindow)
             {
-                pictureBoxPreview.Image?.Dispose();
+                if (!Program.Settings.CacheOpenImages)
+                    pictureBoxPreview.Image?.Dispose();
                 pictureBoxPreview.Image = img;
             }
         }
@@ -230,7 +231,8 @@ namespace BooruDatasetTagManager
         private void HidePreview()
         {
             fPreview?.Hide();
-            pictureBoxPreview.Image?.Dispose();
+            if (!Program.Settings.CacheOpenImages)
+                pictureBoxPreview.Image?.Dispose();
             pictureBoxPreview.Image = null;
         }
 
