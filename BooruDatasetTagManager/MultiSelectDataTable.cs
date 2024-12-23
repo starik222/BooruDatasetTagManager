@@ -15,6 +15,7 @@ namespace BooruDatasetTagManager
     {
         private List<DataItem> selectedDataItems;
         private bool isTranslateMode = false;
+        private Dictionary<string, int> tagCount = new Dictionary<string, int>();
         public MultiSelectDataTable()
             : base()
         {
@@ -43,6 +44,14 @@ namespace BooruDatasetTagManager
         public void SetTranslationMode(bool translate)
         {
             this.isTranslateMode = translate;
+        }
+
+        public int GetTagsCount(string tag)
+        {
+            if (tagCount.ContainsKey(tag))
+                return tagCount[tag];
+            else
+                return 0;
         }
         //For debug
         public void CheckIndexSync()
@@ -120,11 +129,26 @@ namespace BooruDatasetTagManager
                     row["Image"] = item.Value[i].Value.ImageFilePath;//ImgName
                     row["ImageName"] = item.Value[i].Value.Name;//ImgName
                     Rows.Add(row);
+                    IncreaseTagCount(item.Key);
                 }
             }
 #if DEBUG
             CheckIndexSync();
 #endif
+        }
+
+        private void IncreaseTagCount(string tag)
+        {
+            if (tagCount.ContainsKey(tag))
+                tagCount[tag]++;
+            else
+                tagCount[tag] = 1;
+        }
+
+        private void DecreaseTagCount(string tag)
+        {
+            if (tagCount.ContainsKey(tag))
+                tagCount[tag]--;
         }
 
         protected override void OnRowChanged(DataRowChangeEventArgs e)
@@ -135,10 +159,12 @@ namespace BooruDatasetTagManager
                 if ((string)e.Row["Tag"] != rowData.GetTagText())
                 {
                     var eTag = rowData.GetDataItem().Tags[rowData.GetTagIndex()];
+                    DecreaseTagCount(eTag.Tag);
                     eTag.Tag = (string)e.Row["Tag"];
                     if (eTag.IsEditing)
                         eTag.EndEdit();
                     rowData.SetTagText((string)e.Row["Tag"]);
+                    IncreaseTagCount(eTag.Tag);
                 }
             }
             base.OnRowChanged(e);
@@ -169,7 +195,7 @@ namespace BooruDatasetTagManager
                 string textTag = ((MultiSelectDataRow)e.Row).GetTagText();
                 DataItem dataItem = ((MultiSelectDataRow)e.Row).GetDataItem();
                 dataItem.Tags.RemoveAt(tagIndex);
-
+                DecreaseTagCount(textTag);
                 //Changing TagIndex after deleting tags
                 for (int i = 0; i < Rows.Count; i++)
                 {
@@ -265,6 +291,7 @@ namespace BooruDatasetTagManager
                         //    row["Translation"] = i == 0 ? await Program.TransManager.TranslateAsync(tag) : "";//tag
                         //}
                         Rows.Add(row);
+                        IncreaseTagCount(tag);
                     }
                 }
             }
@@ -303,6 +330,7 @@ namespace BooruDatasetTagManager
                         row["Image"] = item.Value.ImageFilePath;//ImgName
                         row["ImageName"] = item.Value.Name;//ImgName
                         Rows.InsertAt(row, startInsertIndex++);
+                        IncreaseTagCount(tag);
                     }
                 }
             }

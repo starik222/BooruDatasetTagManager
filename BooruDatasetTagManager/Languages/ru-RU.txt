@@ -227,3 +227,4 @@ CustomPictureBoxNText=N
 BtnTagImageChecker=Визуальный редактор тегов (выбранного) при множественном выборе
 HKBtnTagImageChecker=Визуальный редактор тегов (выбранного) при множественном выборе
 SettingsCheckBoxCacheImages=Кэшировать открытые изображения (ускоряет повторное открытие изображений, но потребляет больше памяти)
+TipTagCountInSelected=Количество:

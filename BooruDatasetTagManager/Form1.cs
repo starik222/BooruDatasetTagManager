@@ -2380,5 +2380,15 @@ namespace BooruDatasetTagManager
             dt.UpdateDataForTag(dr.GetTagText(), result);
             gridViewTags.Refresh();
         }
+
+        private void gridViewTags_CellToolTipTextNeeded(object sender, DataGridViewCellToolTipTextNeededEventArgs e)
+        {
+            if (GetTagsDataSourceType() == DataSourceType.Multi)
+            {
+                MultiSelectDataTable dt = (MultiSelectDataTable)gridViewTags.DataSource;
+                MultiSelectDataRow dr = (MultiSelectDataRow)dt.Rows[e.RowIndex];
+                e.ToolTipText = I18n.GetText("TipTagCountInSelected") + " " + dt.GetTagsCount(dr.GetTagText());
+            }
+        }
     }
 }

@@ -235,6 +235,7 @@ namespace BooruDatasetTagManager
             gridViewTags.CellEndEdit += gridViewTags_CellEndEdit;
             gridViewTags.CellMouseEnter += dataGridViewTags_CellMouseEnter;
             gridViewTags.CellMouseLeave += dataGridViewTags_CellMouseLeave;
+            gridViewTags.CellToolTipTextNeeded += gridViewTags_CellToolTipTextNeeded;
             gridViewTags.CellValueChanged += gridViewTags_CellValueChanged;
             gridViewTags.EditingControlShowing += dataGridView1_EditingControlShowing;
             gridViewTags.SelectionChanged += gridViewTags_SelectionChanged;
@@ -299,7 +300,7 @@ namespace BooruDatasetTagManager
             toolStripTags.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { BtnTagAdd, BtnTagDelete, BtnTagUndo, BtnTagRedo, toolStripSeparator1, BtnTagCopy, BtnTagPaste, BtnTagSetToAll, toolStripSeparator2, BtnTagPasteFromClipBoard, BtnTagShow, toolStripSplitButton1, toolStripSeparator4, BtnTagUp, BtnTagDown, toolStripSeparator7, BtnTagImageChecker, toolStripSeparator9, BtnTagFindInAll });
             toolStripTags.Location = new System.Drawing.Point(0, 3);
             toolStripTags.Name = "toolStripTags";
-            toolStripTags.Size = new System.Drawing.Size(37, 606);
+            toolStripTags.Size = new System.Drawing.Size(37, 587);
             toolStripTags.TabIndex = 3;
             toolStripTags.Text = "toolStrip2";
             // 
