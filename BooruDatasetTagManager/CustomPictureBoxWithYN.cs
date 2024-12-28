@@ -103,22 +103,26 @@ namespace BooruDatasetTagManager
             }
             Refresh();
         }
-        protected override void OnClick(EventArgs e)
+
+        protected override void OnMouseClick(MouseEventArgs e)
         {
-            Form f = new Form();
-            f.WindowState = FormWindowState.Maximized;
-            f.ControlBox = false;
-            PictureBox pictureBox = new PictureBox();
-            pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            f.Controls.Add(pictureBox);
-            pictureBox.Dock = DockStyle.Fill;
-            pictureBox.Image = this.Image;
-            pictureBox.Click += (o, e) =>
+            if (e.Button == MouseButtons.Right)
             {
-                f.Close();
-            };
-            f.ShowDialog();
-            base.OnClick(e);
+                Form f = new Form();
+                f.WindowState = FormWindowState.Maximized;
+                f.ControlBox = false;
+                PictureBox pictureBox = new PictureBox();
+                pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                f.Controls.Add(pictureBox);
+                pictureBox.Dock = DockStyle.Fill;
+                pictureBox.Image = this.Image;
+                pictureBox.Click += (o, e) =>
+                {
+                    f.Close();
+                };
+                f.ShowDialog();
+            }
+            base.OnMouseClick(e);
         }
 
         protected override void OnPaint(PaintEventArgs e)
