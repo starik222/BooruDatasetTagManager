@@ -141,13 +141,20 @@ namespace BooruDatasetTagManager
                 return;
             isLoading = true;
             Program.DataManager = new DatasetManager();
+            TrackBarRowHeight.ValueChanged -= TrackBarRowHeight_ValueChanged;
+            TrackBarRowHeight.TrackBar.Minimum = 1;
+            TrackBarRowHeight.TrackBar.Maximum = Program.Settings.PreviewSize;
+            TrackBarRowHeight.TrackBar.TickFrequency = 50;
+            TrackBarRowHeight.TrackBar.SmallChange = 50;
+            TrackBarRowHeight.TrackBar.LargeChange = 50;
+            TrackBarRowHeight.Value = Program.Settings.PreviewSize;
+            TrackBarRowHeight.ValueChanged += TrackBarRowHeight_ValueChanged;
             //Program.DataManager.SetTranslationMode(isTranslate);
             if (!Program.DataManager.LoadFromFolder(openFolderDialog.Folder))
             {
                 SetStatus(I18n.GetText("TipFolderWrong"));
                 return;
             }
-
             gridViewDS.DataSource = Program.DataManager.GetDataSource();
             isAllTags = true;
             toolStripLabelAllTags.Text = I18n.GetText("UILabelAllTags");
@@ -156,6 +163,32 @@ namespace BooruDatasetTagManager
             await ApplyTranslation(isTranslate);
             isLoading = false;
             gridViewDS.AutoResizeColumns();
+        }
+
+        private void TrackBarRowHeight_ValueChanged(object sender, EventArgs e)
+        {
+            gridViewDS.SuspendLayout();
+            if (gridViewDS.AutoSizeRowsMode == DataGridViewAutoSizeRowsMode.AllCells)
+            {
+                gridViewDS.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+            }
+            //if (gridViewDS.AutoSizeColumnsMode == DataGridViewAutoSizeColumnsMode.AllCells)
+            //{
+            //    gridViewDS.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+            //}
+            //for (int i = 0; i < gridViewDS.ColumnCount; i++)
+            //{
+            //    if (gridViewDS.Columns[i].ValueType == typeof(Image))
+            //    {
+            //        gridViewDS.Columns[i].Width = TrackBarRowHeight.Value;
+            //        //((DataGridViewImageColumn)gridViewDS.Columns[i]).Width = TrackBarRowHeight.Value;
+            //    }
+            //}
+            for (int i = 0; i < gridViewDS.RowCount; i++)
+            {
+                gridViewDS.Rows[i].Height = TrackBarRowHeight.Value;
+            }
+            gridViewDS.ResumeLayout();
         }
 
         private async Task FillTranslation(DataGridView grid)
@@ -1006,7 +1039,7 @@ namespace BooruDatasetTagManager
             {
                 if (gridViewDS.Columns[i].ValueType == typeof(Image))
                 {
-                    ((DataGridViewImageColumn)gridViewDS.Columns[i]).ImageLayout = DataGridViewImageCellLayout.NotSet;
+                    ((DataGridViewImageColumn)gridViewDS.Columns[i]).ImageLayout = DataGridViewImageCellLayout.Zoom;
                     gridViewDS.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 }
             }
@@ -1658,6 +1691,7 @@ namespace BooruDatasetTagManager
             tabAutoTags.Text = I18n.GetText("UITabAutoTags");
             tabPreview.Text = I18n.GetText("UITabPreview");
             toolStripLabel1.Text = I18n.GetText("UITabAutoTagsAutoGenLabel");
+            toolStripLabelDSZoom.Text = I18n.GetText("LabelGridZoomText");
 
 
             foreach (ToolStripMenuItem item in MenuLanguage.DropDownItems)
