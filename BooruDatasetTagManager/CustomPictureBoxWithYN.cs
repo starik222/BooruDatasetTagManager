@@ -18,6 +18,7 @@ namespace BooruDatasetTagManager
         private Button bNo;
         private Color yesColor = Color.LawnGreen;
         private Color noColor = Color.Salmon;
+        private bool selectionMode = false;
         public CustomPictureBoxWithYN(int w, int h ,bool isYes) : base()
         {
             this.Width = w;
@@ -72,6 +73,11 @@ namespace BooruDatasetTagManager
             this.Height = size;
         }
 
+        public void SetSelectionMode(bool isSelectionMode)
+        {
+            selectionMode = isSelectionMode;
+        }
+
         private void BNo_Click(object sender, EventArgs e)
         {
             SetStateYN(false);
@@ -121,6 +127,10 @@ namespace BooruDatasetTagManager
                     f.Close();
                 };
                 f.ShowDialog();
+            }
+            else if (selectionMode && e.Button == MouseButtons.Left)
+            {
+                SetStateYN(!StateYes);
             }
             base.OnMouseClick(e);
         }

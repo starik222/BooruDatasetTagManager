@@ -68,6 +68,7 @@ namespace BooruDatasetTagManager
         private int previewRowIndex = -1;
         private FilterType filterAnd = FilterType.Or;
         private bool isLoading = false;
+        private bool selectionMode = false;
         private List<string> selectedFiles = new List<string>();
 
 
@@ -277,6 +278,7 @@ namespace BooruDatasetTagManager
                 BtnTagImageChecker.Enabled = true;
                 return;
             }
+            gridViewTags.SuspendLayout();
             if (gridViewDS.SelectedRows.Count == 1)
             {
                 BtnTagImageChecker.Enabled = false;
@@ -328,6 +330,7 @@ namespace BooruDatasetTagManager
                     await ((EditableTagList)gridViewTags.DataSource).TranslateAllAsync();
                 }
             }
+            gridViewTags.ResumeLayout();
             //await FillTranslation(gridViewTags);
         }
 
@@ -1047,7 +1050,8 @@ namespace BooruDatasetTagManager
 
         private void dataGridView3_SelectionChanged(object sender, EventArgs e)
         {
-            LoadSelectedImageToGrid();
+            if (!selectionMode)
+                LoadSelectedImageToGrid();
         }
 
 
@@ -1692,6 +1696,7 @@ namespace BooruDatasetTagManager
             tabPreview.Text = I18n.GetText("UITabPreview");
             toolStripLabel1.Text = I18n.GetText("UITabAutoTagsAutoGenLabel");
             toolStripLabelDSZoom.Text = I18n.GetText("LabelGridZoomText");
+            BtnDSChangeSelection.Text = I18n.GetText("BtnDSChangeSelection");
 
 
             foreach (ToolStripMenuItem item in MenuLanguage.DropDownItems)
@@ -2406,7 +2411,7 @@ namespace BooruDatasetTagManager
             Form_TagImagesGrid imgGrid = new Form_TagImagesGrid();
             var dt = (MultiSelectDataTable)gridViewTags.DataSource;
             var dr = (MultiSelectDataRow)dt.Rows[rowIndex];
-            imgGrid.AddDataItems(dt.GetSelectedDataItems(), dr.GetTagText());
+            imgGrid.AddDataItemsEditTagInSelected(dt.GetSelectedDataItems(), dr.GetTagText());
             if (imgGrid.ShowDialog() != DialogResult.OK)
             {
                 imgGrid.Close();
@@ -2425,6 +2430,37 @@ namespace BooruDatasetTagManager
                 MultiSelectDataRow dr = (MultiSelectDataRow)dt.Rows[e.RowIndex];
                 e.ToolTipText = I18n.GetText("TipTagCountInSelected") + " " + dt.GetTagsCount(dr.GetTagText());
             }
+        }
+
+        private void BtnDSChangeSelection_Click(object sender, EventArgs e)
+        {
+            if (Program.DataManager == null)
+            {
+                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
+                return;
+            }
+            selectionMode = true;
+            Form_TagImagesGrid imgGrid = new Form_TagImagesGrid();
+            for (int i = 0; i < gridViewDS.RowCount; i++)
+            {
+                var dItem = Program.DataManager.DataSet[(string)gridViewDS["ImageFilePath", i].Value];
+                bool selected = gridViewDS.Rows[i].Selected;
+                imgGrid.AddDataItemChangeSelection(dItem, selected);
+            }
+            if (imgGrid.ShowDialog() != DialogResult.OK)
+            {
+                imgGrid.Close();
+                selectionMode = false;
+                return;
+            }
+            var result = imgGrid.GetResult(true);
+            for (int i = 0; i < gridViewDS.RowCount; i++)
+            {
+                string imgPath = (string)gridViewDS["ImageFilePath", i].Value;
+                gridViewDS.Rows[i].Selected = result.Where(a => a.Key.ImageFilePath == imgPath).First().Value;
+            }
+            LoadSelectedImageToGrid();
+            selectionMode = false;
         }
     }
 }

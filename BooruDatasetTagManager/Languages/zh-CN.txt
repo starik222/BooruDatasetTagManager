@@ -229,3 +229,4 @@ BtnTagImageChecker=Visual editor of the selected tag for selected images
 HKBtnTagImageChecker=Visual editor of the selected tag for selected images
 SettingsCheckBoxCacheImages=Cache open images (Speeds up reopening previews, but uses more memory)
 TipTagCountInSelected=Count:
+BtnDSChangeSelection=Change selection

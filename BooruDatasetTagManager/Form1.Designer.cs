@@ -30,10 +30,10 @@ namespace BooruDatasetTagManager
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             gridViewTags = new System.Windows.Forms.DataGridView();
             ImageTags = new CustomTextBoxColumn();
@@ -121,6 +121,8 @@ namespace BooruDatasetTagManager
             toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
             toolStripLabelDSZoom = new System.Windows.Forms.ToolStripLabel();
             TrackBarRowHeight = new ToolStripCustomMenuItem();
+            toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
+            BtnDSChangeSelection = new System.Windows.Forms.ToolStripButton();
             gridViewDS = new System.Windows.Forms.DataGridView();
             toolStrip4 = new System.Windows.Forms.ToolStrip();
             toolStripLabelDataSet = new System.Windows.Forms.ToolStripLabel();
@@ -219,14 +221,14 @@ namespace BooruDatasetTagManager
             gridViewTags.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             gridViewTags.ColumnHeadersVisible = false;
             gridViewTags.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { ImageTags, Translation, ImageName, Image, Id });
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            gridViewTags.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            gridViewTags.DefaultCellStyle = dataGridViewCellStyle1;
             gridViewTags.Dock = System.Windows.Forms.DockStyle.Fill;
             gridViewTags.Location = new System.Drawing.Point(0, 0);
             gridViewTags.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -665,14 +667,14 @@ namespace BooruDatasetTagManager
             gridViewAllTags.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             gridViewAllTags.ColumnHeadersVisible = false;
             gridViewAllTags.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { TagsColumn, TranslationColumn, CountColumn });
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            gridViewAllTags.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            gridViewAllTags.DefaultCellStyle = dataGridViewCellStyle2;
             gridViewAllTags.Dock = System.Windows.Forms.DockStyle.Fill;
             gridViewAllTags.Location = new System.Drawing.Point(0, 0);
             gridViewAllTags.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -980,10 +982,10 @@ namespace BooruDatasetTagManager
             // toolStrip5
             // 
             toolStrip5.Dock = System.Windows.Forms.DockStyle.None;
-            toolStrip5.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripSeparator14, toolStripLabelDSZoom, TrackBarRowHeight });
+            toolStrip5.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripSeparator14, toolStripLabelDSZoom, TrackBarRowHeight, toolStripSeparator15, BtnDSChangeSelection });
             toolStrip5.Location = new System.Drawing.Point(3, 0);
             toolStrip5.Name = "toolStrip5";
-            toolStrip5.Size = new System.Drawing.Size(291, 38);
+            toolStrip5.Size = new System.Drawing.Size(320, 38);
             toolStrip5.TabIndex = 0;
             // 
             // toolStripSeparator14
@@ -1003,6 +1005,21 @@ namespace BooruDatasetTagManager
             TrackBarRowHeight.Size = new System.Drawing.Size(200, 35);
             TrackBarRowHeight.Text = "toolStripCustomMenuItem1";
             // 
+            // toolStripSeparator15
+            // 
+            toolStripSeparator15.Name = "toolStripSeparator15";
+            toolStripSeparator15.Size = new System.Drawing.Size(6, 38);
+            // 
+            // BtnDSChangeSelection
+            // 
+            BtnDSChangeSelection.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            BtnDSChangeSelection.Image = Properties.Resources.ChangeSelection;
+            BtnDSChangeSelection.ImageTransparentColor = System.Drawing.Color.Magenta;
+            BtnDSChangeSelection.Name = "BtnDSChangeSelection";
+            BtnDSChangeSelection.Size = new System.Drawing.Size(23, 35);
+            BtnDSChangeSelection.Text = "Change selection";
+            BtnDSChangeSelection.Click += BtnDSChangeSelection_Click;
+            // 
             // gridViewDS
             // 
             gridViewDS.AllowUserToAddRows = false;
@@ -1017,8 +1034,8 @@ namespace BooruDatasetTagManager
             gridViewDS.ReadOnly = true;
             gridViewDS.RowHeadersVisible = false;
             gridViewDS.RowHeadersWidth = 72;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            gridViewDS.RowsDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            gridViewDS.RowsDefaultCellStyle = dataGridViewCellStyle3;
             gridViewDS.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             gridViewDS.RowTemplate.Height = 140;
             gridViewDS.RowTemplate.ReadOnly = true;
@@ -1289,14 +1306,14 @@ namespace BooruDatasetTagManager
             gridViewAutoTags.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             gridViewAutoTags.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             gridViewAutoTags.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            gridViewAutoTags.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            gridViewAutoTags.DefaultCellStyle = dataGridViewCellStyle4;
             gridViewAutoTags.Dock = System.Windows.Forms.DockStyle.Fill;
             gridViewAutoTags.Location = new System.Drawing.Point(0, 0);
             gridViewAutoTags.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1642,6 +1659,8 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
         private ToolStripCustomMenuItem TrackBarRowHeight;
         private System.Windows.Forms.ToolStripLabel toolStripLabelDSZoom;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
+        private System.Windows.Forms.ToolStripButton BtnDSChangeSelection;
     }
 }
 

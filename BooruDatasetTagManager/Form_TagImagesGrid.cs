@@ -55,8 +55,12 @@ namespace BooruDatasetTagManager
         {
             this.Text += ": " + currentTag;
         }
-
-        public void AddDataItems(List<DatasetManager.DataItem> item, string tag)
+        /// <summary>
+        /// Used to change the tag list when multiple selections are made
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="tag"></param>
+        public void AddDataItemsEditTagInSelected(List<DatasetManager.DataItem> item, string tag)
         {
             currentTag = tag;
             List<KeyValuePair<DatasetManager.DataItem, bool>> toSort = new List<KeyValuePair<DatasetManager.DataItem, bool>>();
@@ -72,8 +76,23 @@ namespace BooruDatasetTagManager
                 flowLayoutPanelImages.Controls.Add(pictureBox);
             }
         }
+        /// <summary>
+        /// Used to modify selected images in a dataset
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="selected"></param>
+        public void AddDataItemChangeSelection(DatasetManager.DataItem item, bool selected)
+        {
+            CustomPictureBoxWithYN pictureBox = new CustomPictureBoxWithYN(TrackBarZoom.TrackBar.Value, TrackBarZoom.TrackBar.Value, selected);
+            pictureBox.BorderStyle = BorderStyle.FixedSingle;
+            pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox.SetSelectionMode(true);
+            pictureBox.Image = Program.DataManager.GetImageFromFileWithCache(item.ImageFilePath);
+            pictureBox.SetDataSetItem(item);
+            flowLayoutPanelImages.Controls.Add(pictureBox);
+        }
 
-        public List<KeyValuePair<DatasetManager.DataItem, bool>> GetResult()
+        public List<KeyValuePair<DatasetManager.DataItem, bool>> GetResult(bool allData = false)
         {
             List<KeyValuePair<DatasetManager.DataItem, bool>> result = new List<KeyValuePair<DatasetManager.DataItem, bool>>();
             for (int i = 0; i < flowLayoutPanelImages.Controls.Count; i++)
@@ -81,7 +100,7 @@ namespace BooruDatasetTagManager
                 if (flowLayoutPanelImages.Controls[i] is CustomPictureBoxWithYN)
                 {
                     CustomPictureBoxWithYN c = (CustomPictureBoxWithYN)flowLayoutPanelImages.Controls[i];
-                    if (c.StateChanged)
+                    if (allData || c.StateChanged)
                         result.Add(new KeyValuePair<DatasetManager.DataItem, bool>(c.GetDataSetItem(), c.StateYes));
                 }
             }
