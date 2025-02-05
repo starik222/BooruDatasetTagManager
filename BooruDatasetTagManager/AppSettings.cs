@@ -315,6 +315,7 @@ namespace BooruDatasetTagManager
 
     public class InterragatorSettings
     {
+        public string ConnectionAddress { get; set; } = "http://127.0.0.1:50051";
         public Dictionary<string, List<AdditionalParameters>> InterragatorParams { get; set; }
         public AutoTaggerSort SortMode { get; set; } = AutoTaggerSort.None;
         public NetworkUnionMode UnionMode { get; set; } = NetworkUnionMode.Addition;

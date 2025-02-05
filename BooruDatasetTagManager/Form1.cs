@@ -2018,7 +2018,8 @@ namespace BooruDatasetTagManager
                     {
                         Key = parameter.Key,
                         Value = parameter.Value,
-                        Type = parameter.Type
+                        Type = parameter.Type,
+                        Comment = ""
                     });
                 }
                 var pData = new Image_Interrogator_Ns.NetworkInterrogationParameters() { InterrogatorNetwork = item.Key };

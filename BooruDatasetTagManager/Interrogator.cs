@@ -20,7 +20,7 @@ namespace BooruDatasetTagManager
         public bool IsConnected { get; private set; }
         public Interrogator()
         {
-            _channel = GrpcChannel.ForAddress("http://127.0.0.1:50051");
+            _channel = GrpcChannel.ForAddress(Program.Settings.AutoTagger.ConnectionAddress);
             _client = new ImageInterrogator.ImageInterrogatorClient(_channel);
             InterrogatorList = new List<string>();
         }

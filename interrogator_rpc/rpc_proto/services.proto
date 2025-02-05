@@ -46,6 +46,7 @@ message AdditionalNetworkParameter {
     string key        = 1;
     string value = 2;
     string type = 3;
+    string comment = 4;
 }
 
 message InterrogationResponse {

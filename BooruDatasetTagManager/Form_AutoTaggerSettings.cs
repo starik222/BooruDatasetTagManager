@@ -231,13 +231,15 @@ namespace BooruDatasetTagManager
             foreach (var item in intParams.Parameters)
             {
                 panel.RowCount++;
-                panel.RowStyles.Add(new RowStyle(SizeType.Absolute, 23f));
+                panel.RowStyles.Add(new RowStyle(SizeType.AutoSize, 23f));
                 Label lbl = new Label();
+                lbl.Padding = new Padding(0,6,0,2);
                 lbl.Name = name + "_lbl_" + item.Key.Replace(" ", "");
-                lbl.Text = item.Key;
+                lbl.Text = item.Key.ToUpper() + ":";
                 lbl.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
                 panel.Controls.Add(lbl, 0, panel.RowCount - 1);
                 lbl.Dock = DockStyle.Fill;
+                lbl.AutoSize = true;
                 if (item.Type == "float1")
                 {
                     panel.RowCount++;
@@ -266,6 +268,31 @@ namespace BooruDatasetTagManager
                     textBox.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
                     textBox.Text = item.Value;
                     interrogatorSettingsControls.Add(textBox.Name, textBox);
+                }
+                else if (item.Type == "label")
+                {
+                    panel.RowCount++;
+                    panel.RowStyles.Add(new RowStyle(SizeType.AutoSize, 25f));
+                    Label lb = new Label();
+                    lb.Name = name + "_ctrl_" + item.Key.Replace(" ", "");
+                    panel.Controls.Add(lb, 0, panel.RowCount - 1);
+                    lb.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
+                    lb.Dock = DockStyle.Fill;
+                    lb.AutoSize = true;
+                    lb.Text = item.Value;
+                    interrogatorSettingsControls.Add(lb.Name, lb);
+                }
+                else if (item.Type == "bool")
+                {
+                    panel.RowCount++;
+                    panel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25f));
+                    CheckBox checkBox = new CheckBox();
+                    checkBox.Name = name + "_ctrl_" + item.Key.Replace(" ", "");
+                    panel.Controls.Add(checkBox, 0, panel.RowCount - 1);
+                    checkBox.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
+                    checkBox.Text = item.Comment;
+                    checkBox.Checked = bool.Parse(item.Value);
+                    interrogatorSettingsControls.Add(checkBox.Name, checkBox);
                 }
                 else if (item.Type == "list")
                 {
@@ -323,6 +350,11 @@ namespace BooruDatasetTagManager
                             TextBox tb = (TextBox)ctrl;
                             tb.Text = item.Value;
                         }
+                        else if (ctrl.GetType() == typeof(CheckBox))
+                        {
+                            CheckBox cb = (CheckBox)ctrl;
+                            cb.Checked = bool.Parse(item.Value);
+                        }
                         else if (ctrl.GetType() == typeof(ComboBox))
                         {
                             ComboBox cb = (ComboBox)ctrl;
@@ -367,11 +399,21 @@ namespace BooruDatasetTagManager
                     addParams.Type = "string";
                     addParams.Value = tb.Text;
                 }
+                else if (ctrl.GetType() == typeof(CheckBox))
+                {
+                    CheckBox cb = (CheckBox)ctrl;
+                    addParams.Type = "bool";
+                    addParams.Value = cb.Checked.ToString().ToLower();
+                }
                 else if (ctrl.GetType() == typeof(ComboBox))
                 {
                     ComboBox cb = (ComboBox)ctrl;
                     addParams.Type = "list";
                     addParams.Value = cb.SelectedItem.ToString();
+                }
+                else if (ctrl.GetType() == typeof(Label))
+                {
+                    continue;
                 }
                 if (Program.Settings.AutoTagger.InterragatorParams.ContainsKey(network))
                 {

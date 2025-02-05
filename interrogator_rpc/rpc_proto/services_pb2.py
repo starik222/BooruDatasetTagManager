@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0eservices.proto\x12\x0cinterrogator\"1\n\x13InterrogatorListing\x12\x1a\n\x12interrogator_names\x18\x01 \x03(\t\"\x86\x01\n\x1eNetworkInterrogationParameters\x12\x1c\n\x14interrogator_network\x18\x01 \x01(\t\x12\x46\n\x14\x41\x64\x64itionalParameters\x18\x02 \x03(\x0b\x32(.interrogator.AdditionalNetworkParameter\"\xc1\x01\n\x14InterrogationRequest\x12<\n\x06params\x18\x01 \x03(\x0b\x32,.interrogator.NetworkInterrogationParameters\x12\x19\n\x11interrogate_image\x18\x02 \x01(\x0c\x12\x1e\n\x16skip_internet_requests\x18\x03 \x01(\x08\x12\x1c\n\x14serialize_vram_usage\x18\x04 \x01(\x08\x12\x12\n\nimage_name\x18\x05 \x01(\t\"8\n\x18InterrogatorParamRequest\x12\x1c\n\x14interrogator_network\x18\x01 \x01(\t\"\x87\x01\n\x19InterrogatorParamResponse\x12\x0e\n\x06Result\x18\x01 \x01(\x08\x12\x0e\n\x06\x45rrMes\x18\x02 \x01(\t\x12\x0c\n\x04Type\x18\x03 \x01(\t\x12<\n\nParameters\x18\x04 \x03(\x0b\x32(.interrogator.AdditionalNetworkParameter\",\n\x08TagEntry\x12\x0b\n\x03tag\x18\x01 \x01(\t\x12\x13\n\x0bprobability\x18\x02 \x01(\x02\"F\n\x1a\x41\x64\x64itionalNetworkParameter\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\"S\n\x15InterrogationResponse\x12\x14\n\x0cnetwork_name\x18\x01 \x01(\t\x12$\n\x04tags\x18\x02 \x03(\x0b\x32\x16.interrogator.TagEntry\"t\n\x0fImageTagResults\x12\x36\n\tresponses\x18\x01 \x03(\x0b\x32#.interrogator.InterrogationResponse\x12\x16\n\x0einterrogate_ok\x18\x02 \x01(\x08\x12\x11\n\terror_msg\x18\x03 \x01(\t\"\x1c\n\x1aInterrogatorListingRequest2\xb7\x02\n\x11ImageInterrogator\x12`\n\x11ListInterrogators\x12(.interrogator.InterrogatorListingRequest\x1a!.interrogator.InterrogatorListing\x12U\n\x10InterrogateImage\x12\".interrogator.InterrogationRequest\x1a\x1d.interrogator.ImageTagResults\x12i\n\x16InterrogatorParameters\x12&.interrogator.InterrogatorParamRequest\x1a\'.interrogator.InterrogatorParamResponseB\x18\xaa\x02\x15Image_Interrogator_Nsb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0eservices.proto\x12\x0cinterrogator\"1\n\x13InterrogatorListing\x12\x1a\n\x12interrogator_names\x18\x01 \x03(\t\"\x86\x01\n\x1eNetworkInterrogationParameters\x12\x1c\n\x14interrogator_network\x18\x01 \x01(\t\x12\x46\n\x14\x41\x64\x64itionalParameters\x18\x02 \x03(\x0b\x32(.interrogator.AdditionalNetworkParameter\"\xc1\x01\n\x14InterrogationRequest\x12<\n\x06params\x18\x01 \x03(\x0b\x32,.interrogator.NetworkInterrogationParameters\x12\x19\n\x11interrogate_image\x18\x02 \x01(\x0c\x12\x1e\n\x16skip_internet_requests\x18\x03 \x01(\x08\x12\x1c\n\x14serialize_vram_usage\x18\x04 \x01(\x08\x12\x12\n\nimage_name\x18\x05 \x01(\t\"8\n\x18InterrogatorParamRequest\x12\x1c\n\x14interrogator_network\x18\x01 \x01(\t\"\x87\x01\n\x19InterrogatorParamResponse\x12\x0e\n\x06Result\x18\x01 \x01(\x08\x12\x0e\n\x06\x45rrMes\x18\x02 \x01(\t\x12\x0c\n\x04Type\x18\x03 \x01(\t\x12<\n\nParameters\x18\x04 \x03(\x0b\x32(.interrogator.AdditionalNetworkParameter\",\n\x08TagEntry\x12\x0b\n\x03tag\x18\x01 \x01(\t\x12\x13\n\x0bprobability\x18\x02 \x01(\x02\"W\n\x1a\x41\x64\x64itionalNetworkParameter\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\x12\x0f\n\x07\x63omment\x18\x04 \x01(\t\"S\n\x15InterrogationResponse\x12\x14\n\x0cnetwork_name\x18\x01 \x01(\t\x12$\n\x04tags\x18\x02 \x03(\x0b\x32\x16.interrogator.TagEntry\"t\n\x0fImageTagResults\x12\x36\n\tresponses\x18\x01 \x03(\x0b\x32#.interrogator.InterrogationResponse\x12\x16\n\x0einterrogate_ok\x18\x02 \x01(\x08\x12\x11\n\terror_msg\x18\x03 \x01(\t\"\x1c\n\x1aInterrogatorListingRequest2\xb7\x02\n\x11ImageInterrogator\x12`\n\x11ListInterrogators\x12(.interrogator.InterrogatorListingRequest\x1a!.interrogator.InterrogatorListing\x12U\n\x10InterrogateImage\x12\".interrogator.InterrogationRequest\x1a\x1d.interrogator.ImageTagResults\x12i\n\x16InterrogatorParameters\x12&.interrogator.InterrogatorParamRequest\x1a\'.interrogator.InterrogatorParamResponseB\x18\xaa\x02\x15Image_Interrogator_Nsb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -45,13 +45,13 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_TAGENTRY']._serialized_start=612
   _globals['_TAGENTRY']._serialized_end=656
   _globals['_ADDITIONALNETWORKPARAMETER']._serialized_start=658
-  _globals['_ADDITIONALNETWORKPARAMETER']._serialized_end=728
-  _globals['_INTERROGATIONRESPONSE']._serialized_start=730
-  _globals['_INTERROGATIONRESPONSE']._serialized_end=813
-  _globals['_IMAGETAGRESULTS']._serialized_start=815
-  _globals['_IMAGETAGRESULTS']._serialized_end=931
-  _globals['_INTERROGATORLISTINGREQUEST']._serialized_start=933
-  _globals['_INTERROGATORLISTINGREQUEST']._serialized_end=961
-  _globals['_IMAGEINTERROGATOR']._serialized_start=964
-  _globals['_IMAGEINTERROGATOR']._serialized_end=1275
+  _globals['_ADDITIONALNETWORKPARAMETER']._serialized_end=745
+  _globals['_INTERROGATIONRESPONSE']._serialized_start=747
+  _globals['_INTERROGATIONRESPONSE']._serialized_end=830
+  _globals['_IMAGETAGRESULTS']._serialized_start=832
+  _globals['_IMAGETAGRESULTS']._serialized_end=948
+  _globals['_INTERROGATORLISTINGREQUEST']._serialized_start=950
+  _globals['_INTERROGATORLISTINGREQUEST']._serialized_end=978
+  _globals['_IMAGEINTERROGATOR']._serialized_start=981
+  _globals['_IMAGEINTERROGATOR']._serialized_end=1292
 # @@protoc_insertion_point(module_scope)

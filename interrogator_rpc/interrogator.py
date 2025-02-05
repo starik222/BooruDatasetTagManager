@@ -36,6 +36,14 @@ FLORENCE2_CAPTIONING_NAMES = [
     "Florence-2-large",
 ]
 
+MOONDREAM2_CAPTIONING_NAMES = [
+    "moondream2",
+]
+
+JOYCAPTION_CAPTIONING_NAMES = [
+    "llama-joycaption-alpha-two-hf-llava",
+]
+
 WD_TAGGER_NAMES = [
     "wd-v1-4-convnext-tagger",
     "wd-v1-4-convnext-tagger-v2",
@@ -57,6 +65,14 @@ FLORENCE2_COMMANDS = [
     "<MORE_DETAILED_CAPTION>",
     "<CAPTION_TO_PHRASE_GROUNDING>",
     "<OD>",
+]
+
+MOONDREAM2_COMMANDS = [
+    "Short_caption",
+    "Normal_caption",
+    "Visual_query",
+    "Object_detection",
+    "Pointing",
 ]
 
 WD_TAGGER_THRESHOLDS = [
@@ -81,7 +97,9 @@ INTERROGATORS = (
     [captioning.BLIP("blip")]
     + [captioning.BLIP2(name, "blip2") for name in BLIP2_CAPTIONING_NAMES]
     + [captioning.GITLarge("gitlarge")]
-    + [captioning.Florence2(name, FLORENCE2_COMMANDS, "", "florence2") for name in FLORENCE2_CAPTIONING_NAMES]
+    + [captioning.Florence2(name, FLORENCE2_COMMANDS, "", False, "florence2") for name in FLORENCE2_CAPTIONING_NAMES]
+    + [captioning.Moondream2(name, MOONDREAM2_COMMANDS, "", False, "moondream2") for name in MOONDREAM2_CAPTIONING_NAMES]
+    + [captioning.JoyCaption(name, "", False, "joycaption") for name in JOYCAPTION_CAPTIONING_NAMES]
     + [tagger.DeepDanbooru("dd")]
     + [
         tagger.WaifuDiffusion(name, WD_TAGGER_THRESHOLDS[i], "wd")

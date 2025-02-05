@@ -82,6 +82,9 @@ namespace BooruDatasetTagManager
             comboBoxColorScheme = new System.Windows.Forms.ComboBox();
             tabTranslations = new Manina.Windows.Forms.Tab();
             tabHotkeys = new Manina.Windows.Forms.Tab();
+            tabInterrogator = new Manina.Windows.Forms.Tab();
+            textBoxConnectionAddress = new System.Windows.Forms.TextBox();
+            LabelConnectionAddress = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown3).BeginInit();
@@ -91,6 +94,7 @@ namespace BooruDatasetTagManager
             tabUI.SuspendLayout();
             tabTranslations.SuspendLayout();
             tabHotkeys.SuspendLayout();
+            tabInterrogator.SuspendLayout();
             SuspendLayout();
             // 
             // labelTransLang
@@ -462,6 +466,7 @@ namespace BooruDatasetTagManager
             SettingFrame.Controls.Add(tabUI);
             SettingFrame.Controls.Add(tabTranslations);
             SettingFrame.Controls.Add(tabHotkeys);
+            SettingFrame.Controls.Add(tabInterrogator);
             SettingFrame.Location = new System.Drawing.Point(2, 1);
             SettingFrame.Name = "SettingFrame";
             SettingFrame.SelectedIndex = 0;
@@ -471,6 +476,7 @@ namespace BooruDatasetTagManager
             SettingFrame.Tabs.Add(tabUI);
             SettingFrame.Tabs.Add(tabTranslations);
             SettingFrame.Tabs.Add(tabHotkeys);
+            SettingFrame.Tabs.Add(tabInterrogator);
             // 
             // tabGeneral
             // 
@@ -558,9 +564,9 @@ namespace BooruDatasetTagManager
             tabUI.Controls.Add(BtnGridviewFontChange);
             tabUI.Controls.Add(label14);
             tabUI.Controls.Add(label11);
-            tabUI.Location = new System.Drawing.Point(1, 23);
+            tabUI.Location = new System.Drawing.Point(0, 0);
             tabUI.Name = "tabUI";
-            tabUI.Size = new System.Drawing.Size(628, 403);
+            tabUI.Size = new System.Drawing.Size(0, 0);
             tabUI.Text = "UI";
             // 
             // checkBoxCacheImages
@@ -630,6 +636,31 @@ namespace BooruDatasetTagManager
             tabHotkeys.Size = new System.Drawing.Size(0, 0);
             tabHotkeys.Text = "Hotkeys";
             // 
+            // tabInterrogator
+            // 
+            tabInterrogator.Controls.Add(textBoxConnectionAddress);
+            tabInterrogator.Controls.Add(LabelConnectionAddress);
+            tabInterrogator.Location = new System.Drawing.Point(1, 23);
+            tabInterrogator.Name = "tabInterrogator";
+            tabInterrogator.Size = new System.Drawing.Size(628, 403);
+            tabInterrogator.Text = "Interrogator";
+            // 
+            // textBoxConnectionAddress
+            // 
+            textBoxConnectionAddress.Location = new System.Drawing.Point(140, 10);
+            textBoxConnectionAddress.Name = "textBoxConnectionAddress";
+            textBoxConnectionAddress.Size = new System.Drawing.Size(480, 23);
+            textBoxConnectionAddress.TabIndex = 1;
+            // 
+            // LabelConnectionAddress
+            // 
+            LabelConnectionAddress.AutoSize = true;
+            LabelConnectionAddress.Location = new System.Drawing.Point(9, 13);
+            LabelConnectionAddress.Name = "LabelConnectionAddress";
+            LabelConnectionAddress.Size = new System.Drawing.Size(112, 15);
+            LabelConnectionAddress.TabIndex = 0;
+            LabelConnectionAddress.Text = "Connection address";
+            // 
             // Form_settings
             // 
             AcceptButton = BtnSave;
@@ -658,6 +689,8 @@ namespace BooruDatasetTagManager
             tabTranslations.PerformLayout();
             tabHotkeys.ResumeLayout(false);
             tabHotkeys.PerformLayout();
+            tabInterrogator.ResumeLayout(false);
+            tabInterrogator.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -715,5 +748,8 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.Label labelPreviewLocation;
         private System.Windows.Forms.ComboBox comboBoxPreviewType;
         private System.Windows.Forms.CheckBox checkBoxCacheImages;
+        private Manina.Windows.Forms.Tab tabInterrogator;
+        private System.Windows.Forms.TextBox textBoxConnectionAddress;
+        private System.Windows.Forms.Label LabelConnectionAddress;
     }
 }

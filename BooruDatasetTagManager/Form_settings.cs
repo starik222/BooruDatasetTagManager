@@ -64,7 +64,8 @@ namespace BooruDatasetTagManager
             {
                 dataGridViewHotkeys.Rows.Add(item.Id, item.Text, item.GetHotkeyString());
             }
-            //--
+            //Interrogator
+            textBoxConnectionAddress.Text = Program.Settings.AutoTagger.ConnectionAddress;
             
         }
 
@@ -112,6 +113,9 @@ namespace BooruDatasetTagManager
                     Program.Settings.Hotkeys[item.Key] = item.Value;
                 }
             }
+            //Interrogator
+            Program.Settings.AutoTagger.ConnectionAddress = textBoxConnectionAddress.Text;
+
             Program.Settings.SaveSettings();
             DialogResult = DialogResult.OK;
         }
@@ -181,6 +185,7 @@ namespace BooruDatasetTagManager
             labelTranslService.Text = I18n.GetText("SettingTranslationSrv");
             checkBoxLoadOnlyManual.Text = I18n.GetText("SettingLoadOnlyManualAutocomplete");
             checkBoxCacheImages.Text = I18n.GetText("SettingsCheckBoxCacheImages");
+            LabelConnectionAddress.Text = I18n.GetText("SettingsInterrogatorAddress");
 
             comboAutocompMode.Items.Clear();
             comboAutocompSort.Items.Clear();

@@ -36,7 +36,13 @@ def get_cuda():
         return torch.cuda.device("cuda")
 
 def get_torch_dtype():
-    return torch.float16 if torch.cuda.is_available() else torch.float32
+    if torch.cuda.is_available():
+        if torch.cuda.is_bf16_supported():
+            return torch.bfloat16
+        else:
+            return torch.float16
+    else:
+        return torch.float32
 
 
 def get_cuda_device():

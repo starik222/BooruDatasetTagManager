@@ -21,18 +21,18 @@ def fixed_get_imports(filename: str | os.PathLike) -> list[str]:
 
 
 class Florence2Captioning:
-    MODEL_FILENAME = "pytorch_model.bin"
-
     def __init__(self, model_name):
         self.MODEL_REPO = model_name
         self.model = None
         self.processor = None
         self.cmd = None
         self.prompt = None
+        self.split = False
 
-    def load(self, cmd, prompt, skip_online: bool = False):
+    def load(self, cmd, prompt, split, skip_online: bool = False):
         self.cmd = cmd
         self.prompt = prompt
+        self.split = split
         if self.model is None or self.processor is None:
             attention = 'sdpa'
             with patch("transformers.dynamic_module_utils.get_imports",
@@ -75,7 +75,11 @@ class Florence2Captioning:
         parsed_answer = self.processor.post_process_generation(generated_text, task=self.cmd,
                                                                image_size=(image.width, image.height))
         if self.cmd == '<CAPTION>' or self.cmd == '<DETAILED_CAPTION>' or self.cmd == '<MORE_DETAILED_CAPTION>':
-            return [parsed_answer[self.cmd]]
+            result = parsed_answer[self.cmd]
+            if self.split:
+                return [x.strip() for x in result.split(',')]
+            else:
+                return [result]
         elif self.cmd == '<CAPTION_TO_PHRASE_GROUNDING>' or self.cmd == '<OD>':
             return parsed_answer[self.cmd]['labels']
         else:

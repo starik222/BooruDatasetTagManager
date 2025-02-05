@@ -60,14 +60,16 @@ class TagEntry(_message.Message):
     def __init__(self, tag: _Optional[str] = ..., probability: _Optional[float] = ...) -> None: ...
 
 class AdditionalNetworkParameter(_message.Message):
-    __slots__ = ("key", "value", "type")
+    __slots__ = ("key", "value", "type", "comment")
     KEY_FIELD_NUMBER: _ClassVar[int]
     VALUE_FIELD_NUMBER: _ClassVar[int]
     TYPE_FIELD_NUMBER: _ClassVar[int]
+    COMMENT_FIELD_NUMBER: _ClassVar[int]
     key: str
     value: str
     type: str
-    def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ..., type: _Optional[str] = ...) -> None: ...
+    comment: str
+    def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ..., type: _Optional[str] = ..., comment: _Optional[str] = ...) -> None: ...
 
 class InterrogationResponse(_message.Message):
     __slots__ = ("network_name", "tags")
