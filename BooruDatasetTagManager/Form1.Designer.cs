@@ -83,6 +83,7 @@ namespace BooruDatasetTagManager
             toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             replaceTransparentBackgroundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             generateTagsWithAutoTaggerForAllImagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            cropImagesWithMoondream2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             testSortingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             openImageGridFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -614,7 +615,7 @@ namespace BooruDatasetTagManager
             // 
             // toolsToolStripMenuItem
             // 
-            toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { replaceTransparentBackgroundToolStripMenuItem, generateTagsWithAutoTaggerForAllImagesToolStripMenuItem });
+            toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { replaceTransparentBackgroundToolStripMenuItem, generateTagsWithAutoTaggerForAllImagesToolStripMenuItem, cropImagesWithMoondream2ToolStripMenuItem });
             toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             toolsToolStripMenuItem.Size = new System.Drawing.Size(57, 25);
             toolsToolStripMenuItem.Text = "Tools";
@@ -632,6 +633,13 @@ namespace BooruDatasetTagManager
             generateTagsWithAutoTaggerForAllImagesToolStripMenuItem.Size = new System.Drawing.Size(437, 26);
             generateTagsWithAutoTaggerForAllImagesToolStripMenuItem.Text = "Generate tags with AutoTagger for all images";
             generateTagsWithAutoTaggerForAllImagesToolStripMenuItem.Click += generateTagsWithAutoTaggerForAllImagesToolStripMenuItem_Click;
+            // 
+            // cropImagesWithMoondream2ToolStripMenuItem
+            // 
+            cropImagesWithMoondream2ToolStripMenuItem.Name = "cropImagesWithMoondream2ToolStripMenuItem";
+            cropImagesWithMoondream2ToolStripMenuItem.Size = new System.Drawing.Size(437, 26);
+            cropImagesWithMoondream2ToolStripMenuItem.Text = "Crop images with moondream2";
+            cropImagesWithMoondream2ToolStripMenuItem.Click += cropImagesWithMoondream2ToolStripMenuItem_Click;
             // 
             // debugToolStripMenuItem
             // 
@@ -985,7 +993,7 @@ namespace BooruDatasetTagManager
             toolStrip5.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripSeparator14, toolStripLabelDSZoom, TrackBarRowHeight, toolStripSeparator15, BtnDSChangeSelection });
             toolStrip5.Location = new System.Drawing.Point(3, 0);
             toolStrip5.Name = "toolStrip5";
-            toolStrip5.Size = new System.Drawing.Size(320, 38);
+            toolStrip5.Size = new System.Drawing.Size(289, 38);
             toolStrip5.TabIndex = 0;
             // 
             // toolStripSeparator14
@@ -1661,6 +1669,7 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripLabel toolStripLabelDSZoom;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
         private System.Windows.Forms.ToolStripButton BtnDSChangeSelection;
+        private System.Windows.Forms.ToolStripMenuItem cropImagesWithMoondream2ToolStripMenuItem;
     }
 }
 

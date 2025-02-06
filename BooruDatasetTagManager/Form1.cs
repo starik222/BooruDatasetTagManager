@@ -2140,6 +2140,62 @@ namespace BooruDatasetTagManager
             LockEdit(false);
         }
 
+        private async Task CropImages(bool allTags)
+        {
+            if (Program.DataManager == null)
+            {
+                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
+                return;
+            }
+            Form_CropImage cropImageForm = new Form_CropImage();
+            if (cropImageForm.ShowDialog() != DialogResult.OK)
+                return;
+            LockEdit(true);
+            List<DataItem> selectedTagsList = new List<DataItem>();
+            if (!allTags)
+            {
+                for (int i = 0; i < gridViewDS.SelectedRows.Count; i++)
+                {
+                    selectedTagsList.Add(Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[i].Cells["ImageFilePath"].Value]);
+                }
+            }
+            else
+            {
+                foreach (var item in Program.DataManager.DataSet)
+                {
+                    selectedTagsList.Add(item.Value);
+                }
+            }
+            foreach (var item in selectedTagsList)
+            {
+                var cropRect = await cropImageForm.CalcCropRectangle(item.ImageFilePath);
+                using (Bitmap target = new Bitmap(cropRect.Width, cropRect.Height))
+                {
+                    using (Bitmap src = System.Drawing.Image.FromFile(item.ImageFilePath) as Bitmap)
+                    {
+
+                        using (Graphics g = Graphics.FromImage(target))
+                        {
+                            g.DrawImage(src, new Rectangle(0, 0, target.Width, target.Height),
+                                cropRect,
+                                GraphicsUnit.Pixel);
+                        }
+
+                    }
+                    target.Save(item.ImageFilePath);
+                }
+                Program.DataManager.DataSet[item.ImageFilePath].Img = Extensions.MakeThumb(item.ImageFilePath, Program.Settings.PreviewSize);
+            }
+            gridViewDS.Refresh();
+            //if (selectedTagsList.Count > 1)
+            //{
+            //    LoadSelectedImageToGrid();
+            //}
+            //if (gridViewAllTags.DataSource == null)
+            //    BindTagList();
+            LockEdit(false);
+        }
+
         private async void generateTagsWithSettingsWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             await GenerateTagsInTags(false, false);
@@ -2462,6 +2518,20 @@ namespace BooruDatasetTagManager
             }
             LoadSelectedImageToGrid();
             selectionMode = false;
+        }
+
+        private async void cropImagesWithMoondream2ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Crop all images? Yes - for all, No - only selected images.", "Crop all images?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            bool allImg = false;
+            if (result == DialogResult.Yes)
+            {
+                allImg = true;
+            }
+            else if (result == DialogResult.Cancel)
+                return;
+            await CropImages(allImg);
+            SetStatus("Cropping complete!");
         }
     }
 }
