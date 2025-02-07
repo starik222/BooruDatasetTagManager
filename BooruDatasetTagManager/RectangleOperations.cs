@@ -30,6 +30,59 @@ namespace BooruDatasetTagManager
             return maxRect;
         }
 
+        public static MoondreamRect FindLargestRectangleIncludeRequired(MoondreamRect initial, List<MoondreamRect> subtractors, List<MoondreamRect> required)
+        {
+            List<MoondreamRect> currentCandidates = FindAllRectangles(initial, subtractors);
+
+            if (currentCandidates.Count == 0)
+                return null;
+
+            List<MoondreamRect> testInclude = currentCandidates.Select(a => a.Clone()).ToList();
+            foreach (var cur in testInclude)
+            {
+                foreach (var incl in required)
+                {
+                    cur.Add(incl);
+                }
+            }
+            List<MoondreamRect> notIntersect = new List<MoondreamRect>();
+            foreach (var cur in testInclude)
+            {
+                bool intersect = false;
+                foreach (var sub in subtractors)
+                {
+                    if (Overlap(cur, sub))
+                    {
+                        intersect = true;
+                        break;
+                    }
+                }
+                if (!intersect)
+                {
+                    notIntersect.Add(cur);
+                }
+            }
+            List<MoondreamRect> finalRects = null;
+            if (notIntersect.Count > 0)
+                finalRects = notIntersect;
+            else
+                finalRects = currentCandidates;
+
+            MoondreamRect maxRect = finalRects[0];
+            float maxArea = maxRect.Area;
+
+            foreach (var rect in finalRects)
+            {
+                if (rect.Area > maxArea)
+                {
+                    maxArea = rect.Area;
+                    maxRect = rect;
+                }
+            }
+
+            return maxRect;
+        }
+
         public static List<MoondreamRect> FindAllRectangles(MoondreamRect initial, List<MoondreamRect> subtractors)
         {
             List<MoondreamRect> currentCandidates = new List<MoondreamRect> { initial };
@@ -63,6 +116,13 @@ namespace BooruDatasetTagManager
         public static bool Intersects(MoondreamRect a, MoondreamRect b)
         {
             return !(a.x_max <= b.x_min || a.x_min >= b.x_max || a.y_max <= b.y_min || a.y_min >= b.y_max);
+        }
+
+        public static bool Overlap(MoondreamRect a, MoondreamRect b)
+        {
+            bool overlapX = a.x_min < b.x_max && a.x_max > b.x_min;
+            bool overlapY = a.y_min < b.y_max && a.y_max > b.y_min;
+            return overlapX && overlapY;
         }
 
         public static List<MoondreamRect> Split(MoondreamRect a, MoondreamRect b)

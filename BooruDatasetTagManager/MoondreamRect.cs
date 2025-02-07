@@ -32,6 +32,14 @@ namespace BooruDatasetTagManager
             y_max = Ymax;
         }
 
+        public void Add(MoondreamRect rect)
+        {
+            x_min = Math.Min(x_min, rect.x_min);
+            y_min = Math.Min(y_min, rect.y_min);
+            x_max = Math.Max(x_max, rect.x_max);
+            y_max = Math.Max(y_max, rect.y_max);
+        }
+
         public Rectangle ToRealRect(int imgWidth, int imgHeight)
         {
             int x = (int)Math.Round(x_min * (float)imgWidth);
@@ -55,6 +63,16 @@ namespace BooruDatasetTagManager
                 x_max = (int)Math.Round(x_max * (float)imgWidth),
                 y_max = (int)Math.Round(y_max * (float)imgHeight)
             };
+        }
+
+        public override string ToString()
+        {
+            return $"{x_min}, {y_min}, {x_max}, {y_max}";
+        }
+
+        public MoondreamRect Clone()
+        {
+            return new MoondreamRect(x_min, y_min, x_max, y_max);
         }
     }
 }

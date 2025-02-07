@@ -2140,19 +2140,20 @@ namespace BooruDatasetTagManager
             LockEdit(false);
         }
 
-        private async Task CropImages(bool allTags)
+        private async Task<bool> CropImages()
         {
             if (Program.DataManager == null)
             {
                 MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
-                return;
+                return false;
             }
             Form_CropImage cropImageForm = new Form_CropImage();
             if (cropImageForm.ShowDialog() != DialogResult.OK)
-                return;
+                return false;
+            bool allImages = cropImageForm.radioButtonAllImages.Checked;
             LockEdit(true);
             List<DataItem> selectedTagsList = new List<DataItem>();
-            if (!allTags)
+            if (!allImages)
             {
                 for (int i = 0; i < gridViewDS.SelectedRows.Count; i++)
                 {
@@ -2169,6 +2170,10 @@ namespace BooruDatasetTagManager
             foreach (var item in selectedTagsList)
             {
                 var cropRect = await cropImageForm.CalcCropRectangle(item.ImageFilePath);
+                if (cropRect.Width <= 1 || cropRect.Height <= 1)
+                {
+                    continue;
+                }
                 using (Bitmap target = new Bitmap(cropRect.Width, cropRect.Height))
                 {
                     using (Bitmap src = System.Drawing.Image.FromFile(item.ImageFilePath) as Bitmap)
@@ -2194,6 +2199,7 @@ namespace BooruDatasetTagManager
             //if (gridViewAllTags.DataSource == null)
             //    BindTagList();
             LockEdit(false);
+            return true;
         }
 
         private async void generateTagsWithSettingsWindowToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2522,16 +2528,11 @@ namespace BooruDatasetTagManager
 
         private async void cropImagesWithMoondream2ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var result = MessageBox.Show("Crop all images? Yes - for all, No - only selected images.", "Crop all images?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-            bool allImg = false;
-            if (result == DialogResult.Yes)
-            {
-                allImg = true;
-            }
-            else if (result == DialogResult.Cancel)
-                return;
-            await CropImages(allImg);
-            SetStatus("Cropping complete!");
+            var res = await CropImages();
+            if (res)
+                SetStatus("Cropping complete!");
+            else
+                SetStatus("Cropping canceled!");
         }
     }
 }

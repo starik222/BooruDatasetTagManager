@@ -39,8 +39,8 @@ namespace BooruDatasetTagManager
                 else
                 {
                     connectSuccess = true;
-                    button1.Text = "Success!";
-                    button1.Enabled = false;
+                    buttonCheckConnection.Text = "Success!";
+                    buttonCheckConnection.Enabled = false;
                     groupBox1.Enabled = true;
                 }
             }
@@ -122,12 +122,12 @@ namespace BooruDatasetTagManager
             else if (includeRects != null && excludeRects != null)
             {
                 //Removing excluded objects from the area
-                var result = RectangleOperations.FindLargestRectangle(new MoondreamRect(0, 0, imgWidth, imgHeight), excludeRects);
+                var result = RectangleOperations.FindLargestRectangleIncludeRequired(new MoondreamRect(0, 0, imgWidth, imgHeight), excludeRects, includeRects);
                 //Adding required objects
-                foreach (var item in includeRects)
-                {
-                    result = RectangleOperations.Join(result, item);
-                }
+                //foreach (var item in includeRects)
+                //{
+                //    result = RectangleOperations.Join(result, item);
+                //}
                 return result.ToRealRect();
             }
             else
@@ -155,7 +155,7 @@ namespace BooruDatasetTagManager
 
             using (Graphics g = Graphics.FromImage(image))
             {
-                g.DrawRectangle(new Pen(Brushes.Red, 2), res);
+                g.DrawRectangle(new Pen(Brushes.Green, 4), res);
             }
             button4.Enabled = true;
             Form_preview preview = new Form_preview();
@@ -188,9 +188,9 @@ namespace BooruDatasetTagManager
             using (Graphics g = Graphics.FromImage(image))
             {
                 foreach (var item in exclObj)
-                    g.DrawRectangle(new Pen(Brushes.Red, 2), item);
+                    g.DrawRectangle(new Pen(Brushes.Red, 4), item);
                 foreach (var item in incObj)
-                    g.DrawRectangle(new Pen(Brushes.Green, 2), item);
+                    g.DrawRectangle(new Pen(Brushes.Green, 4), item);
             }
             button5.Enabled = true;
             Form_preview preview = new Form_preview();
@@ -205,6 +205,11 @@ namespace BooruDatasetTagManager
         private void button3_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
+        }
+
+        private void Form_CropImage_Load(object sender, EventArgs e)
+        {
+            buttonCheckConnection.PerformClick();
         }
     }
 }
