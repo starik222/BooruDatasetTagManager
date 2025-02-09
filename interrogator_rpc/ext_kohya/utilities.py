@@ -8,6 +8,7 @@ from PIL import Image
 if not hasattr(Image, 'Resampling'):  # Pillow<9.0
     Image.Resampling = Image
 
+
 def base_dir_path():
     return Path(__file__).parents[1].absolute()
 
@@ -58,3 +59,13 @@ def resize_and_fill(image: Image.Image, size: Tuple[int, int]):
             (resized.width + fill_l, 0),
         )
     return result
+
+
+def remove_transparency(im: Image.Image, bg_colour=(255, 255, 255)):
+    if im.mode in ('RGBA', 'LA') or (im.mode == 'P' and 'transparency' in im.info):
+        alpha = im.convert('RGBA').getchannel('A')
+        bg = Image.new("RGBA", im.size, bg_colour + (255,))
+        bg.paste(im, mask=alpha)
+        return bg
+    else:
+        return im

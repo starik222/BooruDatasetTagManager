@@ -11,9 +11,9 @@ message InterrogatorListing {
     repeated string interrogator_names = 1;
 }
 
+
 message NetworkInterrogationParameters {
     string interrogator_network   = 1;
-    //float  interrogator_threshold = 2;
     repeated AdditionalNetworkParameter AdditionalParameters = 2;
 }
 
@@ -27,6 +27,10 @@ message InterrogationRequest {
 
 message InterrogatorParamRequest {
     string interrogator_network = 1;
+}
+
+message ModelsByTypeRequest {
+    string model_type = 1;
 }
 
 message InterrogatorParamResponse {
@@ -62,6 +66,12 @@ message ImageTagResults {
     string error_msg                         = 3;
 }
 
+message ImageEditResult {
+    bytes edited_image                       = 1;
+    bool result                              = 2;
+    string error_msg                         = 3;
+}
+
 
 // RPC actions CANNOT have empty requests, or empty responses.
 // This.... is stupid.
@@ -71,6 +81,10 @@ message InterrogatorListingRequest {
 
 service ImageInterrogator {
     rpc ListInterrogators (InterrogatorListingRequest) returns (InterrogatorListing);
+    rpc ListEditors(InterrogatorListingRequest) returns (InterrogatorListing);
+    rpc ListModelsByType(ModelsByTypeRequest) returns (InterrogatorListing);
     rpc InterrogateImage (InterrogationRequest) returns (ImageTagResults);
+    rpc EditImage (InterrogationRequest) returns (ImageEditResult);
     rpc InterrogatorParameters (InterrogatorParamRequest) returns (InterrogatorParamResponse);
+    rpc EditorParameters (InterrogatorParamRequest) returns (InterrogatorParamResponse);
 }

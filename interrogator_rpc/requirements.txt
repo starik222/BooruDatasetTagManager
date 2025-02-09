@@ -10,12 +10,12 @@ accelerate>=0.26.0
 einops
 timm
 pyvips
+kornia
+pillow
+transformers>=4.39.1,<=4.48.2
 # This needs to be from Torch's pypi repo.
 # ONNX does not support cuda 12 yet.
 --extra-index-url https://download.pytorch.org/whl/cu118
 torch
 torchvision
 torchaudio
-
-# This needs to be a more recent version.
-git+https://github.com/huggingface/transformers

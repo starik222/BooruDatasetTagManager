@@ -7,7 +7,7 @@ class Interrogator:
         self.stop()
         pass
 
-    def start(self, net_params: dict, skip_online: bool=False):
+    def start(self, net_params: dict, skip_online: bool = False):
         pass
 
     def stop(self):
@@ -17,4 +17,7 @@ class Interrogator:
         raise NotImplementedError()
 
     def name(self):
+        raise NotImplementedError()
+
+    def mode_type(self):
         raise NotImplementedError()

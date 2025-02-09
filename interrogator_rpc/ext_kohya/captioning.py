@@ -1,11 +1,12 @@
 # pylint: disable=bad-indentation
 
 from .interrogator import Interrogator
-from .interrogators import BLIPLargeCaptioning, BLIP2Captioning, GITLargeCaptioning, Florence2Captioning, Moondream2Captioning, JoyCaptionCaptioning
+from .interrogators import BLIPLargeCaptioning, BLIP2Captioning, GITLargeCaptioning, Florence2Captioning, \
+    Moondream2Captioning, JoyCaptionCaptioning
 
 
 class Captioning(Interrogator):
-    def start(self, net_params: dict, skip_online: bool=False):
+    def start(self, net_params: dict, skip_online: bool = False):
         pass
 
     def stop(self):
@@ -13,11 +14,14 @@ class Captioning(Interrogator):
 
     def predict(self, image):
         raise NotImplementedError()
-    
+
     def predict_multi(self, image):
         raise NotImplementedError()
 
     def name(self):
+        raise NotImplementedError()
+
+    def mode_type(self):
         raise NotImplementedError()
 
 
@@ -25,8 +29,8 @@ class BLIP(Captioning):
     def __init__(self, intType):
         self.interrogator = BLIPLargeCaptioning()
         self.type = intType
-    
-    def start(self, net_params: dict, skip_online: bool=False):
+
+    def start(self, net_params: dict, skip_online: bool = False):
         self.interrogator.load(skip_online=skip_online)
 
     def stop(self):
@@ -35,13 +39,16 @@ class BLIP(Captioning):
     def predict(self, image):
         tags = self.interrogator.apply(image)[0].split(",")
         return [t for t in tags if t]
-    
-    def predict_multi(self, images:list):
+
+    def predict_multi(self, images: list):
         captions = self.interrogator.apply(images)
         return [[t for t in caption.split(',') if t] for caption in captions]
 
     def name(self):
         return "BLIP"
+
+    def mode_type(self):
+        return self.type
 
 
 class BLIP2(Captioning):
@@ -49,8 +56,8 @@ class BLIP2(Captioning):
         self.interrogator = BLIP2Captioning("Salesforce/" + repo_name)
         self.repo_name = repo_name
         self.type = intType
-    
-    def start(self, net_params: dict, skip_online: bool=False):
+
+    def start(self, net_params: dict, skip_online: bool = False):
         self.interrogator.load(skip_online=skip_online)
 
     def stop(self):
@@ -59,13 +66,16 @@ class BLIP2(Captioning):
     def predict(self, image):
         tags = self.interrogator.apply(image)[0].split(",")
         return [t for t in tags if t]
-    
-    def predict_multi(self, images:list):
+
+    def predict_multi(self, images: list):
         captions = self.interrogator.apply(images)
         return [[t for t in caption.split(',') if t] for caption in captions]
 
     def name(self):
         return self.repo_name
+
+    def mode_type(self):
+        return self.type
 
 
 class GITLarge(Captioning):
@@ -73,7 +83,7 @@ class GITLarge(Captioning):
         self.interrogator = GITLargeCaptioning()
         self.type = intType
 
-    def start(self, net_params: dict, skip_online: bool=False):
+    def start(self, net_params: dict, skip_online: bool = False):
         self.interrogator.load(skip_online=skip_online)
 
     def stop(self):
@@ -82,18 +92,21 @@ class GITLarge(Captioning):
     def predict(self, image):
         tags = self.interrogator.apply(image)[0].split(",")
         return [t for t in tags if t]
-    
-    def predict_multi(self, images:list):
+
+    def predict_multi(self, images: list):
         captions = self.interrogator.apply(images)
         return [[t for t in caption.split(',') if t] for caption in captions]
 
     def name(self):
         return "GIT-large-COCO"
 
+    def mode_type(self):
+        return self.type
+
 
 class Florence2(Captioning):
     def __init__(self, repo_name, commandsList, defPrompt, needSplit, intType):
-        self.interrogator = Florence2Captioning("microsoft/" + repo_name)
+        self.interrogator = Florence2Captioning(repo_name)
         self.repo_name = repo_name
         self.commands = commandsList
         self.defaultCommand = commandsList[0]
@@ -115,8 +128,8 @@ class Florence2(Captioning):
 
     def predict(self, image):
         res = self.interrogator.apply(image)
-        #tags = res[0].split(",")
-        return res #[t for t in tags if t]
+        # tags = res[0].split(",")
+        return res  # [t for t in tags if t]
 
     def predict_multi(self, images: list):
         captions = self.interrogator.apply(images)
@@ -125,9 +138,13 @@ class Florence2(Captioning):
     def name(self):
         return self.repo_name
 
+    def mode_type(self):
+        return self.type
+
+
 class Moondream2(Captioning):
     def __init__(self, repo_name, commandsList, defPrompt, needSplit, intType):
-        self.interrogator = Moondream2Captioning("vikhyatk/" + repo_name,"2025-01-09")
+        self.interrogator = Moondream2Captioning("vikhyatk/" + repo_name, "2025-01-09")
         self.repo_name = repo_name
         self.commands = commandsList
         self.defaultCommand = commandsList[0]
@@ -149,8 +166,8 @@ class Moondream2(Captioning):
 
     def predict(self, image):
         res = self.interrogator.apply(image)
-        #tags = res[0].split(",")
-        return res #[t for t in tags if t]
+        # tags = res[0].split(",")
+        return res  # [t for t in tags if t]
 
     def predict_multi(self, images: list):
         captions = self.interrogator.apply(images)
@@ -159,12 +176,16 @@ class Moondream2(Captioning):
     def name(self):
         return self.repo_name
 
+    def mode_type(self):
+        return self.type
+
+
 class JoyCaption(Captioning):
     def __init__(self, repo_name, defPrompt, needSplit, intType):
         self.interrogator = JoyCaptionCaptioning("fancyfeast/" + repo_name)
         self.repo_name = repo_name
-        #self.commands = commandsList
-        #self.defaultCommand = commandsList[0]
+        # self.commands = commandsList
+        # self.defaultCommand = commandsList[0]
         self.defaultPrompt = defPrompt
         self.split = needSplit
         self.type = intType
@@ -183,8 +204,8 @@ class JoyCaption(Captioning):
 
     def predict(self, image):
         res = self.interrogator.apply(image)
-        #tags = res[0].split(",")
-        return res #[t for t in tags if t]
+        # tags = res[0].split(",")
+        return res  # [t for t in tags if t]
 
     def predict_multi(self, images: list):
         captions = self.interrogator.apply(images)
@@ -192,3 +213,6 @@ class JoyCaption(Captioning):
 
     def name(self):
         return self.repo_name
+
+    def mode_type(self):
+        return self.type

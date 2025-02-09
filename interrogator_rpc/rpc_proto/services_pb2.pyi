@@ -39,6 +39,12 @@ class InterrogatorParamRequest(_message.Message):
     interrogator_network: str
     def __init__(self, interrogator_network: _Optional[str] = ...) -> None: ...
 
+class ModelsByTypeRequest(_message.Message):
+    __slots__ = ("model_type",)
+    MODEL_TYPE_FIELD_NUMBER: _ClassVar[int]
+    model_type: str
+    def __init__(self, model_type: _Optional[str] = ...) -> None: ...
+
 class InterrogatorParamResponse(_message.Message):
     __slots__ = ("Result", "ErrMes", "Type", "Parameters")
     RESULT_FIELD_NUMBER: _ClassVar[int]
@@ -88,6 +94,16 @@ class ImageTagResults(_message.Message):
     interrogate_ok: bool
     error_msg: str
     def __init__(self, responses: _Optional[_Iterable[_Union[InterrogationResponse, _Mapping]]] = ..., interrogate_ok: bool = ..., error_msg: _Optional[str] = ...) -> None: ...
+
+class ImageEditResult(_message.Message):
+    __slots__ = ("edited_image", "result", "error_msg")
+    EDITED_IMAGE_FIELD_NUMBER: _ClassVar[int]
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    ERROR_MSG_FIELD_NUMBER: _ClassVar[int]
+    edited_image: bytes
+    result: bool
+    error_msg: str
+    def __init__(self, edited_image: _Optional[bytes] = ..., result: bool = ..., error_msg: _Optional[str] = ...) -> None: ...
 
 class InterrogatorListingRequest(_message.Message):
     __slots__ = ()

@@ -74,13 +74,21 @@ class Florence2Captioning:
         generated_text = self.processor.batch_decode(generated_ids, skip_special_tokens=False)[0]
         parsed_answer = self.processor.post_process_generation(generated_text, task=self.cmd,
                                                                image_size=(image.width, image.height))
-        if self.cmd == '<CAPTION>' or self.cmd == '<DETAILED_CAPTION>' or self.cmd == '<MORE_DETAILED_CAPTION>':
+        if self.cmd == '<CAPTION_TO_PHRASE_GROUNDING>' or self.cmd == '<OD>':
+            return parsed_answer[self.cmd]['labels']
+        else:
             result = parsed_answer[self.cmd]
             if self.split:
                 return [x.strip() for x in result.split(',')]
             else:
                 return [result]
-        elif self.cmd == '<CAPTION_TO_PHRASE_GROUNDING>' or self.cmd == '<OD>':
-            return parsed_answer[self.cmd]['labels']
-        else:
-            return None
+        # if self.cmd == '<CAPTION>' or self.cmd == '<DETAILED_CAPTION>' or self.cmd == '<MORE_DETAILED_CAPTION>':
+        #     result = parsed_answer[self.cmd]
+        #     if self.split:
+        #         return [x.strip() for x in result.split(',')]
+        #     else:
+        #         return [result]
+        # elif self.cmd == '<CAPTION_TO_PHRASE_GROUNDING>' or self.cmd == '<OD>':
+        #     return parsed_answer[self.cmd]['labels']
+        # else:
+        #     return None

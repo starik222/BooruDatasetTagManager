@@ -39,13 +39,33 @@ class ImageInterrogatorStub(object):
                 request_serializer=services__pb2.InterrogatorListingRequest.SerializeToString,
                 response_deserializer=services__pb2.InterrogatorListing.FromString,
                 _registered_method=True)
+        self.ListEditors = channel.unary_unary(
+                '/interrogator.ImageInterrogator/ListEditors',
+                request_serializer=services__pb2.InterrogatorListingRequest.SerializeToString,
+                response_deserializer=services__pb2.InterrogatorListing.FromString,
+                _registered_method=True)
+        self.ListModelsByType = channel.unary_unary(
+                '/interrogator.ImageInterrogator/ListModelsByType',
+                request_serializer=services__pb2.ModelsByTypeRequest.SerializeToString,
+                response_deserializer=services__pb2.InterrogatorListing.FromString,
+                _registered_method=True)
         self.InterrogateImage = channel.unary_unary(
                 '/interrogator.ImageInterrogator/InterrogateImage',
                 request_serializer=services__pb2.InterrogationRequest.SerializeToString,
                 response_deserializer=services__pb2.ImageTagResults.FromString,
                 _registered_method=True)
+        self.EditImage = channel.unary_unary(
+                '/interrogator.ImageInterrogator/EditImage',
+                request_serializer=services__pb2.InterrogationRequest.SerializeToString,
+                response_deserializer=services__pb2.ImageEditResult.FromString,
+                _registered_method=True)
         self.InterrogatorParameters = channel.unary_unary(
                 '/interrogator.ImageInterrogator/InterrogatorParameters',
+                request_serializer=services__pb2.InterrogatorParamRequest.SerializeToString,
+                response_deserializer=services__pb2.InterrogatorParamResponse.FromString,
+                _registered_method=True)
+        self.EditorParameters = channel.unary_unary(
+                '/interrogator.ImageInterrogator/EditorParameters',
                 request_serializer=services__pb2.InterrogatorParamRequest.SerializeToString,
                 response_deserializer=services__pb2.InterrogatorParamResponse.FromString,
                 _registered_method=True)
@@ -60,13 +80,37 @@ class ImageInterrogatorServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ListEditors(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ListModelsByType(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def InterrogateImage(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def EditImage(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def InterrogatorParameters(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def EditorParameters(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -80,13 +124,33 @@ def add_ImageInterrogatorServicer_to_server(servicer, server):
                     request_deserializer=services__pb2.InterrogatorListingRequest.FromString,
                     response_serializer=services__pb2.InterrogatorListing.SerializeToString,
             ),
+            'ListEditors': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListEditors,
+                    request_deserializer=services__pb2.InterrogatorListingRequest.FromString,
+                    response_serializer=services__pb2.InterrogatorListing.SerializeToString,
+            ),
+            'ListModelsByType': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListModelsByType,
+                    request_deserializer=services__pb2.ModelsByTypeRequest.FromString,
+                    response_serializer=services__pb2.InterrogatorListing.SerializeToString,
+            ),
             'InterrogateImage': grpc.unary_unary_rpc_method_handler(
                     servicer.InterrogateImage,
                     request_deserializer=services__pb2.InterrogationRequest.FromString,
                     response_serializer=services__pb2.ImageTagResults.SerializeToString,
             ),
+            'EditImage': grpc.unary_unary_rpc_method_handler(
+                    servicer.EditImage,
+                    request_deserializer=services__pb2.InterrogationRequest.FromString,
+                    response_serializer=services__pb2.ImageEditResult.SerializeToString,
+            ),
             'InterrogatorParameters': grpc.unary_unary_rpc_method_handler(
                     servicer.InterrogatorParameters,
+                    request_deserializer=services__pb2.InterrogatorParamRequest.FromString,
+                    response_serializer=services__pb2.InterrogatorParamResponse.SerializeToString,
+            ),
+            'EditorParameters': grpc.unary_unary_rpc_method_handler(
+                    servicer.EditorParameters,
                     request_deserializer=services__pb2.InterrogatorParamRequest.FromString,
                     response_serializer=services__pb2.InterrogatorParamResponse.SerializeToString,
             ),
@@ -129,6 +193,60 @@ class ImageInterrogator(object):
             _registered_method=True)
 
     @staticmethod
+    def ListEditors(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/interrogator.ImageInterrogator/ListEditors',
+            services__pb2.InterrogatorListingRequest.SerializeToString,
+            services__pb2.InterrogatorListing.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ListModelsByType(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/interrogator.ImageInterrogator/ListModelsByType',
+            services__pb2.ModelsByTypeRequest.SerializeToString,
+            services__pb2.InterrogatorListing.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
     def InterrogateImage(request,
             target,
             options=(),
@@ -156,6 +274,33 @@ class ImageInterrogator(object):
             _registered_method=True)
 
     @staticmethod
+    def EditImage(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/interrogator.ImageInterrogator/EditImage',
+            services__pb2.InterrogationRequest.SerializeToString,
+            services__pb2.ImageEditResult.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
     def InterrogatorParameters(request,
             target,
             options=(),
@@ -170,6 +315,33 @@ class ImageInterrogator(object):
             request,
             target,
             '/interrogator.ImageInterrogator/InterrogatorParameters',
+            services__pb2.InterrogatorParamRequest.SerializeToString,
+            services__pb2.InterrogatorParamResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def EditorParameters(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/interrogator.ImageInterrogator/EditorParameters',
             services__pb2.InterrogatorParamRequest.SerializeToString,
             services__pb2.InterrogatorParamResponse.FromString,
             options,

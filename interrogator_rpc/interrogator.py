@@ -15,6 +15,7 @@ from ext_kohya import (
     captioning,
     paths,
     devices,
+    editors
 )
 
 paths.initialize()
@@ -30,10 +31,15 @@ BLIP2_CAPTIONING_NAMES = [
 ]
 
 FLORENCE2_CAPTIONING_NAMES = [
-    "Florence-2-base-ft",
-    "Florence-2-base",
-    "Florence-2-large-ft",
-    "Florence-2-large",
+    "microsoft/Florence-2-base-ft",
+    "microsoft/Florence-2-base",
+    "microsoft/Florence-2-large-ft",
+    "microsoft/Florence-2-large",
+]
+
+FLORENCE2PG_CAPTIONING_NAMES = [
+    "MiaoshouAI/Florence-2-large-PromptGen-v2.0",
+    "MiaoshouAI/Florence-2-base-PromptGen-v2.0",
 ]
 
 MOONDREAM2_CAPTIONING_NAMES = [
@@ -59,6 +65,16 @@ WD_TAGGER_NAMES = [
     "wd-eva02-large-tagger-v3",
 ]
 
+FLORENCE2PG_COMMANDS = [
+    "<GENERATE_TAGS>",
+    "<CAPTION>",
+    "<DETAILED_CAPTION>",
+    "<MORE_DETAILED_CAPTION>",
+    "<ANALYZE>",
+    "<MIXED_CAPTION>",
+    "<MIXED_CAPTION_PLUS>",
+]
+
 FLORENCE2_COMMANDS = [
     "<CAPTION>",
     "<DETAILED_CAPTION>",
@@ -73,6 +89,26 @@ MOONDREAM2_COMMANDS = [
     "Visual_query",
     "Object_detection",
     "Pointing",
+]
+
+BG_REMOVAL = [
+    "briaai/RMBG-2.0",
+    "ZhengPeng7/BiRefNet",
+    "ZhengPeng7/BiRefNet_HR",
+    "zhengpeng7/BiRefNet_lite",
+    "ZhengPeng7/BiRefNet_lite-2K",
+    "ZhengPeng7/BiRefNet-matting",
+    "ZhengPeng7/BiRefNet_512x512",
+]
+
+BG_REMOVAL_RESOLUTION = [
+    (1024, 1024),
+    (1024, 1024),
+    (2048, 2048),
+    (1024, 1024),
+    (2560, 1440),
+    (1024, 1024),
+    (512, 512),
 ]
 
 WD_TAGGER_THRESHOLDS = [
@@ -98,6 +134,7 @@ INTERROGATORS = (
     + [captioning.BLIP2(name, "blip2") for name in BLIP2_CAPTIONING_NAMES]
     + [captioning.GITLarge("gitlarge")]
     + [captioning.Florence2(name, FLORENCE2_COMMANDS, "", False, "florence2") for name in FLORENCE2_CAPTIONING_NAMES]
+    + [captioning.Florence2(name, FLORENCE2PG_COMMANDS, "", False, "florence2") for name in FLORENCE2PG_CAPTIONING_NAMES]
     + [captioning.Moondream2(name, MOONDREAM2_COMMANDS, "", False, "moondream2") for name in MOONDREAM2_CAPTIONING_NAMES]
     + [captioning.JoyCaption(name, "", False, "joycaption") for name in JOYCAPTION_CAPTIONING_NAMES]
     + [tagger.DeepDanbooru("dd")]
@@ -111,6 +148,16 @@ INTERROGATOR_NAMES = [it.name() for it in INTERROGATORS]
 
 INTERROGATOR_MAP = dict(zip(INTERROGATOR_NAMES, INTERROGATORS))
 
+EDITORS = (
+    [
+        editors.RMBG2(name, BG_REMOVAL_RESOLUTION[i], "rmbg2")
+        for i, name in enumerate(BG_REMOVAL)
+    ]
+)
+
+EDITOR_NAMES = [it.name() for it in EDITORS]
+
+EDITOR_MAP = dict(zip(EDITOR_NAMES, EDITORS))
 
 def init():
     devices.init_interrogator()

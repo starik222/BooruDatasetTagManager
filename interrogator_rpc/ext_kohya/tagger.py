@@ -22,6 +22,9 @@ class Tagger(Interrogator):
     def name(self):
         raise NotImplementedError()
 
+    def mode_type(self):
+        raise NotImplementedError()
+
 def get_replaced_tag(tag: str):
     use_spaces = settings.current.tagger_use_spaces
     if use_spaces:
@@ -61,6 +64,9 @@ class DeepDanbooru(Tagger):
     def name(self):
         return "DeepDanbooru"
 
+    def mode_type(self):
+        return self.type
+
 
 class WaifuDiffusion(Tagger):
     def __init__(self, repo_name, threshold, intType):
@@ -99,3 +105,6 @@ class WaifuDiffusion(Tagger):
 
     def name(self):
         return self.repo_name
+
+    def mode_type(self):
+        return self.type

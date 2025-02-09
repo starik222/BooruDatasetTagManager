@@ -20,7 +20,6 @@ namespace BooruDatasetTagManager
 {
     public static class Extensions
     {
-
         public static void AddRange(this List<TagValue> list, IEnumerable<string> range)
         {
             foreach (var item in range)

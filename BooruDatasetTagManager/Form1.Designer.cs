@@ -162,6 +162,7 @@ namespace BooruDatasetTagManager
             toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             contextMenuImageGridHeader = new System.Windows.Forms.ContextMenuStrip(components);
+            backgroundRemovalWithRMBG20ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)gridViewTags).BeginInit();
             toolStripTags.SuspendLayout();
             menuStrip1.SuspendLayout();
@@ -615,7 +616,7 @@ namespace BooruDatasetTagManager
             // 
             // toolsToolStripMenuItem
             // 
-            toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { replaceTransparentBackgroundToolStripMenuItem, generateTagsWithAutoTaggerForAllImagesToolStripMenuItem, cropImagesWithMoondream2ToolStripMenuItem });
+            toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { replaceTransparentBackgroundToolStripMenuItem, generateTagsWithAutoTaggerForAllImagesToolStripMenuItem, cropImagesWithMoondream2ToolStripMenuItem, backgroundRemovalWithRMBG20ToolStripMenuItem });
             toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             toolsToolStripMenuItem.Size = new System.Drawing.Size(57, 25);
             toolsToolStripMenuItem.Text = "Tools";
@@ -1451,6 +1452,13 @@ namespace BooruDatasetTagManager
             contextMenuImageGridHeader.Name = "contextMenuImageGridHeader";
             contextMenuImageGridHeader.Size = new System.Drawing.Size(61, 4);
             // 
+            // backgroundRemovalWithRMBG20ToolStripMenuItem
+            // 
+            backgroundRemovalWithRMBG20ToolStripMenuItem.Name = "backgroundRemovalWithRMBG20ToolStripMenuItem";
+            backgroundRemovalWithRMBG20ToolStripMenuItem.Size = new System.Drawing.Size(437, 26);
+            backgroundRemovalWithRMBG20ToolStripMenuItem.Text = "Background Removal with RMBG-2.0";
+            backgroundRemovalWithRMBG20ToolStripMenuItem.Click += backgroundRemovalWithRMBG20ToolStripMenuItem_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1670,6 +1678,7 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
         private System.Windows.Forms.ToolStripButton BtnDSChangeSelection;
         private System.Windows.Forms.ToolStripMenuItem cropImagesWithMoondream2ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem backgroundRemovalWithRMBG20ToolStripMenuItem;
     }
 }
 

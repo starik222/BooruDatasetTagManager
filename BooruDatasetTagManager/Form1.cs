@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Text;
@@ -2147,59 +2148,132 @@ namespace BooruDatasetTagManager
                 MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
                 return false;
             }
-            Form_CropImage cropImageForm = new Form_CropImage();
-            if (cropImageForm.ShowDialog() != DialogResult.OK)
-                return false;
-            bool allImages = cropImageForm.radioButtonAllImages.Checked;
-            LockEdit(true);
-            List<DataItem> selectedTagsList = new List<DataItem>();
-            if (!allImages)
+            using (Form_CropImage cropImageForm = new Form_CropImage())
             {
-                for (int i = 0; i < gridViewDS.SelectedRows.Count; i++)
+                if (gridViewDS.SelectedRows.Count > 1)
+                    cropImageForm.radioButtonOnlySelected.Checked = true;
+                if (cropImageForm.ShowDialog() != DialogResult.OK)
+                    return false;
+                bool allImages = cropImageForm.radioButtonAllImages.Checked;
+                LockEdit(true);
+                List<DataItem> selectedTagsList = new List<DataItem>();
+                if (!allImages)
                 {
-                    selectedTagsList.Add(Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[i].Cells["ImageFilePath"].Value]);
-                }
-            }
-            else
-            {
-                foreach (var item in Program.DataManager.DataSet)
-                {
-                    selectedTagsList.Add(item.Value);
-                }
-            }
-            foreach (var item in selectedTagsList)
-            {
-                var cropRect = await cropImageForm.CalcCropRectangle(item.ImageFilePath);
-                if (cropRect.Width <= 1 || cropRect.Height <= 1)
-                {
-                    continue;
-                }
-                using (Bitmap target = new Bitmap(cropRect.Width, cropRect.Height))
-                {
-                    using (Bitmap src = System.Drawing.Image.FromFile(item.ImageFilePath) as Bitmap)
+                    for (int i = 0; i < gridViewDS.SelectedRows.Count; i++)
                     {
-
-                        using (Graphics g = Graphics.FromImage(target))
-                        {
-                            g.DrawImage(src, new Rectangle(0, 0, target.Width, target.Height),
-                                cropRect,
-                                GraphicsUnit.Pixel);
-                        }
-
+                        selectedTagsList.Add(Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[i].Cells["ImageFilePath"].Value]);
                     }
-                    target.Save(item.ImageFilePath);
                 }
-                Program.DataManager.DataSet[item.ImageFilePath].Img = Extensions.MakeThumb(item.ImageFilePath, Program.Settings.PreviewSize);
+                else
+                {
+                    foreach (var item in Program.DataManager.DataSet)
+                    {
+                        selectedTagsList.Add(item.Value);
+                    }
+                }
+                int index = 0;
+                foreach (var item in selectedTagsList)
+                {
+                    var cropRect = await cropImageForm.CalcCropRectangle(item.ImageFilePath);
+                    if (cropRect.Width <= 1 || cropRect.Height <= 1)
+                    {
+                        continue;
+                    }
+                    using (Bitmap target = new Bitmap(cropRect.Width, cropRect.Height))
+                    {
+                        using (Bitmap src = System.Drawing.Image.FromFile(item.ImageFilePath) as Bitmap)
+                        {
+
+                            using (Graphics g = Graphics.FromImage(target))
+                            {
+                                g.DrawImage(src, new Rectangle(0, 0, target.Width, target.Height),
+                                    cropRect,
+                                    GraphicsUnit.Pixel);
+                            }
+
+                        }
+                        target.Save(item.ImageFilePath);
+                    }
+                    try
+                    {
+                        Program.DataManager.DataSet[item.ImageFilePath].Img = Extensions.MakeThumb(item.ImageFilePath, Program.Settings.PreviewSize);
+                    }
+                    catch (Exception)
+                    {
+                        Program.DataManager.DataSet[item.ImageFilePath].Img = null;
+                    }
+                    SetStatus($"{++index} / {selectedTagsList.Count}");
+                }
+                gridViewDS.Refresh();
+                //if (selectedTagsList.Count > 1)
+                //{
+                //    LoadSelectedImageToGrid();
+                //}
+                //if (gridViewAllTags.DataSource == null)
+                //    BindTagList();
+                LockEdit(false);
+                return true;
             }
-            gridViewDS.Refresh();
-            //if (selectedTagsList.Count > 1)
-            //{
-            //    LoadSelectedImageToGrid();
-            //}
-            //if (gridViewAllTags.DataSource == null)
-            //    BindTagList();
-            LockEdit(false);
-            return true;
+        }
+
+        private async Task<bool> RemoveBackgrounds()
+        {
+            if (Program.DataManager == null)
+            {
+                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
+                return false;
+            }
+            using (Form_BGRemover bgRemoverForm = new Form_BGRemover())
+            {
+                if (gridViewDS.SelectedRows.Count > 1)
+                    bgRemoverForm.radioButtonOnlySelected.Checked = true;
+                if (bgRemoverForm.ShowDialog() != DialogResult.OK)
+                    return false;
+                string selectedModel = bgRemoverForm.GetSelectedModel();
+                if (string.IsNullOrEmpty(selectedModel))
+                    return false;
+                bool allImages = bgRemoverForm.radioButtonAllImages.Checked;
+                LockEdit(true);
+                List<DataItem> selectedTagsList = new List<DataItem>();
+                if (!allImages)
+                {
+                    for (int i = 0; i < gridViewDS.SelectedRows.Count; i++)
+                    {
+                        selectedTagsList.Add(Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[i].Cells["ImageFilePath"].Value]);
+                    }
+                }
+                else
+                {
+                    foreach (var item in Program.DataManager.DataSet)
+                    {
+                        selectedTagsList.Add(item.Value);
+                    }
+                }
+                int index = 0;
+                foreach (var item in selectedTagsList)
+                {
+                    var imgData = await bgRemoverForm.RemoveBackgroundAsync(item.ImageFilePath, selectedModel);
+                    await File.WriteAllBytesAsync(item.ImageFilePath, imgData);
+                    try
+                    {
+                        Program.DataManager.DataSet[item.ImageFilePath].Img = Extensions.MakeThumb(item.ImageFilePath, Program.Settings.PreviewSize);
+                    }
+                    catch (Exception)
+                    {
+                        Program.DataManager.DataSet[item.ImageFilePath].Img = null;
+                    }
+                    SetStatus($"{++index} / {selectedTagsList.Count}");
+                }
+                gridViewDS.Refresh();
+                //if (selectedTagsList.Count > 1)
+                //{
+                //    LoadSelectedImageToGrid();
+                //}
+                //if (gridViewAllTags.DataSource == null)
+                //    BindTagList();
+                LockEdit(false);
+                return true;
+            }
         }
 
         private async void generateTagsWithSettingsWindowToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2533,6 +2607,15 @@ namespace BooruDatasetTagManager
                 SetStatus("Cropping complete!");
             else
                 SetStatus("Cropping canceled!");
+        }
+
+        private async void backgroundRemovalWithRMBG20ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var res = await RemoveBackgrounds();
+            if (res)
+                SetStatus("Background removal complete!");
+            else
+                SetStatus("Background removal canceled!");
         }
     }
 }

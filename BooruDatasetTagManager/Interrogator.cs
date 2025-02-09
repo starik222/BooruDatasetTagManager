@@ -16,13 +16,19 @@ namespace BooruDatasetTagManager
         private ImageInterrogator.ImageInterrogatorClient _client;
         private GrpcChannel _channel;
         public List<string> InterrogatorList;
+        public List<string> EditorList;
 
         public bool IsConnected { get; private set; }
         public Interrogator()
         {
-            _channel = GrpcChannel.ForAddress(Program.Settings.AutoTagger.ConnectionAddress);
+            _channel = GrpcChannel.ForAddress(Program.Settings.AutoTagger.ConnectionAddress, new GrpcChannelOptions
+            {
+                MaxReceiveMessageSize = 30 * 1024 * 1024,
+                MaxSendMessageSize = 30 * 1024 * 1024
+            });
             _client = new ImageInterrogator.ImageInterrogatorClient(_channel);
             InterrogatorList = new List<string>();
+            EditorList = new List<string>();
         }
 
         public async Task<bool> ConnectAsync()
@@ -35,8 +41,11 @@ namespace BooruDatasetTagManager
                 if (InterrogatorList.Count > 0)
                 {
                     IsConnected = true;
+                    response = await _client.ListEditorsAsync(request);
+                    EditorList = response.InterrogatorNames.Cast<string>().ToList();
                     return true;
                 }
+
                 return false;
             }
             catch (Exception)
@@ -93,14 +102,71 @@ namespace BooruDatasetTagManager
             }
         }
 
+        public async Task<EditResult> EditImage(string imagePath, List<NetworkInterrogationParameters> interrogationParameters, bool serializeVramUsage, bool SkipInternetRequests)
+        {
+            EditResult result = new EditResult();
+            if (!File.Exists(imagePath) || !IsConnected)
+            {
+                result.Success = false;
+                result.Message = IsConnected ? "Image not found" : "The connection to the service has not been established!";
+                return result;
+            }
+            try
+            {
+                InterrogationRequest request = new InterrogationRequest();
+                request.SerializeVramUsage = serializeVramUsage;
+                request.SkipInternetRequests = SkipInternetRequests;
+                request.Params.AddRange(interrogationParameters);
+                request.InterrogateImage = ByteString.CopyFrom(File.ReadAllBytes(imagePath));
+                request.ImageName = Path.GetFileName(imagePath);
+                var response = await _client.EditImageAsync(request);
+                if (response.Result)
+                {
+                    result.Success = true;
+                    result.ImageData = response.EditedImage.ToByteArray();
+                    result.Message = response.ErrorMsg;
+                    return result;
+                }
+                else
+                {
+                    result.Success = false;
+                    result.Message = response.ErrorMsg;
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                return result;
+            }
+        }
+
         public async Task<InterrogatorParamResponse> GetInterrogatorParams(string name)
         {
             InterrogatorParamRequest request = new InterrogatorParamRequest()
             {
                 InterrogatorNetwork = name
             };
-            InterrogatorParamResponse resp;
             return await _client.InterrogatorParametersAsync(request);
+        }
+
+        public async Task<List<string>> GetListModelsByType(string modelType)
+        {
+            ModelsByTypeRequest request = new ModelsByTypeRequest()
+            {
+                ModelType = modelType
+            };
+            return (await _client.ListModelsByTypeAsync(request)).InterrogatorNames.Cast<string>().ToList();
+        }
+
+        public async Task<InterrogatorParamResponse> GetEditorParams(string name)
+        {
+            InterrogatorParamRequest request = new InterrogatorParamRequest()
+            {
+                InterrogatorNetwork = name
+            };
+            return await _client.EditorParametersAsync(request);
         }
 
         public void Dispose()
@@ -134,6 +200,14 @@ namespace BooruDatasetTagManager
             Tag = tag;
             Confidence = confidence;
         }
+    }
+
+    public class EditResult
+    {
+        public bool Success { get; set; }
+        public byte[] ImageData { get; set; }
+        public string Message { get; set; }
+
     }
 
     public class InterrogateResult
