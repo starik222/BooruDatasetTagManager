@@ -2162,6 +2162,7 @@ namespace BooruDatasetTagManager
                     for (int i = 0; i < gridViewDS.SelectedRows.Count; i++)
                     {
                         selectedTagsList.Add(Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[i].Cells["ImageFilePath"].Value]);
+                        Program.DataManager.RemoveFromCache((string)gridViewDS.SelectedRows[i].Cells["ImageFilePath"].Value);
                     }
                 }
                 else
@@ -2170,6 +2171,7 @@ namespace BooruDatasetTagManager
                     {
                         selectedTagsList.Add(item.Value);
                     }
+                    Program.DataManager.ClearCache();
                 }
                 int index = 0;
                 foreach (var item in selectedTagsList)
@@ -2240,6 +2242,7 @@ namespace BooruDatasetTagManager
                     for (int i = 0; i < gridViewDS.SelectedRows.Count; i++)
                     {
                         selectedTagsList.Add(Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[i].Cells["ImageFilePath"].Value]);
+                        Program.DataManager.RemoveFromCache((string)gridViewDS.SelectedRows[i].Cells["ImageFilePath"].Value);
                     }
                 }
                 else
@@ -2248,6 +2251,7 @@ namespace BooruDatasetTagManager
                     {
                         selectedTagsList.Add(item.Value);
                     }
+                    Program.DataManager.ClearCache();
                 }
                 int index = 0;
                 foreach (var item in selectedTagsList)

@@ -80,6 +80,16 @@ namespace BooruDatasetTagManager
                 return Extensions.GetImageFromFile(path);
         }
 
+        public void ClearCache()
+        {
+            imagesCache.Clear();
+        }
+
+        public void RemoveFromCache(string path)
+        {
+            imagesCache.Remove(path);
+        }
+
         private IEnumerable<DataItem> GetEnumerator(bool useFilter)
         {
             IEnumerable<DataItem> lst = null;
