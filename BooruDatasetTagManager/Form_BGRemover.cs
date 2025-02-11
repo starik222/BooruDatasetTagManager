@@ -17,6 +17,21 @@ namespace BooruDatasetTagManager
         public Form_BGRemover()
         {
             InitializeComponent();
+            Program.ColorManager.ChangeColorScheme(this, Program.ColorManager.SelectedScheme);
+            Program.ColorManager.ChangeColorSchemeInConteiner(Controls, Program.ColorManager.SelectedScheme);
+            SwitchLanguage();
+        }
+
+        private void SwitchLanguage()
+        {
+            this.Text = I18n.GetText("UIBGRemovalForm");
+            buttonCheckConnection.Text = I18n.GetText("UIBGRemovalFormCheckBtn");
+            groupBox1.Text = I18n.GetText("UIBGRemovalFormGroupText");
+            label4.Text = I18n.GetText("UIBGRemovalFormModeLabel");
+            radioButtonAllImages.Text = I18n.GetText("UICropImagesFormRadioAll");
+            radioButtonOnlySelected.Text = I18n.GetText("UICropImagesFormRadioSelected");
+            label1.Text = I18n.GetText("UIBGRemovalFormModelsLabel");
+            buttonRemovingTest.Text = I18n.GetText("UIBGRemovalFormRemovingTestBtn");
         }
         private bool connectSuccess = false;
         private async void buttonCheckConnection_Click(object sender, EventArgs e)
@@ -58,11 +73,11 @@ namespace BooruDatasetTagManager
             openFileDialog.Title = "Select image";
             if (openFileDialog.ShowDialog() != DialogResult.OK)
                 return;
-            button4.Enabled = false;
+            buttonRemovingTest.Enabled = false;
             var res = await RemoveBackgroundAsync(openFileDialog.FileName, (string)listBoxModels.SelectedItem);
             if (res == null)
             {
-                button4.Enabled = true;
+                buttonRemovingTest.Enabled = true;
                 return;
             }
             Image img = null;
@@ -70,7 +85,7 @@ namespace BooruDatasetTagManager
             {
                 img = Image.FromStream(ms);
             }
-            button4.Enabled = true;
+            buttonRemovingTest.Enabled = true;
             Form_preview preview = new Form_preview();
             preview.Show(img);
         }

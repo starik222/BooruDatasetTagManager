@@ -1650,6 +1650,9 @@ namespace BooruDatasetTagManager
             toolsToolStripMenuItem.Text = I18n.GetText("MenuTools");
             replaceTransparentBackgroundToolStripMenuItem.Text = I18n.GetText("MenuReplaceTranspColor");
             generateTagsWithAutoTaggerForAllImagesToolStripMenuItem.Text = I18n.GetText("MenuGenTagsForAllImages");
+            cropImagesWithMoondream2ToolStripMenuItem.Text = I18n.GetText("MenuToolsAutoCropping");
+            backgroundRemovalWithRMBG20ToolStripMenuItem.Text = I18n.GetText("MenuToolsBGRemoval");
+            removeBackgroundToolStripMenuItem.Text = I18n.GetText("MenuContextDSRemoveBG");
 
             BtnTagAddToAll.Text = I18n.GetText("BtnTagAddToAll");
             BtnTagAdd.Text = I18n.GetText("BtnTagAdd");
@@ -2218,7 +2221,7 @@ namespace BooruDatasetTagManager
             }
         }
 
-        private async Task<bool> RemoveBackgrounds()
+        private async Task<bool> RemoveBackgrounds(bool onlySelected)
         {
             if (Program.DataManager == null)
             {
@@ -2227,7 +2230,7 @@ namespace BooruDatasetTagManager
             }
             using (Form_BGRemover bgRemoverForm = new Form_BGRemover())
             {
-                if (gridViewDS.SelectedRows.Count > 1)
+                if (onlySelected || gridViewDS.SelectedRows.Count > 1)
                     bgRemoverForm.radioButtonOnlySelected.Checked = true;
                 if (bgRemoverForm.ShowDialog() != DialogResult.OK)
                     return false;
@@ -2615,7 +2618,16 @@ namespace BooruDatasetTagManager
 
         private async void backgroundRemovalWithRMBG20ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var res = await RemoveBackgrounds();
+            var res = await RemoveBackgrounds(false);
+            if (res)
+                SetStatus("Background removal complete!");
+            else
+                SetStatus("Background removal canceled!");
+        }
+
+        private async void removeBackgroundToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var res = await RemoveBackgrounds(true);
             if (res)
                 SetStatus("Background removal complete!");
             else

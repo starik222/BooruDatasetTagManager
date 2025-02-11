@@ -32,6 +32,7 @@ namespace BooruDatasetTagManager
             BtnTgOk.Text = I18n.GetText("SettingBtnSave");
             BtnTgCancel.Text = I18n.GetText("SettingBtnCancel");
             LabelGridZoomText.Text = I18n.GetText("LabelGridZoomText");
+            toolStripStatusLabelMSForm.Text = I18n.GetText("ToolStripStatusLabelMSForm");
         }
 
         private void TrackBarZoom_ValueChanged(object sender, EventArgs e)

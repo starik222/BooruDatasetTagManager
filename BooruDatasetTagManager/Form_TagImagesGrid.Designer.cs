@@ -33,9 +33,12 @@
             BtnTgOk = new System.Windows.Forms.ToolStripButton();
             BtnTgCancel = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            TrackBarZoom = new ToolStripCustomMenuItem();
             LabelGridZoomText = new System.Windows.Forms.ToolStripLabel();
+            TrackBarZoom = new ToolStripCustomMenuItem();
+            statusStrip1 = new System.Windows.Forms.StatusStrip();
+            toolStripStatusLabelMSForm = new System.Windows.Forms.ToolStripStatusLabel();
             toolStrip1.SuspendLayout();
+            statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // flowLayoutPanelImages
@@ -45,7 +48,7 @@
             flowLayoutPanelImages.Dock = System.Windows.Forms.DockStyle.Fill;
             flowLayoutPanelImages.Location = new System.Drawing.Point(0, 33);
             flowLayoutPanelImages.Name = "flowLayoutPanelImages";
-            flowLayoutPanelImages.Size = new System.Drawing.Size(800, 417);
+            flowLayoutPanelImages.Size = new System.Drawing.Size(800, 395);
             flowLayoutPanelImages.TabIndex = 0;
             // 
             // toolStrip1
@@ -82,17 +85,32 @@
             toolStripSeparator1.Name = "toolStripSeparator1";
             toolStripSeparator1.Size = new System.Drawing.Size(6, 33);
             // 
+            // LabelGridZoomText
+            // 
+            LabelGridZoomText.Name = "LabelGridZoomText";
+            LabelGridZoomText.Size = new System.Drawing.Size(42, 30);
+            LabelGridZoomText.Text = "Zoom:";
+            // 
             // TrackBarZoom
             // 
             TrackBarZoom.Name = "TrackBarZoom";
             TrackBarZoom.Size = new System.Drawing.Size(200, 30);
             TrackBarZoom.Text = "Zoom";
             // 
-            // LabelGridZoomText
+            // statusStrip1
             // 
-            LabelGridZoomText.Name = "LabelGridZoomText";
-            LabelGridZoomText.Size = new System.Drawing.Size(42, 30);
-            LabelGridZoomText.Text = "Zoom:";
+            statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripStatusLabelMSForm });
+            statusStrip1.Location = new System.Drawing.Point(0, 428);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new System.Drawing.Size(800, 22);
+            statusStrip1.TabIndex = 2;
+            statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabelMSForm
+            // 
+            toolStripStatusLabelMSForm.Name = "toolStripStatusLabelMSForm";
+            toolStripStatusLabelMSForm.Size = new System.Drawing.Size(12, 17);
+            toolStripStatusLabelMSForm.Text = "-";
             // 
             // Form_TagImagesGrid
             // 
@@ -100,6 +118,7 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(800, 450);
             Controls.Add(flowLayoutPanelImages);
+            Controls.Add(statusStrip1);
             Controls.Add(toolStrip1);
             Name = "Form_TagImagesGrid";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -108,6 +127,8 @@
             Load += Form_TagImagesGrid_Load;
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -120,5 +141,7 @@
         private ToolStripCustomMenuItem TrackBarZoom;
         public System.Windows.Forms.FlowLayoutPanel flowLayoutPanelImages;
         private System.Windows.Forms.ToolStripLabel LabelGridZoomText;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelMSForm;
     }
 }

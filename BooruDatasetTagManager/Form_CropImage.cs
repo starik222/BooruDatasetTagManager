@@ -18,6 +18,24 @@ namespace BooruDatasetTagManager
         public Form_CropImage()
         {
             InitializeComponent();
+            Program.ColorManager.ChangeColorScheme(this, Program.ColorManager.SelectedScheme);
+            Program.ColorManager.ChangeColorSchemeInConteiner(Controls, Program.ColorManager.SelectedScheme);
+            SwitchLanguage();
+        }
+
+        private void SwitchLanguage()
+        {
+            this.Text = I18n.GetText("UICropImagesForm");
+            buttonCheckConnection.Text = I18n.GetText("UICropImagesFormCheckBtn");
+            groupBox1.Text = I18n.GetText("UICropImagesFormGroupText");
+            label4.Text = I18n.GetText("UICropImagesFormModeLabel");
+            radioButtonAllImages.Text = I18n.GetText("UICropImagesFormRadioAll");
+            radioButtonOnlySelected.Text = I18n.GetText("UICropImagesFormRadioSelected");
+            label1.Text = I18n.GetText("UICropImagesFormExcludeLabel");
+            label2.Text = I18n.GetText("UICropImagesFormIncludeLabel");
+            button5.Text = I18n.GetText("UICropImagesFormObSearchTextBtn");
+            button4.Text = I18n.GetText("UICropImagesFormCropTestBtn");
+            label3.Text = I18n.GetText("UICropImagesFormDescriptionLabel");
         }
         private bool connectSuccess = false;
         private async void button1_Click(object sender, EventArgs e)

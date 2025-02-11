@@ -163,6 +163,7 @@ namespace BooruDatasetTagManager
             toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             contextMenuImageGridHeader = new System.Windows.Forms.ContextMenuStrip(components);
+            removeBackgroundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)gridViewTags).BeginInit();
             toolStripTags.SuspendLayout();
             menuStrip1.SuspendLayout();
@@ -1436,9 +1437,9 @@ namespace BooruDatasetTagManager
             // contextMenuStrip1
             // 
             contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(28, 28);
-            contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem2 });
+            contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem2, removeBackgroundToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new System.Drawing.Size(192, 48);
+            contextMenuStrip1.Size = new System.Drawing.Size(192, 70);
             // 
             // toolStripMenuItem1
             // 
@@ -1458,6 +1459,13 @@ namespace BooruDatasetTagManager
             // 
             contextMenuImageGridHeader.Name = "contextMenuImageGridHeader";
             contextMenuImageGridHeader.Size = new System.Drawing.Size(61, 4);
+            // 
+            // removeBackgroundToolStripMenuItem
+            // 
+            removeBackgroundToolStripMenuItem.Name = "removeBackgroundToolStripMenuItem";
+            removeBackgroundToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            removeBackgroundToolStripMenuItem.Text = "Remove background";
+            removeBackgroundToolStripMenuItem.Click += removeBackgroundToolStripMenuItem_Click;
             // 
             // MainForm
             // 
@@ -1679,6 +1687,7 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripButton BtnDSChangeSelection;
         private System.Windows.Forms.ToolStripMenuItem cropImagesWithMoondream2ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem backgroundRemovalWithRMBG20ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeBackgroundToolStripMenuItem;
     }
 }
 

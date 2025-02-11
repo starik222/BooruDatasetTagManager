@@ -34,7 +34,7 @@
             radioButtonOnlySelected = new System.Windows.Forms.RadioButton();
             radioButtonAllImages = new System.Windows.Forms.RadioButton();
             label4 = new System.Windows.Forms.Label();
-            button4 = new System.Windows.Forms.Button();
+            buttonRemovingTest = new System.Windows.Forms.Button();
             button3 = new System.Windows.Forms.Button();
             button2 = new System.Windows.Forms.Button();
             buttonCheckConnection = new System.Windows.Forms.Button();
@@ -51,13 +51,13 @@
             groupBox1.Controls.Add(radioButtonOnlySelected);
             groupBox1.Controls.Add(radioButtonAllImages);
             groupBox1.Controls.Add(label4);
-            groupBox1.Controls.Add(button4);
+            groupBox1.Controls.Add(buttonRemovingTest);
             groupBox1.Controls.Add(button3);
             groupBox1.Controls.Add(button2);
             groupBox1.Enabled = false;
             groupBox1.Location = new System.Drawing.Point(12, 48);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(376, 273);
+            groupBox1.Size = new System.Drawing.Size(467, 273);
             groupBox1.TabIndex = 6;
             groupBox1.TabStop = false;
             groupBox1.Text = "Removing settings";
@@ -68,7 +68,7 @@
             listBoxModels.ItemHeight = 15;
             listBoxModels.Location = new System.Drawing.Point(6, 61);
             listBoxModels.Name = "listBoxModels";
-            listBoxModels.Size = new System.Drawing.Size(364, 169);
+            listBoxModels.Size = new System.Drawing.Size(455, 169);
             listBoxModels.TabIndex = 9;
             // 
             // label1
@@ -83,7 +83,7 @@
             // radioButtonOnlySelected
             // 
             radioButtonOnlySelected.AutoSize = true;
-            radioButtonOnlySelected.Location = new System.Drawing.Point(220, 17);
+            radioButtonOnlySelected.Location = new System.Drawing.Point(237, 17);
             radioButtonOnlySelected.Name = "radioButtonOnlySelected";
             radioButtonOnlySelected.Size = new System.Drawing.Size(137, 19);
             radioButtonOnlySelected.TabIndex = 1;
@@ -107,19 +107,19 @@
             label4.AutoSize = true;
             label4.Location = new System.Drawing.Point(6, 19);
             label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(91, 15);
+            label4.Size = new System.Drawing.Size(95, 15);
             label4.TabIndex = 7;
-            label4.Text = "Cropping mode";
+            label4.Text = "Removing mode";
             // 
-            // button4
+            // buttonRemovingTest
             // 
-            button4.Location = new System.Drawing.Point(168, 236);
-            button4.Name = "button4";
-            button4.Size = new System.Drawing.Size(91, 23);
-            button4.TabIndex = 7;
-            button4.Text = "Removing test";
-            button4.UseVisualStyleBackColor = true;
-            button4.Click += button4_Click;
+            buttonRemovingTest.Location = new System.Drawing.Point(168, 236);
+            buttonRemovingTest.Name = "buttonRemovingTest";
+            buttonRemovingTest.Size = new System.Drawing.Size(157, 23);
+            buttonRemovingTest.TabIndex = 7;
+            buttonRemovingTest.Text = "Removing test";
+            buttonRemovingTest.UseVisualStyleBackColor = true;
+            buttonRemovingTest.Click += button4_Click;
             // 
             // button3
             // 
@@ -147,7 +147,7 @@
             buttonCheckConnection.Name = "buttonCheckConnection";
             buttonCheckConnection.Size = new System.Drawing.Size(263, 23);
             buttonCheckConnection.TabIndex = 4;
-            buttonCheckConnection.Text = "Check availability of moondream2 model";
+            buttonCheckConnection.Text = "Check availability of BiRefNet models";
             buttonCheckConnection.UseVisualStyleBackColor = true;
             buttonCheckConnection.Click += buttonCheckConnection_Click;
             // 
@@ -156,7 +156,7 @@
             statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripStatusLabel1 });
             statusStrip1.Location = new System.Drawing.Point(0, 343);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new System.Drawing.Size(406, 22);
+            statusStrip1.Size = new System.Drawing.Size(491, 22);
             statusStrip1.TabIndex = 5;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -170,7 +170,7 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(406, 365);
+            ClientSize = new System.Drawing.Size(491, 365);
             Controls.Add(groupBox1);
             Controls.Add(buttonCheckConnection);
             Controls.Add(statusStrip1);
@@ -190,7 +190,7 @@
         public System.Windows.Forms.RadioButton radioButtonOnlySelected;
         public System.Windows.Forms.RadioButton radioButtonAllImages;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button buttonRemovingTest;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button buttonCheckConnection;
