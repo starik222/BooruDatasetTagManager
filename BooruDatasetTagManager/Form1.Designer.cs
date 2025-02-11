@@ -84,6 +84,7 @@ namespace BooruDatasetTagManager
             replaceTransparentBackgroundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             generateTagsWithAutoTaggerForAllImagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             cropImagesWithMoondream2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            backgroundRemovalWithRMBG20ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             testSortingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             openImageGridFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -162,7 +163,6 @@ namespace BooruDatasetTagManager
             toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             contextMenuImageGridHeader = new System.Windows.Forms.ContextMenuStrip(components);
-            backgroundRemovalWithRMBG20ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)gridViewTags).BeginInit();
             toolStripTags.SuspendLayout();
             menuStrip1.SuspendLayout();
@@ -641,6 +641,13 @@ namespace BooruDatasetTagManager
             cropImagesWithMoondream2ToolStripMenuItem.Size = new System.Drawing.Size(437, 26);
             cropImagesWithMoondream2ToolStripMenuItem.Text = "Crop images with moondream2";
             cropImagesWithMoondream2ToolStripMenuItem.Click += cropImagesWithMoondream2ToolStripMenuItem_Click;
+            // 
+            // backgroundRemovalWithRMBG20ToolStripMenuItem
+            // 
+            backgroundRemovalWithRMBG20ToolStripMenuItem.Name = "backgroundRemovalWithRMBG20ToolStripMenuItem";
+            backgroundRemovalWithRMBG20ToolStripMenuItem.Size = new System.Drawing.Size(437, 26);
+            backgroundRemovalWithRMBG20ToolStripMenuItem.Text = "Background Removal with RMBG-2.0";
+            backgroundRemovalWithRMBG20ToolStripMenuItem.Click += backgroundRemovalWithRMBG20ToolStripMenuItem_Click;
             // 
             // debugToolStripMenuItem
             // 
@@ -1451,13 +1458,6 @@ namespace BooruDatasetTagManager
             // 
             contextMenuImageGridHeader.Name = "contextMenuImageGridHeader";
             contextMenuImageGridHeader.Size = new System.Drawing.Size(61, 4);
-            // 
-            // backgroundRemovalWithRMBG20ToolStripMenuItem
-            // 
-            backgroundRemovalWithRMBG20ToolStripMenuItem.Name = "backgroundRemovalWithRMBG20ToolStripMenuItem";
-            backgroundRemovalWithRMBG20ToolStripMenuItem.Size = new System.Drawing.Size(437, 26);
-            backgroundRemovalWithRMBG20ToolStripMenuItem.Text = "Background Removal with RMBG-2.0";
-            backgroundRemovalWithRMBG20ToolStripMenuItem.Click += backgroundRemovalWithRMBG20ToolStripMenuItem_Click;
             // 
             // MainForm
             // 

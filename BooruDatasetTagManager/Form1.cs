@@ -1866,7 +1866,7 @@ namespace BooruDatasetTagManager
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (gridViewTags.IsCurrentCellInEditMode && keyData == Keys.Enter)
+            if (gridViewTags.IsCurrentCellInEditMode && (keyData == Keys.Enter || keyData == Keys.Tab))
             {
                 var rowIndex = gridViewTags.CurrentCell.RowIndex;
                 gridViewTags.EndEdit();
