@@ -138,16 +138,23 @@ namespace BooruDatasetTagManager
                 return null;
             if (BitConverter.ToInt32(imageData, 0) == 1179011410 || BitConverter.ToInt32(imageData, 0) == 1346520407)
                 isWebP = true;
-            if (!isWebP)
+            try
             {
-                return Image.FromStream(new MemoryStream(imageData));
-            }
-            else
-            {
-                using (WebPWrapper.WebP wp = new WebPWrapper.WebP())
+                if (!isWebP)
                 {
-                    return wp.Load(imageData);
+                    return Image.FromStream(new MemoryStream(imageData));
                 }
+                else
+                {
+                    using (WebPWrapper.WebP wp = new WebPWrapper.WebP())
+                    {
+                        return wp.Load(imageData);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
 
@@ -168,6 +175,8 @@ namespace BooruDatasetTagManager
 
             using (var img = Extensions.GetImageFromFile(imagePath))
             {
+                if (img == null)
+                    return null;
                 var aspect = img.Width / (float)img.Height;
 
                 int newHeight = img.Height * imgSize / img.Width;

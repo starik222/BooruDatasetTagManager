@@ -904,8 +904,8 @@ namespace WebPWrapper
     [SuppressUnmanagedCodeSecurityAttribute]
     internal sealed partial class UnsafeNativeMethods
     {
-        private const string _sPathDLL64 = "Libs\\libwebp\\x64\\libwebp.dll";
-        private const string _sPathDLL86 = "Libs\\libwebp\\x86\\libwebp.dll";
+        private const string _sPathDLL64 = "win-x64\\libwebp.dll";
+        private const string _sPathDLL86 = "win-x86\\libwebp.dll";
 
         [DllImport("kernel32.dll", EntryPoint = "CopyMemory", SetLastError = false)]
         internal static extern void CopyMemory(IntPtr dest, IntPtr src, uint count);

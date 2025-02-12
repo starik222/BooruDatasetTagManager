@@ -249,6 +249,8 @@ namespace BooruDatasetTagManager
         private void ShowPreview(string imgPath, bool separateWindow = false)
         {
             Image img = Program.DataManager.GetImageFromFileWithCache(imgPath);
+            if (img == null)
+                return;
             if (separateWindow || Program.Settings.PreviewType == ImagePreviewType.SeparateWindow)
             {
                 if (fPreview == null || fPreview.IsDisposed)

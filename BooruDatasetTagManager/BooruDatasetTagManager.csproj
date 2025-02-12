@@ -21,6 +21,8 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <ApplicationIcon>BDTM.ico</ApplicationIcon>
+	<PublishSingleFile>true</PublishSingleFile>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|AnyCPU'">
     <NoWarn>1701;1702;CA1416;NU1701</NoWarn>
@@ -72,11 +74,20 @@
     <None Update="Languages\zh-CN.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Languages\zh-TW.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Update="Translations\pt-BR.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Translations\zh-CN.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Translations\zh-TW.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -97,4 +108,14 @@
   <ItemGroup>
     <Folder Include="Languages\" />
   </ItemGroup>
+  <Target Name="MoveNativeDllsToSubDirectory" AfterTargets="Publish">
+    <PropertyGroup>
+      <NativeDllSubDir>$(RuntimeIdentifier)</NativeDllSubDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <NativeDllsToMove Include="$(PublishDir)*.dll" />
+    </ItemGroup>
+    <Move SourceFiles="@(NativeDllsToMove)" DestinationFolder="$(PublishDir)\$(NativeDllSubDir)\" />
+    <Message Text="Moved native dlls to sub-directory '$(NativeDllSubDir)'" Importance="high" />
+  </Target>
 </Project>

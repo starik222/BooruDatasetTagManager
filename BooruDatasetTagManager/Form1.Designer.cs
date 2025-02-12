@@ -162,8 +162,8 @@ namespace BooruDatasetTagManager
             contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(components);
             toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            contextMenuImageGridHeader = new System.Windows.Forms.ContextMenuStrip(components);
             removeBackgroundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            contextMenuImageGridHeader = new System.Windows.Forms.ContextMenuStrip(components);
             ((System.ComponentModel.ISupportInitialize)gridViewTags).BeginInit();
             toolStripTags.SuspendLayout();
             menuStrip1.SuspendLayout();
@@ -1439,7 +1439,7 @@ namespace BooruDatasetTagManager
             contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(28, 28);
             contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem2, removeBackgroundToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new System.Drawing.Size(192, 70);
+            contextMenuStrip1.Size = new System.Drawing.Size(192, 92);
             // 
             // toolStripMenuItem1
             // 
@@ -1455,17 +1455,17 @@ namespace BooruDatasetTagManager
             toolStripMenuItem2.Text = "Delete image and tags";
             toolStripMenuItem2.Click += toolStripMenuItem2_Click;
             // 
-            // contextMenuImageGridHeader
-            // 
-            contextMenuImageGridHeader.Name = "contextMenuImageGridHeader";
-            contextMenuImageGridHeader.Size = new System.Drawing.Size(61, 4);
-            // 
             // removeBackgroundToolStripMenuItem
             // 
             removeBackgroundToolStripMenuItem.Name = "removeBackgroundToolStripMenuItem";
             removeBackgroundToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             removeBackgroundToolStripMenuItem.Text = "Remove background";
             removeBackgroundToolStripMenuItem.Click += removeBackgroundToolStripMenuItem_Click;
+            // 
+            // contextMenuImageGridHeader
+            // 
+            contextMenuImageGridHeader.Name = "contextMenuImageGridHeader";
+            contextMenuImageGridHeader.Size = new System.Drawing.Size(61, 4);
             // 
             // MainForm
             // 
