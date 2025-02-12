@@ -72,6 +72,7 @@ namespace BooruDatasetTagManager
                 CustomPictureBoxWithYN pictureBox = new CustomPictureBoxWithYN(TrackBarZoom.TrackBar.Value, TrackBarZoom.TrackBar.Value, listItem.Value);
                 pictureBox.BorderStyle = BorderStyle.FixedSingle;
                 pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                pictureBox.SetSelectionMode(true);
                 pictureBox.Image = Program.DataManager.GetImageFromFileWithCache(listItem.Key.ImageFilePath);
                 pictureBox.SetDataSetItem(listItem.Key);
                 flowLayoutPanelImages.Controls.Add(pictureBox);

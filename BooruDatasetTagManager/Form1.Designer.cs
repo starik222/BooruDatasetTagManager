@@ -311,7 +311,7 @@ namespace BooruDatasetTagManager
             toolStripTags.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { BtnTagAdd, BtnTagDelete, BtnTagUndo, BtnTagRedo, toolStripSeparator1, BtnTagCopy, BtnTagPaste, BtnTagSetToAll, toolStripSeparator2, BtnTagPasteFromClipBoard, BtnTagShow, toolStripSplitButton1, toolStripSeparator4, BtnTagUp, BtnTagDown, toolStripSeparator7, BtnTagImageChecker, toolStripSeparator9, BtnTagFindInAll });
             toolStripTags.Location = new System.Drawing.Point(0, 3);
             toolStripTags.Name = "toolStripTags";
-            toolStripTags.Size = new System.Drawing.Size(37, 587);
+            toolStripTags.Size = new System.Drawing.Size(37, 606);
             toolStripTags.TabIndex = 3;
             toolStripTags.Text = "toolStrip2";
             // 
@@ -1439,7 +1439,7 @@ namespace BooruDatasetTagManager
             contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(28, 28);
             contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem2, removeBackgroundToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new System.Drawing.Size(192, 92);
+            contextMenuStrip1.Size = new System.Drawing.Size(192, 70);
             // 
             // toolStripMenuItem1
             // 
