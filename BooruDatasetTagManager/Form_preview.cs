@@ -31,7 +31,8 @@ namespace BooruDatasetTagManager
 
         public void Show(Image img)
         {
-            pictureBox1.Image?.Dispose();
+            if (!Program.Settings.CacheOpenImages)
+                pictureBox1.Image?.Dispose();
             pictureBox1.Image = img;
 
             if (!loaded)
@@ -49,7 +50,7 @@ namespace BooruDatasetTagManager
         {
             if (!this.Visible)
             {
-                if (pictureBox1.Image != null)
+                if (pictureBox1.Image != null && !Program.Settings.CacheOpenImages)
                     pictureBox1.Image.Dispose();
             }
             else
