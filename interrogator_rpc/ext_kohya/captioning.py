@@ -182,7 +182,7 @@ class Moondream2(Captioning):
 
 class JoyCaption(Captioning):
     def __init__(self, repo_name, defPrompt, needSplit, intType):
-        self.interrogator = JoyCaptionCaptioning("fancyfeast/" + repo_name)
+        self.interrogator = JoyCaptionCaptioning(repo_name)
         self.repo_name = repo_name
         # self.commands = commandsList
         # self.defaultCommand = commandsList[0]

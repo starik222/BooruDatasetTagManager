@@ -35,6 +35,7 @@ FLORENCE2_CAPTIONING_NAMES = [
     "microsoft/Florence-2-base",
     "microsoft/Florence-2-large-ft",
     "microsoft/Florence-2-large",
+    "thwri/CogFlorence-2.2-Large",
 ]
 
 FLORENCE2PG_CAPTIONING_NAMES = [
@@ -47,7 +48,7 @@ MOONDREAM2_CAPTIONING_NAMES = [
 ]
 
 JOYCAPTION_CAPTIONING_NAMES = [
-    "llama-joycaption-alpha-two-hf-llava",
+    "fancyfeast/llama-joycaption-alpha-two-hf-llava",
 ]
 
 WD_TAGGER_NAMES = [
