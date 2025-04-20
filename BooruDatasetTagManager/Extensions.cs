@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.Data;
 using Newtonsoft.Json;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using FFMpegCore;
 
 namespace BooruDatasetTagManager
 {
@@ -134,6 +135,7 @@ namespace BooruDatasetTagManager
         {
             bool isWebP = false;
             byte[] imageData = File.ReadAllBytes(imagePath);
+            var isMp4 = imagePath.EndsWith(".mp4", StringComparison.OrdinalIgnoreCase);
             if (imageData.Length < 4)
                 return null;
             if (BitConverter.ToInt32(imageData, 0) == 1179011410 || BitConverter.ToInt32(imageData, 0) == 1346520407)
@@ -142,7 +144,25 @@ namespace BooruDatasetTagManager
             {
                 if (!isWebP)
                 {
-                    return Image.FromStream(new MemoryStream(imageData));
+                    if (isMp4)
+                    {
+                        // Read the first frame from an MP4 video
+                        using var ms = new MemoryStream(imageData);
+                        var jpg_path = imagePath.Replace(".mp4", ".jpg");
+                        FFMpegArguments.FromFileInput(imagePath).OutputToFile(jpg_path, true, options => options
+                                .WithVideoCodec("mjpeg")
+                                .WithFrameOutputCount(1)
+                                .Seek(TimeSpan.FromSeconds(0))
+                            ).ProcessSynchronously();
+                        using var fs = new FileStream(jpg_path, FileMode.Open, FileAccess.Read);
+                        var image = Image.FromStream(fs);
+                        fs.Close();
+                        return image;
+                    }
+                    else {
+                        return Image.FromStream(new MemoryStream(imageData));
+                    }
+                    
                 }
                 else
                 {
@@ -151,6 +171,7 @@ namespace BooruDatasetTagManager
                         return wp.Load(imageData);
                     }
                 }
+                
             }
             catch (Exception)
             {
