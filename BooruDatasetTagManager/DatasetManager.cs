@@ -272,7 +272,7 @@ namespace BooruDatasetTagManager
 
         public bool LoadFromFolder(string folder)
         {
-            List<string> imagesExt = new List<string>() { ".jpg", ".png", ".bmp", ".jpeg", ".webp" };
+            List<string> imagesExt = new List<string>() { ".jpg", ".png", ".bmp", ".jpeg", ".webp", ".mp4" };
             string[] imgs = Directory.GetFiles(folder, "*.*", SearchOption.AllDirectories);
             if (imgs.Length == 0)
             {
