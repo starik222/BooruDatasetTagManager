@@ -2502,9 +2502,8 @@ namespace BooruDatasetTagManager
         #region Debug
         private void testSortingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var allTags = ((BindingSource)gridViewAllTags.DataSource);
-            allTags.Sort = "Count DESC";
-            //gridViewAllTags.Sort(gridViewAllTags.Columns["CountColumn"], System.ComponentModel.ListSortDirection.Descending);
+            Form_ImageSorterSettings form_ImageSorter = new Form_ImageSorterSettings();
+            form_ImageSorter.ShowDialog();
         }
         #endregion
 
