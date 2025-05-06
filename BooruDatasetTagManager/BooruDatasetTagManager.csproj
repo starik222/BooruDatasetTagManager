@@ -52,7 +52,6 @@
     <Content Include="BDTM.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FFMpegCore" Version="5.2.0" />
     <PackageReference Include="Google.Protobuf" Version="3.24.4" />
     <PackageReference Include="Grpc.Net.Client" Version="2.57.0" />
     <PackageReference Include="Grpc.Tools" Version="2.58.0">
@@ -108,6 +107,12 @@
 
   <ItemGroup>
     <Folder Include="Languages\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ScreenListerNET">
+      <HintPath>..\..\ScreenLister\ScreenList\bin\Release\net6.0-windows\ScreenListerNET.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Target Name="MoveNativeDllsToSubDirectory" AfterTargets="Publish">
     <PropertyGroup>

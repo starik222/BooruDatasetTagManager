@@ -272,13 +272,15 @@ namespace BooruDatasetTagManager
 
         public bool LoadFromFolder(string folder)
         {
-            List<string> imagesExt = new List<string>() { ".jpg", ".png", ".bmp", ".jpeg", ".webp", ".mp4" };
+            List<string> allowedExt = new List<string>();
+            allowedExt.AddRange(Extensions.ImageExtensions);
+            allowedExt.AddRange(Extensions.VideoExtensions);
             string[] imgs = Directory.GetFiles(folder, "*.*", SearchOption.AllDirectories);
             if (imgs.Length == 0)
             {
                 return false;
             }
-            imgs = imgs.Where(a => imagesExt.Contains(Path.GetExtension(a).ToLower())).OrderBy(a => a, new FileNamesComparer()).ToArray();
+            imgs = imgs.Where(a => allowedExt.Contains(Path.GetExtension(a).ToLower())).OrderBy(a => a, new FileNamesComparer()).ToArray();
             int imgSize = Program.Settings.PreviewSize;
             imgs.AsParallel().ForAll(x =>
             {

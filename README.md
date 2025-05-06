@@ -107,6 +107,10 @@ Currently, the program offers two color schemes (Classic and Dark). You can crea
 
 All language files are located in the `Languages` ​​folder. You can translate the application interface into the language you are interested in. To do this, you need to copy any `xx-XX.txt` file you like, rename it according to your [language code](https://learn.microsoft.com/en-us/openspecs/office_standards/ms-oe376/6c085406-a698-4e12-9d4d-c3b0ee3dbc4a) and translate the contents after the `=` sign. You can create a topic in Issues or discussions and attach your translation. I will include your translation in the next release.
 
+# Dependencies
+
+- [ScreenLister](https://github.com/starik222/ScreenLister) - Used to obtain images from videos.
+
 # Build
 
 This is a tool designed in C and you will need to run it in Visual Studio (not Visual Studio Code). Steps to achieve this are:

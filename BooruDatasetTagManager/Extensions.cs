@@ -15,13 +15,17 @@ using System.Diagnostics;
 using System.Data;
 using Newtonsoft.Json;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using FFMpegCore;
+using ScreenLister;
 
 namespace BooruDatasetTagManager
 {
     public static class Extensions
     {
-        public static void AddRange(this List<TagValue> list, IEnumerable<string> range)
+
+        public static string[] ImageExtensions =  { ".jpg", ".png", ".bmp", ".jpeg", ".webp", ".mp4" };
+        public static string[] VideoExtensions =  { ".mp4", ".flv", ".mkv", ".ts", ".avi" };
+
+    public static void AddRange(this List<TagValue> list, IEnumerable<string> range)
         {
             foreach (var item in range)
                 list.Add(new TagValue(item));
@@ -135,9 +139,9 @@ namespace BooruDatasetTagManager
         {
             bool isWebP = false;
             byte[] imageData = File.ReadAllBytes(imagePath);
-            var isMp4 = imagePath.EndsWith(".mp4", StringComparison.OrdinalIgnoreCase);
             if (imageData.Length < 4)
                 return null;
+            var isMp4 = VideoExtensions.Contains(Path.GetExtension(imagePath).ToLower());
             if (BitConverter.ToInt32(imageData, 0) == 1179011410 || BitConverter.ToInt32(imageData, 0) == 1346520407)
                 isWebP = true;
             try
@@ -150,19 +154,8 @@ namespace BooruDatasetTagManager
                     }
                 }
                 else if (isMp4) 
-                {    
-                    // Read the first frame from an MP4 video
-                    var jpg_path = imagePath.Replace(".mp4", ".jpg");
-                    FFMpegArguments.FromFileInput(imagePath).OutputToFile(jpg_path, true, options => options
-                            .WithVideoCodec("mjpeg")
-                            .WithFrameOutputCount(1)
-                            .Seek(TimeSpan.FromSeconds(0))
-                        ).ProcessSynchronously();
-                    using var fs = new FileStream(jpg_path, FileMode.Open, FileAccess.Read);
-                    var image = Image.FromStream(fs);
-                    fs.Close();
-                    File.Delete(jpg_path);
-                    return image;
+                {
+                    return ScreenListerNET.GetImageFromVideoBuffer(imageData);
                 }
                 else 
                 {
