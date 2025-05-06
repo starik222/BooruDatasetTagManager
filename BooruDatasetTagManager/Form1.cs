@@ -248,6 +248,10 @@ namespace BooruDatasetTagManager
 
         private void ShowPreview(string imgPath, bool separateWindow = false)
         {
+            if (imgPath.EndsWith(".mp4")) {
+                Process.Start(new ProcessStartInfo(imgPath) { UseShellExecute = true });
+                return;
+            }
             Image img = Program.DataManager.GetImageFromFileWithCache(imgPath);
             if (img == null)
                 return;
