@@ -51,6 +51,13 @@ JOYCAPTION_CAPTIONING_NAMES = [
     "fancyfeast/llama-joycaption-alpha-two-hf-llava",
 ]
 
+QWEN25_CAPTIONING_NAMES = [
+    "Qwen/Qwen2.5-VL-3B-Instruct",
+    "Qwen/Qwen2.5-VL-7B-Instruct",
+    "huihui-ai/Qwen2.5-VL-7B-Instruct-abliterated",
+    "unsloth/Qwen2.5-VL-7B-Instruct-unsloth-bnb-4bit",
+]
+
 WD_TAGGER_NAMES = [
     "wd-v1-4-convnext-tagger",
     "wd-v1-4-convnext-tagger-v2",
@@ -138,6 +145,7 @@ INTERROGATORS = (
     + [captioning.Florence2(name, FLORENCE2PG_COMMANDS, "", False, "florence2") for name in FLORENCE2PG_CAPTIONING_NAMES]
     + [captioning.Moondream2(name, MOONDREAM2_COMMANDS, "", False, "moondream2") for name in MOONDREAM2_CAPTIONING_NAMES]
     + [captioning.JoyCaption(name, "", False, "joycaption") for name in JOYCAPTION_CAPTIONING_NAMES]
+    + [captioning.Qwen25Caption(name, "", False, "qwen25") for name in QWEN25_CAPTIONING_NAMES]
     + [tagger.DeepDanbooru("dd")]
     + [
         tagger.WaifuDiffusion(name, WD_TAGGER_THRESHOLDS[i], "wd")

@@ -209,6 +209,15 @@ class InterrogatorServicer(rpc_proto.services_pb2_grpc.ImageInterrogatorServicer
                                                               "You can see examples of requests on the project page "
                                                               "https://github.com/fpgaminer/joycaption",
                                                               "label", ""))
+        elif intInstance.type == "qwen25":
+            ret.Type = "qwen25"
+            #ret.Parameters.append(createInterrogatorParameter("cmd", (",").join(intInstance.commands), "list", ""))
+            ret.Parameters.append(createInterrogatorParameter("query", intInstance.defaultPrompt, "string", ""))
+            ret.Parameters.append(createInterrogatorParameter("split", "false", "bool", "Split lines with commas"))
+            ret.Parameters.append(createInterrogatorParameter("Comment",
+                                                              "You can see examples of requests on the project page "
+                                                              "https://github.com/fpgaminer/joycaption",
+                                                              "label", ""))
         elif intInstance.type == "blip":
             ret.Type = "blip"
         elif intInstance.type == "blip2":

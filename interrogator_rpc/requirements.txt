@@ -12,10 +12,12 @@ timm
 pyvips
 kornia
 pillow
-transformers>=4.39.1,<=4.48.2
+transformers==4.51.3
+qwen_vl_utils
+bitsandbytes
 # This needs to be from Torch's pypi repo.
 # ONNX does not support cuda 12 yet.
---extra-index-url https://download.pytorch.org/whl/cu118
+--extra-index-url https://download.pytorch.org/whl/cu126
 torch
 torchvision
 torchaudio

@@ -90,7 +90,6 @@ class JoyCaptionCaptioning:
             caption = self.processor.tokenizer.decode(generate_ids, skip_special_tokens=True,
                                                  clean_up_tokenization_spaces=False)
             caption = caption.strip()
-            print(caption)
             if self.split:
                 return [x.strip() for x in caption.split(',')]
             return [caption]
