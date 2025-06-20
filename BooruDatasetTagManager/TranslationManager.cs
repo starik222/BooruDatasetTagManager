@@ -123,7 +123,8 @@ namespace BooruDatasetTagManager
                 return result;
             }
             result = await translator.TranslateAsync(text, "en", _language);
-            await AddTranslationAsync(text, result, false);
+            if (!string.IsNullOrEmpty(result))
+                await AddTranslationAsync(text, result, false);
             Program.TranslationLocker.Release();
             return result;
         }
