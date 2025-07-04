@@ -1795,10 +1795,14 @@ namespace BooruDatasetTagManager
                 return;
             Form_backgroundReplace backgroundReplace = new Form_backgroundReplace();
             if (backgroundReplace.ShowDialog() != DialogResult.OK)
+            {
+                backgroundReplace.Close();
                 return;
+            }
             LockEdit(true);
             SetStatus(I18n.GetText("InProgress"));
-            bool randomColor = backgroundReplace.checkBox1.Checked;
+            bool randomColor = backgroundReplace.radioButton2.Checked;
+            bool randomSelectedColor = backgroundReplace.radioButton3.Checked;
             Color replColor = backgroundReplace.pictureBox1.BackColor;
             List<DataItem> selectedTagsList = new List<DataItem>();
             Random r = new Random();
@@ -1816,6 +1820,10 @@ namespace BooruDatasetTagManager
                     {
                         replColor = Color.FromArgb(r.Next(255), r.Next(255), r.Next(255));
                     }
+                    else if (randomSelectedColor)
+                    {
+                        replColor = backgroundReplace.listView1.Items[r.Next(backgroundReplace.listView1.Items.Count)].BackColor;
+                    }
                     Bitmap bmpRes = Extensions.Transparent2Color(bmp, replColor);
                     bmp.Dispose();
                     bmpRes.Save(item.ImageFilePath, format);
@@ -1823,6 +1831,7 @@ namespace BooruDatasetTagManager
                     item.Img = Extensions.MakeThumb(item.ImageFilePath, Program.Settings.PreviewSize);
                 }
             });
+            backgroundReplace.Close();
             LockEdit(false);
             SetStatus(I18n.GetText("TipBackgrRepComplete"));
         }
