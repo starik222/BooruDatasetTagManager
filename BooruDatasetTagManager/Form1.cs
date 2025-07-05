@@ -254,7 +254,8 @@ namespace BooruDatasetTagManager
 
         private void ShowPreview(string imgPath, bool separateWindow = false)
         {
-            if (imgPath.EndsWith(".mp4")) {
+            if (Extensions.VideoExtensions.Contains(Path.GetExtension(imgPath)))
+            {
                 Process.Start(new ProcessStartInfo(imgPath) { UseShellExecute = true });
                 return;
             }
@@ -2652,6 +2653,27 @@ namespace BooruDatasetTagManager
                 SetStatus("Background removal complete!");
             else
                 SetStatus("Background removal canceled!");
+        }
+
+        private void openManualCropToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form_manualCrop form_ManualCrop = new Form_manualCrop("D:\\All\\Upscaled\\Ayumu Orikasa\\card_chara_01193 — копия.png");
+            form_ManualCrop.ShowDialog();
+        }
+
+        private void cropImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (gridViewDS.SelectedRows.Count > 0)
+            {
+                var di = Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value];
+                Form_manualCrop fCrop = new Form_manualCrop(di.ImageFilePath);
+                if (fCrop.ShowDialog() == DialogResult.OK)
+                {
+                    di.Img = Extensions.MakeThumb(di.ImageFilePath, Program.Settings.PreviewSize);
+                    gridViewDS.Refresh();
+                }
+                fCrop.Close();
+            }
         }
     }
 }

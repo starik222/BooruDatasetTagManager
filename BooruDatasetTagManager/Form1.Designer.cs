@@ -88,6 +88,7 @@ namespace BooruDatasetTagManager
             debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             testSortingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             openImageGridFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            openManualCropToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             gridViewAllTags = new System.Windows.Forms.DataGridView();
             TagsColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             TranslationColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -163,6 +164,7 @@ namespace BooruDatasetTagManager
             toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             removeBackgroundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            cropImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             contextMenuImageGridHeader = new System.Windows.Forms.ContextMenuStrip(components);
             ((System.ComponentModel.ISupportInitialize)gridViewTags).BeginInit();
             toolStripTags.SuspendLayout();
@@ -652,7 +654,7 @@ namespace BooruDatasetTagManager
             // 
             // debugToolStripMenuItem
             // 
-            debugToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { testSortingToolStripMenuItem, openImageGridFormToolStripMenuItem });
+            debugToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { testSortingToolStripMenuItem, openImageGridFormToolStripMenuItem, openManualCropToolStripMenuItem });
             debugToolStripMenuItem.Name = "debugToolStripMenuItem";
             debugToolStripMenuItem.Size = new System.Drawing.Size(68, 25);
             debugToolStripMenuItem.Text = "Debug";
@@ -671,6 +673,13 @@ namespace BooruDatasetTagManager
             openImageGridFormToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
             openImageGridFormToolStripMenuItem.Text = "Open ImageGrid form";
             openImageGridFormToolStripMenuItem.Click += openImageGridFormToolStripMenuItem_Click;
+            // 
+            // openManualCropToolStripMenuItem
+            // 
+            openManualCropToolStripMenuItem.Name = "openManualCropToolStripMenuItem";
+            openManualCropToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            openManualCropToolStripMenuItem.Text = "Open manual crop";
+            openManualCropToolStripMenuItem.Click += openManualCropToolStripMenuItem_Click;
             // 
             // gridViewAllTags
             // 
@@ -746,7 +755,7 @@ namespace BooruDatasetTagManager
             toolStripAllTags.Location = new System.Drawing.Point(0, 3);
             toolStripAllTags.Name = "toolStripAllTags";
             toolStripAllTags.Padding = new System.Windows.Forms.Padding(2, 0, 5, 0);
-            toolStripAllTags.Size = new System.Drawing.Size(43, 606);
+            toolStripAllTags.Size = new System.Drawing.Size(43, 587);
             toolStripAllTags.TabIndex = 3;
             toolStripAllTags.Text = "toolStrip2";
             // 
@@ -1437,9 +1446,9 @@ namespace BooruDatasetTagManager
             // contextMenuStrip1
             // 
             contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(28, 28);
-            contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem2, removeBackgroundToolStripMenuItem });
+            contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem2, removeBackgroundToolStripMenuItem, cropImageToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new System.Drawing.Size(192, 70);
+            contextMenuStrip1.Size = new System.Drawing.Size(192, 92);
             // 
             // toolStripMenuItem1
             // 
@@ -1461,6 +1470,13 @@ namespace BooruDatasetTagManager
             removeBackgroundToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             removeBackgroundToolStripMenuItem.Text = "Remove background";
             removeBackgroundToolStripMenuItem.Click += removeBackgroundToolStripMenuItem_Click;
+            // 
+            // cropImageToolStripMenuItem
+            // 
+            cropImageToolStripMenuItem.Name = "cropImageToolStripMenuItem";
+            cropImageToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            cropImageToolStripMenuItem.Text = "Crop Image";
+            cropImageToolStripMenuItem.Click += cropImageToolStripMenuItem_Click;
             // 
             // contextMenuImageGridHeader
             // 
@@ -1688,6 +1704,8 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripMenuItem cropImagesWithMoondream2ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem backgroundRemovalWithRMBG20ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeBackgroundToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openManualCropToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cropImageToolStripMenuItem;
     }
 }
 
