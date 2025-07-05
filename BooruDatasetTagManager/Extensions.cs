@@ -22,7 +22,7 @@ namespace BooruDatasetTagManager
     public static class Extensions
     {
 
-        public static string[] ImageExtensions =  { ".jpg", ".png", ".bmp", ".jpeg", ".webp", ".mp4" };
+        public static string[] ImageExtensions =  { ".jpg", ".png", ".bmp", ".jpeg", ".webp" };
         public static string[] VideoExtensions =  { ".mp4", ".flv", ".mkv", ".ts", ".avi" };
 
     public static void AddRange(this List<TagValue> list, IEnumerable<string> range)

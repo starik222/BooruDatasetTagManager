@@ -141,6 +141,8 @@ namespace BooruDatasetTagManager
             OpenFolderDialog openFolderDialog = new OpenFolderDialog();
             if (openFolderDialog.ShowDialog() != DialogResult.OK)
                 return;
+            SetStatus(I18n.GetText("TipLoadingStart"));
+            LockEdit(true);
             isLoading = true;
             Program.DataManager = new DatasetManager();
             TrackBarRowHeight.ValueChanged -= TrackBarRowHeight_ValueChanged;
@@ -152,8 +154,9 @@ namespace BooruDatasetTagManager
             TrackBarRowHeight.Value = Program.Settings.PreviewSize;
             TrackBarRowHeight.ValueChanged += TrackBarRowHeight_ValueChanged;
             //Program.DataManager.SetTranslationMode(isTranslate);
-            if (!Program.DataManager.LoadFromFolder(openFolderDialog.Folder))
+            if (!await Program.DataManager.LoadFromFolderAsync(openFolderDialog.Folder))
             {
+                LockEdit(false);
                 SetStatus(I18n.GetText("TipFolderWrong"));
                 return;
             }
@@ -165,6 +168,8 @@ namespace BooruDatasetTagManager
             await ApplyTranslation(isTranslate);
             isLoading = false;
             gridViewDS.AutoResizeColumns();
+            LockEdit(false);
+            SetStatus(I18n.GetText("TipLoadingComplete"));
         }
 
         private void TrackBarRowHeight_ValueChanged(object sender, EventArgs e)
@@ -235,6 +240,7 @@ namespace BooruDatasetTagManager
 
         private void LockEdit(bool locked)
         {
+            menuStrip1.Enabled = !locked;
             toolStripTags.Enabled = !locked;
             toolStripAllTags.Enabled = !locked;
             gridViewTags.Enabled = !locked;

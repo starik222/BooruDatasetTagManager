@@ -251,3 +251,5 @@ UIBGRemovalFormRemovingTestBtn=Тест удаления
 MenuToolsAutoCropping=Обрезка изображений с помощью moondream2
 MenuToolsBGRemoval=Удаление фонов с помощью BiRefNet
 MenuContextDSRemoveBG=Удалить фон
+TipLoadingStart=Идет загрузка, пожалуйста, подождите...
+TipLoadingComplete=Загрузка завершена.

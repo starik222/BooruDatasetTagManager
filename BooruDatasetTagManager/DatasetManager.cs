@@ -270,6 +270,11 @@ namespace BooruDatasetTagManager
             return delList;
         }
 
+        public async Task<bool> LoadFromFolderAsync(string folder)
+        {
+            return await Task.Run(() => LoadFromFolder(folder));
+        }
+
         public bool LoadFromFolder(string folder)
         {
             List<string> allowedExt = new List<string>();
