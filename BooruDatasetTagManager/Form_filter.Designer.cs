@@ -84,6 +84,7 @@
             Name = "Form_filter";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "All tags filter";
+            Load += Form_filter_Load;
             ResumeLayout(false);
             PerformLayout();
         }

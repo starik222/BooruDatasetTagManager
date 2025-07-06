@@ -63,7 +63,7 @@ namespace BooruDatasetTagManager
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
             if (Extensions.GetEnumItemFromFriendlyText<DatasetManager.AddingType>((string)comboBox1.SelectedItem) == DatasetManager.AddingType.Custom)
             {
                 numericUpDown1.Visible = true;
@@ -90,5 +90,6 @@ namespace BooruDatasetTagManager
             label1.Text = I18n.GetText("UIAddTagTag");
             checkBoxSkipExist.Text = I18n.GetText("CheckBoxSkipExist");
         }
+
     }
 }

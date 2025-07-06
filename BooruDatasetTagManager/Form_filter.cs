@@ -34,5 +34,21 @@ namespace BooruDatasetTagManager
             this.Text = I18n.GetText("UIFilterForm");
             label1.Text = I18n.GetText("UIFilterText");
         }
+
+        protected override bool ProcessDialogKey(Keys keyData)
+        {
+            if (Form.ModifierKeys == Keys.None && keyData == Keys.Escape)
+            {
+                DialogResult = DialogResult.Cancel;
+                return true;
+            }
+            return base.ProcessDialogKey(keyData);
+        }
+
+        private void Form_filter_Load(object sender, EventArgs e)
+        {
+            textBox1.Focus();
+            textBox1.SelectAll();
+        }
     }
 }
