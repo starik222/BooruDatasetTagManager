@@ -36,6 +36,7 @@ namespace BooruDatasetTagManager
             comboBox1 = new System.Windows.Forms.ComboBox();
             numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             checkBoxSkipExist = new System.Windows.Forms.CheckBox();
+            button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             SuspendLayout();
             // 
@@ -116,11 +117,22 @@ namespace BooruDatasetTagManager
             checkBoxSkipExist.Text = "Skip exist tags";
             checkBoxSkipExist.UseVisualStyleBackColor = true;
             // 
+            // button3
+            // 
+            button3.Location = new System.Drawing.Point(300, 78);
+            button3.Name = "button3";
+            button3.Size = new System.Drawing.Size(88, 23);
+            button3.TabIndex = 8;
+            button3.Text = "Lower case";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
             // Form_addTag
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             ClientSize = new System.Drawing.Size(401, 353);
+            Controls.Add(button3);
             Controls.Add(checkBoxSkipExist);
             Controls.Add(numericUpDown1);
             Controls.Add(comboBox1);
@@ -149,5 +161,6 @@ namespace BooruDatasetTagManager
         public System.Windows.Forms.ComboBox comboBox1;
         public System.Windows.Forms.NumericUpDown numericUpDown1;
         public System.Windows.Forms.CheckBox checkBoxSkipExist;
+        private System.Windows.Forms.Button button3;
     }
 }

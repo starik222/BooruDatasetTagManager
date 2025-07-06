@@ -91,5 +91,9 @@ namespace BooruDatasetTagManager
             checkBoxSkipExist.Text = I18n.GetText("CheckBoxSkipExist");
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            tagTextBox.Text = tagTextBox.Text.ToLower();
+        }
     }
 }
