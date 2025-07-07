@@ -12,12 +12,18 @@ namespace BooruDatasetTagManager
 {
     public partial class Form_replaceAll : Form
     {
+        public bool DataSetFiltered = false;
         public Form_replaceAll()
         {
             InitializeComponent();
             Program.ColorManager.ChangeColorScheme(this, Program.ColorManager.SelectedScheme);
             Program.ColorManager.ChangeColorSchemeInConteiner(Controls, Program.ColorManager.SelectedScheme);
             SwitchLanguage();
+            labelWarning.ForeColor = Color.OrangeRed;
+        }
+        private void Form_replaceAll_Load(object sender, EventArgs e)
+        {
+            labelWarning.Visible = DataSetFiltered;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -35,6 +41,9 @@ namespace BooruDatasetTagManager
             this.Text = I18n.GetText("UIReplaceForm");
             label1.Text = I18n.GetText("UIReplaceSourceTag");
             label2.Text = I18n.GetText("UIReplaceNewTag");
+            labelWarning.Text = I18n.GetText("TipWarningFiltered");
         }
+
+
     }
 }

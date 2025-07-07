@@ -253,3 +253,4 @@ MenuToolsBGRemoval=Background Removal with BiRefNet
 MenuContextDSRemoveBG=Remove background
 TipLoadingStart=Loading, please wait...
 TipLoadingComplete=Loading completed
+TipWarningFiltered=The dataset is filtered! Replacement will only occur in filtered records.

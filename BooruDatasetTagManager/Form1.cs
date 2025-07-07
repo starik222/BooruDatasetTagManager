@@ -579,6 +579,7 @@ namespace BooruDatasetTagManager
             if (gridViewAllTags.SelectedCells.Count == 0)
                 return;
             Form_replaceAll replaceAll = new Form_replaceAll();
+            replaceAll.DataSetFiltered = isFiltered;
             replaceAll.comboBox1.DataSource = Program.DataManager.AllTags;
             replaceAll.comboBox1.DisplayMember = "Tag";
             replaceAll.comboBox1.SelectedIndex = gridViewAllTags.SelectedCells[0].RowIndex;

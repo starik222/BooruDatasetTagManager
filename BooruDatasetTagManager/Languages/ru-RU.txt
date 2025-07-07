@@ -253,3 +253,4 @@ MenuToolsBGRemoval=Удаление фонов с помощью BiRefNet
 MenuContextDSRemoveBG=Удалить фон
 TipLoadingStart=Идет загрузка, пожалуйста, подождите...
 TipLoadingComplete=Загрузка завершена.
+TipWarningFiltered=Набор данных отфильтрован! Замена произойдет только в отфильтрованных записях.

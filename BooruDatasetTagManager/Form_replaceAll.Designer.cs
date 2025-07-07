@@ -35,6 +35,7 @@ namespace BooruDatasetTagManager
             comboBox2 = new System.Windows.Forms.ComboBox();
             button1 = new System.Windows.Forms.Button();
             button2 = new System.Windows.Forms.Button();
+            labelWarning = new System.Windows.Forms.Label();
             SuspendLayout();
             // 
             // label1
@@ -80,7 +81,7 @@ namespace BooruDatasetTagManager
             // 
             // button1
             // 
-            button1.Location = new System.Drawing.Point(18, 134);
+            button1.Location = new System.Drawing.Point(18, 187);
             button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(88, 27);
@@ -92,7 +93,7 @@ namespace BooruDatasetTagManager
             // button2
             // 
             button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            button2.Location = new System.Drawing.Point(112, 134);
+            button2.Location = new System.Drawing.Point(112, 187);
             button2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             button2.Name = "button2";
             button2.Size = new System.Drawing.Size(88, 27);
@@ -101,13 +102,23 @@ namespace BooruDatasetTagManager
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
+            // labelWarning
+            // 
+            labelWarning.ForeColor = System.Drawing.Color.OrangeRed;
+            labelWarning.Location = new System.Drawing.Point(18, 116);
+            labelWarning.Name = "labelWarning";
+            labelWarning.Size = new System.Drawing.Size(237, 68);
+            labelWarning.TabIndex = 6;
+            labelWarning.Text = "-";
+            // 
             // Form_replaceAll
             // 
             AcceptButton = button1;
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             CancelButton = button2;
-            ClientSize = new System.Drawing.Size(273, 189);
+            ClientSize = new System.Drawing.Size(273, 226);
+            Controls.Add(labelWarning);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(comboBox2);
@@ -118,6 +129,7 @@ namespace BooruDatasetTagManager
             Name = "Form_replaceAll";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Replace all";
+            Load += Form_replaceAll_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -130,5 +142,6 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.Button button2;
         public System.Windows.Forms.ComboBox comboBox1;
         public System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Label labelWarning;
     }
 }
