@@ -582,8 +582,19 @@ namespace BooruDatasetTagManager
             replaceAll.DataSetFiltered = isFiltered;
             replaceAll.comboBox1.DataSource = Program.DataManager.AllTags;
             replaceAll.comboBox1.DisplayMember = "Tag";
-            replaceAll.comboBox1.SelectedIndex = gridViewAllTags.SelectedCells[0].RowIndex;
+            List<int> selectedCells = new List<int>();
+            for (int i = 0; i < gridViewAllTags.SelectedCells.Count; i++)
+            {
+                if (!selectedCells.Contains(gridViewAllTags.SelectedCells[i].RowIndex))
+                    selectedCells.Add(gridViewAllTags.SelectedCells[i].RowIndex);
+            }
+            selectedCells.Reverse();
+            replaceAll.comboBox1.SelectedIndex = selectedCells[0];
             replaceAll.comboBox2.Items.AddRange(Program.DataManager.AllTags.GetAllTagsList());
+            if (selectedCells.Count > 1)
+            {
+                replaceAll.comboBox2.SelectedItem = gridViewAllTags["TagsColumn", selectedCells[1]].Value;
+            }
             if (replaceAll.ShowDialog() == DialogResult.OK)
             {
                 Program.DataManager.ReplaceTagInAll(((AllTagsItem)replaceAll.comboBox1.SelectedItem).Tag, (string)replaceAll.comboBox2.Text, true);
