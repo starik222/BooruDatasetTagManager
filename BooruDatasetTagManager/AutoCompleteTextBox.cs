@@ -13,7 +13,6 @@ namespace BooruDatasetTagManager
     {
         private ListBox _listBox;
         private bool _isAdded;
-        //private String[] _values;
         private List<TagsDB.TagItem> _values;
         private String _formerValue = String.Empty;
         private AutocompleteMode _mode = AutocompleteMode.StartWithAndContains;
@@ -77,14 +76,22 @@ namespace BooruDatasetTagManager
 
         private void AutoCompleteTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+            if (e.KeyCode == Keys.Enter && e.Alt)
+            {
+                if (_listBox.Visible)
+                {
+                    ResetListBox();
+                    _formerValue = Text;
+                    ItemSelectionComplete?.Invoke(this, e);
+                }
+            }
+            else if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
                 if (_listBox.Visible)
                 {
                     Text = ((TagsDB.TagItem)_listBox.SelectedItem).GetTag();
                     ResetListBox();
                     _formerValue = Text;
-                    //this.Select(this.Text.Length, 0);
                     ItemSelectionComplete?.Invoke(this, e);
                 }
             }
@@ -104,51 +111,22 @@ namespace BooruDatasetTagManager
         {
             if (!_isAdded)
             {
-                //Parent.Controls.Add(_listBox);
-                //_parent.Controls.Add(_listBox);
-                //_listBox.Parent = Parent;
                 Program.ColorManager.ChangeColorScheme(_listBox, Program.ColorManager.SelectedScheme);
                 if (Parent is Form)
                 {
                     Parent.Controls.Add(_listBox);
-                    //_listBox.BackColor = Parent.BackColor;
-                    //_listBox.ForeColor = Parent.ForeColor;
                     _listBox.Left = Left;
                     _listBox.Top = Top + Height;
                 }
                 else
                 {
                     Parent.Parent.Controls.Add(_listBox);
-                    //_listBox.BackColor = Parent.Parent.BackColor;
-                    //_listBox.ForeColor = Parent.Parent.ForeColor;
                 }
                 _isAdded = true;
             }
-
-            //int gridHeight = Parent.Parent.Height;
-            //int upMaxSize = Parent.Top;
-            //int downMaxSize = gridHeight - Parent.Top + Parent.Height;
-
-            //if (upMaxSize > downMaxSize)
-            //{
-
-            //}
-
-
-            //_listBox.Left = Left;
-            //_listBox.Top = Parent.Top + Parent.Height;
             _listBox.Visible = true;
             _listBox.BringToFront();
-            //_listBox.Focus();
         }
-
-        //private Control GetRootControl(Control control)
-        //{
-        //    if(control.Parent!=null)
-        //        return GetRootControl(control.Parent);
-        //    else
-        //        return control;
-        //}
 
         public void ResetListBox()
         {
@@ -165,6 +143,29 @@ namespace BooruDatasetTagManager
             switch (e.KeyCode)
             {
                 case Keys.Enter:
+                    {
+                        if (_listBox.Visible)
+                        {
+                            if (e.Control)
+                            {
+                                ResetListBox();
+                                _formerValue = Text;
+                                this.Select(this.Text.Length, 0);
+                                ItemSelectionComplete?.Invoke(this, e);
+                                e.Handled = true;
+                            }
+                            else
+                            {
+                                Text = ((TagsDB.TagItem)_listBox.SelectedItem).GetTag();
+                                ResetListBox();
+                                _formerValue = Text;
+                                this.Select(this.Text.Length, 0);
+                                ItemSelectionComplete?.Invoke(this, e);
+                                e.Handled = true;
+                            }
+                        }
+                        break;
+                    }
                 case Keys.Tab:
                     {
                         if (_listBox.Visible)
@@ -221,7 +222,6 @@ namespace BooruDatasetTagManager
 
             if (_values != null && word.Length > 0 && word.Length >= Program.Settings.ShowAutocompleteAfterCharCount)
             {
-                //string[] matches = null;
                 TagsDB.TagItem[] matches = null;
                 IEnumerable<TagsDB.TagItem> tempMatches = null;
                 if (_mode == AutocompleteMode.StartWith)
@@ -313,21 +313,6 @@ namespace BooruDatasetTagManager
                             _listBox.Height += _listBox.GetItemHeight(i);
                     }
                     _listBox.Width = this.Width;
-
-                    //using (Graphics graphics = _listBox.CreateGraphics())
-                    //{
-                    //    for (int i = 0; i < _listBox.Items.Count; i++)
-                    //    {
-                    //        if (i < 20 && _listBox.Height < maxSize)
-                    //            _listBox.Height += _listBox.GetItemHeight(i);
-                    //        // it item width is larger than the current one
-                    //        // set it to the new max item width
-                    //        // GetItemRectangle does not work for me
-                    //        // we add a little extra space by using '_'
-                    //        int itemWidth = (int)graphics.MeasureString(((string)_listBox.Items[i]) + "_", _listBox.Font).Width;
-                    //        _listBox.Width = (_listBox.Width < itemWidth) ? itemWidth : this.Width; ;
-                    //    }
-                    //}
                     if (!(Parent is Form))
                     {
                         if (isDown)
