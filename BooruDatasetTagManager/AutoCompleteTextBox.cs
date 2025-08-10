@@ -17,6 +17,8 @@ namespace BooruDatasetTagManager
         private String _formerValue = String.Empty;
         private AutocompleteMode _mode = AutocompleteMode.StartWithAndContains;
         private AutocompleteSort _sort = AutocompleteSort.Alphabetical;
+        public delegate void ListBoxState();
+        public event ListBoxState ListBoxClosedByEscape;
 
         public AutoCompleteTextBox()
         {
@@ -97,6 +99,8 @@ namespace BooruDatasetTagManager
             }
             else if (e.KeyCode == Keys.Escape)
             {
+                if (IsListBoxVisible())
+                    ListBoxClosedByEscape?.Invoke();
                 ResetListBox();
             }
         }
