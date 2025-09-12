@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BooruDatasetTagManager.AiApi;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -50,7 +51,7 @@ namespace BooruDatasetTagManager
             }
             if (Program.AutoTagger.IsConnected)
             {
-                if (!Program.AutoTagger.InterrogatorList.Contains("moondream2"))
+                if (!Program.AutoTagger.Config.Interrogators.Contains("moondream2"))
                 {
                     MessageBox.Show("moondream2 model not found!");
                 }
@@ -66,24 +67,20 @@ namespace BooruDatasetTagManager
 
         public async Task<MoondreamRect[]> DetectObjectsOnImage(string imgFilePath, string detectObjects)
         {
-            List<Image_Interrogator_Ns.NetworkInterrogationParameters> parameters = new List<Image_Interrogator_Ns.NetworkInterrogationParameters>();
-            List<Image_Interrogator_Ns.AdditionalNetworkParameter> additionalParameters = new List<Image_Interrogator_Ns.AdditionalNetworkParameter>();
-            additionalParameters.Add(new Image_Interrogator_Ns.AdditionalNetworkParameter()
+            ModelParameters model = new ModelParameters() { ModelName = "moondream2" };
+            model.AdditionalParameters.Add(new ModelAdditionalParameters()
             {
                 Key = "cmd",
                 Value = "Object_detection",
                 Type = "list"
             });
-            additionalParameters.Add(new Image_Interrogator_Ns.AdditionalNetworkParameter()
+            model.AdditionalParameters.Add(new ModelAdditionalParameters()
             {
                 Key = "query",
                 Value = detectObjects,
                 Type = "string"
             });
-            var pData = new Image_Interrogator_Ns.NetworkInterrogationParameters() { InterrogatorNetwork = "moondream2" };
-            pData.AdditionalParameters.AddRange(additionalParameters);
-            parameters.Add(pData);
-            var result = await Program.AutoTagger.InterrogateImage(imgFilePath, parameters, Program.Settings.AutoTagger.SerializeVramUsage, Program.Settings.AutoTagger.SkipInternetRequests);
+            var result = await Program.AutoTagger.InterrogateImage(imgFilePath, new List<ModelParameters>() { model }, Program.Settings.AutoTagger.SerializeVramUsage, Program.Settings.AutoTagger.SkipInternetRequests);
             return JsonConvert.DeserializeObject<MoondreamRect[]>(result.Items.First().Value.First().Tag);
             //if (rects.Length == 0)
             //    return new Rectangle();

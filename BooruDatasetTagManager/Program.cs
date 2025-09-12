@@ -10,6 +10,7 @@ using System.Threading;
 using UmaMusumeDBBrowser;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using BooruDatasetTagManager.AiApi;
 
 namespace BooruDatasetTagManager    
 {
@@ -88,7 +89,7 @@ namespace BooruDatasetTagManager
             };
             f_wait.ShowDialog();
             #endregion
-            AutoTagger = new Interrogator();
+            AutoTagger = new AiApiClient();
 
             Application.Run(new MainForm());
         }
@@ -147,7 +148,7 @@ namespace BooruDatasetTagManager
 
         public static TagsDB TagsList;
 
-        public static Interrogator AutoTagger;
+        public static AiApiClient AutoTagger;
 
         public static ColorSchemeManager ColorManager;
 

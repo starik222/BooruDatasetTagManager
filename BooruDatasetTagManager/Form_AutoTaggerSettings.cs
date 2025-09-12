@@ -71,7 +71,7 @@ namespace BooruDatasetTagManager
             }
             if (Program.AutoTagger.IsConnected)
             {
-                checkedListBoxcomboBoxInterrogators.Items.AddRange(Program.AutoTagger.InterrogatorList.ToArray());
+                checkedListBoxcomboBoxInterrogators.Items.AddRange(Program.AutoTagger.Config.Interrogators.ToArray());
                 button1.Enabled = true;
                 foreach (var item in Program.Settings.AutoTagger.InterragatorParams)
                 {
@@ -210,10 +210,10 @@ namespace BooruDatasetTagManager
 
         private async Task<bool> CreateInterrogatorTabAsync(string name)
         {
-            var intParams = await Program.AutoTagger.GetInterrogatorParams(name);
-            if (!intParams.Result)
+            var intParams = await Program.AutoTagger.GetModelParams(name);
+            if (!intParams.Success)
             {
-                MessageBox.Show(intParams.ErrMes, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(intParams.ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             selectedInterrogators.Add(name);

@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32.SafeHandles;
+﻿using BooruDatasetTagManager.AiApi;
+using Microsoft.Win32.SafeHandles;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -2024,7 +2025,7 @@ namespace BooruDatasetTagManager
             LockEdit(false);
         }
 
-        private async Task<List<AutoTagItem>> GetTagsWithAutoTagger(string imagePath, bool defSettings)
+        private async Task<List<AiApiClient.AutoTagItem>> GetTagsWithAutoTagger(string imagePath, bool defSettings)
         {
             if (gridViewDS.SelectedRows.Count == 0)
                 return null;
@@ -2046,13 +2047,13 @@ namespace BooruDatasetTagManager
                     return null;
                 }
             }
-            List<Image_Interrogator_Ns.NetworkInterrogationParameters> parameters = new List<Image_Interrogator_Ns.NetworkInterrogationParameters>();
+            List<ModelParameters> models = new List<ModelParameters>();
             foreach (var item in Program.Settings.AutoTagger.InterragatorParams)
             {
-                List<Image_Interrogator_Ns.AdditionalNetworkParameter> additionalParameters = new List<Image_Interrogator_Ns.AdditionalNetworkParameter>();
+                ModelParameters model = new ModelParameters(){ ModelName = item.Key };
                 foreach (var parameter in item.Value)
                 {
-                    additionalParameters.Add(new Image_Interrogator_Ns.AdditionalNetworkParameter()
+                    model.AdditionalParameters.Add(new ModelAdditionalParameters()
                     {
                         Key = parameter.Key,
                         Value = parameter.Value,
@@ -2060,17 +2061,15 @@ namespace BooruDatasetTagManager
                         Comment = ""
                     });
                 }
-                var pData = new Image_Interrogator_Ns.NetworkInterrogationParameters() { InterrogatorNetwork = item.Key };
-                pData.AdditionalParameters.AddRange(additionalParameters);
-                parameters.Add(pData);
+                models.Add(model);
             }
-            var listOfTags = await Program.AutoTagger.InterrogateImage(imagePath, parameters, Program.Settings.AutoTagger.SerializeVramUsage, Program.Settings.AutoTagger.SkipInternetRequests);
+            var listOfTags = await Program.AutoTagger.InterrogateImage(imagePath, models, Program.Settings.AutoTagger.SerializeVramUsage, Program.Settings.AutoTagger.SkipInternetRequests);
             SetStatus(listOfTags.Message);
             if (!listOfTags.Success)
             {
                 return null;
             }
-            List<AutoTagItem> result = listOfTags.GetTagList(Program.Settings.AutoTagger.UnionMode);
+            List<AiApiClient.AutoTagItem> result = listOfTags.GetTagList(Program.Settings.AutoTagger.UnionMode);
 
             if (Program.Settings.AutoTagger.TagFilteringMode != TagFilteringMode.None && !string.IsNullOrEmpty(Program.Settings.AutoTagger.TagFilter))
             {

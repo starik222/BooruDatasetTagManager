@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BooruDatasetTagManager.AiApi;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -49,7 +50,7 @@ namespace BooruDatasetTagManager
                 connectSuccess = true;
                 buttonCheckConnection.Text = "Success!";
                 buttonCheckConnection.Enabled = false;
-                listBoxModels.Items.AddRange((await Program.AutoTagger.GetListModelsByType("rmbg2")).ToArray());
+                listBoxModels.Items.AddRange((await Program.AutoTagger.GetListModelsByType("rmbg2")).GetList().ToArray());
                 groupBox1.Enabled = true;
             }
         }
@@ -99,24 +100,9 @@ namespace BooruDatasetTagManager
 
         public async Task<byte[]> RemoveBackgroundAsync(string imgFilePath, string model)
         {
-            List<Image_Interrogator_Ns.NetworkInterrogationParameters> parameters = new List<Image_Interrogator_Ns.NetworkInterrogationParameters>();
-            //List<Image_Interrogator_Ns.AdditionalNetworkParameter> additionalParameters = new List<Image_Interrogator_Ns.AdditionalNetworkParameter>();
-            //additionalParameters.Add(new Image_Interrogator_Ns.AdditionalNetworkParameter()
-            //{
-            //    Key = "cmd",
-            //    Value = "Object_detection",
-            //    Type = "list"
-            //});
-            //additionalParameters.Add(new Image_Interrogator_Ns.AdditionalNetworkParameter()
-            //{
-            //    Key = "query",
-            //    Value = detectObjects,
-            //    Type = "string"
-            //});
-            var pData = new Image_Interrogator_Ns.NetworkInterrogationParameters() { InterrogatorNetwork = model };
-            //pData.AdditionalParameters.AddRange(additionalParameters);
-            parameters.Add(pData);
-            var result = await Program.AutoTagger.EditImage(imgFilePath, parameters, Program.Settings.AutoTagger.SerializeVramUsage, Program.Settings.AutoTagger.SkipInternetRequests);
+            ModelParameters modelParam = new ModelParameters() { ModelName = model };
+            modelParam.ModelName = model;
+            var result = await Program.AutoTagger.EditImage(imgFilePath, modelParam, Program.Settings.AutoTagger.SerializeVramUsage, Program.Settings.AutoTagger.SkipInternetRequests);
             if (result.Success)
                 return result.ImageData;
             return null;
