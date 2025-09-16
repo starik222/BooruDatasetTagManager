@@ -51,7 +51,7 @@ namespace BooruDatasetTagManager
             }
             if (Program.AutoTagger.IsConnected)
             {
-                if (!Program.AutoTagger.Config.Interrogators.Contains("moondream2"))
+                if (!Program.AutoTagger.Config.Interrogators.Exists(a=>a.ModelName == "vikhyatk/moondream2"))
                 {
                     MessageBox.Show("moondream2 model not found!");
                 }
@@ -67,7 +67,7 @@ namespace BooruDatasetTagManager
 
         public async Task<MoondreamRect[]> DetectObjectsOnImage(string imgFilePath, string detectObjects)
         {
-            ModelParameters model = new ModelParameters() { ModelName = "moondream2" };
+            ModelParameters model = new ModelParameters() { ModelName = "vikhyatk/moondream2" };
             model.AdditionalParameters.Add(new ModelAdditionalParameters()
             {
                 Key = "cmd",

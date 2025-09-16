@@ -11,7 +11,7 @@ namespace BooruDatasetTagManager.AiApi
         public byte[] Image { get; set; }
         public bool SkipInternetRequests { get; set; }
         public bool SerializeVramUsage { get; set; }
-        public string ImageName { get; set; }
+        public string FileName { get; set; }
         public ModelParameters Model { get; set; }
     }
 }

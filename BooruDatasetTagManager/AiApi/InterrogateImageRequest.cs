@@ -8,10 +8,11 @@ namespace BooruDatasetTagManager.AiApi
 {
     public class InterrogateImageRequest
     {
-        public byte[] Image { get; set; }
+        public byte[] DataObject { get; set; }
+        public ObjectDataType DataType { get; set; }
         public bool SkipInternetRequests { get; set; }
         public bool SerializeVramUsage { get; set; }
-        public string ImageName { get; set; }
+        public string FileName { get; set; }
         public List<ModelParameters> Models { get; set; }
 
     }

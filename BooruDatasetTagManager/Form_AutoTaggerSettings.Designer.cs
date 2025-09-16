@@ -49,10 +49,20 @@ namespace BooruDatasetTagManager
             textBoxTagFilter = new TextBox();
             TaggerSettingTabs = new Manina.Windows.Forms.TabControl();
             tabGeneral = new Manina.Windows.Forms.Tab();
+            label3 = new Label();
+            linkLabelRepo = new LinkLabel();
+            labelRepo = new Label();
+            checkBoxSupportVideo = new CheckBox();
             errorProvider1 = new ErrorProvider(components);
+            pictureBox1 = new PictureBox();
+            label8 = new Label();
+            pictureBox2 = new PictureBox();
+            label9 = new Label();
             TaggerSettingTabs.SuspendLayout();
             tabGeneral.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -114,9 +124,10 @@ namespace BooruDatasetTagManager
             checkedListBoxcomboBoxInterrogators.Location = new System.Drawing.Point(12, 27);
             checkedListBoxcomboBoxInterrogators.Name = "checkedListBoxcomboBoxInterrogators";
             checkedListBoxcomboBoxInterrogators.ScrollAlwaysVisible = true;
-            checkedListBoxcomboBoxInterrogators.Size = new System.Drawing.Size(440, 418);
+            checkedListBoxcomboBoxInterrogators.Size = new System.Drawing.Size(440, 508);
             checkedListBoxcomboBoxInterrogators.TabIndex = 7;
             checkedListBoxcomboBoxInterrogators.ItemCheck += checkedListBoxcomboBoxInterrogators_ItemCheck;
+            checkedListBoxcomboBoxInterrogators.SelectedIndexChanged += checkedListBoxcomboBoxInterrogators_SelectedIndexChanged;
             // 
             // label4
             // 
@@ -217,13 +228,17 @@ namespace BooruDatasetTagManager
             TaggerSettingTabs.Location = new System.Drawing.Point(457, 27);
             TaggerSettingTabs.Name = "TaggerSettingTabs";
             TaggerSettingTabs.SelectedIndex = 0;
-            TaggerSettingTabs.Size = new System.Drawing.Size(445, 418);
+            TaggerSettingTabs.Size = new System.Drawing.Size(445, 508);
             TaggerSettingTabs.TabIndex = 6;
             TaggerSettingTabs.Tabs.Add(tabGeneral);
             // 
             // tabGeneral
             // 
+            tabGeneral.Controls.Add(label3);
+            tabGeneral.Controls.Add(linkLabelRepo);
+            tabGeneral.Controls.Add(labelRepo);
             tabGeneral.Controls.Add(label5);
+            tabGeneral.Controls.Add(checkBoxSupportVideo);
             tabGeneral.Controls.Add(checkBoxSkipInternet);
             tabGeneral.Controls.Add(textBoxTagFilter);
             tabGeneral.Controls.Add(checkBoxSerializeVRAM);
@@ -237,12 +252,89 @@ namespace BooruDatasetTagManager
             tabGeneral.Controls.Add(comboBoxSetMode);
             tabGeneral.Location = new System.Drawing.Point(1, 23);
             tabGeneral.Name = "tabGeneral";
-            tabGeneral.Size = new System.Drawing.Size(443, 394);
+            tabGeneral.Size = new System.Drawing.Size(443, 484);
             tabGeneral.Text = "General";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(12, 323);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(154, 15);
+            label3.TabIndex = 14;
+            label3.Text = "Selected model information";
+            // 
+            // linkLabelRepo
+            // 
+            linkLabelRepo.AutoEllipsis = true;
+            linkLabelRepo.AutoSize = true;
+            linkLabelRepo.Location = new System.Drawing.Point(17, 378);
+            linkLabelRepo.Name = "linkLabelRepo";
+            linkLabelRepo.Size = new System.Drawing.Size(12, 15);
+            linkLabelRepo.TabIndex = 2;
+            linkLabelRepo.TabStop = true;
+            linkLabelRepo.Text = "-";
+            linkLabelRepo.LinkClicked += linkLabelRepo_LinkClicked;
+            // 
+            // labelRepo
+            // 
+            labelRepo.AutoSize = true;
+            labelRepo.Location = new System.Drawing.Point(17, 363);
+            labelRepo.Name = "labelRepo";
+            labelRepo.Size = new System.Drawing.Size(88, 15);
+            labelRepo.TabIndex = 1;
+            labelRepo.Text = "Repository link:";
+            // 
+            // checkBoxSupportVideo
+            // 
+            checkBoxSupportVideo.AutoCheck = false;
+            checkBoxSupportVideo.AutoSize = true;
+            checkBoxSupportVideo.Location = new System.Drawing.Point(17, 341);
+            checkBoxSupportVideo.Name = "checkBoxSupportVideo";
+            checkBoxSupportVideo.Size = new System.Drawing.Size(149, 19);
+            checkBoxSupportVideo.TabIndex = 0;
+            checkBoxSupportVideo.Text = "Supports video analysis";
+            checkBoxSupportVideo.UseVisualStyleBackColor = true;
             // 
             // errorProvider1
             // 
             errorProvider1.ContainerControl = this;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.BackColor = System.Drawing.Color.Green;
+            pictureBox1.Location = new System.Drawing.Point(218, 549);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new System.Drawing.Size(18, 22);
+            pictureBox1.TabIndex = 8;
+            pictureBox1.TabStop = false;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new System.Drawing.Point(239, 552);
+            label8.Name = "label8";
+            label8.Size = new System.Drawing.Size(101, 15);
+            label8.TabIndex = 9;
+            label8.Text = "- supported video";
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.BackColor = System.Drawing.Color.Crimson;
+            pictureBox2.Location = new System.Drawing.Point(365, 549);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new System.Drawing.Size(18, 22);
+            pictureBox2.TabIndex = 8;
+            pictureBox2.TabStop = false;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new System.Drawing.Point(386, 552);
+            label9.Name = "label9";
+            label9.Size = new System.Drawing.Size(122, 15);
+            label9.TabIndex = 9;
+            label9.Text = "- not supported video";
             // 
             // Form_AutoTaggerSettings
             // 
@@ -251,6 +343,10 @@ namespace BooruDatasetTagManager
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = button2;
             ClientSize = new System.Drawing.Size(916, 585);
+            Controls.Add(label9);
+            Controls.Add(pictureBox2);
+            Controls.Add(label8);
+            Controls.Add(pictureBox1);
             Controls.Add(TaggerSettingTabs);
             Controls.Add(checkedListBoxcomboBoxInterrogators);
             Controls.Add(button2);
@@ -265,6 +361,8 @@ namespace BooruDatasetTagManager
             tabGeneral.ResumeLayout(false);
             tabGeneral.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -290,5 +388,13 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private Manina.Windows.Forms.TabControl TaggerSettingTabs;
         private Manina.Windows.Forms.Tab tabGeneral;
+        private LinkLabel linkLabelRepo;
+        private Label labelRepo;
+        private CheckBox checkBoxSupportVideo;
+        private Label label3;
+        private PictureBox pictureBox1;
+        private Label label9;
+        private PictureBox pictureBox2;
+        private Label label8;
     }
 }

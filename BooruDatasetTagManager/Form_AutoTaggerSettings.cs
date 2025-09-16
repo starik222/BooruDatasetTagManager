@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -9,6 +10,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
+using BooruDatasetTagManager.AiApi;
 using Manina.Windows.Forms;
 using Microsoft.VisualBasic.Devices;
 
@@ -88,6 +91,14 @@ namespace BooruDatasetTagManager
                 textBoxTagFilter.Text = Program.Settings.AutoTagger.TagFilter;
                 checkBoxSerializeVRAM.Checked = Program.Settings.AutoTagger.SerializeVramUsage;
                 checkBoxSkipInternet.Checked = Program.Settings.AutoTagger.SkipInternetRequests;
+
+                //for (int i = 0; i < checkedListBoxcomboBoxInterrogators.Items.Count; i++)
+                //{
+                //    if (((ModelBaseInfo)checkedListBoxcomboBoxInterrogators.Items[i]).SupportedVideo)
+                //    {
+                //        checkedListBoxcomboBoxInterrogators.
+                //    }
+                //}
             }
         }
 
@@ -228,12 +239,13 @@ namespace BooruDatasetTagManager
             panel.Padding = new Padding(10);
             tab.Controls.Add(panel);
             panel.Dock = DockStyle.Fill;
+            panel.AutoScroll = true;
             foreach (var item in intParams.Parameters)
             {
                 panel.RowCount++;
                 panel.RowStyles.Add(new RowStyle(SizeType.AutoSize, 23f));
                 Label lbl = new Label();
-                lbl.Padding = new Padding(0,6,0,2);
+                lbl.Padding = new Padding(0, 6, 0, 2);
                 lbl.Name = name + "_lbl_" + item.Key.Replace(" ", "");
                 lbl.Text = item.Key.ToUpper() + ":";
                 lbl.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
@@ -257,6 +269,19 @@ namespace BooruDatasetTagManager
                     bar.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
                     bar.Value = (int)(Convert.ToSingle(item.Value, CultureInfo.InvariantCulture.NumberFormat) * 100);
                     interrogatorSettingsControls.Add(bar.Name, bar);
+                }
+                else if (item.Type == "int")
+                {
+                    panel.RowCount++;
+                    panel.RowStyles.Add(new RowStyle(SizeType.Absolute, 30f));
+                    NumericUpDown numeric = new NumericUpDown();
+                    numeric.Name = name + "_ctrl_" + item.Key.Replace(" ", "");
+                    numeric.Minimum = decimal.MinValue;
+                    numeric.Maximum = decimal.MaxValue;
+                    panel.Controls.Add(numeric, 0, panel.RowCount - 1);
+                    numeric.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
+                    numeric.Value = Convert.ToInt32(item.Value);
+                    interrogatorSettingsControls.Add(numeric.Name, numeric);
                 }
                 else if (item.Type == "string")
                 {
@@ -309,23 +334,46 @@ namespace BooruDatasetTagManager
                         cbList.SelectedIndex = 0;
                 }
 
+                if (!string.IsNullOrWhiteSpace(item.Comment) && item.Type != "bool" && item.Type != "label")
+                {
+                    AddCommentLabel(panel, name, item);
+                }
+
             }
+            //fix bad scroll size. Last row not scrolling...
+            panel.RowCount++;
+            panel.RowStyles.Add(new RowStyle(SizeType.Absolute, 30f));
+
             Program.ColorManager.ChangeColorScheme(tab, Program.ColorManager.SelectedScheme);
             Program.ColorManager.ChangeColorSchemeInConteiner(tab.Controls, Program.ColorManager.SelectedScheme);
             TaggerSettingTabs.ResumeLayout();
             return true;
         }
 
+        private void AddCommentLabel(TableLayoutPanel panel, string name, ModelAdditionalParameters parameters)
+        {
+            panel.RowCount++;
+            panel.RowStyles.Add(new RowStyle(SizeType.AutoSize, 25f));
+            Label lb = new Label();
+            lb.Name = name + "_label_" + parameters.Key.Replace(" ", "");
+            lb.Font = new Font(lb.Font, FontStyle.Italic);
+            panel.Controls.Add(lb, 0, panel.RowCount - 1);
+            lb.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
+            lb.Dock = DockStyle.Fill;
+            lb.AutoSize = true;
+            lb.Text = parameters.Comment;
+        }
+
         private void RemoveTab(string name)
         {
-            var tab = TaggerSettingTabs.Tabs.FirstOrDefault(a=>a.Name == name);
+            var tab = TaggerSettingTabs.Tabs.FirstOrDefault(a => a.Name == name);
             if (tab != null)
             {
                 TaggerSettingTabs.Tabs.Remove(tab);
             }
             selectedInterrogators.Remove(name);
             var ctrlsToRemove = interrogatorSettingsControls.Where(a => a.Key.StartsWith(name + "_ctrl")).Select(a => a.Key);
-            foreach(var item in ctrlsToRemove)
+            foreach (var item in ctrlsToRemove)
                 interrogatorSettingsControls.Remove(item);
         }
 
@@ -335,7 +383,8 @@ namespace BooruDatasetTagManager
                 return;
             foreach (var inter in Program.Settings.AutoTagger.InterragatorParams)
             {
-                foreach (var item in inter.Value) {
+                foreach (var item in inter.Value)
+                {
                     string ctrlName = inter.Key + "_ctrl_" + item.Key;
                     if (interrogatorSettingsControls.ContainsKey(ctrlName))
                     {
@@ -349,6 +398,11 @@ namespace BooruDatasetTagManager
                         {
                             TextBox tb = (TextBox)ctrl;
                             tb.Text = item.Value;
+                        }
+                        else if (ctrl.GetType() == typeof(NumericUpDown))
+                        {
+                            NumericUpDown num = (NumericUpDown)ctrl;
+                            num.Value = Convert.ToInt32(item.Value);
                         }
                         else if (ctrl.GetType() == typeof(CheckBox))
                         {
@@ -399,6 +453,12 @@ namespace BooruDatasetTagManager
                     addParams.Type = "string";
                     addParams.Value = tb.Text;
                 }
+                else if (ctrl.GetType() == typeof(NumericUpDown))
+                {
+                    NumericUpDown num = (NumericUpDown)ctrl;
+                    addParams.Type = "int";
+                    addParams.Value = num.Value.ToString();
+                }
                 else if (ctrl.GetType() == typeof(CheckBox))
                 {
                     CheckBox cb = (CheckBox)ctrl;
@@ -424,6 +484,34 @@ namespace BooruDatasetTagManager
                     Program.Settings.AutoTagger.InterragatorParams.Add(network, new List<AdditionalParameters> { addParams });
                 }
             }
+        }
+
+        private void checkedListBoxcomboBoxInterrogators_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (checkedListBoxcomboBoxInterrogators.SelectedItem != null)
+            {
+                var info = (ModelBaseInfo)checkedListBoxcomboBoxInterrogators.SelectedItem;
+                checkBoxSupportVideo.Checked = info.SupportedVideo;
+                if (!string.IsNullOrEmpty(info.RepositoryLink))
+                {
+                    linkLabelRepo.Enabled = true;
+                    linkLabelRepo.Text = info.RepositoryLink;
+                }
+                else
+                    linkLabelRepo.Enabled = false;
+            }
+        }
+
+        private void linkLabelRepo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (!linkLabelRepo.Enabled)
+                return;
+            var info = new ProcessStartInfo
+            {
+                FileName = linkLabelRepo.Text,
+                UseShellExecute = true
+            };
+            Process.Start(info);
         }
     }
 }

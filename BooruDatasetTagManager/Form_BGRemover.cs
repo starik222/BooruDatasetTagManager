@@ -75,7 +75,7 @@ namespace BooruDatasetTagManager
             if (openFileDialog.ShowDialog() != DialogResult.OK)
                 return;
             buttonRemovingTest.Enabled = false;
-            var res = await RemoveBackgroundAsync(openFileDialog.FileName, (string)listBoxModels.SelectedItem);
+            var res = await RemoveBackgroundAsync(openFileDialog.FileName, listBoxModels.SelectedItem.ToString());
             if (res == null)
             {
                 buttonRemovingTest.Enabled = true;

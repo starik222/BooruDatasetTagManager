@@ -16,6 +16,7 @@ using System.Data;
 using Newtonsoft.Json;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using ScreenLister;
+using System.Drawing.Imaging;
 
 namespace BooruDatasetTagManager
 {
@@ -166,6 +167,12 @@ namespace BooruDatasetTagManager
             {
                 return null;
             }
+        }
+
+        public static byte[] ImageToByteArray(Image image)
+        {
+            ImageConverter converter = new ImageConverter();
+            return (byte[])converter.ConvertTo(image, typeof(byte[]));
         }
 
         public static Bitmap Transparent2Color(Bitmap bmp1, Color target)

@@ -71,8 +71,43 @@ namespace BooruDatasetTagManager.AiApi
                 request.SerializeVramUsage = serializeVramUsage;
                 request.SkipInternetRequests = SkipInternetRequests;
                 request.Models = models;
-                request.Image = File.ReadAllBytes(imagePath);
-                request.ImageName = Path.GetFileName(imagePath);
+                if (Extensions.VideoExtensions.Contains(Path.GetExtension(imagePath)))
+                {
+                    bool supportedVideo = false;
+                    bool notSupportedVideo = false;
+                    foreach (var model in models)
+                    {
+                        if(Config.Interrogators.First(a=>a.ModelName == model.ModelName).SupportedVideo)
+                            supportedVideo = true;
+                        else
+                            notSupportedVideo = true;
+                    }
+                    if (notSupportedVideo && !supportedVideo)
+                    {
+                        request.DataObject = Extensions.ImageToByteArray(Extensions.GetImageFromFile(imagePath));
+                        request.DataType = ObjectDataType.IMAGE_BYTE_ARRAY;
+                    }
+                    else if (!notSupportedVideo && supportedVideo)
+                    {
+                        request.DataObject = Encoding.UTF8.GetBytes(imagePath);
+                        request.DataType = ObjectDataType.VIDEO_PATH;
+                    }
+                    else
+                    {
+                        //remove all not supported video
+                        request.Models.RemoveAll(a=>Config.Interrogators.Where(a=>!a.SupportedVideo).Select(a=>a.ModelName).ToList().Contains(a.ModelName));
+                        request.DataObject = Encoding.UTF8.GetBytes(imagePath);
+                        request.DataType = ObjectDataType.VIDEO_PATH;
+                    }
+                }
+                else if (Extensions.ImageExtensions.Contains(Path.GetExtension(imagePath)))
+                {
+                    request.DataObject = File.ReadAllBytes(imagePath);
+                    request.DataType = ObjectDataType.IMAGE_BYTE_ARRAY;
+                }
+                else
+                    throw new NotImplementedException($"Extension of file {imagePath} not supported!");
+                    request.FileName = Path.GetFileName(imagePath);
                 var response = await PostJsonAsync("interrogateimage", request);
                 if (response.Success)
                 {
@@ -131,7 +166,7 @@ namespace BooruDatasetTagManager.AiApi
                 request.SkipInternetRequests = SkipInternetRequests;
                 request.Model = model;
                 request.Image = File.ReadAllBytes(imagePath);
-                request.ImageName = Path.GetFileName(imagePath);
+                request.FileName = Path.GetFileName(imagePath);
 
                 var response = await PostJsonAsync("editimage", request);
                 if (response.Success)
