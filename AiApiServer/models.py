@@ -47,6 +47,7 @@ MOONDREAM2_CAPTIONING_NAMES = [
 
 JOYCAPTION_CAPTIONING_NAMES = [
     "fancyfeast/llama-joycaption-alpha-two-hf-llava",
+    "fancyfeast/llama-joycaption-beta-one-hf-llava",
     "NeoChen1024/llama-joycaption-beta-one-hf-llava-FP8-Dynamic"
 ]
 
