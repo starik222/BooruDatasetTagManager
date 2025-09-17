@@ -2,6 +2,12 @@ from dataclasses import dataclass, field
 from dataclasses_json import dataclass_json, config
 from typing import List
 import base64
+from enum import Enum
+
+
+class ObjectDataType(Enum):
+    IMAGE_BYTE_ARRAY = 1
+    VIDEO_PATH = 2
 
 
 def decode_base64(value: str) -> bytes:
@@ -31,15 +37,16 @@ class ModelParameters:
 @dataclass_json
 @dataclass
 class InterrogateImageRequest:
-    Image: bytes = field(
+    DataObject: bytes = field(
         metadata=config(
             encoder=encode_base64,
             decoder=decode_base64
         )
     )
+    DataType: ObjectDataType
     SkipInternetRequests: bool
     SerializeVramUsage: bool
-    ImageName: str
+    FileName: str
     Models: List[ModelParameters]
 
 
@@ -54,7 +61,7 @@ class EditImageRequest:
     )
     SkipInternetRequests: bool
     SerializeVramUsage: bool
-    ImageName: str
+    FileName: str
     Model: ModelParameters
 
 
@@ -148,10 +155,23 @@ class TranslateTextResponse:
 
 @dataclass_json
 @dataclass
+class ModelBaseInfo:
+    ModelName: str
+    SupportedVideo: bool
+    RepositoryLink: str
+
+    def __init__(self):
+        self.SupportedVideo = False
+        self.RepositoryLink = ""
+        self.ModelName = ""
+
+
+@dataclass_json
+@dataclass
 class ConfigResponse:
-    Interrogators: List[str]
-    Editors: List[str]
-    Translators: List[str]
+    Interrogators: List[ModelBaseInfo]
+    Editors: List[ModelBaseInfo]
+    Translators: List[ModelBaseInfo]
 
     def __init__(self):
         self.Interrogators = []

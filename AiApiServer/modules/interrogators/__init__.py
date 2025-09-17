@@ -7,6 +7,8 @@ from .florence2_captioning import Florence2Captioning
 from .moondream2_captioning import Moondream2Captioning
 from .joycaption_captioning import JoyCaptionCaptioning
 from .qwen25_captioning import Qwen25CaptionCaptioning
+from .keye_captioning import KeyeCaptionCaptioning
 
 __all__ = ["BLIPLargeCaptioning", "BLIP2Captioning", "GITLargeCaptioning", "WaifuDiffusionTagger", "DepDanbooruTagger",
-           "Florence2Captioning", "Moondream2Captioning", "JoyCaptionCaptioning", "Qwen25CaptionCaptioning"]
+           "Florence2Captioning", "Moondream2Captioning", "JoyCaptionCaptioning", "Qwen25CaptionCaptioning",
+           "KeyeCaptionCaptioning"]

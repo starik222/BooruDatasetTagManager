@@ -81,10 +81,12 @@ namespace BooruDatasetTagManager
             comboBoxPreviewType = new System.Windows.Forms.ComboBox();
             comboBoxColorScheme = new System.Windows.Forms.ComboBox();
             tabTranslations = new Manina.Windows.Forms.Tab();
-            tabHotkeys = new Manina.Windows.Forms.Tab();
             tabInterrogator = new Manina.Windows.Forms.Tab();
+            textBoxCustomPrompt = new System.Windows.Forms.TextBox();
+            checkBoxCustomPrompt = new System.Windows.Forms.CheckBox();
             textBoxConnectionAddress = new System.Windows.Forms.TextBox();
             LabelConnectionAddress = new System.Windows.Forms.Label();
+            tabHotkeys = new Manina.Windows.Forms.Tab();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown3).BeginInit();
@@ -93,8 +95,8 @@ namespace BooruDatasetTagManager
             tabGeneral.SuspendLayout();
             tabUI.SuspendLayout();
             tabTranslations.SuspendLayout();
-            tabHotkeys.SuspendLayout();
             tabInterrogator.SuspendLayout();
+            tabHotkeys.SuspendLayout();
             SuspendLayout();
             // 
             // labelTransLang
@@ -465,8 +467,8 @@ namespace BooruDatasetTagManager
             SettingFrame.Controls.Add(tabGeneral);
             SettingFrame.Controls.Add(tabUI);
             SettingFrame.Controls.Add(tabTranslations);
-            SettingFrame.Controls.Add(tabHotkeys);
             SettingFrame.Controls.Add(tabInterrogator);
+            SettingFrame.Controls.Add(tabHotkeys);
             SettingFrame.Location = new System.Drawing.Point(2, 1);
             SettingFrame.Name = "SettingFrame";
             SettingFrame.SelectedIndex = 0;
@@ -475,8 +477,8 @@ namespace BooruDatasetTagManager
             SettingFrame.Tabs.Add(tabGeneral);
             SettingFrame.Tabs.Add(tabUI);
             SettingFrame.Tabs.Add(tabTranslations);
-            SettingFrame.Tabs.Add(tabHotkeys);
             SettingFrame.Tabs.Add(tabInterrogator);
+            SettingFrame.Tabs.Add(tabHotkeys);
             // 
             // tabGeneral
             // 
@@ -627,23 +629,38 @@ namespace BooruDatasetTagManager
             tabTranslations.Size = new System.Drawing.Size(0, 0);
             tabTranslations.Text = "Translations";
             // 
-            // tabHotkeys
-            // 
-            tabHotkeys.Controls.Add(dataGridViewHotkeys);
-            tabHotkeys.Controls.Add(labelHotkeysHelp);
-            tabHotkeys.Location = new System.Drawing.Point(0, 0);
-            tabHotkeys.Name = "tabHotkeys";
-            tabHotkeys.Size = new System.Drawing.Size(0, 0);
-            tabHotkeys.Text = "Hotkeys";
-            // 
             // tabInterrogator
             // 
+            tabInterrogator.Controls.Add(textBoxCustomPrompt);
+            tabInterrogator.Controls.Add(checkBoxCustomPrompt);
             tabInterrogator.Controls.Add(textBoxConnectionAddress);
             tabInterrogator.Controls.Add(LabelConnectionAddress);
             tabInterrogator.Location = new System.Drawing.Point(1, 23);
             tabInterrogator.Name = "tabInterrogator";
             tabInterrogator.Size = new System.Drawing.Size(628, 403);
-            tabInterrogator.Text = "Interrogator";
+            tabInterrogator.Text = "AiApiServer";
+            // 
+            // textBoxCustomPrompt
+            // 
+            textBoxCustomPrompt.Enabled = false;
+            textBoxCustomPrompt.Location = new System.Drawing.Point(9, 73);
+            textBoxCustomPrompt.MaxLength = 3276700;
+            textBoxCustomPrompt.Multiline = true;
+            textBoxCustomPrompt.Name = "textBoxCustomPrompt";
+            textBoxCustomPrompt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            textBoxCustomPrompt.Size = new System.Drawing.Size(611, 185);
+            textBoxCustomPrompt.TabIndex = 3;
+            // 
+            // checkBoxCustomPrompt
+            // 
+            checkBoxCustomPrompt.AutoSize = true;
+            checkBoxCustomPrompt.Location = new System.Drawing.Point(9, 48);
+            checkBoxCustomPrompt.Name = "checkBoxCustomPrompt";
+            checkBoxCustomPrompt.Size = new System.Drawing.Size(313, 19);
+            checkBoxCustomPrompt.TabIndex = 2;
+            checkBoxCustomPrompt.Text = "Custom system prompt for models with chat template";
+            checkBoxCustomPrompt.UseVisualStyleBackColor = true;
+            checkBoxCustomPrompt.CheckedChanged += checkBoxCustomPrompt_CheckedChanged;
             // 
             // textBoxConnectionAddress
             // 
@@ -660,6 +677,15 @@ namespace BooruDatasetTagManager
             LabelConnectionAddress.Size = new System.Drawing.Size(112, 15);
             LabelConnectionAddress.TabIndex = 0;
             LabelConnectionAddress.Text = "Connection address";
+            // 
+            // tabHotkeys
+            // 
+            tabHotkeys.Controls.Add(dataGridViewHotkeys);
+            tabHotkeys.Controls.Add(labelHotkeysHelp);
+            tabHotkeys.Location = new System.Drawing.Point(0, 0);
+            tabHotkeys.Name = "tabHotkeys";
+            tabHotkeys.Size = new System.Drawing.Size(0, 0);
+            tabHotkeys.Text = "Hotkeys";
             // 
             // Form_settings
             // 
@@ -687,10 +713,10 @@ namespace BooruDatasetTagManager
             tabUI.PerformLayout();
             tabTranslations.ResumeLayout(false);
             tabTranslations.PerformLayout();
-            tabHotkeys.ResumeLayout(false);
-            tabHotkeys.PerformLayout();
             tabInterrogator.ResumeLayout(false);
             tabInterrogator.PerformLayout();
+            tabHotkeys.ResumeLayout(false);
+            tabHotkeys.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -751,5 +777,7 @@ namespace BooruDatasetTagManager
         private Manina.Windows.Forms.Tab tabInterrogator;
         private System.Windows.Forms.TextBox textBoxConnectionAddress;
         private System.Windows.Forms.Label LabelConnectionAddress;
+        private System.Windows.Forms.TextBox textBoxCustomPrompt;
+        private System.Windows.Forms.CheckBox checkBoxCustomPrompt;
     }
 }

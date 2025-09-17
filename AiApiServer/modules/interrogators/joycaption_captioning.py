@@ -8,6 +8,7 @@ from transformers import AutoProcessor, LlavaForConditionalGeneration
 from .. import settings
 from .. import devices as devices
 from .. import utilities, paths
+from ..server_dataclasses import ObjectDataType
 
 
 class JoyCaptionCaptioning:
@@ -41,16 +42,21 @@ class JoyCaptionCaptioning:
             self.processor = None
             devices.torch_gc()
 
-    def apply(self, image: Image.Image):
+    def apply(self, data_obj, data_type: ObjectDataType):
         if self.model is None or self.processor is None:
             return ""
-
+        if data_type != ObjectDataType.IMAGE_BYTE_ARRAY:
+            raise Exception('Model supported only image format.')
+        image = utilities.byte_array_to_image(data_obj)
         with torch.no_grad():
             # Build the conversation
+            sys_prompt = "You are a helpful image captioner."
+            if settings.current.custom_system_prompt != "":
+                sys_prompt = settings.current.custom_system_prompt
             convo = [
                 {
                     "role": "system",
-                    "content": "You are a helpful image captioner.",
+                    "content": sys_prompt,
                 },
                 {
                     "role": "user",

@@ -6,6 +6,7 @@ import torch
 
 from .. import settings, devices, utilities, paths
 from . import deepbooru_model, model_loader
+from ..server_dataclasses import ObjectDataType
 
 
 class DepDanbooruTagger:
@@ -32,9 +33,12 @@ class DepDanbooruTagger:
             self.model = None
             devices.torch_gc()
 
-    def apply(self, image: Image.Image):
+    def apply(self, data_obj, data_type: ObjectDataType):
         if not self.model:
             return []
+        if data_type != ObjectDataType.IMAGE_BYTE_ARRAY:
+            raise Exception('Model supported only image format.')
+        image = utilities.byte_array_to_image(data_obj)
         image = utilities.resize_and_fill(image.convert("RGB"), (512, 512))
         image_np = np.expand_dims(np.array(image, dtype=np.float32), 0) / 255
         with torch.no_grad(), torch.autocast('cuda'):

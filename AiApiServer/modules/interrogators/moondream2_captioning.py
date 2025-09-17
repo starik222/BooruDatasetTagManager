@@ -11,13 +11,14 @@ from .. import devices as devices
 from .. import utilities, paths
 from unittest.mock import patch
 
+from ..server_dataclasses import ObjectDataType
+
 
 class Moondream2Captioning:
 
-    def __init__(self, model_name, revision):
+    def __init__(self, model_name):
         handle_pyvips_dll_error(download_dir=os.path.join("."))
         self.MODEL_REPO = model_name
-        self.MODEL_REVISION = revision
         self.model = None
         self.cmd = None
         self.prompt = None
@@ -29,7 +30,6 @@ class Moondream2Captioning:
         self.split = split
         if self.model is None:
             self.model = AutoModelForCausalLM.from_pretrained(self.MODEL_REPO,
-                                                              revision=self.MODEL_REVISION,
                                                               trust_remote_code=True,
                                                               cache_dir=paths.setting_model_path,
                                                               local_files_only=skip_online
@@ -47,9 +47,12 @@ class Moondream2Captioning:
             self.model = None
             devices.torch_gc()
 
-    def apply(self, image: Image.Image):
+    def apply(self, data_obj, data_type: ObjectDataType):
         if self.model is None:
             return ""
+        if data_type != ObjectDataType.IMAGE_BYTE_ARRAY:
+            raise Exception('Model supported only image format.')
+        image = utilities.byte_array_to_image(data_obj)
         enc_image = self.model.encode_image(image)
         if self.cmd == 'Short_caption':
             result = self.model.caption(enc_image, length="short")["caption"]

@@ -324,6 +324,7 @@ namespace BooruDatasetTagManager
         public string TagFilter { get; set; } = "";
         public bool SerializeVramUsage { get; set; } = false;
         public bool SkipInternetRequests { get; set; } = false;
+        public string CustomSystemPrompt { get; set; } = "";
 
         public InterragatorSettings()
         {

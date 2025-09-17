@@ -254,3 +254,5 @@ MenuContextDSRemoveBG=Удалить фон
 TipLoadingStart=Идет загрузка, пожалуйста, подождите...
 TipLoadingComplete=Загрузка завершена.
 TipWarningFiltered=Набор данных отфильтрован! Замена произойдет только в отфильтрованных записях.
+SettingsCheckBoxCustomPrompt=Сторонний системный промпт в моделях с шаблоном чата.
+MenuLabelSettings=Настройки

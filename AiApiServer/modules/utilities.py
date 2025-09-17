@@ -1,12 +1,26 @@
+import io
 from typing import Tuple
 from pathlib import Path
 import math
-import threading
-
-from PIL import Image
+import re
+from PIL import Image, UnidentifiedImageError
 
 if not hasattr(Image, 'Resampling'):  # Pillow<9.0
     Image.Resampling = Image
+
+
+def byte_array_to_image(data: bytes):
+    try:
+        image_obj = Image.open(io.BytesIO(data))
+        return image_obj
+    except (OSError, UnidentifiedImageError) as e:
+        print(f"Error converting byte array to image: {str(e)}")
+        return None
+
+
+def remove_tags_with_content(text):
+    pattern = r'<[^>]+>.*?</[^>]+>'
+    return re.sub(pattern, '', text, flags=re.DOTALL)
 
 
 def base_dir_path():

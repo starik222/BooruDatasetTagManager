@@ -22,6 +22,13 @@ Content-Type: application/json
 
 ###
 
+POST http://127.0.0.1:50051/setcustomsustemprompt
+Content-Type: application/json
+
+{"Prompt": "custom prompt"}
+
+###
+
 POST http://127.0.0.1:50051/interrogateimage
 Content-Type: application/json
 
@@ -51,8 +58,8 @@ POST http://127.0.0.1:50051/translate
 Content-Type: application/json
 
 {
-  "Text": "Test translation",
-  "FromLang": "English",
+  "Text": "迷宮の建設や修復、築城などを得意とする ",
+  "FromLang": "Japanese",
   "ToLang": "Russian",
   "SkipInternetRequests": false,
   "SerializeVramUsage": false,

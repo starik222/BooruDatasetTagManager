@@ -32,6 +32,7 @@ class RMBG2(editor):
         self.repo_name = repo_name
         self.resolution = resulution
         self.type = intType
+        self.video_supported = False
 
     def start(self, net_params: dict, skip_online: bool = False):
         self.editor.load(self.resolution, skip_online=skip_online)

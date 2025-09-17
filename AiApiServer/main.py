@@ -9,6 +9,7 @@ import time
 import io
 from PIL import Image
 from concurrent import futures
+from modules import settings
 
 from modules.translators.seed_x_translator import LANGUAGES
 
@@ -28,7 +29,7 @@ api = Api(app)
 app.logger.setLevel(logging.ERROR)
 
 
-def interrogate_image(network_name, image_obj, net_params, skip_online):
+def interrogate_image(network_name, data_object, data_type, net_params, skip_online):
     global ACTIVE_INTERROGATOR
     global ONE_INTERROGATOR_IN_VRAM_AT_A_TIME
 
@@ -47,7 +48,7 @@ def interrogate_image(network_name, image_obj, net_params, skip_online):
         intg = models.INTERROGATOR_MAP[network_name]
         intg.start(net_params, skip_online=skip_online)
 
-        tags = intg.predict(image_obj)
+        tags = intg.predict(data_object, data_type)
 
         return tags
 
@@ -127,6 +128,8 @@ def create_dict_from_additional_parameters(param_list):
     for param in param_list:
         if param.Type == "float1":
             result[param.Key] = float(param.Value)
+        elif param.Type == "int":
+            result[param.Key] = int(param.Value)
         elif param.Type == "string":
             result[param.Key] = param.Value
         elif param.Type == "list":
@@ -136,13 +139,29 @@ def create_dict_from_additional_parameters(param_list):
     return result
 
 
+def get_model_base_info_list(model_map: dict, type_name: str = None):
+    result = []
+    for key, value in model_map.items():
+        if type_name is None or value.type == type_name:
+            mbi = ModelBaseInfo()
+            mbi.ModelName = key
+            mbi.SupportedVideo = value.video_supported
+            if value.repo_name != "":
+                mbi.RepositoryLink = "https://huggingface.co/" + value.repo_name
+            result.append(mbi)
+    return result
+
+
 # Get all model list
 class GetConfig(Resource):
     def get(self):
         result = ConfigResponse()
-        result.Interrogators = list(models.INTERROGATOR_MAP.keys())
-        result.Editors = list(models.EDITOR_MAP.keys())
-        result.Translators = list(models.TRANSLATOR_MAP.keys())
+        result.Interrogators = get_model_base_info_list(models.INTERROGATOR_MAP)
+        result.Editors = get_model_base_info_list(models.EDITOR_MAP)
+        result.Translators = get_model_base_info_list(models.TRANSLATOR_MAP)
+        # result.Interrogators = list(models.INTERROGATOR_MAP.keys())
+        # result.Editors = list(models.EDITOR_MAP.keys())
+        # result.Translators = list(models.TRANSLATOR_MAP.keys())
         return result.to_dict(), 200
 
 
@@ -151,15 +170,10 @@ class ListModelsByType(Resource):
     def get(self):
         result = ConfigResponse()
         model_type = request.args.get("name")
-        for model in models.INTERROGATORS:
-            if model.type == model_type:
-                result.Interrogators.append(model.name())
-        for model in models.EDITORS:
-            if model.type == model_type:
-                result.Editors.append(model.name())
-        for model in models.TRANSLATORS:
-            if model.type == model_type:
-                result.Translators.append(model.name())
+
+        result.Interrogators = get_model_base_info_list(models.INTERROGATOR_MAP, model_type)
+        result.Editors = get_model_base_info_list(models.EDITOR_MAP, model_type)
+        result.Translators = get_model_base_info_list(models.TRANSLATOR_MAP, model_type)
         return result.to_dict(), 200
 
 
@@ -208,16 +222,20 @@ def taggers_params(model_name):
                                                                "You can see examples of requests on the project page "
                                                                "https://github.com/fpgaminer/joycaption",
                                                                "label", ""))
-    elif int_instance.type == "qwen25":
-        result.Type = "qwen25"
+    elif int_instance.type == "qwen25" or int_instance.type == "keye":
+        result.Type = int_instance.type
         # result.Parameters.append(create_interrogator_parameter("cmd", (",").join(intInstance.commands), "list", ""))
         result.Parameters.append(create_interrogator_parameter("query", int_instance.defaultPrompt, "string", ""))
         result.Parameters.append(
+            create_interrogator_parameter("fps", int_instance.fps, "int", "Fps limit for video reading"))
+        result.Parameters.append(create_interrogator_parameter("max_frames", int_instance.max_frames, "int",
+                                                               "Maximum number of frames to analyze. -1 for default value."))
+        result.Parameters.append(create_interrogator_parameter("min_pixels", int_instance.min_pixels, "int",
+                                                               "Image Resolution for performance boost. -1 for default value. For example 256 * 28 * 28 = 200704."))
+        result.Parameters.append(create_interrogator_parameter("max_pixels", int_instance.max_pixels, "int",
+                                                               "Image Resolution for performance boost. -1 for default value. For example 1280 * 28 * 28 = 1003520."))
+        result.Parameters.append(
             create_interrogator_parameter("split", "false", "bool", "Split lines with commas"))
-        result.Parameters.append(create_interrogator_parameter("Comment",
-                                                               "You can see examples of requests on the project page "
-                                                               "https://github.com/fpgaminer/joycaption",
-                                                               "label", ""))
     elif int_instance.type == "blip":
         result.Type = "blip"
     elif int_instance.type == "blip2":
@@ -276,27 +294,37 @@ class GetModelParams(Resource):
             return tg_params.to_dict(), 200
 
 
+class SetCustomSystemPrompt(Resource):
+    def post(self):
+        data = request.get_json()
+        prompt = data["Prompt"]
+        settings.current = settings.current._replace(custom_system_prompt=prompt)
+        return 200
+
+
 class InterrogateImage(Resource):
     def post(self):
         data = request.get_json()
         int_request = InterrogateImageRequest.from_dict(data)
         return self.interrogate_image(int_request).to_dict(), 200
 
-    def interrogate_image(self, int_request):
+    def interrogate_image(self, int_request: InterrogateImageRequest):
         ret = InterrogateImageResponse()
         print("Interrogate Request!")
-        print("File name: ", int_request.ImageName)
-        print("File size: ", len(int_request.Image))
+        print("File name: ", int_request.FileName)
+        if int_request.DataType == ObjectDataType.IMAGE_BYTE_ARRAY:
+            print("File size: ", len(int_request.DataObject))
+        print("File type: ", int_request.DataType.name)
         for network_conf in int_request.Models:
             if network_conf.ModelName not in models.INTERROGATOR_MAP:
                 ret.Success = False
                 ret.ErrorMessage = "Image Interrogator named '%s' is not a valid interrogator name. Known interrogators: '%s'" % (
-                        network_conf.interrogator_network, list(models.INTERROGATOR_MAP.keys())
-                    )
+                    network_conf.interrogator_network, list(models.INTERROGATOR_MAP.keys())
+                )
                 print(ret.ErrorMessage)
                 return ret
 
-        if not int_request.Image:
+        if not int_request.DataObject:
             ret.Success = False
             ret.ErrorMessage = "Interrogate Failed - Received no image!"
             print(ret.ErrorMessage)
@@ -305,20 +333,19 @@ class InterrogateImage(Resource):
         global ONE_INTERROGATOR_IN_VRAM_AT_A_TIME
         ONE_INTERROGATOR_IN_VRAM_AT_A_TIME = int_request.SerializeVramUsage
 
-
-
         try:
 
-            image_bytes = int_request.Image
+            # image_bytes = int_request.Image
 
-            image_obj = Image.open(io.BytesIO(image_bytes))
+            # image_obj = Image.open(io.BytesIO(image_bytes))
 
             for network_conf in int_request.Models:
                 param_dict = create_dict_from_additional_parameters(network_conf.AdditionalParameters)
                 threshold = 1.0
                 if 'threshold' in param_dict:
                     threshold = param_dict['threshold']
-                tag_ret = interrogate_image(network_conf.ModelName, image_obj, param_dict,
+                tag_ret = interrogate_image(network_conf.ModelName, int_request.DataObject, int_request.DataType,
+                                            param_dict,
                                             skip_online=int_request.SkipInternetRequests)
                 network_tags = extract_tag_ret(tag_ret, threshold)
 
@@ -384,13 +411,13 @@ class EditImage(Resource):
     def edit_image(self, int_request: EditImageRequest):
         ret = EditImageResponse()
         print("Editor Request!")
-        print("File name: ", int_request.ImageName)
+        print("File name: ", int_request.FileName)
         print("File size: ", len(int_request.Image))
         if int_request.Model.ModelName not in models.EDITOR_MAP:
             ret.Success = False
             ret.ErrorMessage = "Image Interrogator named '%s' is not a valid interrogator name. Known interrogators: '%s'" % (
-                    int_request.Model.ModelName, list(models.EDITOR_MAP.keys())
-                )
+                int_request.Model.ModelName, list(models.EDITOR_MAP.keys())
+            )
             print(ret.ErrorMessage)
             return ret
 
@@ -402,8 +429,6 @@ class EditImage(Resource):
 
         global ONE_INTERROGATOR_IN_VRAM_AT_A_TIME
         ONE_INTERROGATOR_IN_VRAM_AT_A_TIME = int_request.SerializeVramUsage
-
-
 
         try:
 
@@ -480,8 +505,8 @@ class TranslateText(Resource):
         if tr_request.Model.ModelName not in models.TRANSLATOR_MAP:
             ret.Success = False
             ret.ErrorMessage = "Image Interrogator named '%s' is not a valid interrogator name. Known interrogators: '%s'" % (
-                    tr_request.Model.ModelName, list(models.TRANSLATOR_MAP.keys())
-                )
+                tr_request.Model.ModelName, list(models.TRANSLATOR_MAP.keys())
+            )
             print(ret.ErrorMessage)
             return ret
 
@@ -551,6 +576,7 @@ api.add_resource(GetModelParams, '/getmodelparams')
 api.add_resource(InterrogateImage, '/interrogateimage')
 api.add_resource(EditImage, '/editimage')
 api.add_resource(TranslateText, '/translate')
+api.add_resource(SetCustomSystemPrompt, '/setcustomsustemprompt')
 
 if __name__ == '__main__':
     models.init()

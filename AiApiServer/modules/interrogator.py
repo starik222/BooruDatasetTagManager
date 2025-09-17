@@ -13,7 +13,7 @@ class Interrogator:
     def stop(self):
         pass
 
-    def predict(self, image, **kwargs):
+    def predict(self, data_obj, data_type, **kwargs):
         raise NotImplementedError()
 
     def name(self):

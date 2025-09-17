@@ -16,6 +16,9 @@ dataclasses_json
 flask
 flask-restful
 compressed-tensors
+qwen-vl-utils[decord]==0.0.11
+keye-vl-utils
+opencv-python
 # This needs to be from Torch's pypi repo.
 # ONNX does not support cuda 12 yet.
 --extra-index-url https://download.pytorch.org/whl/cu126

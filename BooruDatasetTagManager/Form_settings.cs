@@ -66,7 +66,18 @@ namespace BooruDatasetTagManager
             }
             //Interrogator
             textBoxConnectionAddress.Text = Program.Settings.AutoTagger.ConnectionAddress;
-            
+            if (string.IsNullOrEmpty(Program.Settings.AutoTagger.CustomSystemPrompt))
+            {
+                checkBoxCustomPrompt.Checked = false;
+                textBoxCustomPrompt.Enabled = false;
+            }
+            else
+            {
+                checkBoxCustomPrompt.Checked = true;
+                textBoxCustomPrompt.Enabled = true;
+                textBoxCustomPrompt.Text = Program.Settings.AutoTagger.CustomSystemPrompt;
+            }
+
         }
 
         private void ColorManager_SchemeChanded(object sender, EventArgs e)
@@ -78,7 +89,7 @@ namespace BooruDatasetTagManager
             }
         }
 
-        private void BtnSave_Click(object sender, EventArgs e)
+        private async void BtnSave_Click(object sender, EventArgs e)
         {
             MessageBox.Show(I18n.GetText("TipSaveSettings"));
             Program.Settings.PreviewSize = (int)numericUpDown1.Value;
@@ -115,6 +126,18 @@ namespace BooruDatasetTagManager
             }
             //Interrogator
             Program.Settings.AutoTagger.ConnectionAddress = textBoxConnectionAddress.Text;
+            if (checkBoxCustomPrompt.Checked)
+            {
+                Program.Settings.AutoTagger.CustomSystemPrompt = textBoxCustomPrompt.Text;
+            }
+            else
+            {
+                Program.Settings.AutoTagger.CustomSystemPrompt = "";
+            }
+            if (Program.AutoTagger != null && Program.AutoTagger.IsConnected)
+            {
+                await Program.AutoTagger.SetCustomSystemPrompt(Program.Settings.AutoTagger.CustomSystemPrompt);
+            }
 
             Program.Settings.SaveSettings();
             DialogResult = DialogResult.OK;
@@ -186,6 +209,7 @@ namespace BooruDatasetTagManager
             checkBoxLoadOnlyManual.Text = I18n.GetText("SettingLoadOnlyManualAutocomplete");
             checkBoxCacheImages.Text = I18n.GetText("SettingsCheckBoxCacheImages");
             LabelConnectionAddress.Text = I18n.GetText("SettingsInterrogatorAddress");
+            checkBoxCustomPrompt.Text = I18n.GetText("SettingsCheckBoxCustomPrompt");
 
             comboAutocompMode.Items.Clear();
             comboAutocompSort.Items.Clear();
@@ -218,6 +242,11 @@ namespace BooruDatasetTagManager
                 dataGridViewHotkeys.SelectedRows[0].Cells["Hotkey"].Value = hkItem.GetHotkeyString();
             }
             e.SuppressKeyPress = true;
+        }
+
+        private void checkBoxCustomPrompt_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxCustomPrompt.Enabled = checkBoxCustomPrompt.Checked;
         }
     }
 }

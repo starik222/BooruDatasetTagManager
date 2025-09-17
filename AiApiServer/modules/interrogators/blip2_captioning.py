@@ -1,7 +1,8 @@
 # pylint: disable=bad-indentation
 
 from transformers import Blip2Processor, Blip2ForConditionalGeneration
-from .. import devices, settings, paths
+from .. import devices, settings, paths, utilities
+from ..server_dataclasses import ObjectDataType
 
 
 class BLIP2Captioning:
@@ -29,9 +30,12 @@ class BLIP2Captioning:
             self.processor = None
             devices.torch_gc()
 
-    def apply(self, image):
+    def apply(self, data_obj, data_type):
         if self.model is None or self.processor is None:
             return ""
+        if data_type != ObjectDataType.IMAGE_BYTE_ARRAY:
+            raise Exception('Model supported only image format.')
+        image = utilities.byte_array_to_image(data_obj)
         inputs = self.processor(images=image, return_tensors="pt").to(devices.device)
         ids = self.model.generate(**inputs)
         return self.processor.batch_decode(ids, skip_special_tokens=True)

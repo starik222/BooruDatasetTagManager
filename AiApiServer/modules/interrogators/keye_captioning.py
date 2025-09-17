@@ -3,8 +3,8 @@ import os
 
 import torch
 from PIL import Image
-from transformers import Qwen2_5_VLForConditionalGeneration, AutoTokenizer, AutoProcessor
-from qwen_vl_utils import process_vision_info
+from transformers import AutoModel, AutoTokenizer, AutoProcessor
+from keye_vl_utils import process_vision_info
 from transformers.video_utils import load_video
 
 from .. import settings
@@ -13,7 +13,7 @@ from .. import utilities, paths
 from ..server_dataclasses import ObjectDataType
 
 
-class Qwen25CaptionCaptioning:
+class KeyeCaptionCaptioning:
     def __init__(self, model_name):
         self.MODEL_REPO = model_name
         self.model = None
@@ -35,11 +35,13 @@ class Qwen25CaptionCaptioning:
         self.min_pixels = min_pixels
         self.max_pixels = max_pixels
         if self.model is None or self.processor is None:
-            self.model = Qwen2_5_VLForConditionalGeneration.from_pretrained(self.MODEL_REPO,
-                                                                            torch_dtype=devices.get_torch_dtype(),
-                                                                            cache_dir=paths.setting_model_path,
-                                                                            local_files_only=skip_online,
-                                                                            device_map="auto")  # .to(devices.device)
+            self.model = AutoModel.from_pretrained(self.MODEL_REPO,
+                                                   trust_remote_code=True,
+                                                   torch_dtype=devices.get_torch_dtype(),
+                                                   cache_dir=paths.setting_model_path,
+                                                   local_files_only=skip_online,
+                                                   attn_implementation="flash_attention_2",
+                                                   device_map="auto")  # .to(devices.device)
 
             self.processor = AutoProcessor.from_pretrained(self.MODEL_REPO,
                                                            trust_remote_code=True,
@@ -104,24 +106,26 @@ class Qwen25CaptionCaptioning:
         text = self.processor.apply_chat_template(
             messages, tokenize=False, add_generation_prompt=True
         )
-        image_inputs, video_inputs = process_vision_info(messages)
+        image_inputs, video_inputs, mm_processor_kwargs = process_vision_info(messages)
         inputs = self.processor(
             text=[text],
             images=image_inputs,
             videos=video_inputs,
             padding=True,
             return_tensors="pt",
+            **mm_processor_kwargs
         )
         inputs = inputs.to(devices.device)
 
         # Inference: Generation of the output
-        generated_ids = self.model.generate(**inputs, max_new_tokens=128)
+        generated_ids = self.model.generate(**inputs, max_new_tokens=1024)
         generated_ids_trimmed = [
             out_ids[len(in_ids):] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
         ]
         output_text = self.processor.batch_decode(
             generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False
         )
+        output_text = [utilities.remove_tags_with_content(output_text[0])]
         if self.split:
             return [x.strip() for x in output_text[0].split(',')]
         return output_text

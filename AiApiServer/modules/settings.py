@@ -4,6 +4,7 @@ from .utilities import base_dir_path
 
 SETTING_PATH = base_dir_path() / "settings.json"
 
+
 class Settings(NamedTuple):
     use_temp_files: bool = False
     temp_directory: str = ''
@@ -16,11 +17,11 @@ class Settings(NamedTuple):
     interrogator_keep_in_memory: bool = False
     interrogator_max_length: int = 60
     interrogator_model_dir: str = ""
+    custom_system_prompt: str = ""
 
 
 DEFAULT = Settings()
 current = Settings()
-
 
 NAMES = list(Settings.__annotations__.keys())
 
@@ -37,7 +38,6 @@ DESCRIPTIONS = {
     "interrogator_max_length": "Maximum text length for interrogator (for GIT only)",
     "interrogator_model_dir": "Path to directory for downloaded interrogator models",
 }
-
 
 
 def save():

@@ -16,7 +16,7 @@ class Tagger(Interrogator):
     def stop(self):
         pass
 
-    def predict(self, image: Image.Image, threshold: Optional[float]):
+    def predict(self, data_obj, data_type, threshold: Optional[float]):
         raise NotImplementedError()
 
     def name(self):
@@ -40,6 +40,8 @@ class DeepDanbooru(Tagger):
         self.tagger_inst = DepDanbooruTagger()
         self.threshold = threshold
         self.type = intType
+        self.video_supported = False
+        self.repo_name = ""
 
     def start(self, net_params: dict, skip_online: bool=False):
         self.tagger_inst.load(skip_online=skip_online)
@@ -48,8 +50,8 @@ class DeepDanbooru(Tagger):
     def stop(self):
         self.tagger_inst.unload()
 
-    def predict(self, image: Image.Image, threshold: Optional[float] = None):
-        labels = self.tagger_inst.apply(image)
+    def predict(self, data_obj, data_type, threshold: Optional[float] = None):
+        labels = self.tagger_inst.apply(data_obj, data_type)
 
         if threshold is not None:
             probability_dict = dict(
@@ -72,9 +74,10 @@ class DeepDanbooru(Tagger):
 class WaifuDiffusion(Tagger):
     def __init__(self, repo_name, threshold, intType):
         self.repo_name = repo_name
-        self.tagger_inst = WaifuDiffusionTagger("SmilingWolf/" + repo_name)
+        self.tagger_inst = WaifuDiffusionTagger(repo_name)
         self.threshold = threshold
         self.type = intType
+        self.video_supported = False
 
     def start(self, net_params: dict, skip_online: bool=False):
         self.tagger_inst.load(skip_online=skip_online)
@@ -85,11 +88,11 @@ class WaifuDiffusion(Tagger):
 
     # brought from https://huggingface.co/spaces/SmilingWolf/wd-v1-4-tags/blob/main/app.py and modified
     # set threshold<0 to use default value for now...
-    def predict(self, image: Image.Image, threshold: Optional[float] = None):
+    def predict(self, data_obj, data_type, threshold: Optional[float] = None):
         # may not use ratings
         # rating = dict(labels[:4])
 
-        labels = self.tagger_inst.apply(image)
+        labels = self.tagger_inst.apply(data_obj, data_type)
 
         if threshold is not None:
             if threshold < 0:

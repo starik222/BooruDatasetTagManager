@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace BooruDatasetTagManager.AiApi
 {
@@ -45,9 +46,32 @@ namespace BooruDatasetTagManager.AiApi
                 {
                     Config = GetObjectFromResponse<ConfigResponse>(response.JsonText);
                     IsConnected = true;
+                    if (!string.IsNullOrEmpty(Program.Settings.AutoTagger.CustomSystemPrompt))
+                    {
+                        await SetCustomSystemPrompt(Program.Settings.AutoTagger.CustomSystemPrompt);
+                    }
                     return true;
                 }
 
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> SetCustomSystemPrompt(string prompt)
+        {
+            try
+            {
+                JObject root = new JObject();
+                root["Prompt"] = prompt;
+                var response = await PostJsonAsync("setcustomsustemprompt", root.ToString()).ConfigureAwait(false);
+                if (response.Success)
+                {
+                    return true;
+                }
                 return false;
             }
             catch (Exception)

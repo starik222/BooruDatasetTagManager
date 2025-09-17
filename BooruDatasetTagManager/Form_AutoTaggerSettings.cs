@@ -22,6 +22,8 @@ namespace BooruDatasetTagManager
         private Dictionary<string, Control> interrogatorSettingsControls = new Dictionary<string, Control>();
         private List<string> selectedInterrogators = new List<string>();
         private string ctrlPattern = "(.*?)_ctrl_(.*)";
+        private Color supportedVideoColor = Color.LightGreen;
+        private Color notSupportedVideoColor = Color.LavenderBlush;
         public Form_AutoTaggerSettings()
         {
             InitializeComponent();
@@ -35,6 +37,9 @@ namespace BooruDatasetTagManager
             connectRechecker.Tick += ConnectRechecker_Tick;
             connectRechecker.Interval = 5000;
             SwitchLanguage();
+            pictureBox1.BackColor = supportedVideoColor;
+            pictureBox2.BackColor = notSupportedVideoColor;
+
         }
 
         private async void ConnectRechecker_Tick(object sender, EventArgs e)
@@ -78,7 +83,7 @@ namespace BooruDatasetTagManager
                 button1.Enabled = true;
                 foreach (var item in Program.Settings.AutoTagger.InterragatorParams)
                 {
-                    int index = checkedListBoxcomboBoxInterrogators.Items.IndexOf(item.Key);
+                    int index = checkedListBoxcomboBoxInterrogators.FindIndexByName(item.Key);
                     if (index != -1)
                     {
                         checkedListBoxcomboBoxInterrogators.SetItemChecked(index, true);
@@ -92,13 +97,17 @@ namespace BooruDatasetTagManager
                 checkBoxSerializeVRAM.Checked = Program.Settings.AutoTagger.SerializeVramUsage;
                 checkBoxSkipInternet.Checked = Program.Settings.AutoTagger.SkipInternetRequests;
 
-                //for (int i = 0; i < checkedListBoxcomboBoxInterrogators.Items.Count; i++)
-                //{
-                //    if (((ModelBaseInfo)checkedListBoxcomboBoxInterrogators.Items[i]).SupportedVideo)
-                //    {
-                //        checkedListBoxcomboBoxInterrogators.
-                //    }
-                //}
+                for (int i = 0; i < checkedListBoxcomboBoxInterrogators.Items.Count; i++)
+                {
+                    if (((ModelBaseInfo)checkedListBoxcomboBoxInterrogators.Items[i]).SupportedVideo)
+                    {
+                        checkedListBoxcomboBoxInterrogators.ItemsColor[i] = supportedVideoColor;
+                    }
+                    else
+                    {
+                        checkedListBoxcomboBoxInterrogators.ItemsColor[i] = notSupportedVideoColor;
+                    }
+                }
             }
         }
 

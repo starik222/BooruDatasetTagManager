@@ -2119,6 +2119,7 @@ namespace BooruDatasetTagManager
                 MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
                 return;
             }
+            StringBuilder sbErrors = new StringBuilder();
             LockEdit(true);
             List<DataItem> selectedTagsList = new List<DataItem>();
             if (!allTags)
@@ -2164,8 +2165,9 @@ namespace BooruDatasetTagManager
                 }
                 else
                 {
-                    LockEdit(false);
-                    return;
+                    sbErrors.AppendLine(item.ImageFilePath);
+                    //LockEdit(false);
+                    //return;
                 }
             }
             if (selectedTagsList.Count > 1)
@@ -2175,6 +2177,11 @@ namespace BooruDatasetTagManager
             //if (gridViewAllTags.DataSource == null)
             //    BindTagList();
             LockEdit(false);
+            if (sbErrors.Length > 0)
+            {
+                sbErrors.Insert(0, "The following files were not processed (see AiApiServer log):\n");
+                MessageBox.Show(sbErrors.ToString());
+            }
         }
 
         private async Task<bool> CropImages()

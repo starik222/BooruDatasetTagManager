@@ -6,7 +6,9 @@
 
 # BooruDatasetTagManager
 A simple tag editor for a dataset created for training hypernetworks, embeddings, lora, etc. You can create a dataset from scratch using only images, or you can use a program to edit a dataset created using automatic tagging ([wd14-tagger](https://github.com/toriato/stable-diffusion-webui-wd14-tagger), [stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui), etc.)
-The editor is primarily intended for booru-style tagged data, but you can adapt it for other datasets as well.
+The editor is primarily intended for booru-style tagged data, but you can adapt it for other datasets as well. 
+
+Since version 2.5.0 the editor also supports video tagging.
 
 # Using
 You need a dataset like the following:
@@ -51,10 +53,10 @@ Currently, the manual translation filter can only be used in tag autocompletion 
 
 The application supports loading tags from csv files of the format used in "[Booru tag autocompletion for A1111](https://github.com/DominikDoom/a1111-sd-webui-tagcomplete)". You can also create your own txt files with a list of tags (line by line). But since loading data from these files takes a long time, the program converts them to its own format and loads data from it. Therefore, if you change the list of tags, be prepared to wait quite a long time. All files with tags are located in the "Tags" folder.
 
-# AutoTagger (interrogator_rpc)
+# AutoTagger (AiApiServer)
 
-You can generate tags for images directly in the program. To do this, you need to configure and run the "interrogator_rpc" service. Python must be installed for it to work.
-To configure interrogator_rpc, run the command:
+You can generate tags for images directly in the program. To do this, you need to configure and run the "AiApiServer" service. Python must be installed for it to work.
+To configure AiApiServer, run the command:
 ```bash
 pip install -r requirements.txt
 ```
@@ -76,7 +78,7 @@ If you have problems running a service in pure python, try using [anaconda](http
 After installing anaconda, run the console, create a new conda environment and install the necessary dependencies.
 ```bash
 #Creating new environment with python
-conda create -n bdtm python=3.10.13
+conda create -n bdtm python=3.12.9
 #Activating the created environment
 conda activate bdtm
 #Installing the necessary dependencies.
@@ -91,9 +93,19 @@ python main.py
 ```
 After launching the service, in the editor itself you can generate tags for all images using the "Tools" menu, generate tags for selected images using ![](https://github.com/starik222/BooruDatasetTagManager/assets/1236582/230f47f9-5cef-49bc-8b44-a67890433c42) icon, and also generate tags in a separate tab "AutoTagger preview window". To configure generation parameters, you can use the corresponding generation menu item, or the "Settings" -> "Auto tagger settings..." menu.
 
-![bdtm06](https://github.com/starik222/BooruDatasetTagManager/assets/1236582/88c3ab34-b96e-411c-b0b9-2a92729b822c)
+![bdtm06](https://github.com/user-attachments/assets/5bcc14c8-b505-4e58-9d76-7910f4b40c84)
 
 The generator allows you to select several models at once and specify a method for combining the results.
+
+# AiApiServer problems
+
+At the moment, the latest version of transformers that Florence2 models work with is 4.49.0. So if you want to use Florence2 models you need to downgrade transformers by running `pip install transformers==4.49.0 --upgrade`, but this may break other models, so choose for yourself what you need.
+
+The `briaai/RMBG-2.0` model (the background removal model) also doesn't work with the latest versions of transformers, so use the `BiRefNet` models instead.
+
+Model `Kwai-Keye/Keye-VL-1_5-8B` requires `Flash Attention 2` and `triton`. If you are using Windows, then you will encounter the problem that Flash Attention does not install on Windows, and it needs to be manually builded for your computer configuration. You can use [this article](https://github.com/Dao-AILab/flash-attention/issues/1469), or look for ready-made builds for your configuration. If you are using python 3.12+ and a blackwell 2.0 (rtx 50), ada (rtx 40) or ampere (rtx 30) video card, you can try installing [this build](https://huggingface.co/Panchovix/flash-attentionv2-blackwell2.0-nightly/tree/main).
+
+To install triton, run the command `pip install triton-windows`.
 
 # Weighted tags
 

@@ -7,6 +7,7 @@ from typing import Tuple
 from .. import settings
 from .. import devices as devices
 from .. import launch, utilities, paths
+from ..server_dataclasses import ObjectDataType
 
 
 class WaifuDiffusionTagger:
@@ -100,12 +101,13 @@ class WaifuDiffusionTagger:
             devices.torch_gc()
 
     # brought from https://huggingface.co/spaces/SmilingWolf/wd-v1-4-tags/blob/main/app.py and modified
-    def apply(self, image: Image.Image):
+    def apply(self, data_obj, data_type: ObjectDataType):
         if not self.model:
             return []
-
         _, height, width, _ = self.model.get_inputs()[0].shape
-
+        if data_type != ObjectDataType.IMAGE_BYTE_ARRAY:
+            raise Exception('Model supported only image format.')
+        image = utilities.byte_array_to_image(data_obj)
         # the way to fill empty pixels is quite different from original one;
         # original: fill by white pixels
         # this: repeat the pixels on the edge

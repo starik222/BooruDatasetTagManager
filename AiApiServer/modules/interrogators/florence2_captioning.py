@@ -10,6 +10,8 @@ from .. import devices as devices
 from .. import utilities, paths
 from unittest.mock import patch
 
+from ..server_dataclasses import ObjectDataType
+
 
 def fixed_get_imports(filename: str | os.PathLike) -> list[str]:
     if not str(filename).endswith("modeling_florence2.py"):
@@ -55,10 +57,12 @@ class Florence2Captioning:
             self.processor = None
             devices.torch_gc()
 
-    def apply(self, image: Image.Image):
+    def apply(self, data_obj, data_type: ObjectDataType):
         if self.model is None or self.processor is None:
             return ""
-
+        if data_type != ObjectDataType.IMAGE_BYTE_ARRAY:
+            raise Exception('Model supported only image format.')
+        image = utilities.byte_array_to_image(data_obj)
         prompt = self.cmd + self.prompt
         if image.mode != "RGB":
             image = image.convert("RGB")

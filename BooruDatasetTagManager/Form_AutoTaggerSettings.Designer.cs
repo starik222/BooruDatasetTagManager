@@ -31,12 +31,13 @@ namespace BooruDatasetTagManager
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_AutoTaggerSettings));
             label1 = new Label();
             label2 = new Label();
             comboBoxSortMode = new ComboBox();
             button1 = new Button();
             button2 = new Button();
-            checkedListBoxcomboBoxInterrogators = new CheckedListBox();
+            checkedListBoxcomboBoxInterrogators = new ColouredCheckedListBox();
             label4 = new Label();
             comboBoxUnionMode = new ComboBox();
             checkBoxSerializeVRAM = new CheckBox();
@@ -54,10 +55,10 @@ namespace BooruDatasetTagManager
             labelRepo = new Label();
             checkBoxSupportVideo = new CheckBox();
             errorProvider1 = new ErrorProvider(components);
-            pictureBox1 = new PictureBox();
             label8 = new Label();
-            pictureBox2 = new PictureBox();
             label9 = new Label();
+            pictureBox1 = new PictureBox();
+            pictureBox2 = new PictureBox();
             TaggerSettingTabs.SuspendLayout();
             tabGeneral.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
@@ -121,6 +122,7 @@ namespace BooruDatasetTagManager
             checkedListBoxcomboBoxInterrogators.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             checkedListBoxcomboBoxInterrogators.CheckOnClick = true;
             checkedListBoxcomboBoxInterrogators.FormattingEnabled = true;
+            checkedListBoxcomboBoxInterrogators.ItemsColor = (System.Collections.Generic.Dictionary<int, System.Drawing.Color>)resources.GetObject("checkedListBoxcomboBoxInterrogators.ItemsColor");
             checkedListBoxcomboBoxInterrogators.Location = new System.Drawing.Point(12, 27);
             checkedListBoxcomboBoxInterrogators.Name = "checkedListBoxcomboBoxInterrogators";
             checkedListBoxcomboBoxInterrogators.ScrollAlwaysVisible = true;
@@ -300,15 +302,6 @@ namespace BooruDatasetTagManager
             // 
             errorProvider1.ContainerControl = this;
             // 
-            // pictureBox1
-            // 
-            pictureBox1.BackColor = System.Drawing.Color.Green;
-            pictureBox1.Location = new System.Drawing.Point(218, 549);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new System.Drawing.Size(18, 22);
-            pictureBox1.TabIndex = 8;
-            pictureBox1.TabStop = false;
-            // 
             // label8
             // 
             label8.AutoSize = true;
@@ -317,15 +310,6 @@ namespace BooruDatasetTagManager
             label8.Size = new System.Drawing.Size(101, 15);
             label8.TabIndex = 9;
             label8.Text = "- supported video";
-            // 
-            // pictureBox2
-            // 
-            pictureBox2.BackColor = System.Drawing.Color.Crimson;
-            pictureBox2.Location = new System.Drawing.Point(365, 549);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new System.Drawing.Size(18, 22);
-            pictureBox2.TabIndex = 8;
-            pictureBox2.TabStop = false;
             // 
             // label9
             // 
@@ -336,6 +320,26 @@ namespace BooruDatasetTagManager
             label9.TabIndex = 9;
             label9.Text = "- not supported video";
             // 
+            // pictureBox1
+            // 
+            pictureBox1.BackColor = System.Drawing.Color.LightGreen;
+            pictureBox1.BorderStyle = BorderStyle.FixedSingle;
+            pictureBox1.Location = new System.Drawing.Point(221, 549);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new System.Drawing.Size(18, 22);
+            pictureBox1.TabIndex = 11;
+            pictureBox1.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.BackColor = System.Drawing.Color.LavenderBlush;
+            pictureBox2.BorderStyle = BorderStyle.FixedSingle;
+            pictureBox2.Location = new System.Drawing.Point(368, 549);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new System.Drawing.Size(18, 22);
+            pictureBox2.TabIndex = 11;
+            pictureBox2.TabStop = false;
+            // 
             // Form_AutoTaggerSettings
             // 
             AcceptButton = button1;
@@ -343,10 +347,10 @@ namespace BooruDatasetTagManager
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = button2;
             ClientSize = new System.Drawing.Size(916, 585);
-            Controls.Add(label9);
             Controls.Add(pictureBox2);
-            Controls.Add(label8);
             Controls.Add(pictureBox1);
+            Controls.Add(label9);
+            Controls.Add(label8);
             Controls.Add(TaggerSettingTabs);
             Controls.Add(checkedListBoxcomboBoxInterrogators);
             Controls.Add(button2);
@@ -374,7 +378,7 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ComboBox comboBoxSortMode;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.CheckedListBox checkedListBoxcomboBoxInterrogators;
+        private ColouredCheckedListBox checkedListBoxcomboBoxInterrogators;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox comboBoxUnionMode;
         private System.Windows.Forms.CheckBox checkBoxSerializeVRAM;
@@ -392,9 +396,9 @@ namespace BooruDatasetTagManager
         private Label labelRepo;
         private CheckBox checkBoxSupportVideo;
         private Label label3;
-        private PictureBox pictureBox1;
         private Label label9;
-        private PictureBox pictureBox2;
         private Label label8;
+        private PictureBox pictureBox2;
+        private PictureBox pictureBox1;
     }
 }

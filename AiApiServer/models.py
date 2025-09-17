@@ -19,13 +19,13 @@ from modules import (
 paths.initialize()
 
 BLIP2_CAPTIONING_NAMES = [
-    "blip2-opt-2.7b",
-    "blip2-opt-2.7b-coco",
-    "blip2-opt-6.7b",
-    "blip2-opt-6.7b-coco",
-    "blip2-flan-t5-xl",
-    "blip2-flan-t5-xl-coco",
-    "blip2-flan-t5-xxl",
+    "Salesforce/blip2-opt-2.7b",
+    "Salesforce/blip2-opt-2.7b-coco",
+    "Salesforce/blip2-opt-6.7b",
+    "Salesforce/blip2-opt-6.7b-coco",
+    "Salesforce/blip2-flan-t5-xl",
+    "Salesforce/blip2-flan-t5-xl-coco",
+    "Salesforce/blip2-flan-t5-xxl",
 ]
 
 FLORENCE2_CAPTIONING_NAMES = [
@@ -42,7 +42,7 @@ FLORENCE2PG_CAPTIONING_NAMES = [
 ]
 
 MOONDREAM2_CAPTIONING_NAMES = [
-    "moondream2",
+    "vikhyatk/moondream2",
 ]
 
 JOYCAPTION_CAPTIONING_NAMES = [
@@ -51,25 +51,30 @@ JOYCAPTION_CAPTIONING_NAMES = [
 ]
 
 QWEN25_CAPTIONING_NAMES = [
-    "Qwen/Qwen2.5-VL-3B-Instruct",
-    "Qwen/Qwen2.5-VL-7B-Instruct",
-    "huihui-ai/Qwen2.5-VL-7B-Instruct-abliterated",
-    "unsloth/Qwen2.5-VL-7B-Instruct-unsloth-bnb-4bit",
+    ("Qwen/Qwen2.5-VL-3B-Instruct", True),
+    ("Qwen/Qwen2.5-VL-7B-Instruct", True),
+    ("huihui-ai/Qwen2.5-VL-7B-Instruct-abliterated", True),
+    ("unsloth/Qwen2.5-VL-7B-Instruct-unsloth-bnb-4bit", True),
+    ("prithivMLmods/DeepCaption-VLA-7B", True),
+]
+
+KEYE_CAPTIONING_NAMES = [
+    ("Kwai-Keye/Keye-VL-1_5-8B", True),
 ]
 
 WD_TAGGER_NAMES = [
-    "wd-v1-4-convnext-tagger",
-    "wd-v1-4-convnext-tagger-v2",
-    "wd-v1-4-convnextv2-tagger-v2",
-    "wd-v1-4-swinv2-tagger-v2",
-    "wd-v1-4-vit-tagger",
-    "wd-v1-4-vit-tagger-v2",
-    "wd-v1-4-moat-tagger-v2",
-    "wd-vit-tagger-v3",
-    "wd-swinv2-tagger-v3",
-    "wd-convnext-tagger-v3",
-    "wd-vit-large-tagger-v3",
-    "wd-eva02-large-tagger-v3",
+    "SmilingWolf/wd-v1-4-convnext-tagger",
+    "SmilingWolf/wd-v1-4-convnext-tagger-v2",
+    "SmilingWolf/wd-v1-4-convnextv2-tagger-v2",
+    "SmilingWolf/wd-v1-4-swinv2-tagger-v2",
+    "SmilingWolf/wd-v1-4-vit-tagger",
+    "SmilingWolf/wd-v1-4-vit-tagger-v2",
+    "SmilingWolf/wd-v1-4-moat-tagger-v2",
+    "SmilingWolf/wd-vit-tagger-v3",
+    "SmilingWolf/wd-swinv2-tagger-v3",
+    "SmilingWolf/wd-convnext-tagger-v3",
+    "SmilingWolf/wd-vit-large-tagger-v3",
+    "SmilingWolf/wd-eva02-large-tagger-v3",
 ]
 
 FLORENCE2PG_COMMANDS = [
@@ -150,7 +155,8 @@ INTERROGATORS = (
         + [captioning.Moondream2(name, MOONDREAM2_COMMANDS, "", False, "moondream2") for name in
            MOONDREAM2_CAPTIONING_NAMES]
         + [captioning.JoyCaption(name, "", False, "joycaption") for name in JOYCAPTION_CAPTIONING_NAMES]
-        + [captioning.Qwen25Caption(name, "", False, "qwen25") for name in QWEN25_CAPTIONING_NAMES]
+        + [captioning.Qwen25Caption(name, "", False, video, "qwen25") for name, video in QWEN25_CAPTIONING_NAMES]
+        + [captioning.KeyeCaption(name, "", False, video, "keye") for name, video in KEYE_CAPTIONING_NAMES]
         + [tagger.DeepDanbooru(0.5, "dd")]
         + [
             tagger.WaifuDiffusion(name, WD_TAGGER_THRESHOLDS[i], "wd")

@@ -34,6 +34,7 @@ class seed_x(translator):
         self.translator = seed_x_translator(repo_name)
         self.repo_name = repo_name
         self.type = intType
+        self.video_supported = False
 
     def start(self, net_params: dict, skip_online: bool = False):
         self.translator.load(skip_online=skip_online)
