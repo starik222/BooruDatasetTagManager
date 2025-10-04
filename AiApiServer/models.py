@@ -57,6 +57,7 @@ QWEN25_CAPTIONING_NAMES = [
     ("huihui-ai/Qwen2.5-VL-7B-Instruct-abliterated", True),
     ("unsloth/Qwen2.5-VL-7B-Instruct-unsloth-bnb-4bit", True),
     ("prithivMLmods/DeepCaption-VLA-7B", True),
+    ("internlm/CapRL-3B", False),
 ]
 
 KEYE_CAPTIONING_NAMES = [
