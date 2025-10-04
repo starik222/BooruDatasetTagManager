@@ -95,7 +95,7 @@ namespace BooruDatasetTagManager
         {
             if (listBoxModels.SelectedIndex == -1)
                 return null;
-            return (string)listBoxModels.SelectedItem;
+            return ((ModelBaseInfo)listBoxModels.SelectedItem).ModelName;
         }
 
         public async Task<byte[]> RemoveBackgroundAsync(string imgFilePath, string model)

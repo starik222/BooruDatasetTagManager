@@ -1,3 +1,5 @@
+import pathlib
+
 from flask import Flask, request
 from flask_restful import Resource, Api
 
@@ -441,6 +443,18 @@ class EditImage(Resource):
                                  skip_online=int_request.SkipInternetRequests)
             format = img_ret.format
             mode = img_ret.mode
+            if format is None:
+                file_extension = pathlib.Path(int_request.FileName).suffix.lower()
+                if file_extension == '.png':
+                    format = 'PNG'
+                elif file_extension in ('.jpg', '.jpeg'):
+                    format = 'JPEG'
+                elif file_extension == '.bmp':
+                    format = 'BMP'
+                elif file_extension == '.webp':
+                    format = 'WEBP'
+                else:
+                    format = file_extension[1:].upper()
             # Removing alpha channel for bmp and jpg formats
             if format in ('JPEG', 'BMP') and mode == 'RGBA':
                 img_ret = utilities.remove_transparency(img_ret).convert("RGB")

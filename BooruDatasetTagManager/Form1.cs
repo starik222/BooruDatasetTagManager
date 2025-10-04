@@ -2296,18 +2296,26 @@ namespace BooruDatasetTagManager
                     }
                     Program.DataManager.ClearCache();
                 }
+                StringBuilder sbErrors = new StringBuilder();
                 int index = 0;
                 foreach (var item in selectedTagsList)
                 {
                     var imgData = await bgRemoverForm.RemoveBackgroundAsync(item.ImageFilePath, selectedModel);
-                    await File.WriteAllBytesAsync(item.ImageFilePath, imgData);
-                    try
+                    if (imgData == null)
                     {
-                        Program.DataManager.DataSet[item.ImageFilePath].Img = Extensions.MakeThumb(item.ImageFilePath, Program.Settings.PreviewSize);
+                        sbErrors.AppendLine(item.ImageFilePath);
                     }
-                    catch (Exception)
+                    else
                     {
-                        Program.DataManager.DataSet[item.ImageFilePath].Img = null;
+                        await File.WriteAllBytesAsync(item.ImageFilePath, imgData);
+                        try
+                        {
+                            Program.DataManager.DataSet[item.ImageFilePath].Img = Extensions.MakeThumb(item.ImageFilePath, Program.Settings.PreviewSize);
+                        }
+                        catch (Exception)
+                        {
+                            Program.DataManager.DataSet[item.ImageFilePath].Img = null;
+                        }
                     }
                     SetStatus($"{++index} / {selectedTagsList.Count}");
                 }
@@ -2319,6 +2327,11 @@ namespace BooruDatasetTagManager
                 //if (gridViewAllTags.DataSource == null)
                 //    BindTagList();
                 LockEdit(false);
+                if (sbErrors.Length > 0)
+                {
+                    sbErrors.Insert(0, "The following files were not processed (see AiApiServer log):\n");
+                    MessageBox.Show(sbErrors.ToString());
+                }
                 return true;
             }
         }
