@@ -22,8 +22,6 @@ namespace BooruDatasetTagManager
         private Dictionary<string, Control> interrogatorSettingsControls = new Dictionary<string, Control>();
         private List<string> selectedInterrogators = new List<string>();
         private string ctrlPattern = "(.*?)_ctrl_(.*)";
-        private Color supportedVideoColor = Color.LightGreen;
-        private Color notSupportedVideoColor = Color.LavenderBlush;
         public Form_AutoTaggerSettings()
         {
             InitializeComponent();
@@ -37,9 +35,6 @@ namespace BooruDatasetTagManager
             connectRechecker.Tick += ConnectRechecker_Tick;
             connectRechecker.Interval = 5000;
             SwitchLanguage();
-            pictureBox1.BackColor = supportedVideoColor;
-            pictureBox2.BackColor = notSupportedVideoColor;
-
         }
 
         private async void ConnectRechecker_Tick(object sender, EventArgs e)
@@ -59,6 +54,8 @@ namespace BooruDatasetTagManager
 
         private async void Form_AutoTaggerSettings_Load(object sender, EventArgs e)
         {
+            pictureBox1.BackColor = checkedListBoxcomboBoxInterrogators.SupportedVideoColor;
+            pictureBox2.BackColor = checkedListBoxcomboBoxInterrogators.NotSupportedVideoColor;
             button1.Enabled = false;
             if (!Program.AutoTagger.IsConnected)
             {
@@ -101,11 +98,11 @@ namespace BooruDatasetTagManager
                 {
                     if (((ModelBaseInfo)checkedListBoxcomboBoxInterrogators.Items[i]).SupportedVideo)
                     {
-                        checkedListBoxcomboBoxInterrogators.ItemsColor[i] = supportedVideoColor;
+                        checkedListBoxcomboBoxInterrogators.ItemsColor[i] = checkedListBoxcomboBoxInterrogators.SupportedVideoColor;
                     }
                     else
                     {
-                        checkedListBoxcomboBoxInterrogators.ItemsColor[i] = notSupportedVideoColor;
+                        checkedListBoxcomboBoxInterrogators.ItemsColor[i] = checkedListBoxcomboBoxInterrogators.NotSupportedVideoColor;
                     }
                 }
             }

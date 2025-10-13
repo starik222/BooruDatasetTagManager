@@ -13,7 +13,9 @@ namespace BooruDatasetTagManager
 {
     [DesignerCategory("Code")]
     public  class ColouredCheckedListBox: CheckedListBox
-    {    
+    {
+        public Color SupportedVideoColor { get; set; } = Color.LightGreen;
+        public Color NotSupportedVideoColor { get; set; } = Color.LavenderBlush;
         public Dictionary<int, Color> ItemsColor { get; set; }
         public ColouredCheckedListBox() : base()
         {

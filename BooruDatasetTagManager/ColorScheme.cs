@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Windows.Forms;
 using System.ComponentModel;
+using BooruDatasetTagManager;
 
 namespace UmaMusumeDBBrowser
 {
@@ -86,6 +87,13 @@ namespace UmaMusumeDBBrowser
             {
                 ctrl.BackColor = scheme.TextBoxStyle.BackColor;
                 ctrl.ForeColor = scheme.TextBoxStyle.ForeColor;
+            }
+            else if (ctrl is ColouredCheckedListBox)
+            {
+                ctrl.BackColor = scheme.ColoredCheckedListBoxStyle.BackColor;
+                ctrl.ForeColor = scheme.ColoredCheckedListBoxStyle.ForeColor;
+                ((ColouredCheckedListBox)ctrl).SupportedVideoColor = scheme.ColoredCheckedListBoxStyle.SupportedVideoColor;
+                ((ColouredCheckedListBox)ctrl).NotSupportedVideoColor = scheme.ColoredCheckedListBoxStyle.NotSupportedVideoColor;
             }
             else if (ctrl is ListBox || ctrl is CheckedListBox || ctrl is ComboBox)
             {
@@ -232,6 +240,7 @@ namespace UmaMusumeDBBrowser
             public GenericColorData ToolStripStyle { get; set; }
             public GenericColorData LabelStyle { get; set; }
             public GenericColorData OtherStyle { get; set; }
+            public ColoredCheckedListBoxData ColoredCheckedListBoxStyle { get; set; }
 
             public override string ToString()
             {
@@ -268,6 +277,14 @@ namespace UmaMusumeDBBrowser
                 scheme.ToolStripStyle = new GenericColorData() { BackColor = SystemColors.Control, ForeColor = SystemColors.ControlText };
                 scheme.LabelStyle = new GenericColorData() { BackColor = Color.Transparent, ForeColor = SystemColors.ControlText };
                 scheme.OtherStyle = new GenericColorData() { BackColor = SystemColors.Control, ForeColor = SystemColors.ControlText };
+                scheme.ColoredCheckedListBoxStyle = new ColoredCheckedListBoxData() 
+                { 
+                    BackColor = SystemColors.Control, 
+                    ForeColor = SystemColors.ControlText,
+                    SupportedVideoColor = Color.LightGreen,
+                    NotSupportedVideoColor = Color.LavenderBlush
+                };
+
                 return scheme;
             }
 
@@ -300,7 +317,13 @@ namespace UmaMusumeDBBrowser
                 scheme.ToolStripStyle = new GenericColorData() { BackColor = Color.FromArgb(40, 40, 40), ForeColor = SystemColors.HighlightText };
                 scheme.LabelStyle = new GenericColorData() { BackColor = Color.Transparent, ForeColor = SystemColors.HighlightText };
                 scheme.OtherStyle = new GenericColorData() { BackColor = Color.FromArgb(40, 40, 40), ForeColor = SystemColors.HighlightText };
-
+                scheme.ColoredCheckedListBoxStyle = new ColoredCheckedListBoxData()
+                {
+                    BackColor = Color.FromArgb(40, 40, 40),
+                    ForeColor = SystemColors.HighlightText,
+                    SupportedVideoColor = Color.DarkBlue,
+                    NotSupportedVideoColor = Color.DimGray
+                };
                 return scheme;
             }
         }
@@ -309,6 +332,12 @@ namespace UmaMusumeDBBrowser
         {
             public Color BackColor { get; set; }
             public Color ForeColor { get; set; }
+        }
+
+        public class ColoredCheckedListBoxData : GenericColorData
+        {
+            public Color SupportedVideoColor { get; set; }
+            public Color NotSupportedVideoColor { get; set; }
         }
 
         public class GridColorData : GenericColorData
