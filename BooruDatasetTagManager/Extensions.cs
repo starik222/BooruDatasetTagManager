@@ -138,11 +138,22 @@ namespace BooruDatasetTagManager
 
         public static Image GetImageFromFile(string imagePath)
         {
+            var isMp4 = VideoExtensions.Contains(Path.GetExtension(imagePath).ToLower());
+            try
+            {
+                if (isMp4)
+                {
+                    return ScreenListerNET.GetImageFromVideoFile(imagePath);
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
             bool isWebP = false;
             byte[] imageData = File.ReadAllBytes(imagePath);
             if (imageData.Length < 4)
                 return null;
-            var isMp4 = VideoExtensions.Contains(Path.GetExtension(imagePath).ToLower());
             if (BitConverter.ToInt32(imageData, 0) == 1179011410 || BitConverter.ToInt32(imageData, 0) == 1346520407)
                 isWebP = true;
             try
@@ -153,10 +164,6 @@ namespace BooruDatasetTagManager
                     {
                         return wp.Load(imageData);
                     }
-                }
-                else if (isMp4) 
-                {
-                    return ScreenListerNET.GetImageFromVideoBuffer(imageData);
                 }
                 else 
                 {
