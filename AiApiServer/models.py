@@ -53,6 +53,7 @@ JOYCAPTION_CAPTIONING_NAMES = [
 
 QWEN25_CAPTIONING_NAMES = [
     ("Qwen/Qwen2.5-VL-3B-Instruct", True),
+    ("huihui-ai/Qwen2.5-VL-3B-Instruct-abliterated", True),
     ("Qwen/Qwen2.5-VL-7B-Instruct", True),
     ("huihui-ai/Qwen2.5-VL-7B-Instruct-abliterated", True),
     ("unsloth/Qwen2.5-VL-7B-Instruct-unsloth-bnb-4bit", True),

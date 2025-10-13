@@ -99,7 +99,7 @@ class Qwen25CaptionCaptioning:
                 messages[0]["content"][0]["max_pixels"] = self.max_pixels
 
         if settings.current.custom_system_prompt != "":
-            messages.append({"role": "system", "content": settings.current.custom_system_prompt})
+            messages.insert(0, {"role": "system", "content": settings.current.custom_system_prompt})
         # Preparation for inference
         text = self.processor.apply_chat_template(
             messages, tokenize=False, add_generation_prompt=True
