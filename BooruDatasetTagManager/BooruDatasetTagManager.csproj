@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="OpenAI" Version="2.7.0" />
     <PackageReference Include="TabControl" Version="2.1.2" />
   </ItemGroup>
   <ItemGroup>

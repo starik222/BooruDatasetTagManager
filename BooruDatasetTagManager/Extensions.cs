@@ -23,10 +23,12 @@ namespace BooruDatasetTagManager
     public static class Extensions
     {
 
-        public static string[] ImageExtensions =  { ".jpg", ".png", ".bmp", ".jpeg", ".webp" };
-        public static string[] VideoExtensions =  { ".mp4", ".flv", ".mkv", ".ts", ".avi" };
+        public static string[] ImageExtensions = { ".jpg", ".png", ".bmp", ".jpeg", ".webp" };
+        public static string[] VideoExtensions = { ".mp4", ".flv", ".mkv", ".ts", ".avi" };
 
-    public static void AddRange(this List<TagValue> list, IEnumerable<string> range)
+        public delegate void ErrorHandler(string message);
+
+        public static void AddRange(this List<TagValue> list, IEnumerable<string> range)
         {
             foreach (var item in range)
                 list.Add(new TagValue(item));
@@ -173,7 +175,7 @@ namespace BooruDatasetTagManager
                         return wp.Load(imageData);
                     }
                 }
-                else 
+                else
                 {
                     return Image.FromStream(new MemoryStream(imageData));
                 }
@@ -286,7 +288,7 @@ namespace BooruDatasetTagManager
                 {
                     List<ReleaseInfo> releasesList = JsonConvert.DeserializeObject<List<ReleaseInfo>>(data);
 
-                    releasesList.Sort((b,a)=>a.published_at.CompareTo(b.published_at));
+                    releasesList.Sort((b, a) => a.published_at.CompareTo(b.published_at));
                     currentVersion = "v" + currentVersion;
                     int curIndex = releasesList.FindIndex(a => currentVersion.StartsWith(a.tag_name));
                     if (curIndex <= 0)
@@ -325,7 +327,7 @@ namespace BooruDatasetTagManager
 
         public static T Pop<T>(this List<T> list)
         {
-            if(list == null || list.Count == 0)
+            if (list == null || list.Count == 0)
                 return default;
             T res = list[list.Count - 1];
             //T res = list[0];
