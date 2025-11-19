@@ -228,7 +228,7 @@ namespace BooruDatasetTagManager
             gridViewTags.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { ImageTags, Translation, ImageName, Image, Id });
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 14F);
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -500,7 +500,7 @@ namespace BooruDatasetTagManager
             // 
             // menuStrip1
             // 
-            menuStrip1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            menuStrip1.Font = new System.Drawing.Font("Segoe UI", 12F);
             menuStrip1.ImageScalingSize = new System.Drawing.Size(28, 28);
             menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem, viewToolStripMenuItem, MenuSetting, toolsToolStripMenuItem, debugToolStripMenuItem });
             menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -695,7 +695,7 @@ namespace BooruDatasetTagManager
             gridViewAllTags.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { TagsColumn, TranslationColumn, CountColumn });
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 14F);
             dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -1091,7 +1091,7 @@ namespace BooruDatasetTagManager
             // 
             // toolStripLabelDataSet
             // 
-            toolStripLabelDataSet.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            toolStripLabelDataSet.Font = new System.Drawing.Font("Segoe UI", 12F);
             toolStripLabelDataSet.Name = "toolStripLabelDataSet";
             toolStripLabelDataSet.Size = new System.Drawing.Size(62, 21);
             toolStripLabelDataSet.Text = "Dataset";
@@ -1180,7 +1180,7 @@ namespace BooruDatasetTagManager
             // 
             // toolStripLabelImageTags
             // 
-            toolStripLabelImageTags.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            toolStripLabelImageTags.Font = new System.Drawing.Font("Segoe UI", 12F);
             toolStripLabelImageTags.Name = "toolStripLabelImageTags";
             toolStripLabelImageTags.Size = new System.Drawing.Size(86, 22);
             toolStripLabelImageTags.Text = "Image tags";
@@ -1271,7 +1271,7 @@ namespace BooruDatasetTagManager
             // 
             // toolStripLabelAllTags
             // 
-            toolStripLabelAllTags.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            toolStripLabelAllTags.Font = new System.Drawing.Font("Segoe UI", 12F);
             toolStripLabelAllTags.Name = "toolStripLabelAllTags";
             toolStripLabelAllTags.Size = new System.Drawing.Size(61, 22);
             toolStripLabelAllTags.Text = "All tags";
@@ -1334,7 +1334,7 @@ namespace BooruDatasetTagManager
             gridViewAutoTags.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Tahoma", 14F);
             dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -1409,7 +1409,7 @@ namespace BooruDatasetTagManager
             // 
             // toolStripLabel1
             // 
-            toolStripLabel1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            toolStripLabel1.Font = new System.Drawing.Font("Segoe UI", 12F);
             toolStripLabel1.Name = "toolStripLabel1";
             toolStripLabel1.Size = new System.Drawing.Size(150, 22);
             toolStripLabel1.Text = "Auto generated tags";

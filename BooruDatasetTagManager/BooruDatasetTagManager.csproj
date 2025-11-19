@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net6.0-windows</TargetFrameworks>
+    <TargetFrameworks>net8.0-windows</TargetFrameworks>
     <OutputType>WinExe</OutputType>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -99,7 +99,7 @@
 
   <ItemGroup>
     <Reference Include="ScreenListerNET">
-      <HintPath>..\..\ScreenLister\ScreenList\bin\Release\net6.0-windows\ScreenListerNET.dll</HintPath>
+      <HintPath>..\..\ScreenLister\ScreenList\bin\x64\Release\net6.0-windows\ScreenListerNET.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Target Name="MoveNativeDllsToSubDirectory" AfterTargets="Publish">

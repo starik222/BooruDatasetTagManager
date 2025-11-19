@@ -7,7 +7,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml.Linq;
 
 namespace BooruDatasetTagManager.AiApi
@@ -244,6 +246,85 @@ namespace BooruDatasetTagManager.AiApi
                 result.ErrorMessage = response.ErrorMessage;
                 return result;
             }
+        }
+
+        public async Task<(List<AiApiClient.AutoTagItem> data, string errorMessage)> GetTagsWithAutoTagger(string imagePath, bool defSettings)
+        {
+            if (!defSettings || Program.Settings.AutoTagger.InterragatorParams.Count == 0)
+            {
+                Form_AutoTaggerSettings autoTaggerSettings = new Form_AutoTaggerSettings();
+                if (autoTaggerSettings.ShowDialog() != DialogResult.OK || Program.Settings.AutoTagger.InterragatorParams.Count == 0)
+                {
+                    autoTaggerSettings.Close();
+                    return (null, I18n.GetText("TipGenCancel"));
+                }
+            }
+            if (!Program.AutoTagger.IsConnected)
+            {
+                if (!await Program.AutoTagger.ConnectAsync())
+                {
+                    return (null, I18n.GetText("TipUnConnectInterrogator"));
+                }
+            }
+            List<ModelParameters> models = new List<ModelParameters>();
+            foreach (var item in Program.Settings.AutoTagger.InterragatorParams)
+            {
+                ModelParameters model = new ModelParameters() { ModelName = item.Key };
+                foreach (var parameter in item.Value)
+                {
+                    model.AdditionalParameters.Add(new ModelAdditionalParameters()
+                    {
+                        Key = parameter.Key,
+                        Value = parameter.Value,
+                        Type = parameter.Type,
+                        Comment = ""
+                    });
+                }
+                models.Add(model);
+            }
+            
+            var listOfTags = await Program.AutoTagger.InterrogateImage(imagePath, models, Program.Settings.AutoTagger.SerializeVramUsage, Program.Settings.AutoTagger.SkipInternetRequests);
+            string errMess = listOfTags.Message;
+            if (!listOfTags.Success)
+            {
+                return (null, errMess);
+            }
+            List<AiApiClient.AutoTagItem> result = listOfTags.GetTagList(Program.Settings.AutoTagger.UnionMode);
+
+            if (Program.Settings.AutoTagger.TagFilteringMode != TagFilteringMode.None && !string.IsNullOrEmpty(Program.Settings.AutoTagger.TagFilter))
+            {
+                if (Program.Settings.AutoTagger.TagFilteringMode == TagFilteringMode.Regex)
+                    try
+                    {
+                        result = result.Where(t => Regex.IsMatch(t.Tag, Program.Settings.AutoTagger.TagFilter, RegexOptions.IgnoreCase)).ToList();
+                    }
+                    catch
+                    {
+                        errMess = I18n.GetText("TipInvalidRegex");
+                    }
+                else
+                {
+                    string[] tagFilter = Program.Settings.AutoTagger.TagFilter.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+                    if (Program.Settings.AutoTagger.TagFilteringMode == TagFilteringMode.Equal)
+                        result = result.Where(t => tagFilter.Any(f => string.Equals(t.Tag, f, StringComparison.OrdinalIgnoreCase))).ToList();
+                    else if (Program.Settings.AutoTagger.TagFilteringMode == TagFilteringMode.NotEqual)
+                        result = result.Where(t => !tagFilter.Any(f => string.Equals(t.Tag, f, StringComparison.OrdinalIgnoreCase))).ToList();
+                    else if (Program.Settings.AutoTagger.TagFilteringMode == TagFilteringMode.Containing)
+                        result = result.Where(t => tagFilter.Any(f => t.Tag.Contains(f, StringComparison.OrdinalIgnoreCase))).ToList();
+                    else if (Program.Settings.AutoTagger.TagFilteringMode == TagFilteringMode.NotContaining)
+                        result = result.Where(t => !tagFilter.Any(f => t.Tag.Contains(f, StringComparison.OrdinalIgnoreCase))).ToList();
+                }
+            }
+
+            if (Program.Settings.AutoTagger.SortMode == AutoTaggerSort.Confidence)
+            {
+                result.Sort((a, b) => b.Confidence.CompareTo(a.Confidence));
+            }
+            else if (Program.Settings.AutoTagger.SortMode == AutoTaggerSort.Alphabetical)
+            {
+                result.Sort((a, b) => a.Tag.CompareTo(b.Tag));
+            }
+            return (result, errMess);
         }
 
         public async Task<ConfigResponse> GetListModelsByType(string modelType)

@@ -1,25 +1,14 @@
-﻿using BooruDatasetTagManager.AiApi;
-using Microsoft.Win32.SafeHandles;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Security.AccessControl;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Transactions;
 using System.Windows.Forms;
-using Translator;
 using static BooruDatasetTagManager.DatasetManager;
 
 namespace BooruDatasetTagManager
@@ -1994,6 +1983,11 @@ namespace BooruDatasetTagManager
 
         private async void BtnAutoGetTagsDefSet_Click(object sender, EventArgs e)
         {
+            await GetTagsWithAutoTagger(true);
+        }
+
+        private async Task GetTagsWithAutoTagger(bool defSettings)
+        {
             if (Program.DataManager == null)
             {
                 MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
@@ -2002,109 +1996,29 @@ namespace BooruDatasetTagManager
             tabAutoTags.Select();
             LockEdit(true);
             var selectedImageData = Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value];
-            var tagList = await GetTagsWithAutoTagger(selectedImageData.ImageFilePath, true);
-            if (tagList != null)
+            var taggerResult = await Program.AutoTagger.GetTagsWithAutoTagger(selectedImageData.ImageFilePath, defSettings);
+            if (!string.IsNullOrEmpty(taggerResult.errorMessage))
+                SetStatus(taggerResult.errorMessage);
+            if (taggerResult.data != null)
             {
                 if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.AllWithReplacement)
-                    gridViewAutoTags.DataSource = tagList;
+                    gridViewAutoTags.DataSource = taggerResult.data;
                 else if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.OnlyNewWithAddition)
                 {
                     foreach (var item in selectedImageData.Tags.TextTags)
                     {
-                        tagList.RemoveAll(a => a.Tag == item);
+                        taggerResult.data.RemoveAll(a => a.Tag == item);
                     }
-                    gridViewAutoTags.DataSource = tagList;
+                    gridViewAutoTags.DataSource = taggerResult.data;
                 }
                 else if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.SkipExistTagList)
                 {
                     if (selectedImageData.Tags.Count == 0)
-                        gridViewAutoTags.DataSource = tagList;
+                        gridViewAutoTags.DataSource = taggerResult.data;
                 }
             }
 
             LockEdit(false);
-        }
-
-        private async Task<List<AiApiClient.AutoTagItem>> GetTagsWithAutoTagger(string imagePath, bool defSettings)
-        {
-            if (gridViewDS.SelectedRows.Count == 0)
-                return null;
-            if (!defSettings || Program.Settings.AutoTagger.InterragatorParams.Count == 0)
-            {
-                Form_AutoTaggerSettings autoTaggerSettings = new Form_AutoTaggerSettings();
-                if (autoTaggerSettings.ShowDialog() != DialogResult.OK || Program.Settings.AutoTagger.InterragatorParams.Count == 0)
-                {
-                    autoTaggerSettings.Close();
-                    SetStatus(I18n.GetText("TipGenCancel"));
-                    return null;
-                }
-            }
-            if (!Program.AutoTagger.IsConnected)
-            {
-                if (!await Program.AutoTagger.ConnectAsync())
-                {
-                    SetStatus(I18n.GetText("TipUnConnectInterrogator"));
-                    return null;
-                }
-            }
-            List<ModelParameters> models = new List<ModelParameters>();
-            foreach (var item in Program.Settings.AutoTagger.InterragatorParams)
-            {
-                ModelParameters model = new ModelParameters(){ ModelName = item.Key };
-                foreach (var parameter in item.Value)
-                {
-                    model.AdditionalParameters.Add(new ModelAdditionalParameters()
-                    {
-                        Key = parameter.Key,
-                        Value = parameter.Value,
-                        Type = parameter.Type,
-                        Comment = ""
-                    });
-                }
-                models.Add(model);
-            }
-            var listOfTags = await Program.AutoTagger.InterrogateImage(imagePath, models, Program.Settings.AutoTagger.SerializeVramUsage, Program.Settings.AutoTagger.SkipInternetRequests);
-            SetStatus(listOfTags.Message);
-            if (!listOfTags.Success)
-            {
-                return null;
-            }
-            List<AiApiClient.AutoTagItem> result = listOfTags.GetTagList(Program.Settings.AutoTagger.UnionMode);
-
-            if (Program.Settings.AutoTagger.TagFilteringMode != TagFilteringMode.None && !string.IsNullOrEmpty(Program.Settings.AutoTagger.TagFilter))
-            {
-                if (Program.Settings.AutoTagger.TagFilteringMode == TagFilteringMode.Regex)
-                    try
-                    {
-                        result = result.Where(t => Regex.IsMatch(t.Tag, Program.Settings.AutoTagger.TagFilter, RegexOptions.IgnoreCase)).ToList();
-                    }
-                    catch
-                    {
-                        SetStatus(I18n.GetText("TipInvalidRegex"));
-                    }
-                else
-                {
-                    string[] tagFilter = Program.Settings.AutoTagger.TagFilter.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-                    if (Program.Settings.AutoTagger.TagFilteringMode == TagFilteringMode.Equal)
-                        result = result.Where(t => tagFilter.Any(f => string.Equals(t.Tag, f, StringComparison.OrdinalIgnoreCase))).ToList();
-                    else if (Program.Settings.AutoTagger.TagFilteringMode == TagFilteringMode.NotEqual)
-                        result = result.Where(t => !tagFilter.Any(f => string.Equals(t.Tag, f, StringComparison.OrdinalIgnoreCase))).ToList();
-                    else if (Program.Settings.AutoTagger.TagFilteringMode == TagFilteringMode.Containing)
-                        result = result.Where(t => tagFilter.Any(f => t.Tag.Contains(f, StringComparison.OrdinalIgnoreCase))).ToList();
-                    else if (Program.Settings.AutoTagger.TagFilteringMode == TagFilteringMode.NotContaining)
-                        result = result.Where(t => !tagFilter.Any(f => t.Tag.Contains(f, StringComparison.OrdinalIgnoreCase))).ToList();
-                }
-            }
-
-            if (Program.Settings.AutoTagger.SortMode == AutoTaggerSort.Confidence)
-            {
-                result.Sort((a, b) => b.Confidence.CompareTo(a.Confidence));
-            }
-            else if (Program.Settings.AutoTagger.SortMode == AutoTaggerSort.Alphabetical)
-            {
-                result.Sort((a, b) => a.Tag.CompareTo(b.Tag));
-            }
-            return result;
         }
 
         private async void generateTagsWithCurrentSettingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2138,19 +2052,21 @@ namespace BooruDatasetTagManager
             }
             foreach (var item in selectedTagsList)
             {
-                var tagList = await GetTagsWithAutoTagger(item.ImageFilePath, defSettings);
+                var taggerResult = await Program.AutoTagger.GetTagsWithAutoTagger(item.ImageFilePath, defSettings);
                 if (!defSettings)
                     defSettings = true;
-                if (tagList != null)
+                if (!string.IsNullOrEmpty(taggerResult.errorMessage))
+                    SetStatus(taggerResult.errorMessage);
+                if (taggerResult.data != null)
                 {
                     if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.AllWithReplacement)
                     {
                         item.Tags.Clear();
-                        item.Tags.AddRange(tagList.Select(a => a.Tag), true);
+                        item.Tags.AddRange(taggerResult.data.Select(a => a.Tag), true);
                     }
                     else if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.OnlyNewWithAddition)
                     {
-                        foreach (var aTag in tagList)
+                        foreach (var aTag in taggerResult.data)
                         {
                             item.Tags.AddTag(aTag.Tag, true, AddingType.Down, 0);
                         }
@@ -2159,7 +2075,7 @@ namespace BooruDatasetTagManager
                     {
                         if (item.Tags.Count == 0)
                         {
-                            item.Tags.AddRange(tagList.Select(a => a.Tag), true);
+                            item.Tags.AddRange(taggerResult.data.Select(a => a.Tag), true);
                         }
                     }
                 }
@@ -2343,37 +2259,7 @@ namespace BooruDatasetTagManager
 
         private async void btnAutoGetTagsOpenSet_Click(object sender, EventArgs e)
         {
-            if (Program.DataManager == null)
-            {
-                MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
-                return;
-            }
-            tabAutoTags.Select();
-            LockEdit(true);
-            var selectedImageData = Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value];
-            var tagList = await GetTagsWithAutoTagger(selectedImageData.ImageFilePath, false);
-            if (tagList != null)
-            {
-                if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.AllWithReplacement)
-                    gridViewAutoTags.DataSource = tagList;
-                else if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.OnlyNewWithAddition)
-                {
-                    foreach (var item in selectedImageData.Tags.TextTags)
-                    {
-                        tagList.RemoveAll(a => a.Tag == item);
-                    }
-                    gridViewAutoTags.DataSource = tagList;
-                }
-                else if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.SkipExistTagList)
-                {
-                    if (selectedImageData.Tags.Count == 0)
-                    {
-                        gridViewAutoTags.DataSource = tagList;
-                    }
-                }
-            }
-
-            LockEdit(false);
+            await GetTagsWithAutoTagger(false);
         }
 
         private void MenuHideAllTags_Click(object sender, EventArgs e)

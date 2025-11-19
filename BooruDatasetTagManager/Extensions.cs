@@ -40,7 +40,9 @@ namespace BooruDatasetTagManager
         public static object LoadDataSet(string path)
         {
             MemoryStream ms = new MemoryStream(File.ReadAllBytes(path));
+#pragma warning disable SYSLIB0011 // Тип или член устарел
             var obj = new BinaryFormatter().Deserialize((Stream)ms);
+#pragma warning restore SYSLIB0011 // Тип или член устарел
             ms.Close();
             return obj;
         }
@@ -48,7 +50,9 @@ namespace BooruDatasetTagManager
         public static object LoadDataSet(byte[] data)
         {
             MemoryStream ms = new MemoryStream(data);
+#pragma warning disable SYSLIB0011 // Тип или член устарел
             var obj = new BinaryFormatter().Deserialize((Stream)ms);
+#pragma warning restore SYSLIB0011 // Тип или член устарел
             ms.Close();
             return obj;
         }
@@ -57,7 +61,9 @@ namespace BooruDatasetTagManager
         public static void SaveDataSet(object lst, string path)
         {
             MemoryStream ms = new MemoryStream();
+#pragma warning disable SYSLIB0011 // Тип или член устарел
             BinaryFormatter bf = new BinaryFormatter();
+#pragma warning restore SYSLIB0011 // Тип или член устарел
             bf.Serialize(ms, lst);
             File.WriteAllBytes(path, ms.ToArray());
             ms.Close();
@@ -67,7 +73,9 @@ namespace BooruDatasetTagManager
         {
             using (MemoryStream ms = new MemoryStream())
             {
+#pragma warning disable SYSLIB0011 // Тип или член устарел
                 BinaryFormatter bf = new BinaryFormatter();
+#pragma warning restore SYSLIB0011 // Тип или член устарел
                 bf.Serialize(ms, objItem);
                 return ms.ToArray();
             }
