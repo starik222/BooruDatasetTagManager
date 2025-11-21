@@ -45,6 +45,7 @@ namespace BooruDatasetTagManager
         public HotkeyData Hotkeys { get; set; }
 
         public InterragatorSettings AutoTagger { get; set; }
+        public OpenAiSettings OpenAiAutoTagger { get; set; }
 
         public int TagImagesGridSize { get; set; } = 400;
 
@@ -65,6 +66,7 @@ namespace BooruDatasetTagManager
         {
             InitAvaibleLangs();
             AutoTagger = new InterragatorSettings();
+            OpenAiAutoTagger = new OpenAiSettings();
             Hotkeys = new HotkeyData();
             Hotkeys.InitDefault();
             LoadData(appDir);
@@ -73,6 +75,7 @@ namespace BooruDatasetTagManager
         public AppSettings()
         {
             AutoTagger = new InterragatorSettings();
+            OpenAiAutoTagger = new OpenAiSettings();
             Hotkeys = new HotkeyData();
             Hotkeys.InitDefault();
         }
@@ -125,6 +128,11 @@ namespace BooruDatasetTagManager
                 if (AutoTagger == null)
                 {
                     AutoTagger = new InterragatorSettings();
+                }
+                OpenAiAutoTagger = tempSettings.OpenAiAutoTagger;
+                if (OpenAiAutoTagger == null)
+                {
+                    OpenAiAutoTagger = new OpenAiSettings();
                 }
 
                 if (tempSettings.Hotkeys != null)
@@ -313,15 +321,40 @@ namespace BooruDatasetTagManager
         }
     }
 
-    public class InterragatorSettings
+    public class OpenAiSettings : TaggerSettings
+    {
+        public new string ConnectionAddress { get; set; } = "http://127.0.0.1:1234/v1";
+        public string ApiKey { get; set; } = "lm-studio";
+        public int RequestTimeout { get; set; } = 3600;
+        public string SystemPrompt { get; set; } = "";
+        public string UserPrompt { get; set; } = "";
+        public float Temperature { get; set; } = -1;
+        public float TopP { get; set; } = -1;
+        public float RepeatPenalty { get; set; } = 0;
+        public string Model { get; set; } = "";
+        public bool SplitString { get; set; } = false;
+        public string Splitter { get; set; } = ",";
+
+
+        public OpenAiSettings()
+        {
+        }
+    }
+
+    public abstract class TaggerSettings
     {
         public string ConnectionAddress { get; set; } = "http://127.0.0.1:50051";
-        public Dictionary<string, List<AdditionalParameters>> InterragatorParams { get; set; }
         public AutoTaggerSort SortMode { get; set; } = AutoTaggerSort.None;
-        public NetworkUnionMode UnionMode { get; set; } = NetworkUnionMode.Addition;
         public NetworkResultSetMode SetMode { get; set; } = NetworkResultSetMode.AllWithReplacement;
         public TagFilteringMode TagFilteringMode { get; set; } = TagFilteringMode.None;
         public string TagFilter { get; set; } = "";
+    }
+
+    public class InterragatorSettings : TaggerSettings
+    {
+        public new string ConnectionAddress { get; set; } = "http://127.0.0.1:50051";
+        public Dictionary<string, List<AdditionalParameters>> InterragatorParams { get; set; }
+        public NetworkUnionMode UnionMode { get; set; } = NetworkUnionMode.Addition;
         public bool SerializeVramUsage { get; set; } = false;
         public bool SkipInternetRequests { get; set; } = false;
         public string CustomSystemPrompt { get; set; } = "";

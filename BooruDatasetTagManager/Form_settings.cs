@@ -20,6 +20,7 @@ namespace BooruDatasetTagManager
             Program.ColorManager.ChangeColorSchemeInConteiner(Controls, Program.ColorManager.SelectedScheme);
             Program.ColorManager.SchemeChanded += ColorManager_SchemeChanded;
             Program.Settings.TranslationLanguage ??= "en-US";
+            textBoxOpenApiEndpoint.AutoCompleteSource = AutoCompleteSource.CustomSource;
         }
         private FontSettings gridFontSettings = null;
         private FontSettings autocompleteFontSettings = null;
@@ -58,14 +59,13 @@ namespace BooruDatasetTagManager
             comboBoxLanguage.SelectedItem = Program.Settings.Language;
             comboBoxPreviewType.Items.AddRange(Extensions.GetFriendlyEnumValues<ImagePreviewType>());
             comboBoxPreviewType.SelectedIndex = Extensions.GetEnumIndexFromValue<ImagePreviewType>(Program.Settings.PreviewType.ToString());
-            SwitchLanguage();
             //hotkeys
             foreach (var item in Program.Settings.Hotkeys.Items)
             {
                 dataGridViewHotkeys.Rows.Add(item.Id, item.Text, item.GetHotkeyString());
             }
             //Interrogator
-            textBoxConnectionAddress.Text = Program.Settings.AutoTagger.ConnectionAddress;
+            textBoxAiApiEndpoint.Text = Program.Settings.AutoTagger.ConnectionAddress;
             if (string.IsNullOrEmpty(Program.Settings.AutoTagger.CustomSystemPrompt))
             {
                 checkBoxCustomPrompt.Checked = false;
@@ -77,6 +77,11 @@ namespace BooruDatasetTagManager
                 textBoxCustomPrompt.Enabled = true;
                 textBoxCustomPrompt.Text = Program.Settings.AutoTagger.CustomSystemPrompt;
             }
+            textBoxOpenApiEndpoint.Text = Program.Settings.OpenAiAutoTagger.ConnectionAddress;
+            textBoxOpenAiApiKey.Text = Program.Settings.OpenAiAutoTagger.ApiKey;
+            numericUpDownOpenAiTimeout.Value = Program.Settings.OpenAiAutoTagger.RequestTimeout;
+
+            SwitchLanguage();
 
         }
 
@@ -125,7 +130,7 @@ namespace BooruDatasetTagManager
                 }
             }
             //Interrogator
-            Program.Settings.AutoTagger.ConnectionAddress = textBoxConnectionAddress.Text;
+            Program.Settings.AutoTagger.ConnectionAddress = textBoxAiApiEndpoint.Text;
             if (checkBoxCustomPrompt.Checked)
             {
                 Program.Settings.AutoTagger.CustomSystemPrompt = textBoxCustomPrompt.Text;
@@ -137,6 +142,17 @@ namespace BooruDatasetTagManager
             if (Program.AutoTagger != null && Program.AutoTagger.IsConnected)
             {
                 await Program.AutoTagger.SetCustomSystemPrompt(Program.Settings.AutoTagger.CustomSystemPrompt);
+            }
+            Program.Settings.OpenAiAutoTagger.ConnectionAddress = textBoxOpenApiEndpoint.Text;
+            Program.Settings.OpenAiAutoTagger.ApiKey = textBoxOpenAiApiKey.Text;
+            Program.Settings.OpenAiAutoTagger.RequestTimeout = (int)numericUpDownOpenAiTimeout.Value;
+            if (!string.IsNullOrEmpty(Program.Settings.OpenAiAutoTagger.ConnectionAddress) && !string.IsNullOrEmpty(Program.Settings.OpenAiAutoTagger.ApiKey))
+            {
+                try
+                {
+                    Program.OpenAiAutoTagger = new AiApi.AiOpenAiClient(Program.Settings.OpenAiAutoTagger.ConnectionAddress, Program.Settings.OpenAiAutoTagger.ApiKey, Program.Settings.OpenAiAutoTagger.RequestTimeout);
+                }
+                catch { }
             }
 
             Program.Settings.SaveSettings();
@@ -208,8 +224,11 @@ namespace BooruDatasetTagManager
             labelTranslService.Text = I18n.GetText("SettingTranslationSrv");
             checkBoxLoadOnlyManual.Text = I18n.GetText("SettingLoadOnlyManualAutocomplete");
             checkBoxCacheImages.Text = I18n.GetText("SettingsCheckBoxCacheImages");
-            LabelConnectionAddress.Text = I18n.GetText("SettingsInterrogatorAddress");
+            LabelApApiEndpoint.Text = I18n.GetText("SettingsInterrogatorAddress");
+            labelOpenAiEndpoint.Text = I18n.GetText("SettingsInterrogatorAddress");
             checkBoxCustomPrompt.Text = I18n.GetText("SettingsCheckBoxCustomPrompt");
+            labelOpenAiApiKey.Text = I18n.GetText("SettingsOpenAiApiKey");
+            labelOpenAiTimeout.Text = I18n.GetText("SettingsOpenAiRequestTimeout");
 
             comboAutocompMode.Items.Clear();
             comboAutocompSort.Items.Clear();

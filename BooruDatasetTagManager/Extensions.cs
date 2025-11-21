@@ -188,8 +188,12 @@ namespace BooruDatasetTagManager
 
         public static byte[] ImageToByteArray(Image image)
         {
-            ImageConverter converter = new ImageConverter();
-            return (byte[])converter.ConvertTo(image, typeof(byte[]));
+            using (var memoryStream = new MemoryStream())
+            {
+                image.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
+                return memoryStream.ToArray();
+            }
+
         }
 
         public static Bitmap Transparent2Color(Bitmap bmp1, Color target)

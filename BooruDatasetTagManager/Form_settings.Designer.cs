@@ -82,10 +82,18 @@ namespace BooruDatasetTagManager
             comboBoxColorScheme = new System.Windows.Forms.ComboBox();
             tabTranslations = new Manina.Windows.Forms.Tab();
             tabInterrogator = new Manina.Windows.Forms.Tab();
+            groupBox2 = new System.Windows.Forms.GroupBox();
+            numericUpDownOpenAiTimeout = new System.Windows.Forms.NumericUpDown();
+            labelOpenAiTimeout = new System.Windows.Forms.Label();
+            textBoxOpenAiApiKey = new System.Windows.Forms.TextBox();
+            labelOpenAiApiKey = new System.Windows.Forms.Label();
+            textBoxOpenApiEndpoint = new System.Windows.Forms.TextBox();
+            labelOpenAiEndpoint = new System.Windows.Forms.Label();
+            groupBox1 = new System.Windows.Forms.GroupBox();
+            LabelApApiEndpoint = new System.Windows.Forms.Label();
             textBoxCustomPrompt = new System.Windows.Forms.TextBox();
+            textBoxAiApiEndpoint = new System.Windows.Forms.TextBox();
             checkBoxCustomPrompt = new System.Windows.Forms.CheckBox();
-            textBoxConnectionAddress = new System.Windows.Forms.TextBox();
-            LabelConnectionAddress = new System.Windows.Forms.Label();
             tabHotkeys = new Manina.Windows.Forms.Tab();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
@@ -96,6 +104,9 @@ namespace BooruDatasetTagManager
             tabUI.SuspendLayout();
             tabTranslations.SuspendLayout();
             tabInterrogator.SuspendLayout();
+            groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownOpenAiTimeout).BeginInit();
+            groupBox1.SuspendLayout();
             tabHotkeys.SuspendLayout();
             SuspendLayout();
             // 
@@ -433,7 +444,6 @@ namespace BooruDatasetTagManager
             dataGridViewHotkeys.Name = "dataGridViewHotkeys";
             dataGridViewHotkeys.ReadOnly = true;
             dataGridViewHotkeys.RowHeadersVisible = false;
-            dataGridViewHotkeys.RowTemplate.Height = 25;
             dataGridViewHotkeys.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             dataGridViewHotkeys.Size = new System.Drawing.Size(0, 0);
             dataGridViewHotkeys.TabIndex = 0;
@@ -471,7 +481,7 @@ namespace BooruDatasetTagManager
             SettingFrame.Controls.Add(tabHotkeys);
             SettingFrame.Location = new System.Drawing.Point(2, 1);
             SettingFrame.Name = "SettingFrame";
-            SettingFrame.SelectedIndex = 0;
+            SettingFrame.SelectedIndex = 3;
             SettingFrame.Size = new System.Drawing.Size(630, 427);
             SettingFrame.TabIndex = 6;
             SettingFrame.Tabs.Add(tabGeneral);
@@ -502,9 +512,9 @@ namespace BooruDatasetTagManager
             tabGeneral.Controls.Add(comboAutocompSort);
             tabGeneral.Controls.Add(comboAutocompMode);
             tabGeneral.Controls.Add(LabelAutocompSort);
-            tabGeneral.Location = new System.Drawing.Point(1, 23);
+            tabGeneral.Location = new System.Drawing.Point(0, 0);
             tabGeneral.Name = "tabGeneral";
-            tabGeneral.Size = new System.Drawing.Size(628, 403);
+            tabGeneral.Size = new System.Drawing.Size(0, 0);
             tabGeneral.Text = "General";
             // 
             // checkBoxFixOnLoad
@@ -631,52 +641,131 @@ namespace BooruDatasetTagManager
             // 
             // tabInterrogator
             // 
-            tabInterrogator.Controls.Add(textBoxCustomPrompt);
-            tabInterrogator.Controls.Add(checkBoxCustomPrompt);
-            tabInterrogator.Controls.Add(textBoxConnectionAddress);
-            tabInterrogator.Controls.Add(LabelConnectionAddress);
+            tabInterrogator.Controls.Add(groupBox2);
+            tabInterrogator.Controls.Add(groupBox1);
             tabInterrogator.Location = new System.Drawing.Point(1, 23);
             tabInterrogator.Name = "tabInterrogator";
             tabInterrogator.Size = new System.Drawing.Size(628, 403);
             tabInterrogator.Text = "AiApiServer";
             // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(numericUpDownOpenAiTimeout);
+            groupBox2.Controls.Add(labelOpenAiTimeout);
+            groupBox2.Controls.Add(textBoxOpenAiApiKey);
+            groupBox2.Controls.Add(labelOpenAiApiKey);
+            groupBox2.Controls.Add(textBoxOpenApiEndpoint);
+            groupBox2.Controls.Add(labelOpenAiEndpoint);
+            groupBox2.Location = new System.Drawing.Point(9, 211);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new System.Drawing.Size(611, 179);
+            groupBox2.TabIndex = 5;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "OpenAI settings";
+            // 
+            // numericUpDownOpenAiTimeout
+            // 
+            numericUpDownOpenAiTimeout.Location = new System.Drawing.Point(137, 74);
+            numericUpDownOpenAiTimeout.Maximum = new decimal(new int[] { 99999, 0, 0, 0 });
+            numericUpDownOpenAiTimeout.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericUpDownOpenAiTimeout.Name = "numericUpDownOpenAiTimeout";
+            numericUpDownOpenAiTimeout.Size = new System.Drawing.Size(120, 23);
+            numericUpDownOpenAiTimeout.TabIndex = 5;
+            numericUpDownOpenAiTimeout.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // labelOpenAiTimeout
+            // 
+            labelOpenAiTimeout.AutoSize = true;
+            labelOpenAiTimeout.Location = new System.Drawing.Point(6, 76);
+            labelOpenAiTimeout.Name = "labelOpenAiTimeout";
+            labelOpenAiTimeout.Size = new System.Drawing.Size(94, 15);
+            labelOpenAiTimeout.TabIndex = 4;
+            labelOpenAiTimeout.Text = "Request timeout";
+            // 
+            // textBoxOpenAiApiKey
+            // 
+            textBoxOpenAiApiKey.Location = new System.Drawing.Point(137, 45);
+            textBoxOpenAiApiKey.Name = "textBoxOpenAiApiKey";
+            textBoxOpenAiApiKey.Size = new System.Drawing.Size(468, 23);
+            textBoxOpenAiApiKey.TabIndex = 3;
+            // 
+            // labelOpenAiApiKey
+            // 
+            labelOpenAiApiKey.AutoSize = true;
+            labelOpenAiApiKey.Location = new System.Drawing.Point(6, 48);
+            labelOpenAiApiKey.Name = "labelOpenAiApiKey";
+            labelOpenAiApiKey.Size = new System.Drawing.Size(46, 15);
+            labelOpenAiApiKey.TabIndex = 2;
+            labelOpenAiApiKey.Text = "Api key";
+            // 
+            // textBoxOpenApiEndpoint
+            // 
+            textBoxOpenApiEndpoint.AutoCompleteCustomSource.AddRange(new string[] { "http://localhost:1234/v1", "http://192.168.11.2:1234/v1", "https://api.openai.com/v1", "https://generativelanguage.googleapis.com/v1beta/openai", "https://bothub.chat/api/v2/openai/v1" });
+            textBoxOpenApiEndpoint.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            textBoxOpenApiEndpoint.Location = new System.Drawing.Point(137, 16);
+            textBoxOpenApiEndpoint.Name = "textBoxOpenApiEndpoint";
+            textBoxOpenApiEndpoint.Size = new System.Drawing.Size(468, 23);
+            textBoxOpenApiEndpoint.TabIndex = 1;
+            // 
+            // labelOpenAiEndpoint
+            // 
+            labelOpenAiEndpoint.AutoSize = true;
+            labelOpenAiEndpoint.Location = new System.Drawing.Point(6, 19);
+            labelOpenAiEndpoint.Name = "labelOpenAiEndpoint";
+            labelOpenAiEndpoint.Size = new System.Drawing.Size(112, 15);
+            labelOpenAiEndpoint.TabIndex = 0;
+            labelOpenAiEndpoint.Text = "Connection address";
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(LabelApApiEndpoint);
+            groupBox1.Controls.Add(textBoxCustomPrompt);
+            groupBox1.Controls.Add(textBoxAiApiEndpoint);
+            groupBox1.Controls.Add(checkBoxCustomPrompt);
+            groupBox1.Location = new System.Drawing.Point(9, 6);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new System.Drawing.Size(611, 199);
+            groupBox1.TabIndex = 4;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "AiApiServer settings";
+            // 
+            // LabelApApiEndpoint
+            // 
+            LabelApApiEndpoint.AutoSize = true;
+            LabelApApiEndpoint.Location = new System.Drawing.Point(6, 23);
+            LabelApApiEndpoint.Name = "LabelApApiEndpoint";
+            LabelApApiEndpoint.Size = new System.Drawing.Size(112, 15);
+            LabelApApiEndpoint.TabIndex = 0;
+            LabelApApiEndpoint.Text = "Connection address";
+            // 
             // textBoxCustomPrompt
             // 
             textBoxCustomPrompt.Enabled = false;
-            textBoxCustomPrompt.Location = new System.Drawing.Point(9, 73);
+            textBoxCustomPrompt.Location = new System.Drawing.Point(6, 83);
             textBoxCustomPrompt.MaxLength = 3276700;
             textBoxCustomPrompt.Multiline = true;
             textBoxCustomPrompt.Name = "textBoxCustomPrompt";
             textBoxCustomPrompt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            textBoxCustomPrompt.Size = new System.Drawing.Size(611, 185);
+            textBoxCustomPrompt.Size = new System.Drawing.Size(599, 106);
             textBoxCustomPrompt.TabIndex = 3;
+            // 
+            // textBoxAiApiEndpoint
+            // 
+            textBoxAiApiEndpoint.Location = new System.Drawing.Point(137, 20);
+            textBoxAiApiEndpoint.Name = "textBoxAiApiEndpoint";
+            textBoxAiApiEndpoint.Size = new System.Drawing.Size(468, 23);
+            textBoxAiApiEndpoint.TabIndex = 1;
             // 
             // checkBoxCustomPrompt
             // 
             checkBoxCustomPrompt.AutoSize = true;
-            checkBoxCustomPrompt.Location = new System.Drawing.Point(9, 48);
+            checkBoxCustomPrompt.Location = new System.Drawing.Point(6, 58);
             checkBoxCustomPrompt.Name = "checkBoxCustomPrompt";
             checkBoxCustomPrompt.Size = new System.Drawing.Size(313, 19);
             checkBoxCustomPrompt.TabIndex = 2;
             checkBoxCustomPrompt.Text = "Custom system prompt for models with chat template";
             checkBoxCustomPrompt.UseVisualStyleBackColor = true;
             checkBoxCustomPrompt.CheckedChanged += checkBoxCustomPrompt_CheckedChanged;
-            // 
-            // textBoxConnectionAddress
-            // 
-            textBoxConnectionAddress.Location = new System.Drawing.Point(140, 10);
-            textBoxConnectionAddress.Name = "textBoxConnectionAddress";
-            textBoxConnectionAddress.Size = new System.Drawing.Size(480, 23);
-            textBoxConnectionAddress.TabIndex = 1;
-            // 
-            // LabelConnectionAddress
-            // 
-            LabelConnectionAddress.AutoSize = true;
-            LabelConnectionAddress.Location = new System.Drawing.Point(9, 13);
-            LabelConnectionAddress.Name = "LabelConnectionAddress";
-            LabelConnectionAddress.Size = new System.Drawing.Size(112, 15);
-            LabelConnectionAddress.TabIndex = 0;
-            LabelConnectionAddress.Text = "Connection address";
             // 
             // tabHotkeys
             // 
@@ -714,7 +803,11 @@ namespace BooruDatasetTagManager
             tabTranslations.ResumeLayout(false);
             tabTranslations.PerformLayout();
             tabInterrogator.ResumeLayout(false);
-            tabInterrogator.PerformLayout();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownOpenAiTimeout).EndInit();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             tabHotkeys.ResumeLayout(false);
             tabHotkeys.PerformLayout();
             ResumeLayout(false);
@@ -775,9 +868,17 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ComboBox comboBoxPreviewType;
         private System.Windows.Forms.CheckBox checkBoxCacheImages;
         private Manina.Windows.Forms.Tab tabInterrogator;
-        private System.Windows.Forms.TextBox textBoxConnectionAddress;
-        private System.Windows.Forms.Label LabelConnectionAddress;
+        private System.Windows.Forms.TextBox textBoxAiApiEndpoint;
+        private System.Windows.Forms.Label LabelApApiEndpoint;
         private System.Windows.Forms.TextBox textBoxCustomPrompt;
         private System.Windows.Forms.CheckBox checkBoxCustomPrompt;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label labelOpenAiEndpoint;
+        private System.Windows.Forms.TextBox textBoxOpenApiEndpoint;
+        private System.Windows.Forms.TextBox textBoxOpenAiApiKey;
+        private System.Windows.Forms.Label labelOpenAiApiKey;
+        private System.Windows.Forms.NumericUpDown numericUpDownOpenAiTimeout;
+        private System.Windows.Forms.Label labelOpenAiTimeout;
     }
 }

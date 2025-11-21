@@ -90,6 +90,14 @@ namespace BooruDatasetTagManager
             f_wait.ShowDialog();
             #endregion
             AutoTagger = new AiApiClient();
+            if (!string.IsNullOrEmpty(Settings.OpenAiAutoTagger.ConnectionAddress) && !string.IsNullOrEmpty(Settings.OpenAiAutoTagger.ApiKey))
+            {
+                try
+                {
+                    OpenAiAutoTagger = new AiOpenAiClient(Settings.OpenAiAutoTagger.ConnectionAddress, Settings.OpenAiAutoTagger.ApiKey, Settings.OpenAiAutoTagger.RequestTimeout);
+                }
+                catch { }
+            }
 
             Application.Run(new MainForm());
         }
@@ -149,6 +157,7 @@ namespace BooruDatasetTagManager
         public static TagsDB TagsList;
 
         public static AiApiClient AutoTagger;
+        public static AiOpenAiClient OpenAiAutoTagger = null;
 
         public static ColorSchemeManager ColorManager;
 

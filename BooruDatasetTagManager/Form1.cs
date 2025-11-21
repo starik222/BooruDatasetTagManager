@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BooruDatasetTagManager.AiApi;
+using BooruDatasetTagManager.Properties;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
@@ -1665,6 +1667,7 @@ namespace BooruDatasetTagManager
             toolsToolStripMenuItem.Text = I18n.GetText("MenuTools");
             replaceTransparentBackgroundToolStripMenuItem.Text = I18n.GetText("MenuReplaceTranspColor");
             generateTagsWithAutoTaggerForAllImagesToolStripMenuItem.Text = I18n.GetText("MenuGenTagsForAllImages");
+            MenuOpenAiGenTagsForAllImages.Text = I18n.GetText("MenuOpenAiGenTagsForAllImages");
             cropImagesWithMoondream2ToolStripMenuItem.Text = I18n.GetText("MenuToolsAutoCropping");
             backgroundRemovalWithRMBG20ToolStripMenuItem.Text = I18n.GetText("MenuToolsBGRemoval");
             removeBackgroundToolStripMenuItem.Text = I18n.GetText("MenuContextDSRemoveBG");
@@ -1684,7 +1687,9 @@ namespace BooruDatasetTagManager
             BtnTagFindInAll.Text = I18n.GetText("BtnTagFindInAll");
             toolStripSplitButton1.Text = I18n.GetText("BtnAutoGenerateTagsRoot");
             btnAutoGetTagsDefSet.Text = I18n.GetText("BtnAutoGetTagsDefSet");
+            btnOpenAiAutoGetTagsDefSet.Text = I18n.GetText("BtnOpenAiAutoGetTagsDefSet");
             btnAutoGetTagsOpenSet.Text = I18n.GetText("BtnAutoGetTagsOpenSet");
+            btnOpenAiAutoGetTagsOpenSet.Text = I18n.GetText("BtnOpenAiAutoGetTagsOpenSet");
             btnAutoAddSelToImageTags.Text = I18n.GetText("BtnAutoAddSelToImageTags");
             BtnMenuSorting.Text = I18n.GetText("BtnMenuSorting");
             BtnMenuSortNameAsc.Text = I18n.GetText("BtnMenuSortNameAsc");
@@ -1707,7 +1712,9 @@ namespace BooruDatasetTagManager
             BtnTagExitFilter.Text = I18n.GetText("BtnTagExitFilter");
             MenuShowTagCount.Text = I18n.GetText("MenuShowCount");
             BtnMenuGenTagsWithCurrentSettings.Text = I18n.GetText("BtnMenuGenTagsWithCurrentSettings");
+            BtnMenuOpenAiGenTagsWithCurrentSettings.Text = I18n.GetText("BtnMenuOpenAiGenTagsWithCurrentSettings");
             BtnMenuGenTagsWithSetWindow.Text = I18n.GetText("BtnMenuGenTagsWithSetWindow");
+            BtnMenuOpenAiGenTagsWithSetWindow.Text = I18n.GetText("BtnMenuOpenAiGenTagsWithSetWindow");
             toolStripPromptSortBtn.Text = I18n.GetText("toolStripPromptSortBtn");
             toolStripLabelWeight.Text = I18n.GetText("UILabelWeight");
             tabAllTags.Text = I18n.GetText("UITabAllTags");
@@ -1983,27 +1990,40 @@ namespace BooruDatasetTagManager
 
         private async void BtnAutoGetTagsDefSet_Click(object sender, EventArgs e)
         {
-            await GetTagsWithAutoTagger(true);
+            await GetTagsWithAutoTagger(true, false);
         }
 
-        private async Task GetTagsWithAutoTagger(bool defSettings)
+        private async Task GetTagsWithAutoTagger(bool defSettings, bool useOpenAi)
         {
             if (Program.DataManager == null)
             {
                 MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
                 return;
             }
+            SetStatus(I18n.GetText("InProgress"));
             tabAutoTags.Select();
             LockEdit(true);
             var selectedImageData = Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value];
-            var taggerResult = await Program.AutoTagger.GetTagsWithAutoTagger(selectedImageData.ImageFilePath, defSettings);
+
+            (List<AiApiClient.AutoTagItem> data, string errorMessage) taggerResult = (null, null);
+            TaggerSettings settings = null;
+            if (!useOpenAi)
+            {
+                settings = Program.Settings.AutoTagger;
+                taggerResult = await Program.AutoTagger.GetTagsWithAutoTagger(selectedImageData.ImageFilePath, defSettings);
+            }
+            else
+            {
+                settings = Program.Settings.OpenAiAutoTagger;
+                taggerResult = await Program.OpenAiAutoTagger.GetTagsWithAutoTagger(selectedImageData.ImageFilePath, defSettings);
+            }
             if (!string.IsNullOrEmpty(taggerResult.errorMessage))
                 SetStatus(taggerResult.errorMessage);
             if (taggerResult.data != null)
             {
-                if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.AllWithReplacement)
+                if (settings.SetMode == NetworkResultSetMode.AllWithReplacement)
                     gridViewAutoTags.DataSource = taggerResult.data;
-                else if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.OnlyNewWithAddition)
+                else if (settings.SetMode == NetworkResultSetMode.OnlyNewWithAddition)
                 {
                     foreach (var item in selectedImageData.Tags.TextTags)
                     {
@@ -2011,11 +2031,12 @@ namespace BooruDatasetTagManager
                     }
                     gridViewAutoTags.DataSource = taggerResult.data;
                 }
-                else if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.SkipExistTagList)
+                else if (settings.SetMode == NetworkResultSetMode.SkipExistTagList)
                 {
                     if (selectedImageData.Tags.Count == 0)
                         gridViewAutoTags.DataSource = taggerResult.data;
                 }
+                SetStatus(I18n.GetText("TipProgressComplete"));
             }
 
             LockEdit(false);
@@ -2023,16 +2044,22 @@ namespace BooruDatasetTagManager
 
         private async void generateTagsWithCurrentSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            await GenerateTagsInTags(true, false);
+            await GenerateTagsInTags(true, false, false);
         }
 
-        private async Task GenerateTagsInTags(bool defSettings, bool allTags)
+        private async Task GenerateTagsInTags(bool defSettings, bool allTags, bool useOpenAi)
         {
             if (Program.DataManager == null)
             {
                 MessageBox.Show(I18n.GetText("TipDatasetNoLoad"));
                 return;
             }
+            TaggerSettings settings = null;
+            if (!useOpenAi)
+                settings = Program.Settings.AutoTagger;
+            else
+                settings = Program.Settings.OpenAiAutoTagger;
+            SetStatus(I18n.GetText("InProgress"));
             StringBuilder sbErrors = new StringBuilder();
             LockEdit(true);
             List<DataItem> selectedTagsList = new List<DataItem>();
@@ -2052,26 +2079,33 @@ namespace BooruDatasetTagManager
             }
             foreach (var item in selectedTagsList)
             {
-                var taggerResult = await Program.AutoTagger.GetTagsWithAutoTagger(item.ImageFilePath, defSettings);
+                (List<AiApiClient.AutoTagItem> data, string errorMessage) taggerResult = (null, null);
+                if (!useOpenAi)
+                    taggerResult = await Program.AutoTagger.GetTagsWithAutoTagger(item.ImageFilePath, defSettings);
+                else
+                    taggerResult = await Program.OpenAiAutoTagger.GetTagsWithAutoTagger(item.ImageFilePath, defSettings);
+
                 if (!defSettings)
                     defSettings = true;
                 if (!string.IsNullOrEmpty(taggerResult.errorMessage))
                     SetStatus(taggerResult.errorMessage);
                 if (taggerResult.data != null)
                 {
-                    if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.AllWithReplacement)
+                    if (taggerResult.data.Count == 0)
+                        continue;
+                    if (settings.SetMode == NetworkResultSetMode.AllWithReplacement)
                     {
                         item.Tags.Clear();
                         item.Tags.AddRange(taggerResult.data.Select(a => a.Tag), true);
                     }
-                    else if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.OnlyNewWithAddition)
+                    else if (settings.SetMode == NetworkResultSetMode.OnlyNewWithAddition)
                     {
                         foreach (var aTag in taggerResult.data)
                         {
                             item.Tags.AddTag(aTag.Tag, true, AddingType.Down, 0);
                         }
                     }
-                    else if (Program.Settings.AutoTagger.SetMode == NetworkResultSetMode.SkipExistTagList)
+                    else if (settings.SetMode == NetworkResultSetMode.SkipExistTagList)
                     {
                         if (item.Tags.Count == 0)
                         {
@@ -2095,9 +2129,10 @@ namespace BooruDatasetTagManager
             LockEdit(false);
             if (sbErrors.Length > 0)
             {
-                sbErrors.Insert(0, "The following files were not processed (see AiApiServer log):\n");
+                sbErrors.Insert(0, "The following files were not processed (see ApiServer log):\n");
                 MessageBox.Show(sbErrors.ToString());
             }
+            SetStatus(I18n.GetText("TipProgressComplete"));
         }
 
         private async Task<bool> CropImages()
@@ -2254,12 +2289,12 @@ namespace BooruDatasetTagManager
 
         private async void generateTagsWithSettingsWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            await GenerateTagsInTags(false, false);
+            await GenerateTagsInTags(false, false, false);
         }
 
         private async void btnAutoGetTagsOpenSet_Click(object sender, EventArgs e)
         {
-            await GetTagsWithAutoTagger(false);
+            await GetTagsWithAutoTagger(false, false);
         }
 
         private void MenuHideAllTags_Click(object sender, EventArgs e)
@@ -2368,7 +2403,7 @@ namespace BooruDatasetTagManager
 
         private async void generateTagsWithAutoTaggerForAllImagesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            await GenerateTagsInTags(false, true);
+            await GenerateTagsInTags(false, true, false);
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
@@ -2591,6 +2626,31 @@ namespace BooruDatasetTagManager
                 }
                 fCrop.Close();
             }
+        }
+
+        private async void btnOpenAiAutoGetTagsDefSet_Click(object sender, EventArgs e)
+        {
+            await GetTagsWithAutoTagger(true, true);
+        }
+
+        private async void btnOpenAiAutoGetTagsOpenSet_Click(object sender, EventArgs e)
+        {
+            await GetTagsWithAutoTagger(false, true);
+        }
+
+        private async void BtnMenuOpenAiGenTagsWithCurrentSettings_Click(object sender, EventArgs e)
+        {
+            await GenerateTagsInTags(true, false, true);
+        }
+
+        private async void BtnMenuOpenAiGenTagsWithSetWindow_Click(object sender, EventArgs e)
+        {
+            await GenerateTagsInTags(false, false, true);
+        }
+
+        private async void MenuOpenAiGenTagsForAllImages_Click(object sender, EventArgs e)
+        {
+            await GenerateTagsInTags(false, true, true);
         }
     }
 }
