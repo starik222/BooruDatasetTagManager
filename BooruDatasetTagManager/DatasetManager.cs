@@ -14,6 +14,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Translator.Crypto;
+using static BooruDatasetTagManager.Extensions;
 
 namespace BooruDatasetTagManager
 {
@@ -31,6 +32,8 @@ namespace BooruDatasetTagManager
         private IEnumerable<string> lastTagsFilter = null;
 
         private Dictionary<string, Image> imagesCache;
+
+        public event ProgressHandler LoadingProgressChanged;
 
         public DatasetManager()
         {
@@ -287,6 +290,7 @@ namespace BooruDatasetTagManager
             }
             imgs = imgs.Where(a => allowedExt.Contains(Path.GetExtension(a).ToLower())).OrderBy(a => a, new FileNamesComparer()).ToArray();
             int imgSize = Program.Settings.PreviewSize;
+            int progress = 0;
             imgs.AsParallel().ForAll(x =>
             {
                 var dt = new DataItem();
@@ -294,6 +298,10 @@ namespace BooruDatasetTagManager
                 dt.LoadData(x, imgSize);
 
                 DataSet.TryAdd(dt.ImageFilePath, dt);
+                Program.LoadingLocker.Wait();
+                progress++;
+                LoadingProgressChanged?.Invoke(progress, imgs.Length);
+                Program.LoadingLocker.Release();
             });
             UpdateDatasetHash();
             AllTagsBindingSource.Sort = "Tag ASC";

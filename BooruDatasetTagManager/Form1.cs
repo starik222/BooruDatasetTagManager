@@ -133,10 +133,12 @@ namespace BooruDatasetTagManager
             OpenFolderDialog openFolderDialog = new OpenFolderDialog();
             if (openFolderDialog.ShowDialog() != DialogResult.OK)
                 return;
-            SetStatus(I18n.GetText("TipLoadingStart"));
+            LoadingStatusText = I18n.GetText("TipLoadingStart");
+            SetStatus(LoadingStatusText);
             LockEdit(true);
             isLoading = true;
             Program.DataManager = new DatasetManager();
+            Program.DataManager.LoadingProgressChanged += DataManager_LoadingProgressChanged;
             TrackBarRowHeight.ValueChanged -= TrackBarRowHeight_ValueChanged;
             TrackBarRowHeight.TrackBar.Minimum = 1;
             TrackBarRowHeight.TrackBar.Maximum = Program.Settings.PreviewSize;
@@ -162,6 +164,12 @@ namespace BooruDatasetTagManager
             gridViewDS.AutoResizeColumns();
             LockEdit(false);
             SetStatus(I18n.GetText("TipLoadingComplete"));
+        }
+        //This is necessary to speed up the work, since searching for a string using I18n.GetText takes a long time.
+        private string LoadingStatusText = "";
+        private void DataManager_LoadingProgressChanged(int current, int max)
+        {
+            SetStatus($"{LoadingStatusText} ({current}/{max})");
         }
 
         private void TrackBarRowHeight_ValueChanged(object sender, EventArgs e)

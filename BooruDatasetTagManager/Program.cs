@@ -165,6 +165,7 @@ namespace BooruDatasetTagManager
         public static SemaphoreSlim EditableTagListLocker;
         public static object ListChangeLocker;
         public static SemaphoreSlim TranslationLocker;
+        public static SemaphoreSlim LoadingLocker = new SemaphoreSlim(1, 1);
         #endregion
     }
 }

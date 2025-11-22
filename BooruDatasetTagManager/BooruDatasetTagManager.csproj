@@ -100,7 +100,7 @@
 
   <ItemGroup>
     <Reference Include="ScreenListerNET">
-      <HintPath>..\..\ScreenLister\ScreenList\bin\x64\Release\net6.0-windows\ScreenListerNET.dll</HintPath>
+      <HintPath>..\..\ScreenLister\ScreenList\bin\Release\net6.0-windows\ScreenListerNET.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Target Name="MoveNativeDllsToSubDirectory" AfterTargets="Publish">
