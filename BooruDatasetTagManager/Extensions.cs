@@ -153,7 +153,7 @@ namespace BooruDatasetTagManager
             {
                 if (isMp4)
                 {
-                    return ScreenListerNET.GetImageFromVideoFile(imagePath);
+                    return ScreenListerNET.GetImageFromVideoFile(imagePath, 0);
                 }
             }
             catch (Exception)
