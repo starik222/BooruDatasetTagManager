@@ -49,12 +49,13 @@
             // 
             // checkBoxTagsFromMetadata
             // 
-            checkBoxTagsFromMetadata.AutoSize = true;
+            checkBoxTagsFromMetadata.CheckAlign = System.Drawing.ContentAlignment.TopLeft;
             checkBoxTagsFromMetadata.Location = new System.Drawing.Point(12, 74);
             checkBoxTagsFromMetadata.Name = "checkBoxTagsFromMetadata";
-            checkBoxTagsFromMetadata.Size = new System.Drawing.Size(256, 19);
+            checkBoxTagsFromMetadata.Size = new System.Drawing.Size(426, 46);
             checkBoxTagsFromMetadata.TabIndex = 1;
             checkBoxTagsFromMetadata.Text = "Attempt to read tags from image metadata.";
+            checkBoxTagsFromMetadata.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             checkBoxTagsFromMetadata.UseVisualStyleBackColor = true;
             // 
             // labelPreviewSize
@@ -68,7 +69,7 @@
             // 
             // numericUpDown1
             // 
-            numericUpDown1.Location = new System.Drawing.Point(148, 41);
+            numericUpDown1.Location = new System.Drawing.Point(221, 41);
             numericUpDown1.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
             numericUpDown1.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numericUpDown1.Name = "numericUpDown1";
@@ -78,7 +79,8 @@
             // 
             // button1
             // 
-            button1.Location = new System.Drawing.Point(169, 167);
+            button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            button1.Location = new System.Drawing.Point(282, 184);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(75, 23);
             button1.TabIndex = 4;
@@ -88,7 +90,8 @@
             // 
             // button2
             // 
-            button2.Location = new System.Drawing.Point(250, 167);
+            button2.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            button2.Location = new System.Drawing.Point(363, 184);
             button2.Name = "button2";
             button2.Size = new System.Drawing.Size(75, 23);
             button2.TabIndex = 5;
@@ -102,7 +105,7 @@
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             CancelButton = button2;
-            ClientSize = new System.Drawing.Size(337, 202);
+            ClientSize = new System.Drawing.Size(448, 219);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(numericUpDown1);
