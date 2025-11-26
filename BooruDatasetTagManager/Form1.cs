@@ -122,6 +122,16 @@ namespace BooruDatasetTagManager
 
         private async void openFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            await LoadFromFolderAsync(false);
+        }
+
+        private async void loadFolderWithAdditionalSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            await LoadFromFolderAsync(true);
+        }
+
+        private async Task LoadFromFolderAsync(bool useAdditionalSettings)
+        {
             if (Program.DataManager != null && Program.DataManager.IsDataSetChanged())
             {
                 DialogResult result = MessageBox.Show(I18n.GetText("TipDSChangeSaveText"), I18n.GetText("TipDSChangeSaveTitle"), MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
@@ -133,6 +143,19 @@ namespace BooruDatasetTagManager
             OpenFolderDialog openFolderDialog = new OpenFolderDialog();
             if (openFolderDialog.ShowDialog() != DialogResult.OK)
                 return;
+            bool loadPreviewImages = true;
+            bool readMetadata = false;
+            if (useAdditionalSettings)
+            {
+                Form_LoadingSettings loadingSettings = new Form_LoadingSettings();
+                if (loadingSettings.ShowDialog() != DialogResult.OK)
+                {
+                    loadingSettings.Close();
+                    return;
+                }
+                loadPreviewImages = Program.Settings.LoadSettingsLoadPreviewImages;
+                readMetadata = Program.Settings.LoadSettingsReadMetadata;
+            }
             LoadingStatusText = I18n.GetText("TipLoadingStart");
             SetStatus(LoadingStatusText);
             LockEdit(true);
@@ -148,7 +171,7 @@ namespace BooruDatasetTagManager
             TrackBarRowHeight.Value = Program.Settings.PreviewSize;
             TrackBarRowHeight.ValueChanged += TrackBarRowHeight_ValueChanged;
             //Program.DataManager.SetTranslationMode(isTranslate);
-            if (!await Program.DataManager.LoadFromFolderAsync(openFolderDialog.Folder))
+            if (!await Program.DataManager.LoadFromFolderAsync(openFolderDialog.Folder, loadPreviewImages, readMetadata))
             {
                 LockEdit(false);
                 SetStatus(I18n.GetText("TipFolderWrong"));
@@ -165,6 +188,7 @@ namespace BooruDatasetTagManager
             LockEdit(false);
             SetStatus(I18n.GetText("TipLoadingComplete"));
         }
+
         //This is necessary to speed up the work, since searching for a string using I18n.GetText takes a long time.
         private string LoadingStatusText = "";
         private void DataManager_LoadingProgressChanged(int current, int max)
@@ -1662,6 +1686,7 @@ namespace BooruDatasetTagManager
             toolStripLabelImageTags.Text = I18n.GetText("UILabelImageTags");
             toolStripPromptFixTipLabel.Text = I18n.GetText("UILabelFixPromptLength");
             openFolderToolStripMenuItem.Text = I18n.GetText("MenuItemLoadFolder");
+            loadFolderWithAdditionalSettingsToolStripMenuItem.Text = I18n.GetText("MenuItemLoadFolderWithSettings");
             saveAllChangesToolStripMenuItem.Text = I18n.GetText("MenuItemSaveChanges");
             MenuShowPreview.Text = I18n.GetText("MenuItemShowPreview");
             MenuItemTranslateTags.Text = I18n.GetText("MenuItemTranslateTags");
@@ -2660,5 +2685,7 @@ namespace BooruDatasetTagManager
         {
             await GenerateTagsInTags(false, true, true);
         }
+
+
     }
 }

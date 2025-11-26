@@ -57,6 +57,9 @@ namespace BooruDatasetTagManager
 
         public bool CacheOpenImages { get; set; } = true;
 
+        public bool LoadSettingsLoadPreviewImages { get; set; } = true;
+        public bool LoadSettingsReadMetadata { get; set; } = false;
+
         private string[] _tagsFilesExt = { "txt", "caption" };
 
         private string settingsFile;
@@ -122,6 +125,8 @@ namespace BooruDatasetTagManager
                 CaptionFileExtensions = tempSettings.CaptionFileExtensions;
                 TagImagesGridSize = tempSettings.TagImagesGridSize;
                 CacheOpenImages = tempSettings.CacheOpenImages;
+                LoadSettingsLoadPreviewImages = tempSettings.LoadSettingsLoadPreviewImages;
+                LoadSettingsReadMetadata = tempSettings.LoadSettingsReadMetadata;
                 if (!string.IsNullOrEmpty(tempSettings.ColorScheme))
                     ColorScheme = tempSettings.ColorScheme;
                 AutoTagger = tempSettings.AutoTagger;

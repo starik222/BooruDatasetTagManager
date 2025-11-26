@@ -52,8 +52,10 @@
     <Content Include="BDTM.ico" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="MetadataExtractor" Version="2.9.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OpenAI" Version="2.7.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
     <PackageReference Include="TabControl" Version="2.1.2" />
   </ItemGroup>
   <ItemGroup>

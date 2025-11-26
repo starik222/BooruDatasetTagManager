@@ -273,12 +273,12 @@ namespace BooruDatasetTagManager
             return delList;
         }
 
-        public async Task<bool> LoadFromFolderAsync(string folder)
+        public async Task<bool> LoadFromFolderAsync(string folder, bool loadPreviewImages, bool readMetadata)
         {
-            return await Task.Run(() => LoadFromFolder(folder));
+            return await Task.Run(() => LoadFromFolder(folder, loadPreviewImages, readMetadata));
         }
 
-        public bool LoadFromFolder(string folder)
+        public bool LoadFromFolder(string folder, bool loadPreviewImages, bool readMetadata)
         {
             List<string> allowedExt = new List<string>();
             allowedExt.AddRange(Extensions.ImageExtensions);
@@ -295,8 +295,7 @@ namespace BooruDatasetTagManager
             {
                 var dt = new DataItem();
                 dt.Tags.TagsListChanged += Tags_TagsListChanged;
-                dt.LoadData(x, imgSize);
-
+                dt.LoadData(x, loadPreviewImages ? imgSize : 0, readMetadata);
                 DataSet.TryAdd(dt.ImageFilePath, dt);
                 Program.LoadingLocker.Wait();
                 progress++;
@@ -426,7 +425,7 @@ namespace BooruDatasetTagManager
                 Tags = new EditableTagList();
             }
 
-            public void LoadData(string imagePath, int imageSize)
+            public void LoadData(string imagePath, int imageSize, bool readMetadata)
             {
                 ImageFilePath = imagePath;
                 ImageFilePathHash = ImageFilePath.GetHashCode();
@@ -442,7 +441,7 @@ namespace BooruDatasetTagManager
                 }
                 if (string.IsNullOrEmpty(TextFilePath))
                     TextFilePath = Path.Combine(Path.GetDirectoryName(imagePath), Name + "." + Program.Settings.DefaultTagsFileExtension);
-                GetTagsFromFile();
+                GetTagsFromFile(readMetadata);
                 if (imageSize > 0)
                     Img = Extensions.MakeThumb(imagePath, imageSize);
             }
@@ -454,7 +453,7 @@ namespace BooruDatasetTagManager
 
 
 
-            public void GetTagsFromFile()
+            public void GetTagsFromFile(bool readMetadata)
             {
                 if (File.Exists(TextFilePath))
                 {
@@ -462,12 +461,19 @@ namespace BooruDatasetTagManager
                     string text = File.ReadAllText(TextFilePath);
 
                     var temp_tags = PromptParser.ParsePrompt(text, Program.Settings.FixTagsOnSaveLoad, Program.Settings.SeparatorOnLoad);
-                    //Tags = new EditableTagList(temp_tags);
                     Tags.LoadFromPromptParserData(temp_tags);
                 }
                 else
                 {
-                    //Tags = new EditableTagList();
+                    if (readMetadata)
+                    {
+                        var metadata = Diffusion.IO.Metadata.ReadFromFile(ImageFilePath);
+                        if (!string.IsNullOrEmpty(metadata.Prompt))
+                        {
+                            var temp_tags = PromptParser.ParsePrompt(metadata.Prompt, Program.Settings.FixTagsOnSaveLoad, Program.Settings.SeparatorOnLoad);
+                            Tags.LoadFromPromptParserData(temp_tags);
+                        }
+                    }
                     TagsModifyTime = DateTime.MinValue;
                 }
 

@@ -481,7 +481,7 @@ namespace BooruDatasetTagManager
             SettingFrame.Controls.Add(tabHotkeys);
             SettingFrame.Location = new System.Drawing.Point(2, 1);
             SettingFrame.Name = "SettingFrame";
-            SettingFrame.SelectedIndex = 3;
+            SettingFrame.SelectedIndex = 0;
             SettingFrame.Size = new System.Drawing.Size(630, 427);
             SettingFrame.TabIndex = 6;
             SettingFrame.Tabs.Add(tabGeneral);
@@ -512,9 +512,9 @@ namespace BooruDatasetTagManager
             tabGeneral.Controls.Add(comboAutocompSort);
             tabGeneral.Controls.Add(comboAutocompMode);
             tabGeneral.Controls.Add(LabelAutocompSort);
-            tabGeneral.Location = new System.Drawing.Point(0, 0);
+            tabGeneral.Location = new System.Drawing.Point(1, 23);
             tabGeneral.Name = "tabGeneral";
-            tabGeneral.Size = new System.Drawing.Size(0, 0);
+            tabGeneral.Size = new System.Drawing.Size(628, 403);
             tabGeneral.Text = "General";
             // 
             // checkBoxFixOnLoad

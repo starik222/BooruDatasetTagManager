@@ -265,3 +265,7 @@ BtnMenuOpenAiGenTagsWithCurrentSettings=Generate tags with current settings (Ope
 BtnMenuOpenAiGenTagsWithSetWindow=Generate tags with settings window(OpenAI)...
 MenuOpenAiGenTagsForAllImages=Generate tags with OpenAI Compatibility Endpoints for all images
 TipProgressComplete=Complete.
+FormLoadingSettings=Loading settings
+LoadingSettingsLoadPreviewImages=Load preview images
+LoadingSettingsReadMetadata=Attempt to read tags from image metadata.
+MenuItemLoadFolderWithSettings=Load folder with additional settings...
