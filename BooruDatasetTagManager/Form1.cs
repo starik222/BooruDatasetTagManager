@@ -187,6 +187,7 @@ namespace BooruDatasetTagManager
             gridViewDS.AutoResizeColumns();
             LockEdit(false);
             SetStatus(I18n.GetText("TipLoadingComplete"));
+            SetDSCountStatus(string.Format(I18n.GetText("LabelShownDsImages"), gridViewDS.RowCount, Program.DataManager.DataSet.Count));
         }
 
         //This is necessary to speed up the work, since searching for a string using I18n.GetText takes a long time.
@@ -693,6 +694,11 @@ namespace BooruDatasetTagManager
             statusLabel.Text = text;
         }
 
+        private void SetDSCountStatus(string text)
+        {
+            toolStripLabelDSShown.Text = text;
+        }
+
         private async void BtnPasteTag_Click(object sender, EventArgs e)
         {
             if (gridViewDS.SelectedRows.Count == 1)
@@ -869,6 +875,7 @@ namespace BooruDatasetTagManager
                 BtnImageExitFilter.Enabled = true;
             }
             isLoading = false;
+            SetDSCountStatus(string.Format(I18n.GetText("LabelShownDsImages"), gridViewDS.RowCount, Program.DataManager.DataSet.Count));
         }
 
         private void ResetFilter()
@@ -883,6 +890,7 @@ namespace BooruDatasetTagManager
                 LoadSelectedInViewDs();
             }
             isLoading = false;
+            SetDSCountStatus(string.Format(I18n.GetText("LabelShownDsImages"), gridViewDS.RowCount, Program.DataManager.DataSet.Count));
         }
 
         private void toolStripButton14_Click(object sender, EventArgs e)
@@ -1455,6 +1463,7 @@ namespace BooruDatasetTagManager
                     gridViewDS.Rows[select].Selected = true;
                 }
             }
+            SetDSCountStatus(string.Format(I18n.GetText("LabelShownDsImages"), gridViewDS.RowCount, Program.DataManager.DataSet.Count));
         }
 
         private void gridViewDS_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -2110,6 +2119,7 @@ namespace BooruDatasetTagManager
                     selectedTagsList.Add(item.Value);
                 }
             }
+            int currentIndex = 0;
             foreach (var item in selectedTagsList)
             {
                 (List<AiApiClient.AutoTagItem> data, string errorMessage) taggerResult = (null, null);
@@ -2125,7 +2135,10 @@ namespace BooruDatasetTagManager
                 if (taggerResult.data != null)
                 {
                     if (taggerResult.data.Count == 0)
+                    {
+                        SetStatus(string.Format(I18n.GetText("InProgressCount"), ++currentIndex, selectedTagsList.Count));
                         continue;
+                    }
                     if (settings.SetMode == NetworkResultSetMode.AllWithReplacement)
                     {
                         item.Tags.Clear();
@@ -2152,6 +2165,7 @@ namespace BooruDatasetTagManager
                     //LockEdit(false);
                     //return;
                 }
+                SetStatus(string.Format(I18n.GetText("InProgressCount"), ++currentIndex, selectedTagsList.Count));
             }
             if (selectedTagsList.Count > 1)
             {

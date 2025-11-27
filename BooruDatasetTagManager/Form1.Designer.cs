@@ -130,6 +130,7 @@ namespace BooruDatasetTagManager
             TrackBarRowHeight = new ToolStripCustomMenuItem();
             toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             BtnDSChangeSelection = new System.Windows.Forms.ToolStripButton();
+            toolStripLabelDSShown = new System.Windows.Forms.ToolStripLabel();
             gridViewDS = new System.Windows.Forms.DataGridView();
             toolStrip4 = new System.Windows.Forms.ToolStrip();
             toolStripLabelDataSet = new System.Windows.Forms.ToolStripLabel();
@@ -1041,11 +1042,12 @@ namespace BooruDatasetTagManager
             // 
             // toolStrip5
             // 
+            toolStrip5.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             toolStrip5.Dock = System.Windows.Forms.DockStyle.None;
-            toolStrip5.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripSeparator14, toolStripLabelDSZoom, TrackBarRowHeight, toolStripSeparator15, BtnDSChangeSelection });
+            toolStrip5.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripSeparator14, toolStripLabelDSZoom, TrackBarRowHeight, toolStripSeparator15, BtnDSChangeSelection, toolStripLabelDSShown });
             toolStrip5.Location = new System.Drawing.Point(3, 0);
             toolStrip5.Name = "toolStrip5";
-            toolStrip5.Size = new System.Drawing.Size(289, 38);
+            toolStrip5.Size = new System.Drawing.Size(301, 38);
             toolStrip5.TabIndex = 0;
             // 
             // toolStripSeparator14
@@ -1079,6 +1081,14 @@ namespace BooruDatasetTagManager
             BtnDSChangeSelection.Size = new System.Drawing.Size(23, 35);
             BtnDSChangeSelection.Text = "Change selection";
             BtnDSChangeSelection.Click += BtnDSChangeSelection_Click;
+            // 
+            // toolStripLabelDSShown
+            // 
+            toolStripLabelDSShown.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            toolStripLabelDSShown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            toolStripLabelDSShown.Name = "toolStripLabelDSShown";
+            toolStripLabelDSShown.Size = new System.Drawing.Size(12, 35);
+            toolStripLabelDSShown.Text = "-";
             // 
             // gridViewDS
             // 
@@ -1766,6 +1776,7 @@ namespace BooruDatasetTagManager
         private System.Windows.Forms.ToolStripMenuItem BtnMenuOpenAiGenTagsWithSetWindow;
         private System.Windows.Forms.ToolStripMenuItem MenuOpenAiGenTagsForAllImages;
         private System.Windows.Forms.ToolStripMenuItem loadFolderWithAdditionalSettingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripLabel toolStripLabelDSShown;
     }
 }
 

@@ -370,6 +370,7 @@
             buttonCancel.TabIndex = 3;
             buttonCancel.Text = "Cancel";
             buttonCancel.UseVisualStyleBackColor = true;
+            buttonCancel.Click += buttonCancel_Click;
             // 
             // buttonOk
             // 

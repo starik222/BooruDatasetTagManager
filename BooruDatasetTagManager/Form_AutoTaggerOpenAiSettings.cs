@@ -242,5 +242,10 @@ namespace BooruDatasetTagManager
             else
                 labelRepeatPenaltyValue.Text = (trackBarRepeatPenalty.Value / 100f).ToString();
         }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+        }
     }
 }
