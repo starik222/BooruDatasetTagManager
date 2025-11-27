@@ -2,7 +2,7 @@
 
 from .interrogator import Interrogator
 from .interrogators import BLIPLargeCaptioning, BLIP2Captioning, GITLargeCaptioning, Florence2Captioning, \
-    Moondream2Captioning, JoyCaptionCaptioning, Qwen25CaptionCaptioning, KeyeCaptionCaptioning
+    Moondream2Captioning, JoyCaptionCaptioning, Qwen25CaptionCaptioning, KeyeCaptionCaptioning, Qwen3CaptionCaptioning
 
 
 class Captioning(Interrogator):
@@ -244,6 +244,57 @@ class Qwen25Caption(Captioning):
 
     def mode_type(self):
         return self.type
+
+
+class Qwen3Caption(Captioning):
+    def __init__(self, repo_name, defPrompt, needSplit, video_supported, intType):
+        self.interrogator = Qwen3CaptionCaptioning(repo_name)
+        self.repo_name = repo_name
+        # self.commands = commandsList
+        # self.defaultCommand = commandsList[0]
+        self.defaultPrompt = defPrompt
+        self.split = needSplit
+        self.type = intType
+        self.video_supported = video_supported
+        self.fps = 1
+        self.max_frames = -1
+        self.min_pixels = -1
+        self.max_pixels = -1
+        self.max_new_tokens = 128
+
+    def start(self, net_params: dict, skip_online: bool = False):
+        # if 'cmd' in net_params:
+        #     self.defaultCommand = net_params['cmd']
+        if 'query' in net_params:
+            self.defaultPrompt = net_params['query']
+        if 'split' in net_params:
+            self.split = net_params['split'] == "true"
+        if 'fps' in net_params:
+            self.fps = net_params['fps']
+        if 'max_frames' in net_params:
+            self.max_frames = net_params['max_frames']
+        if 'min_pixels' in net_params:
+            self.min_pixels = net_params['min_pixels']
+        if 'max_pixels' in net_params:
+            self.max_pixels = net_params['max_pixels']
+        if 'max_new_tokens' in net_params:
+            self.max_new_tokens = net_params['max_new_tokens']
+        self.interrogator.load(self.defaultPrompt, self.split, self.fps, self.max_frames, self.min_pixels, self.max_pixels, self.max_new_tokens, skip_online=skip_online)
+
+    def stop(self):
+        self.interrogator.unload()
+
+    def predict(self, data_obj, data_type):
+        res = self.interrogator.apply(data_obj, data_type)
+        # tags = res[0].split(",")
+        return res  # [t for t in tags if t]
+
+    def name(self):
+        return self.repo_name
+
+    def mode_type(self):
+        return self.type
+
 
 class KeyeCaption(Captioning):
     def __init__(self, repo_name, defPrompt, needSplit, video_supported, intType):

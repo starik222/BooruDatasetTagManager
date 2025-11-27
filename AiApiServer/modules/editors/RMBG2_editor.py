@@ -46,8 +46,8 @@ class RMBG2Editor:
     def apply(self, image: Image.Image):
         if self.model is None:
             return ""
-        if image.mode != "RGB":
-            image = image.convert("RGB")
+        #if image.mode != "RGB":
+        #    image = image.convert("RGB")
         input_images = self.transform_image(image).unsqueeze(0).to(devices.device)
         with torch.no_grad():
             preds = self.model(input_images)[-1].sigmoid().cpu()

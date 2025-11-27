@@ -61,6 +61,20 @@ QWEN25_CAPTIONING_NAMES = [
     ("internlm/CapRL-3B", False),
 ]
 
+QWEN3_CAPTIONING_NAMES = [
+    ("Qwen/Qwen3-VL-2B-Instruct", True),
+    ("Qwen/Qwen3-VL-2B-Instruct-FP8", True),
+    ("Qwen/Qwen3-VL-4B-Instruct", True),
+    ("Qwen/Qwen3-VL-4B-Instruct-FP8", True),
+    ("Qwen/Qwen3-VL-4B-Thinking", True),
+    ("Qwen/Qwen3-VL-8B-Instruct", True),
+    ("Qwen/Qwen3-VL-8B-Instruct-FP8", True),
+    ("Qwen/Qwen3-VL-30B-A3B-Instruct", True),
+    ("Qwen/Qwen3-VL-30B-A3B-Instruct-FP8", True),
+    ("thesby/Qwen3-VL-8B-NSFW-Caption-V4.5", True),
+    ("huihui-ai/Huihui-Qwen3-VL-8B-Instruct-abliterated", True),
+]
+
 KEYE_CAPTIONING_NAMES = [
     ("Kwai-Keye/Keye-VL-1_5-8B", True),
 ]
@@ -160,6 +174,7 @@ INTERROGATORS = (
         + [captioning.JoyCaption(name, "", False, "joycaption") for name in JOYCAPTION_CAPTIONING_NAMES]
         + [captioning.Qwen25Caption(name, "", False, video, "qwen25") for name, video in QWEN25_CAPTIONING_NAMES]
         + [captioning.KeyeCaption(name, "", False, video, "keye") for name, video in KEYE_CAPTIONING_NAMES]
+        + [captioning.Qwen3Caption(name, "", False, video, "qwen3") for name, video in QWEN3_CAPTIONING_NAMES]
         + [tagger.DeepDanbooru(0.5, "dd")]
         + [
             tagger.WaifuDiffusion(name, WD_TAGGER_THRESHOLDS[i], "wd")

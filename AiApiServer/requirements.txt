@@ -1,5 +1,5 @@
-onnx>=1.16.1
-onnxruntime-gpu>=1.18.1
+onnx>=1.19.1
+onnxruntime-gpu>=1.23.2
 pandas
 bottleneck>=1.3.6
 accelerate>=0.26.0
@@ -8,20 +8,20 @@ timm
 pyvips
 kornia
 pillow
-transformers==4.56.1
-qwen_vl_utils
+transformers==4.57.3
 bitsandbytes
 hf_xet
 dataclasses_json
 flask
 flask-restful
 compressed-tensors
-qwen-vl-utils[decord]==0.0.11
+qwen-vl-utils
+qwen-vl-utils[decord]
 keye-vl-utils
 opencv-python
 # This needs to be from Torch's pypi repo.
 # ONNX does not support cuda 12 yet.
---extra-index-url https://download.pytorch.org/whl/cu126
+--extra-index-url https://download.pytorch.org/whl/cu128
 torch
 torchvision
 torchaudio

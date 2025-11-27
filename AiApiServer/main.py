@@ -238,6 +238,21 @@ def taggers_params(model_name):
                                                                "Image Resolution for performance boost. -1 for default value. For example 1280 * 28 * 28 = 1003520."))
         result.Parameters.append(
             create_interrogator_parameter("split", "false", "bool", "Split lines with commas"))
+    elif int_instance.type == "qwen3":
+        result.Type = int_instance.type
+        result.Parameters.append(create_interrogator_parameter("query", int_instance.defaultPrompt, "string", ""))
+        result.Parameters.append(
+            create_interrogator_parameter("fps", int_instance.fps, "int", "Fps limit for video reading"))
+        result.Parameters.append(create_interrogator_parameter("max_frames", int_instance.max_frames, "int",
+                                                               "Maximum number of frames to analyze. -1 for default value."))
+        result.Parameters.append(create_interrogator_parameter("min_pixels", int_instance.min_pixels, "int",
+                                                               "Image Resolution for performance boost. -1 for default value. For example 256 * 28 * 28 = 200704."))
+        result.Parameters.append(create_interrogator_parameter("max_pixels", int_instance.max_pixels, "int",
+                                                               "Image Resolution for performance boost. -1 for default value. For example 1280 * 28 * 28 = 1003520."))
+        result.Parameters.append(create_interrogator_parameter("max_new_tokens", int_instance.max_new_tokens, "int",
+                                                               "Maximum new tokens in generation (Don't know what it affects.). 128 for default value."))
+        result.Parameters.append(
+            create_interrogator_parameter("split", "false", "bool", "Split lines with commas"))
     elif int_instance.type == "blip":
         result.Type = "blip"
     elif int_instance.type == "blip2":
