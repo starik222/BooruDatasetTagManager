@@ -182,7 +182,7 @@
             OpenAiRequestSettingsTabs.Controls.Add(tabSettings);
             OpenAiRequestSettingsTabs.Location = new System.Drawing.Point(0, 0);
             OpenAiRequestSettingsTabs.Name = "OpenAiRequestSettingsTabs";
-            OpenAiRequestSettingsTabs.SelectedIndex = 1;
+            OpenAiRequestSettingsTabs.SelectedIndex = 0;
             OpenAiRequestSettingsTabs.Size = new System.Drawing.Size(674, 578);
             OpenAiRequestSettingsTabs.TabIndex = 6;
             OpenAiRequestSettingsTabs.Tabs.Add(tabRequest);
@@ -194,9 +194,9 @@
             tabRequest.Controls.Add(textBoxSystemPrompt);
             tabRequest.Controls.Add(labelUserPrompt);
             tabRequest.Controls.Add(labelSystemPrompt);
-            tabRequest.Location = new System.Drawing.Point(0, 0);
+            tabRequest.Location = new System.Drawing.Point(1, 23);
             tabRequest.Name = "tabRequest";
-            tabRequest.Size = new System.Drawing.Size(0, 0);
+            tabRequest.Size = new System.Drawing.Size(672, 554);
             tabRequest.Text = "Chat message";
             // 
             // textBoxUserPrompt
@@ -263,9 +263,9 @@
             tabSettings.Controls.Add(label2);
             tabSettings.Controls.Add(comboBoxTagFilterMode);
             tabSettings.Controls.Add(label7);
-            tabSettings.Location = new System.Drawing.Point(1, 23);
+            tabSettings.Location = new System.Drawing.Point(0, 0);
             tabSettings.Name = "tabSettings";
-            tabSettings.Size = new System.Drawing.Size(672, 554);
+            tabSettings.Size = new System.Drawing.Size(0, 0);
             tabSettings.Text = "Settings";
             // 
             // numericUpDownVideoFrameCount

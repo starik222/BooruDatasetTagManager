@@ -76,8 +76,8 @@ namespace BooruDatasetTagManager
                     Label errLabel = new Label();
                     errLabel.Name = "errorLabel";
                     errLabel.Text = connectResult.ErrMessage;
-                    errLabel.Location = this.Location;
-                    errLabel.Size = this.Size;
+                    errLabel.Location = listBoxModels.Location;
+                    errLabel.Size = listBoxModels.Size;
                     errLabel.Font = new Font("Segoe UI", 12);
                     errLabel.ForeColor = Color.Red;
                     Controls.Add(errLabel);
