@@ -339,6 +339,8 @@ namespace BooruDatasetTagManager
         public string Model { get; set; } = "";
         public bool SplitString { get; set; } = false;
         public string Splitter { get; set; } = ",";
+        public int VideoFrameCount { get; set; } = 10;
+        public int VideoFrameScale { get; set; } = 0;
 
 
         public OpenAiSettings()

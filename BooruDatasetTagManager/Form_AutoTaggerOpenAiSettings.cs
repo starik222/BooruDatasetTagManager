@@ -110,6 +110,10 @@ namespace BooruDatasetTagManager
                 else
                     trackBarRepeatPenalty.Value = (int)(Program.Settings.OpenAiAutoTagger.RepeatPenalty * 100f);
 
+                trackBarVideoFrameScale.Value = Program.Settings.OpenAiAutoTagger.VideoFrameScale;
+                numericUpDownVideoFrameCount.Value = Program.Settings.OpenAiAutoTagger.VideoFrameCount;
+                labelVideoFrameScaleValue.Text = (100 - trackBarVideoFrameScale.Value).ToString();
+
                 textBoxSystemPrompt.Text = Program.Settings.OpenAiAutoTagger.SystemPrompt;
                 textBoxUserPrompt.Text = Program.Settings.OpenAiAutoTagger.UserPrompt;
 
@@ -206,6 +210,9 @@ namespace BooruDatasetTagManager
                 Program.Settings.OpenAiAutoTagger.RepeatPenalty = trackBarRepeatPenalty.Value / 100f;
             }
 
+            Program.Settings.OpenAiAutoTagger.VideoFrameCount = (int)numericUpDownVideoFrameCount.Value;
+            Program.Settings.OpenAiAutoTagger.VideoFrameScale = trackBarVideoFrameScale.Value;
+
             Program.Settings.OpenAiAutoTagger.SystemPrompt = textBoxSystemPrompt.Text;
             Program.Settings.OpenAiAutoTagger.UserPrompt = textBoxUserPrompt.Text;
 
@@ -246,6 +253,11 @@ namespace BooruDatasetTagManager
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
+        }
+
+        private void trackBarVideoFrameScale_ValueChanged(object sender, EventArgs e)
+        {
+            labelVideoFrameScaleValue.Text = (100 - trackBarVideoFrameScale.Value).ToString();
         }
     }
 }

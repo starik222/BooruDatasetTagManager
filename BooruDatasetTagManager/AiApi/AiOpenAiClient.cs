@@ -68,16 +68,16 @@ namespace BooruDatasetTagManager.AiApi
                 if (!string.IsNullOrEmpty(request.SystemPrompt))
                     messages.Add(new SystemChatMessage(request.SystemPrompt));
                 UserChatMessage userMessage = new UserChatMessage(request.UserPrompt);
-                if (request.ImagePath != null)
+                foreach (var item in request.ImagePath)
                 {
-                    BinaryData bd = new BinaryData(await File.ReadAllBytesAsync(request.ImagePath));
-                    string contentType = GetContentTypeFromExtention(Path.GetExtension(request.ImagePath));
+                    BinaryData bd = new BinaryData(await File.ReadAllBytesAsync(item));
+                    string contentType = GetContentTypeFromExtention(Path.GetExtension(item));
                     ChatMessageContentPart partImage = ChatMessageContentPart.CreateImagePart(bd, contentType);
                     userMessage.Content.Add(partImage);
                 }
-                else if (request.ImageData != null)
+                foreach (var item in request.ImageData)
                 {
-                    BinaryData bd = new BinaryData(request.ImageData);
+                    BinaryData bd = new BinaryData(item);
                     ChatMessageContentPart partImage = ChatMessageContentPart.CreateImagePart(bd, request.ContentType);
                     userMessage.Content.Add(partImage);
                 }
@@ -169,13 +169,22 @@ namespace BooruDatasetTagManager.AiApi
             request.Model = Program.Settings.OpenAiAutoTagger.Model;
             request.RepeatPenalty = Program.Settings.OpenAiAutoTagger.RepeatPenalty;
             string imgExt = Path.GetExtension(imagePath).ToLower();
-            if (Extensions.VideoExtensions.Contains(imgExt) || imgExt == ".webp")
+            if (imgExt == ".webp")
             {
-                request.ImageData = Extensions.ImageToByteArray(Extensions.GetImageFromFile(imagePath));
+                request.ImageData.Add(Extensions.ImageToByteArray(Extensions.GetImageFromFile(imagePath)));
+                request.ContentType = "image/png";
+            }
+            else if (Extensions.VideoExtensions.Contains(imgExt))
+            {
+                var images = Extensions.GetImagesFromVideo(imagePath, Program.Settings.OpenAiAutoTagger.VideoFrameCount, Program.Settings.OpenAiAutoTagger.VideoFrameScale);
+                foreach (var item in images)
+                {
+                    request.ImageData.Add(Extensions.ImageToByteArray(item.Value));
+                }
                 request.ContentType = "image/png";
             }
             else
-                request.ImagePath = imagePath;
+                request.ImagePath.Add(imagePath);
 
 
             var response = await Program.OpenAiAutoTagger.SendRequestAsync(request);
@@ -238,12 +247,18 @@ namespace BooruDatasetTagManager.AiApi
         public string Model { get; set; } = null;
         public string SystemPrompt { get; set; } = null;
         public string UserPrompt { get; set; } = string.Empty;
-        public string ImagePath { get; set; } = null;
-        public byte[] ImageData { get; set; } = null;
+        public List<string> ImagePath { get; set; }
+        public List<byte[]> ImageData { get; set; }
         public string ContentType { get; set; } = null;
         public float Temperature { get; set; } = -1;
         public float TopP { get; set; } = -1;
         public float RepeatPenalty { get; set; } = 0;
+
+        public OpenAiRequest()
+        {
+            ImagePath = new List<string>();
+            ImageData = new List<byte[]>();
+        }
 
     }
 }

@@ -46,14 +46,19 @@
             labelUserPrompt = new System.Windows.Forms.Label();
             labelSystemPrompt = new System.Windows.Forms.Label();
             tabSettings = new Manina.Windows.Forms.Tab();
+            numericUpDownVideoFrameCount = new System.Windows.Forms.NumericUpDown();
+            labelVideoFrameCount = new System.Windows.Forms.Label();
             textBoxSplitter = new System.Windows.Forms.TextBox();
             checkBoxSplitString = new System.Windows.Forms.CheckBox();
+            labelVideoFrameScaleValue = new System.Windows.Forms.Label();
             labelRepeatPenaltyValue = new System.Windows.Forms.Label();
             labelTopPValue = new System.Windows.Forms.Label();
             labelTempValue = new System.Windows.Forms.Label();
+            trackBarVideoFrameScale = new System.Windows.Forms.TrackBar();
             trackBarRepeatPenalty = new System.Windows.Forms.TrackBar();
             trackBarTopP = new System.Windows.Forms.TrackBar();
             trackBarTemperature = new System.Windows.Forms.TrackBar();
+            labelVideoFrameScale = new System.Windows.Forms.Label();
             labelRepeatPenalty = new System.Windows.Forms.Label();
             labelTopP = new System.Windows.Forms.Label();
             labelTemperature = new System.Windows.Forms.Label();
@@ -64,6 +69,8 @@
             OpenAiRequestSettingsTabs.SuspendLayout();
             tabRequest.SuspendLayout();
             tabSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownVideoFrameCount).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trackBarVideoFrameScale).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBarRepeatPenalty).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBarTopP).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBarTemperature).BeginInit();
@@ -175,7 +182,7 @@
             OpenAiRequestSettingsTabs.Controls.Add(tabSettings);
             OpenAiRequestSettingsTabs.Location = new System.Drawing.Point(0, 0);
             OpenAiRequestSettingsTabs.Name = "OpenAiRequestSettingsTabs";
-            OpenAiRequestSettingsTabs.SelectedIndex = 0;
+            OpenAiRequestSettingsTabs.SelectedIndex = 1;
             OpenAiRequestSettingsTabs.Size = new System.Drawing.Size(674, 578);
             OpenAiRequestSettingsTabs.TabIndex = 6;
             OpenAiRequestSettingsTabs.Tabs.Add(tabRequest);
@@ -187,9 +194,9 @@
             tabRequest.Controls.Add(textBoxSystemPrompt);
             tabRequest.Controls.Add(labelUserPrompt);
             tabRequest.Controls.Add(labelSystemPrompt);
-            tabRequest.Location = new System.Drawing.Point(1, 23);
+            tabRequest.Location = new System.Drawing.Point(0, 0);
             tabRequest.Name = "tabRequest";
-            tabRequest.Size = new System.Drawing.Size(672, 554);
+            tabRequest.Size = new System.Drawing.Size(0, 0);
             tabRequest.Text = "Chat message";
             // 
             // textBoxUserPrompt
@@ -232,14 +239,19 @@
             // 
             // tabSettings
             // 
+            tabSettings.Controls.Add(numericUpDownVideoFrameCount);
+            tabSettings.Controls.Add(labelVideoFrameCount);
             tabSettings.Controls.Add(textBoxSplitter);
             tabSettings.Controls.Add(checkBoxSplitString);
+            tabSettings.Controls.Add(labelVideoFrameScaleValue);
             tabSettings.Controls.Add(labelRepeatPenaltyValue);
             tabSettings.Controls.Add(labelTopPValue);
             tabSettings.Controls.Add(labelTempValue);
+            tabSettings.Controls.Add(trackBarVideoFrameScale);
             tabSettings.Controls.Add(trackBarRepeatPenalty);
             tabSettings.Controls.Add(trackBarTopP);
             tabSettings.Controls.Add(trackBarTemperature);
+            tabSettings.Controls.Add(labelVideoFrameScale);
             tabSettings.Controls.Add(labelRepeatPenalty);
             tabSettings.Controls.Add(labelTopP);
             tabSettings.Controls.Add(labelTemperature);
@@ -251,10 +263,29 @@
             tabSettings.Controls.Add(label2);
             tabSettings.Controls.Add(comboBoxTagFilterMode);
             tabSettings.Controls.Add(label7);
-            tabSettings.Location = new System.Drawing.Point(0, 0);
+            tabSettings.Location = new System.Drawing.Point(1, 23);
             tabSettings.Name = "tabSettings";
-            tabSettings.Size = new System.Drawing.Size(0, 0);
+            tabSettings.Size = new System.Drawing.Size(672, 554);
             tabSettings.Text = "Settings";
+            // 
+            // numericUpDownVideoFrameCount
+            // 
+            numericUpDownVideoFrameCount.Location = new System.Drawing.Point(226, 388);
+            numericUpDownVideoFrameCount.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
+            numericUpDownVideoFrameCount.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericUpDownVideoFrameCount.Name = "numericUpDownVideoFrameCount";
+            numericUpDownVideoFrameCount.Size = new System.Drawing.Size(180, 23);
+            numericUpDownVideoFrameCount.TabIndex = 30;
+            numericUpDownVideoFrameCount.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // labelVideoFrameCount
+            // 
+            labelVideoFrameCount.AutoSize = true;
+            labelVideoFrameCount.Location = new System.Drawing.Point(13, 390);
+            labelVideoFrameCount.Name = "labelVideoFrameCount";
+            labelVideoFrameCount.Size = new System.Drawing.Size(105, 15);
+            labelVideoFrameCount.TabIndex = 29;
+            labelVideoFrameCount.Text = "Video frame count";
             // 
             // textBoxSplitter
             // 
@@ -272,6 +303,15 @@
             checkBoxSplitString.TabIndex = 27;
             checkBoxSplitString.Text = "Split string with";
             checkBoxSplitString.UseVisualStyleBackColor = true;
+            // 
+            // labelVideoFrameScaleValue
+            // 
+            labelVideoFrameScaleValue.AutoSize = true;
+            labelVideoFrameScaleValue.Location = new System.Drawing.Point(115, 421);
+            labelVideoFrameScaleValue.Name = "labelVideoFrameScaleValue";
+            labelVideoFrameScaleValue.Size = new System.Drawing.Size(12, 15);
+            labelVideoFrameScaleValue.TabIndex = 26;
+            labelVideoFrameScaleValue.Text = "-";
             // 
             // labelRepeatPenaltyValue
             // 
@@ -299,6 +339,16 @@
             labelTempValue.Size = new System.Drawing.Size(12, 15);
             labelTempValue.TabIndex = 26;
             labelTempValue.Text = "-";
+            // 
+            // trackBarVideoFrameScale
+            // 
+            trackBarVideoFrameScale.AutoSize = false;
+            trackBarVideoFrameScale.Location = new System.Drawing.Point(13, 439);
+            trackBarVideoFrameScale.Maximum = 99;
+            trackBarVideoFrameScale.Name = "trackBarVideoFrameScale";
+            trackBarVideoFrameScale.Size = new System.Drawing.Size(393, 22);
+            trackBarVideoFrameScale.TabIndex = 25;
+            trackBarVideoFrameScale.ValueChanged += trackBarVideoFrameScale_ValueChanged;
             // 
             // trackBarRepeatPenalty
             // 
@@ -333,6 +383,15 @@
             trackBarTemperature.TabIndex = 25;
             trackBarTemperature.Value = -1;
             trackBarTemperature.ValueChanged += trackBarTemperature_ValueChanged;
+            // 
+            // labelVideoFrameScale
+            // 
+            labelVideoFrameScale.AutoSize = true;
+            labelVideoFrameScale.Location = new System.Drawing.Point(13, 421);
+            labelVideoFrameScale.Name = "labelVideoFrameScale";
+            labelVideoFrameScale.Size = new System.Drawing.Size(103, 15);
+            labelVideoFrameScale.TabIndex = 24;
+            labelVideoFrameScale.Text = "Video frame scale:";
             // 
             // labelRepeatPenalty
             // 
@@ -422,6 +481,8 @@
             tabRequest.PerformLayout();
             tabSettings.ResumeLayout(false);
             tabSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownVideoFrameCount).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trackBarVideoFrameScale).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBarRepeatPenalty).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBarTopP).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBarTemperature).EndInit();
@@ -468,5 +529,10 @@
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.TextBox textBoxSplitter;
         private System.Windows.Forms.CheckBox checkBoxSplitString;
+        private System.Windows.Forms.NumericUpDown numericUpDownVideoFrameCount;
+        private System.Windows.Forms.Label labelVideoFrameCount;
+        private System.Windows.Forms.Label labelVideoFrameScaleValue;
+        private System.Windows.Forms.TrackBar trackBarVideoFrameScale;
+        private System.Windows.Forms.Label labelVideoFrameScale;
     }
 }

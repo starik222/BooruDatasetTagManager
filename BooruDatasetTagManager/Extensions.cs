@@ -186,6 +186,20 @@ namespace BooruDatasetTagManager
             }
         }
 
+        public static List<KeyValuePair<TimeSpan, Image>> GetImagesFromVideo(string videoPath, int count, int percentResize = 50)
+        {
+            if (!VideoExtensions.Contains(Path.GetExtension(videoPath).ToLower()))
+                return null;
+            try
+            {
+                return ScreenListerNET.GetImages(videoPath, 1, count, percentResize);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public static byte[] ImageToByteArray(Image image)
         {
             using (var memoryStream = new MemoryStream())
