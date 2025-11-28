@@ -1,3 +1,4 @@
+import gc
 import sys
 from . import cmd_args
 import torch
@@ -75,6 +76,7 @@ def torch_gc():
         with get_cuda():
             torch.cuda.empty_cache()
             torch.cuda.ipc_collect()
+            gc.collect()
 
 
 device = None
