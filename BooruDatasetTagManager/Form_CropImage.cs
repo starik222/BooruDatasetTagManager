@@ -132,7 +132,12 @@ namespace BooruDatasetTagManager
             }
             else if (includeRects == null && excludeRects != null)
             {
-                return RectangleOperations.FindLargestRectangle(new MoondreamRect(0, 0, imgWidth, imgHeight), excludeRects).ToRealRect();
+                var result = RectangleOperations.FindLargestRectangle(new MoondreamRect(0, 0, imgWidth, imgHeight), excludeRects);
+                if (result != null)
+                    return result.ToRealRect();
+                else
+                    return Rectangle.Empty;
+                //return RectangleOperations.FindLargestRectangle(new MoondreamRect(0, 0, imgWidth, imgHeight), excludeRects).ToRealRect();
             }
             else if (includeRects != null && excludeRects != null)
             {
