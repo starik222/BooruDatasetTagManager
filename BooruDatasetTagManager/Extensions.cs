@@ -325,8 +325,9 @@ namespace BooruDatasetTagManager
                             releaseNote.AppendLine(listItems[i]);
                         }
                     }
-                    if (MessageBox.Show($"A new version of the program has been detected ({nVersions[0].tag_name.Substring(1)}).\nNew in version:\n{releaseNote}\nDo you want to go to the program download page?",
-                        "Software update found", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                    Form_UpdateInfo formUpdate = new Form_UpdateInfo();
+                    formUpdate.SetText($"A new version of the program has been detected ({nVersions[0].tag_name.Substring(1)}).\r\nNew in version:\r\n{releaseNote}\r\nDo you want to go to the program download page?");
+                    if (formUpdate.ShowDialog() == DialogResult.OK)
                     {
                         Process.Start(new ProcessStartInfo
                         {
@@ -334,6 +335,7 @@ namespace BooruDatasetTagManager
                             UseShellExecute = true
                         });
                     }
+                    formUpdate.Close();
                 }
                 catch (Exception)
                 {
