@@ -141,7 +141,7 @@ namespace BooruDatasetTagManager.AiApi
             }
         }
 
-        public async Task<(List<AiApiClient.AutoTagItem> data, string errorMessage)> GetTagsWithAutoTagger(string imagePath, bool defSettings)
+        public async Task<(List<AiApiClient.AutoTagItem> data, string errorMessage, bool canceled)> GetTagsWithAutoTagger(string imagePath, bool defSettings)
         {
             if (!defSettings || Program.OpenAiAutoTagger == null || string.IsNullOrEmpty(Program.Settings.OpenAiAutoTagger.Model))
             {
@@ -149,7 +149,7 @@ namespace BooruDatasetTagManager.AiApi
                 if (autoTaggerSettings.ShowDialog() != DialogResult.OK || Program.OpenAiAutoTagger == null || string.IsNullOrEmpty(Program.Settings.OpenAiAutoTagger.Model))
                 {
                     autoTaggerSettings.Close();
-                    return (new List<AiApiClient.AutoTagItem>(), I18n.GetText("TipGenCancel"));
+                    return (null, I18n.GetText("TipGenCancel"), true);
                 }
             }
             if (!Program.OpenAiAutoTagger.IsConnected)
@@ -157,7 +157,7 @@ namespace BooruDatasetTagManager.AiApi
                 var connectionResult = await Program.OpenAiAutoTagger.ConnectAsync();
                 if (!connectionResult.Result)
                 {
-                    return (null, connectionResult.ErrMessage);
+                    return (null, connectionResult.ErrMessage, true);
                 }
             }
 
@@ -191,8 +191,9 @@ namespace BooruDatasetTagManager.AiApi
             string errMess = response.ErrMessage;
             if (response.Result == null)
             {
-                return (null, errMess);
+                return (null, errMess, false);
             }
+            response.Result = RemoveThinking(response.Result);
             List<AiApiClient.AutoTagItem> result = new List<AiApiClient.AutoTagItem>();
             if (Program.Settings.OpenAiAutoTagger.SplitString)
             {
@@ -236,7 +237,19 @@ namespace BooruDatasetTagManager.AiApi
             {
                 result.Sort((a, b) => a.Tag.CompareTo(b.Tag));
             }
-            return (result, errMess);
+            return (result, errMess, false);
+        }
+
+        private string RemoveThinking(string text)
+        {
+            if (text.Trim().StartsWith("<think>"))
+            {
+                int indexEndThink = text.IndexOf("</think>");
+                if (indexEndThink < 0)
+                    return text;
+                return text.Substring(indexEndThink + 8);
+            }
+            return text;
         }
     }
 

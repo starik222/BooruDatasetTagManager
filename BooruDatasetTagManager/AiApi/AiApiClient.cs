@@ -248,7 +248,7 @@ namespace BooruDatasetTagManager.AiApi
             }
         }
 
-        public async Task<(List<AiApiClient.AutoTagItem> data, string errorMessage)> GetTagsWithAutoTagger(string imagePath, bool defSettings)
+        public async Task<(List<AiApiClient.AutoTagItem> data, string errorMessage, bool calceled)> GetTagsWithAutoTagger(string imagePath, bool defSettings)
         {
             if (!defSettings || Program.Settings.AutoTagger.InterragatorParams.Count == 0)
             {
@@ -256,14 +256,14 @@ namespace BooruDatasetTagManager.AiApi
                 if (autoTaggerSettings.ShowDialog() != DialogResult.OK || Program.Settings.AutoTagger.InterragatorParams.Count == 0)
                 {
                     autoTaggerSettings.Close();
-                    return (null, I18n.GetText("TipGenCancel"));
+                    return (null, I18n.GetText("TipGenCancel"), true);
                 }
             }
             if (!Program.AutoTagger.IsConnected)
             {
                 if (!await Program.AutoTagger.ConnectAsync())
                 {
-                    return (null, I18n.GetText("TipUnConnectInterrogator"));
+                    return (null, I18n.GetText("TipUnConnectInterrogator"), true);
                 }
             }
             List<ModelParameters> models = new List<ModelParameters>();
@@ -287,7 +287,7 @@ namespace BooruDatasetTagManager.AiApi
             string errMess = listOfTags.Message;
             if (!listOfTags.Success)
             {
-                return (null, errMess);
+                return (null, errMess, false);
             }
             List<AiApiClient.AutoTagItem> result = listOfTags.GetTagList(Program.Settings.AutoTagger.UnionMode);
 
@@ -324,7 +324,7 @@ namespace BooruDatasetTagManager.AiApi
             {
                 result.Sort((a, b) => a.Tag.CompareTo(b.Tag));
             }
-            return (result, errMess);
+            return (result, errMess, false);
         }
 
         public async Task<ConfigResponse> GetListModelsByType(string modelType)

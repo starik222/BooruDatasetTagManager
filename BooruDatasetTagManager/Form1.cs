@@ -2047,7 +2047,7 @@ namespace BooruDatasetTagManager
             LockEdit(true);
             var selectedImageData = Program.DataManager.DataSet[(string)gridViewDS.SelectedRows[0].Cells["ImageFilePath"].Value];
 
-            (List<AiApiClient.AutoTagItem> data, string errorMessage) taggerResult = (null, null);
+            (List<AiApiClient.AutoTagItem> data, string errorMessage, bool canceled) taggerResult = (null, null, false);
             TaggerSettings settings = null;
             if (!useOpenAi)
             {
@@ -2061,6 +2061,11 @@ namespace BooruDatasetTagManager
             }
             if (!string.IsNullOrEmpty(taggerResult.errorMessage))
                 SetStatus(taggerResult.errorMessage);
+
+            if (taggerResult.canceled)
+            {
+                goto genExit;
+            }
             if (taggerResult.data != null)
             {
                 if (settings.SetMode == NetworkResultSetMode.AllWithReplacement)
@@ -2080,7 +2085,7 @@ namespace BooruDatasetTagManager
                 }
                 SetStatus(I18n.GetText("TipProgressComplete"));
             }
-
+        genExit:
             LockEdit(false);
         }
 
@@ -2122,12 +2127,15 @@ namespace BooruDatasetTagManager
             int currentIndex = 0;
             foreach (var item in selectedTagsList)
             {
-                (List<AiApiClient.AutoTagItem> data, string errorMessage) taggerResult = (null, null);
+                (List<AiApiClient.AutoTagItem> data, string errorMessage, bool canceled) taggerResult = (null, null, false);
                 if (!useOpenAi)
                     taggerResult = await Program.AutoTagger.GetTagsWithAutoTagger(item.ImageFilePath, defSettings);
                 else
                     taggerResult = await Program.OpenAiAutoTagger.GetTagsWithAutoTagger(item.ImageFilePath, defSettings);
-
+                if (taggerResult.canceled)
+                {
+                    goto genExit;
+                }
                 if (!defSettings)
                     defSettings = true;
                 if (!string.IsNullOrEmpty(taggerResult.errorMessage))
@@ -2167,6 +2175,7 @@ namespace BooruDatasetTagManager
                 }
                 SetStatus(string.Format(I18n.GetText("InProgressCount"), ++currentIndex, selectedTagsList.Count));
             }
+            genExit:
             if (selectedTagsList.Count > 1)
             {
                 LoadSelectedImageToGrid();
