@@ -1,4 +1,5 @@
-﻿using OpenAI;
+﻿using Diffusion.IO;
+using OpenAI;
 using OpenAI.Chat;
 using OpenAI.Models;
 using System;
@@ -242,14 +243,11 @@ namespace BooruDatasetTagManager.AiApi
 
         private string RemoveThinking(string text)
         {
-            if (text.Trim().StartsWith("<think>"))
-            {
-                int indexEndThink = text.IndexOf("</think>");
-                if (indexEndThink < 0)
-                    return text;
-                return text.Substring(indexEndThink + 8);
-            }
-            return text;
+            if (string.IsNullOrWhiteSpace(text))
+                return text;
+            string pattern = @"<think>.*?(?:</think>|$)";
+            string result = Regex.Replace(text, pattern, string.Empty, RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            return result.Trim(['\n', '\r']).Trim();
         }
     }
 
